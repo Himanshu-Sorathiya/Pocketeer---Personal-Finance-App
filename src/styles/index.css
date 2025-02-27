@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-poppins: "Poppins", "Times New Roman";
+  --font-space-grotesk: "Space Grotesk", serif;
+
+  /* Primary Palette */
+  --color-primary: #1e88e5;
+  --color-accent: #f4a261;
+
+  /* Semantic Colors */
+  --color-success: #2d6a4f;
+  --color-error: #d90429;
+  --color-warning: #e9c46a;
+  --color-info: #4895ef;
+
+  /*@ Light Mode Colors */
+  /* Primary Palette */
+  --color-background: #f8f9fa;
+  --color-text: #333333;
+
+  /* Neutral Shades */
+  --color-shade-100: #ffffff;
+  --color-shade-95: #f1f3f5;
+  --color-shade-80: #e0e0e0;
+  --color-shade-60: #b0b0b0;
+  --color-shade-40: #808080;
+  --color-shade-20: #4d4d4d;
+
+  /*@ Dark Mode Colors */
+  /* Primary Palette */
+  --color-dark-background: #121212;
+  --color-dark-text: #e0e0e0;
+
+  /* Neutral Shades */
+  --color-dark-neutral-100: #ffffff;
+  --color-dark-neutral-90: #e0e0e0;
+  --color-dark-neutral-70: #a0a0a0;
+  --color-dark-neutral-50: #707070;
+  --color-dark-neutral-30: #505050;
+  --color-dark-neutral-10: #303030;
+}
+
+body {
+  @apply font-poppins m-0 box-border p-0;
+}
