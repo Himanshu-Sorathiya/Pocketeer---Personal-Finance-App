@@ -1,9 +1,9 @@
-function Transactions() {
+function Transaction() {
   return (
     <div>
-      <h1>Transactions</h1>
+      <h1>Transaction</h1>
     </div>
   );
 }
 
-export default Transactions;
+export default Transaction;

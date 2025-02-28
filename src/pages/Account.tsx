@@ -1,9 +1,9 @@
-function Accounts() {
+function Account() {
   return (
     <div>
-      <h1>Accounts</h1>
+      <h1>Account</h1>
     </div>
   );
 }
 
-export default Accounts;
+export default Account;

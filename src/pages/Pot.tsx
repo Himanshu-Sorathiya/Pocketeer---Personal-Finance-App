@@ -1,9 +1,9 @@
-function Pots() {
+function Pot() {
   return (
     <div>
-      <h1>Pots</h1>
+      <h1>Pot</h1>
     </div>
   );
 }
 
-export default Pots;
+export default Pot;
