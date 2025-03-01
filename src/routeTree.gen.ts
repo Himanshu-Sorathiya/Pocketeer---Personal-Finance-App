@@ -10,271 +10,271 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthIndexImport } from './routes/auth/index'
-import { Route as AppIndexImport } from './routes/app/index'
-import { Route as AuthSignupImport } from './routes/auth/signup'
-import { Route as AuthLoginImport } from './routes/auth/login'
-import { Route as AppTransactionImport } from './routes/app/transaction'
-import { Route as AppPotImport } from './routes/app/pot'
-import { Route as AppNotificationImport } from './routes/app/notification'
-import { Route as AppDashboardImport } from './routes/app/dashboard'
-import { Route as AppBudgetImport } from './routes/app/budget'
-import { Route as AppAccountImport } from './routes/app/account'
+import { Route as rootRoute } from "./routes/__root.tsx";
+import { Route as AppAccountImport } from "./routes/app/account.tsx";
+import { Route as AppBudgetImport } from "./routes/app/budget.tsx";
+import { Route as AppDashboardImport } from "./routes/app/dashboard.tsx";
+import { Route as AppIndexImport } from "./routes/app/index.tsx";
+import { Route as AppNotificationImport } from "./routes/app/notification.tsx";
+import { Route as AppPotImport } from "./routes/app/pot.tsx";
+import { Route as AppTransactionImport } from "./routes/app/transaction.tsx";
+import { Route as AuthIndexImport } from "./routes/auth/index.tsx";
+import { Route as AuthLoginImport } from "./routes/auth/login.tsx";
+import { Route as AuthSignupImport } from "./routes/auth/signup.tsx";
+import { Route as IndexImport } from "./routes/index.tsx";
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AuthIndexRoute = AuthIndexImport.update({
-  id: '/auth/',
-  path: '/auth/',
+  id: "/auth/",
+  path: "/auth/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppIndexRoute = AppIndexImport.update({
-  id: '/app/',
-  path: '/app/',
+  id: "/app/",
+  path: "/app/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AuthSignupRoute = AuthSignupImport.update({
-  id: '/auth/signup',
-  path: '/auth/signup',
+  id: "/auth/signup",
+  path: "/auth/signup",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AuthLoginRoute = AuthLoginImport.update({
-  id: '/auth/login',
-  path: '/auth/login',
+  id: "/auth/login",
+  path: "/auth/login",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppTransactionRoute = AppTransactionImport.update({
-  id: '/app/transaction',
-  path: '/app/transaction',
+  id: "/app/transaction",
+  path: "/app/transaction",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppPotRoute = AppPotImport.update({
-  id: '/app/pot',
-  path: '/app/pot',
+  id: "/app/pot",
+  path: "/app/pot",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppNotificationRoute = AppNotificationImport.update({
-  id: '/app/notification',
-  path: '/app/notification',
+  id: "/app/notification",
+  path: "/app/notification",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppDashboardRoute = AppDashboardImport.update({
-  id: '/app/dashboard',
-  path: '/app/dashboard',
+  id: "/app/dashboard",
+  path: "/app/dashboard",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppBudgetRoute = AppBudgetImport.update({
-  id: '/app/budget',
-  path: '/app/budget',
+  id: "/app/budget",
+  path: "/app/budget",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AppAccountRoute = AppAccountImport.update({
-  id: '/app/account',
-  path: '/app/account',
+  id: "/app/account",
+  path: "/app/account",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/account': {
-      id: '/app/account'
-      path: '/app/account'
-      fullPath: '/app/account'
-      preLoaderRoute: typeof AppAccountImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/budget': {
-      id: '/app/budget'
-      path: '/app/budget'
-      fullPath: '/app/budget'
-      preLoaderRoute: typeof AppBudgetImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/dashboard': {
-      id: '/app/dashboard'
-      path: '/app/dashboard'
-      fullPath: '/app/dashboard'
-      preLoaderRoute: typeof AppDashboardImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/notification': {
-      id: '/app/notification'
-      path: '/app/notification'
-      fullPath: '/app/notification'
-      preLoaderRoute: typeof AppNotificationImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/pot': {
-      id: '/app/pot'
-      path: '/app/pot'
-      fullPath: '/app/pot'
-      preLoaderRoute: typeof AppPotImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/transaction': {
-      id: '/app/transaction'
-      path: '/app/transaction'
-      fullPath: '/app/transaction'
-      preLoaderRoute: typeof AppTransactionImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/signup': {
-      id: '/auth/signup'
-      path: '/auth/signup'
-      fullPath: '/auth/signup'
-      preLoaderRoute: typeof AuthSignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/app/': {
-      id: '/app/'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/': {
-      id: '/auth/'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthIndexImport
-      parentRoute: typeof rootRoute
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/account": {
+      id: "/app/account";
+      path: "/app/account";
+      fullPath: "/app/account";
+      preLoaderRoute: typeof AppAccountImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/budget": {
+      id: "/app/budget";
+      path: "/app/budget";
+      fullPath: "/app/budget";
+      preLoaderRoute: typeof AppBudgetImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/dashboard": {
+      id: "/app/dashboard";
+      path: "/app/dashboard";
+      fullPath: "/app/dashboard";
+      preLoaderRoute: typeof AppDashboardImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/notification": {
+      id: "/app/notification";
+      path: "/app/notification";
+      fullPath: "/app/notification";
+      preLoaderRoute: typeof AppNotificationImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/pot": {
+      id: "/app/pot";
+      path: "/app/pot";
+      fullPath: "/app/pot";
+      preLoaderRoute: typeof AppPotImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/transaction": {
+      id: "/app/transaction";
+      path: "/app/transaction";
+      fullPath: "/app/transaction";
+      preLoaderRoute: typeof AppTransactionImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/auth/login": {
+      id: "/auth/login";
+      path: "/auth/login";
+      fullPath: "/auth/login";
+      preLoaderRoute: typeof AuthLoginImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/auth/signup": {
+      id: "/auth/signup";
+      path: "/auth/signup";
+      fullPath: "/auth/signup";
+      preLoaderRoute: typeof AuthSignupImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/app/": {
+      id: "/app/";
+      path: "/app";
+      fullPath: "/app";
+      preLoaderRoute: typeof AppIndexImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/auth/": {
+      id: "/auth/";
+      path: "/auth";
+      fullPath: "/auth";
+      preLoaderRoute: typeof AuthIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/budget': typeof AppBudgetRoute
-  '/app/dashboard': typeof AppDashboardRoute
-  '/app/notification': typeof AppNotificationRoute
-  '/app/pot': typeof AppPotRoute
-  '/app/transaction': typeof AppTransactionRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/signup': typeof AuthSignupRoute
-  '/app': typeof AppIndexRoute
-  '/auth': typeof AuthIndexRoute
+  "/": typeof IndexRoute;
+  "/app/account": typeof AppAccountRoute;
+  "/app/budget": typeof AppBudgetRoute;
+  "/app/dashboard": typeof AppDashboardRoute;
+  "/app/notification": typeof AppNotificationRoute;
+  "/app/pot": typeof AppPotRoute;
+  "/app/transaction": typeof AppTransactionRoute;
+  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signup": typeof AuthSignupRoute;
+  "/app": typeof AppIndexRoute;
+  "/auth": typeof AuthIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/budget': typeof AppBudgetRoute
-  '/app/dashboard': typeof AppDashboardRoute
-  '/app/notification': typeof AppNotificationRoute
-  '/app/pot': typeof AppPotRoute
-  '/app/transaction': typeof AppTransactionRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/signup': typeof AuthSignupRoute
-  '/app': typeof AppIndexRoute
-  '/auth': typeof AuthIndexRoute
+  "/": typeof IndexRoute;
+  "/app/account": typeof AppAccountRoute;
+  "/app/budget": typeof AppBudgetRoute;
+  "/app/dashboard": typeof AppDashboardRoute;
+  "/app/notification": typeof AppNotificationRoute;
+  "/app/pot": typeof AppPotRoute;
+  "/app/transaction": typeof AppTransactionRoute;
+  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signup": typeof AuthSignupRoute;
+  "/app": typeof AppIndexRoute;
+  "/auth": typeof AuthIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/budget': typeof AppBudgetRoute
-  '/app/dashboard': typeof AppDashboardRoute
-  '/app/notification': typeof AppNotificationRoute
-  '/app/pot': typeof AppPotRoute
-  '/app/transaction': typeof AppTransactionRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/signup': typeof AuthSignupRoute
-  '/app/': typeof AppIndexRoute
-  '/auth/': typeof AuthIndexRoute
+  __root__: typeof rootRoute;
+  "/": typeof IndexRoute;
+  "/app/account": typeof AppAccountRoute;
+  "/app/budget": typeof AppBudgetRoute;
+  "/app/dashboard": typeof AppDashboardRoute;
+  "/app/notification": typeof AppNotificationRoute;
+  "/app/pot": typeof AppPotRoute;
+  "/app/transaction": typeof AppTransactionRoute;
+  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signup": typeof AuthSignupRoute;
+  "/app/": typeof AppIndexRoute;
+  "/auth/": typeof AuthIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/app/account'
-    | '/app/budget'
-    | '/app/dashboard'
-    | '/app/notification'
-    | '/app/pot'
-    | '/app/transaction'
-    | '/auth/login'
-    | '/auth/signup'
-    | '/app'
-    | '/auth'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/app/account"
+    | "/app/budget"
+    | "/app/dashboard"
+    | "/app/notification"
+    | "/app/pot"
+    | "/app/transaction"
+    | "/auth/login"
+    | "/auth/signup"
+    | "/app"
+    | "/auth";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/app/account'
-    | '/app/budget'
-    | '/app/dashboard'
-    | '/app/notification'
-    | '/app/pot'
-    | '/app/transaction'
-    | '/auth/login'
-    | '/auth/signup'
-    | '/app'
-    | '/auth'
+    | "/"
+    | "/app/account"
+    | "/app/budget"
+    | "/app/dashboard"
+    | "/app/notification"
+    | "/app/pot"
+    | "/app/transaction"
+    | "/auth/login"
+    | "/auth/signup"
+    | "/app"
+    | "/auth";
   id:
-    | '__root__'
-    | '/'
-    | '/app/account'
-    | '/app/budget'
-    | '/app/dashboard'
-    | '/app/notification'
-    | '/app/pot'
-    | '/app/transaction'
-    | '/auth/login'
-    | '/auth/signup'
-    | '/app/'
-    | '/auth/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/app/account"
+    | "/app/budget"
+    | "/app/dashboard"
+    | "/app/notification"
+    | "/app/pot"
+    | "/app/transaction"
+    | "/auth/login"
+    | "/auth/signup"
+    | "/app/"
+    | "/auth/";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AppAccountRoute: typeof AppAccountRoute
-  AppBudgetRoute: typeof AppBudgetRoute
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppNotificationRoute: typeof AppNotificationRoute
-  AppPotRoute: typeof AppPotRoute
-  AppTransactionRoute: typeof AppTransactionRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
-  AppIndexRoute: typeof AppIndexRoute
-  AuthIndexRoute: typeof AuthIndexRoute
+  IndexRoute: typeof IndexRoute;
+  AppAccountRoute: typeof AppAccountRoute;
+  AppBudgetRoute: typeof AppBudgetRoute;
+  AppDashboardRoute: typeof AppDashboardRoute;
+  AppNotificationRoute: typeof AppNotificationRoute;
+  AppPotRoute: typeof AppPotRoute;
+  AppTransactionRoute: typeof AppTransactionRoute;
+  AuthLoginRoute: typeof AuthLoginRoute;
+  AuthSignupRoute: typeof AuthSignupRoute;
+  AppIndexRoute: typeof AppIndexRoute;
+  AuthIndexRoute: typeof AuthIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -289,11 +289,11 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   AppIndexRoute: AppIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {

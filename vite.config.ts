@@ -7,7 +7,13 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
+    TanStackRouterVite({
+      target: "react",
+      autoCodeSplitting: true,
+      semicolons: true,
+      quoteStyle: "double",
+      addExtensions: true,
+    }),
     react(),
   ],
 });

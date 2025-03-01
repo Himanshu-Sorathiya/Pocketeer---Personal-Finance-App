@@ -17,7 +17,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
       <nav className="flex gap-4">
         <Link
           to={dashboardRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -26,7 +25,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={transactionRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -35,7 +33,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={budgetRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -44,7 +41,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={potRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -53,7 +49,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={notificationRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -62,7 +57,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={accountRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >

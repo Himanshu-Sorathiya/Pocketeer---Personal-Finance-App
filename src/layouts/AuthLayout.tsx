@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 import { Route as loginRoute } from "../routes/auth/login";
 import { Route as signupRoute } from "../routes/auth/signup";
 
-function AppLayout({ children }: { children?: ReactNode }) {
+function AuthLayout({ children }: { children?: ReactNode }) {
   return (
     <div>
       <div>Auth Layout</div>
@@ -13,7 +13,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
       <nav className="flex gap-4">
         <Link
           to={loginRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -22,7 +21,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
         <Link
           to={signupRoute.to}
-          activeOptions={{ exact: true }}
           activeProps={{ className: "active" }}
           inactiveProps={{ className: "inactive" }}
         >
@@ -35,4 +33,4 @@ function AppLayout({ children }: { children?: ReactNode }) {
   );
 }
 
-export default AppLayout;
+export default AuthLayout;
