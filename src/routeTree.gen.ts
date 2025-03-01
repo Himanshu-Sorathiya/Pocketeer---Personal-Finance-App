@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AppIndexImport } from './routes/app/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
@@ -23,6 +24,12 @@ import { Route as AppBudgetImport } from './routes/app/budget'
 import { Route as AppAccountImport } from './routes/app/account'
 
 // Create/Update Routes
+
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthIndexRoute = AuthIndexImport.update({
   id: '/auth/',
@@ -88,6 +95,13 @@ const AppAccountRoute = AppAccountImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/app/account': {
       id: '/app/account'
       path: '/app/account'
@@ -164,6 +178,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/app/account': typeof AppAccountRoute
   '/app/budget': typeof AppBudgetRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -177,6 +192,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/app/account': typeof AppAccountRoute
   '/app/budget': typeof AppBudgetRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -191,6 +207,7 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
   '/app/account': typeof AppAccountRoute
   '/app/budget': typeof AppBudgetRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -206,6 +223,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/app/account'
     | '/app/budget'
     | '/app/dashboard'
@@ -218,6 +236,7 @@ export interface FileRouteTypes {
     | '/auth'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/app/account'
     | '/app/budget'
     | '/app/dashboard'
@@ -230,6 +249,7 @@ export interface FileRouteTypes {
     | '/auth'
   id:
     | '__root__'
+    | '/'
     | '/app/account'
     | '/app/budget'
     | '/app/dashboard'
@@ -244,6 +264,7 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AppAccountRoute: typeof AppAccountRoute
   AppBudgetRoute: typeof AppBudgetRoute
   AppDashboardRoute: typeof AppDashboardRoute
@@ -257,6 +278,7 @@ export interface RootRouteChildren {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AppAccountRoute: AppAccountRoute,
   AppBudgetRoute: AppBudgetRoute,
   AppDashboardRoute: AppDashboardRoute,
@@ -279,6 +301,7 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/app/account",
         "/app/budget",
         "/app/dashboard",
@@ -290,6 +313,9 @@ export const routeTree = rootRoute
         "/app/",
         "/auth/"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/app/account": {
       "filePath": "app/account.tsx"

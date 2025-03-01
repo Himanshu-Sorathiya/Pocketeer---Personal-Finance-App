@@ -1,10 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import AuthLayout from "../../layouts/AuthLayout.tsx";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/auth/")({
+import { Route as loginRoute } from "./login.tsx";
+
+const Route = createFileRoute("/auth/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <AuthLayout />;
+  return <Navigate to={loginRoute.to} replace={true} />;
 }
+
+export { Route };

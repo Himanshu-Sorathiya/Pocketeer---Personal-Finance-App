@@ -34,14 +34,22 @@
   --color-dark-text: #e0e0e0;
 
   /* Neutral Shades */
-  --color-dark-neutral-100: #ffffff;
-  --color-dark-neutral-90: #e0e0e0;
-  --color-dark-neutral-70: #a0a0a0;
-  --color-dark-neutral-50: #707070;
-  --color-dark-neutral-30: #505050;
-  --color-dark-neutral-10: #303030;
+  --color-dark-shade-100: #ffffff;
+  --color-dark-shade-90: #e0e0e0;
+  --color-dark-shade-70: #a0a0a0;
+  --color-dark-shade-50: #707070;
+  --color-dark-shade-30: #505050;
+  --color-dark-shade-10: #303030;
 }
 
 body {
   @apply font-poppins m-0 box-border p-0;
+}
+
+.active {
+  @apply text-primary;
+}
+
+.inactive {
+  @apply text-shade-60;
 }
