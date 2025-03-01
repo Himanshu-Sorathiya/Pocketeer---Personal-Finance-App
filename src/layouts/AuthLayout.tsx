@@ -2,8 +2,8 @@ import { type ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
 
-import { Route as loginRoute } from "../routes/auth/login";
-import { Route as signupRoute } from "../routes/auth/signup";
+import { Route as loginRoute } from "../routes/auth/login.tsx";
+import { Route as signupRoute } from "../routes/auth/signup.tsx";
 
 function AuthLayout({ children }: { children?: ReactNode }) {
   return (

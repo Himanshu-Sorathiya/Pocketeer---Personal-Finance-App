@@ -2,12 +2,12 @@ import { type ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
 
-import { Route as accountRoute } from "../routes/app/account";
-import { Route as budgetRoute } from "../routes/app/budget";
-import { Route as dashboardRoute } from "../routes/app/dashboard";
-import { Route as notificationRoute } from "../routes/app/notification";
-import { Route as potRoute } from "../routes/app/pot";
-import { Route as transactionRoute } from "../routes/app/transaction";
+import { Route as accountRoute } from "../routes/app/account.tsx";
+import { Route as budgetRoute } from "../routes/app/budget.tsx";
+import { Route as dashboardRoute } from "../routes/app/dashboard.tsx";
+import { Route as notificationRoute } from "../routes/app/notification.tsx";
+import { Route as potRoute } from "../routes/app/pot.tsx";
+import { Route as transactionRoute } from "../routes/app/transaction.tsx";
 
 function AppLayout({ children }: { children?: ReactNode }) {
   return (
