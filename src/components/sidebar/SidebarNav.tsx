@@ -1,11 +1,11 @@
-import { Link, useMatchRoute } from '@tanstack/react-router';
+import { Link, useMatchRoute } from "@tanstack/react-router";
 
-import { Route as accountRoute } from '../../routes/app/account.tsx';
-import { Route as budgetRoute } from '../../routes/app/budget.tsx';
-import { Route as dashboardRoute } from '../../routes/app/dashboard.tsx';
-import { Route as notificationRoute } from '../../routes/app/notification.tsx';
-import { Route as potRoute } from '../../routes/app/pot.tsx';
-import { Route as transactionRoute } from '../../routes/app/transaction.tsx';
+import { Route as accountRoute } from "../../routes/app/account.tsx";
+import { Route as budgetRoute } from "../../routes/app/budget.tsx";
+import { Route as dashboardRoute } from "../../routes/app/dashboard.tsx";
+import { Route as notificationRoute } from "../../routes/app/notification.tsx";
+import { Route as potRoute } from "../../routes/app/pot.tsx";
+import { Route as transactionRoute } from "../../routes/app/transaction.tsx";
 
 function SidebarNav() {
   return (
@@ -67,15 +67,15 @@ function SidebarLink({
     <li className="rounded-md">
       <Link
         to={to}
-        className={`flex items-center space-x-3 rounded-md p-3 hover:bg-gray-800 ${
-          isActive ? "bg-gray-800" : "text-gray-50"
+        className={`flex items-center space-x-3 rounded-md p-3 text-gray-50 transition-all duration-150 hover:bg-gray-800 ${
+          isActive ? "text-primary bg-gray-800" : ""
         }`}
       >
-        <svg className={`h-6 w-6 ${isActive && "text-primary"}`}>
+        <svg className={`h-6 w-6`}>
           <use href={`/src/assets/icons/ui_icons_sprite.svg#${icon}`} />
         </svg>
 
-        <span className={`${isActive && "text-primary"}`}>{label}</span>
+        <span>{label}</span>
       </Link>
     </li>
   );
