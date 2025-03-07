@@ -1,14 +1,17 @@
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 
-import { routeTree } from "./routeTree.gen.ts";
+import { routeTree } from './routeTree.gen.ts';
 
 import PageNotFound from "./pages/PageNotFound.tsx";
+
+import GlobalSpinner from "./components/spinners/GlobalSpinner.tsx";
 
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   defaultPreloadDelay: 100,
   defaultNotFoundComponent: PageNotFound,
+  defaultPendingComponent: GlobalSpinner,
 });
 
 declare module "@tanstack/react-router" {
