@@ -1,7 +1,9 @@
+import PotContainer from "../features/pot/Pot.tsx";
+
 function Pot() {
   return (
     <div>
-      <h1>Pot</h1>
+      <PotContainer />
     </div>
   );
 }

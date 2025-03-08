@@ -1,7 +1,9 @@
+import BudgetContainer from "../features/budget/Budget.tsx";
+
 function Budget() {
   return (
     <div>
-      <h1>Budget</h1>
+      <BudgetContainer />
     </div>
   );
 }

@@ -7,10 +7,7 @@ function AppLayout({ children }: { children?: ReactNode }) {
     <div className="flex h-screen">
       <Sidebar />
 
-      <div className="flex-1">
-        <span>APP LAYOUT</span>
-        <div>{children}</div>
-      </div>
+      <div className="flex-1 bg-orange-50 p-8">{children}</div>
     </div>
   );
 }

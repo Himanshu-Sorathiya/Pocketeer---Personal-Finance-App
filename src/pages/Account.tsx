@@ -1,7 +1,9 @@
+import AccountContainer from "../features/account/Account.tsx";
+
 function Account() {
   return (
     <div>
-      <h1>Account</h1>
+      <AccountContainer />
     </div>
   );
 }

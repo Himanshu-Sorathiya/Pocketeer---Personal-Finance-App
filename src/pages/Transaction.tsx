@@ -1,7 +1,9 @@
+import TransactionContainer from "../features/transaction/Transaction.tsx";
+
 function Transaction() {
   return (
     <div>
-      <h1>Transaction</h1>
+      <TransactionContainer />
     </div>
   );
 }
