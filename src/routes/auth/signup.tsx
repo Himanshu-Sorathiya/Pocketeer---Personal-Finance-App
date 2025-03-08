@@ -1,4 +1,4 @@
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
 
 import AuthLayout from "../../layouts/AuthLayout.tsx";
 
@@ -16,7 +16,9 @@ function RouteComponent() {
 
   return (
     <AuthLayout>
-      {status === "pending" ? <GlobalSpinner /> : <Signup />}
+      {status === "pending" && <GlobalSpinner />}
+
+      <Signup />
     </AuthLayout>
   );
 }

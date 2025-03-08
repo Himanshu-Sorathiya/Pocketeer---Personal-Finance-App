@@ -16,7 +16,9 @@ function RouteComponent() {
 
   return (
     <AuthLayout>
-      {status === "pending" ? <GlobalSpinner /> : <Login />}
+      {status === "pending" && <GlobalSpinner />}
+
+      <Login />
     </AuthLayout>
   );
 }

@@ -16,7 +16,9 @@ function RouteComponent() {
 
   return (
     <AppLayout>
-      {status === "pending" ? <GlobalSpinner /> : <Notification />}
+      {status === "pending" && <GlobalSpinner />}
+
+      <Notification />
     </AppLayout>
   );
 }
