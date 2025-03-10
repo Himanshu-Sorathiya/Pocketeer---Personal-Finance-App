@@ -1,8 +1,10 @@
+import TransactionTable from "./TransactionTable.tsx";
+
 import Header from "../../components/ui/Header.tsx";
 
 function Transaction() {
   return (
-    <div>
+    <>
       <Header title="Transaction">
         <button
           type="button"
@@ -11,7 +13,11 @@ function Transaction() {
           Action
         </button>
       </Header>
-    </div>
+
+      <div className="bg-shade-100 overflow-x-auto rounded-[20px] p-4">
+        <TransactionTable />
+      </div>
+    </>
   );
 }
 

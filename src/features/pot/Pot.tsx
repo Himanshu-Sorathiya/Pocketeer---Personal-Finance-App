@@ -2,7 +2,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Pot() {
   return (
-    <div>
+    <>
       <Header title="Pot">
         <button
           type="button"
@@ -11,7 +11,7 @@ function Pot() {
           Action
         </button>
       </Header>
-    </div>
+    </>
   );
 }
 

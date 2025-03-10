@@ -2,7 +2,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Account() {
   return (
-    <div>
+    <>
       <Header title="Account">
         <button
           type="button"
@@ -11,7 +11,7 @@ function Account() {
           Action
         </button>
       </Header>
-    </div>
+    </>
   );
 }
 

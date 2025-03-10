@@ -1,11 +1,7 @@
 import DashboardContainer from "../features/dashboard/Dashboard.tsx";
 
 function Dashboard() {
-  return (
-    <div>
-      <DashboardContainer />
-    </div>
-  );
+  return <DashboardContainer />;
 }
 
 export default Dashboard;

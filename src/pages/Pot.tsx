@@ -1,11 +1,7 @@
 import PotContainer from "../features/pot/Pot.tsx";
 
 function Pot() {
-  return (
-    <div>
-      <PotContainer />
-    </div>
-  );
+  return <PotContainer />;
 }
 
 export default Pot;

@@ -1,11 +1,7 @@
 import AccountContainer from "../features/account/Account.tsx";
 
 function Account() {
-  return (
-    <div>
-      <AccountContainer />
-    </div>
-  );
+  return <AccountContainer />;
 }
 
 export default Account;

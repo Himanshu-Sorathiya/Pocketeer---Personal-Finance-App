@@ -1,4 +1,4 @@
-import { createFileRoute, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, useRouterState } from '@tanstack/react-router';
 
 import AppLayout from "../../layouts/AppLayout.tsx";
 
@@ -17,7 +17,7 @@ function RouteComponent() {
   return (
     <AppLayout>
       {status === "pending" && <GlobalSpinner />}
-      
+
       <Pot />
     </AppLayout>
   );

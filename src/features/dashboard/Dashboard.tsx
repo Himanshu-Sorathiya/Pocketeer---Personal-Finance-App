@@ -2,7 +2,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Dashboard() {
   return (
-    <div>
+    <>
       <Header title="Dashboard">
         <button
           type="button"
@@ -11,7 +11,7 @@ function Dashboard() {
           Action
         </button>
       </Header>
-    </div>
+    </>
   );
 }
 

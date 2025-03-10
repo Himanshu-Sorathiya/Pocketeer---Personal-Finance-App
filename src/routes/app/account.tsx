@@ -17,7 +17,7 @@ function RouteComponent() {
   return (
     <AppLayout>
       {status === "pending" && <GlobalSpinner />}
-      
+
       <Account />
     </AppLayout>
   );

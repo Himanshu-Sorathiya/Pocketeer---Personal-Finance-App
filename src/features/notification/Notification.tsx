@@ -2,7 +2,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Notification() {
   return (
-    <div>
+    <>
       <Header title="Notification">
         <button
           type="button"
@@ -11,7 +11,7 @@ function Notification() {
           Action
         </button>
       </Header>
-    </div>
+    </>
   );
 }
 

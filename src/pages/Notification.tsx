@@ -1,11 +1,7 @@
 import NotificationContainer from "../features/notification/Notification.tsx";
 
 function Notification() {
-  return (
-    <div>
-      <NotificationContainer />
-    </div>
-  );
+  return <NotificationContainer />;
 }
 
 export default Notification;

@@ -2,7 +2,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Budget() {
   return (
-    <div>
+    <>
       <Header title="Budget">
         <button
           type="button"
@@ -11,7 +11,7 @@ function Budget() {
           Action
         </button>
       </Header>
-    </div>
+    </>
   );
 }
 
