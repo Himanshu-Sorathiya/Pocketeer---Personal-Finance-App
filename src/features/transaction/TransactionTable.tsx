@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import {
-	type ColumnHelper,
-	type HeaderGroup,
-	type Row,
-	type Table,
-	createColumnHelper,
-	flexRender,
-	getCoreRowModel,
-	useReactTable
+  type ColumnHelper,
+  type HeaderGroup,
+  type Row,
+  type Table,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import transactionIcons from "../../constants/transactionIcons.ts";
@@ -230,7 +230,11 @@ function TransactionTable() {
     }),
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
       id: "amount",
-      cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+      cell: (info) => (
+        <span className="font-space-grotesk font-medium">
+          {info.getValue()}
+        </span>
+      ),
       header: () => "Amount",
     }),
 
@@ -267,19 +271,90 @@ function TransactionTable() {
 }
 
 function TableHeader({ table }: { table: Table<Transaction> }) {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const toggleDropdown = (columnId: string) => {
+    setOpenDropdown((prev) => (prev === columnId ? null : columnId));
+  };
+
+  const sortOptions: Record<string, string[]> = {
+    recipient: ["Default", "A-Z", "Z-A"],
+    category: ["Default", "A-Z", "Z-A"],
+    date: ["Default", "Newest", "Oldest"],
+    amount: ["Default", "Highest", "Lowest"],
+  };
+
+  const [selectedSort, setSelectedSort] = useState<Record<string, string>>({
+    recipient: "Default",
+  });
+
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup: HeaderGroup<Transaction>) => (
         <tr
           key={headerGroup.id}
-          className="grid grid-cols-[4fr_3fr_3fr_2fr_1fr] items-center"
+          className="relative grid grid-cols-[4fr_3fr_3fr_2fr_1fr] items-center"
         >
           {headerGroup.headers.map((header) => (
             <th
               key={header.id}
-              className="px-4 pt-2 pb-3 text-left text-xs font-medium whitespace-nowrap text-gray-500"
+              className="relative flex items-center gap-0.5 px-4 pt-2 pb-3 text-left text-xs font-medium whitespace-nowrap text-gray-500"
             >
-              {flexRender(header.column.columnDef.header, header.getContext())}
+              <span>
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext(),
+                )}
+              </span>
+
+              {sortOptions[header.id] && (
+                <div
+                  onMouseEnter={() => setOpenDropdown(header.id)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <button
+                    onClick={() => toggleDropdown(header.id)}
+                    className="cursor-pointer rounded p-0.5 focus-within:bg-neutral-100 hover:bg-neutral-100"
+                  >
+                    <svg className="h-4 w-4">
+                      <use href="/src/assets/icons/ui_icons_sprite.svg#sort"></use>
+                    </svg>
+                  </button>
+
+                  {openDropdown === header.id && (
+                    <div className="absolute top-1/2 left-0 z-10 mt-2 w-32 rounded-md border border-gray-100 bg-white p-1 shadow-md">
+                      {sortOptions[header.id].map((option) => (
+                        <button
+                          key={option}
+                          onClick={() => {
+                            setSelectedSort(() => ({
+                              [header.id]: option,
+                            }));
+                            setOpenDropdown(null);
+                          }}
+                          className="block w-full rounded-lg px-4 py-2 text-left text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                          style={{
+                            backgroundColor:
+                              selectedSort[header.id] === option
+                                ? "#f3f4f6"
+                                : "",
+                            color:
+                              selectedSort[header.id] === option
+                                ? "#364153"
+                                : "",
+                            fontWeight:
+                              selectedSort[header.id] === option
+                                ? "500"
+                                : "400",
+                          }}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </th>
           ))}
         </tr>
