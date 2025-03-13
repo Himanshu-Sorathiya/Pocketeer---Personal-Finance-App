@@ -1,21 +1,23 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
 import {
-  type ColumnHelper,
-  type Header,
-  type HeaderGroup,
-  type Row,
-  type Table,
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
+	type ColumnHelper,
+	type Header,
+	type HeaderGroup,
+	type Row,
+	type Table,
+	createColumnHelper,
+	flexRender,
+	getCoreRowModel,
+	useReactTable
 } from "@tanstack/react-table";
+
+import DropDownMenu from "../../components/ui/DropDownMenu.tsx";
+
+import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
-
-import type { Transaction } from "./transaction.types.ts";
 
 function TransactionTable() {
   const [transactions, _] = useState<Transaction[]>([
@@ -279,14 +281,13 @@ function TableHeader({ table }: { table: Table<Transaction> }) {
   };
 
   const sortOptions: Record<string, string[]> = {
-    recipient: ["Default", "A-Z", "Z-A"],
-    category: ["Default", "A-Z", "Z-A"],
-    date: ["Default", "Newest", "Oldest"],
+    date: ["Newest", "Oldest"],
     amount: ["Default", "Highest", "Lowest"],
   };
 
-  const [selectedSort, setSelectedSort] = useState<Record<string, string>>({
-    recipient: "Default",
+  const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
+    type: "date",
+    value: "Newest",
   });
 
   return (
@@ -336,14 +337,15 @@ function SortDropDown({
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
   toggleDropdown: (columnId: string) => void;
   sortOptions: Record<string, string[]>;
-  selectedSort: Record<string, string>;
-  setSelectedSort: Dispatch<SetStateAction<Record<string, string>>>;
+  selectedSort: SelectedOptions;
+  setSelectedSort: Dispatch<SetStateAction<SelectedOptions>>;
   header: Header<Transaction, unknown>;
 }) {
   return (
     <div
       onMouseEnter={() => setOpenDropdown(header.id)}
       onMouseLeave={() => setOpenDropdown(null)}
+      className="relative flex items-center"
     >
       <button
         onClick={() => toggleDropdown(header.id)}
@@ -356,52 +358,13 @@ function SortDropDown({
 
       {openDropdown === header.id && (
         <DropDownMenu
-          sortOptions={sortOptions}
-          header={header}
+          options={sortOptions}
+          id={header.id}
           setOpenDropdown={setOpenDropdown}
-          selectedSort={selectedSort}
-          setSelectedSort={setSelectedSort}
+          selectedOption={selectedSort}
+          setSelectedOption={setSelectedSort}
         />
       )}
-    </div>
-  );
-}
-
-function DropDownMenu({
-  sortOptions,
-  header,
-  setOpenDropdown,
-  selectedSort,
-  setSelectedSort,
-}: {
-  sortOptions: Record<string, string[]>;
-  header: Header<Transaction, unknown>;
-  setOpenDropdown: (value: SetStateAction<string | null>) => void;
-  selectedSort: Record<string, string>;
-  setSelectedSort: (value: SetStateAction<Record<string, string>>) => void;
-}) {
-  return (
-    <div className="absolute top-1/2 left-0 z-10 mt-2 w-32 rounded-md border border-gray-100 bg-white p-1 shadow-md">
-      {sortOptions[header.id].map((option) => (
-        <button
-          key={option}
-          onClick={() => {
-            setSelectedSort(() => ({
-              [header.id]: option,
-            }));
-            setOpenDropdown(null);
-          }}
-          className="block w-full rounded-lg px-4 py-2 text-left text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          style={{
-            backgroundColor:
-              selectedSort[header.id] === option ? "#f3f4f6" : "",
-            color: selectedSort[header.id] === option ? "#364153" : "",
-            fontWeight: selectedSort[header.id] === option ? "500" : "400",
-          }}
-        >
-          {option}
-        </button>
-      ))}
     </div>
   );
 }

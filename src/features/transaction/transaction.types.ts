@@ -1,3 +1,8 @@
+interface SelectedOptions {
+  type: string;
+  value: string;
+}
+
 type TransactionCategory =
   | "entertainment"
   | "bills"
@@ -23,4 +28,5 @@ type Transaction = {
   currency: string;
 };
 
-export { type Transaction };
+export { type SelectedOptions, type Transaction };
+
