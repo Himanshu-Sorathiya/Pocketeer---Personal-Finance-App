@@ -1,4 +1,4 @@
-import { Link, useMatchRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import { Route as accountRoute } from "../../routes/app/account.tsx";
 import { Route as budgetRoute } from "../../routes/app/budget.tsx";
@@ -60,17 +60,9 @@ function SidebarLink({
   icon: string;
   label: string;
 }) {
-  const matchRoute = useMatchRoute();
-  const isActive = matchRoute({ to, fuzzy: false });
-
   return (
     <li className="rounded-md">
-      <Link
-        to={to}
-        className={`flex items-center space-x-3 rounded-md p-3 text-gray-50 transition-all duration-150 hover:bg-gray-800 ${
-          isActive ? "text-primary bg-gray-800" : ""
-        }`}
-      >
+      <Link to={to} className="sidebar_link">
         <svg className={`h-6 w-6`}>
           <use href={`/src/assets/icons/ui_icons_sprite.svg#${icon}`} />
         </svg>

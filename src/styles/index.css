@@ -46,8 +46,12 @@ body {
   @apply font-poppins m-0 box-border p-0;
 }
 
+.sidebar_link {
+  @apply flex items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800;
+}
+
 .active {
-  @apply text-primary;
+  @apply text-primary bg-gray-800;
 }
 
 .inactive {
