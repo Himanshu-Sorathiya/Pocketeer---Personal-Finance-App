@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
 
 import CategoryFilter from "./CategoryFilter.tsx";
 import DateFilter from "./DateFilter.tsx";
@@ -13,7 +12,7 @@ function TransactionFilter({
 }: {
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
-  setSelectedCategory: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedCategory: (newCategory: string) => void;
 }) {
   return (
     <div className="mt-1 flex min-w-full gap-8">

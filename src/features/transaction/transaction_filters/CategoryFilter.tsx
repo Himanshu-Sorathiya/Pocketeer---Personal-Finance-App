@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
@@ -11,7 +11,7 @@ function CategoryFilter({
 }: {
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
-  setSelectedCategory: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedCategory: (newCategory: string) => void;
 }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -62,7 +62,7 @@ function FilterDropDown({
   toggleDropdown: (columnId: string) => void;
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
-  setSelectedCategory: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedCategory: (newCategory: string) => void;
 }) {
   return (
     <div className="relative flex items-center">

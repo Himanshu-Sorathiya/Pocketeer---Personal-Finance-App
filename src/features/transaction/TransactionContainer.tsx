@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import {
-	type ColumnHelper,
-	type Table,
-	createColumnHelper,
-	getCoreRowModel,
-	useReactTable
+  type ColumnFiltersState,
+  type ColumnHelper,
+  type Table,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
@@ -223,6 +225,10 @@ function TransactionContainer() {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" & "),
       header: () => "Category",
+      filterFn: (row, columnId, filterValue) => {
+        if (!filterValue || filterValue === "default") return true;
+        return row.getValue(columnId) === filterValue;
+      },
     }),
     columnHelper.accessor("date", {
       cell: (info) => info.getValue(),
@@ -267,10 +273,10 @@ function TransactionContainer() {
       "transportation",
       "education",
       "shopping",
-      "health_Fitness",
+      "health_fitness",
       "savings",
       "investments",
-      "debt_Loans",
+      "debt_loans",
       "income",
       "taxes",
       "miscellaneous",
@@ -288,20 +294,35 @@ function TransactionContainer() {
     value: "default",
   });
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table: Table<Transaction> = useReactTable({
     data: transactions,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+
+    state: {
+      columnFilters,
+    },
+    onColumnFiltersChange: setColumnFilters,
 
     getRowId: (row) => row.id,
   });
+
+  function handleCategoryChange(newCategory: string) {
+    setSelectedCategory({ type: "category", value: newCategory });
+    setColumnFilters(
+      newCategory === "default" ? [] : [{ id: "category", value: newCategory }],
+    );
+  }
 
   return (
     <div className="bg-shade-100 flex flex-col gap-3 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
         categoryOptions={categoryOptions}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={handleCategoryChange}
       />
 
       <TransactionTable

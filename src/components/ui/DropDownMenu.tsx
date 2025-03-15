@@ -13,7 +13,9 @@ function DropDownMenu({
   id: string;
   setOpenDropdown: (value: SetStateAction<string | null>) => void;
   selectedOption: SelectedOptions;
-  setSelectedOption: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedOption:
+    | Dispatch<SetStateAction<SelectedOptions>>
+    | ((newCategory: string) => void);
 }) {
   return (
     <div className="absolute top-7/12 -left-1/2 z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white p-1 shadow-md">
@@ -21,13 +23,19 @@ function DropDownMenu({
         <button
           key={option}
           onClick={() => {
-            setSelectedOption((): SelectedOptions => {
-              if (id === "amount" && option === "default") {
-                return { type: "date", value: "newest" };
+            if (typeof setSelectedOption === "function") {
+              if (typeof selectedOption.value === "string") {
+                (setSelectedOption as (newCategory: string) => void)(option);
+              } else {
+                (
+                  setSelectedOption as Dispatch<SetStateAction<SelectedOptions>>
+                )({
+                  type: id === "amount" && option === "default" ? "date" : id,
+                  value:
+                    id === "amount" && option === "default" ? "newest" : option,
+                });
               }
-
-              return { type: id, value: option };
-            });
+            }
 
             setOpenDropdown(null);
           }}
