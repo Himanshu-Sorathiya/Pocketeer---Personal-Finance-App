@@ -22,11 +22,8 @@ function DropDownMenu({
           key={option}
           onClick={() => {
             setSelectedOption((): SelectedOptions => {
-              if (
-                (id === "date" && option === "Newest") ||
-                (id === "amount" && option === "Default")
-              ) {
-                return { type: "date", value: "Newest" };
+              if (id === "amount" && option === "default") {
+                return { type: "date", value: "newest" };
               }
 
               return { type: id, value: option };
@@ -34,7 +31,7 @@ function DropDownMenu({
 
             setOpenDropdown(null);
           }}
-          className="block w-full rounded-lg px-4 py-2 text-left text-sm text-nowrap text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          className="block w-full cursor-grab rounded-lg px-4 py-2 text-left text-sm text-nowrap text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           style={{
             backgroundColor:
               selectedOption.type === id && selectedOption.value === option
@@ -50,7 +47,13 @@ function DropDownMenu({
                 : "400",
           }}
         >
-          {option}
+          {option
+            .split("_")
+            .map(
+              (part) =>
+                part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
+            )
+            .join(" & ")}
         </button>
       ))}
     </div>

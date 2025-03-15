@@ -29,4 +29,3 @@ type Transaction = {
 };
 
 export { type SelectedOptions, type Transaction };
-

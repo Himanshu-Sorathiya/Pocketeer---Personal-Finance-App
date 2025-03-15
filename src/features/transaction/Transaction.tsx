@@ -1,5 +1,4 @@
-import TransactionFilter from "./TransactionFilter.tsx";
-import TransactionTable from "./TransactionTable.tsx";
+import TransactionContainer from "./TransactionContainer.tsx";
 
 import Header from "../../components/ui/Header.tsx";
 
@@ -15,11 +14,7 @@ function Transaction() {
         </button>
       </Header>
 
-      <div className="bg-shade-100 flex flex-col gap-3 overflow-x-auto rounded-[20px] p-4">
-        <TransactionFilter />
-
-        <TransactionTable />
-      </div>
+      <TransactionContainer />
     </>
   );
 }

@@ -1,25 +1,22 @@
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 import {
 	type ColumnHelper,
-	type Header,
-	type HeaderGroup,
-	type Row,
 	type Table,
 	createColumnHelper,
-	flexRender,
 	getCoreRowModel,
 	useReactTable
 } from "@tanstack/react-table";
 
-import DropDownMenu from "../../components/ui/DropDownMenu.tsx";
+import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
+import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
 
-function TransactionTable() {
+function TransactionContainer() {
   const [transactions, _] = useState<Transaction[]>([
     {
       id: "111",
@@ -256,6 +253,41 @@ function TransactionTable() {
     }),
   ];
 
+  const sortOptions: Record<string, string[]> = {
+    date: ["newest", "oldest"],
+    amount: ["default", "highest", "lowest"],
+  };
+
+  const categoryOptions = {
+    category: [
+      "default",
+      "entertainment",
+      "bills",
+      "food",
+      "transportation",
+      "education",
+      "shopping",
+      "health_Fitness",
+      "savings",
+      "investments",
+      "debt_Loans",
+      "income",
+      "taxes",
+      "miscellaneous",
+      "general",
+    ],
+  };
+
+  const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
+    type: "date",
+    value: "newest",
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState<SelectedOptions>({
+    type: "category",
+    value: "default",
+  });
+
   const table: Table<Transaction> = useReactTable({
     data: transactions,
     columns,
@@ -265,127 +297,21 @@ function TransactionTable() {
   });
 
   return (
-    <table className="min-w-full">
-      <TableHeader table={table} />
+    <div className="bg-shade-100 flex flex-col gap-3 overflow-x-auto rounded-[20px] p-4">
+      <TransactionFilter
+        categoryOptions={categoryOptions}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
-      <TableBody table={table} />
-    </table>
-  );
-}
-
-function TableHeader({ table }: { table: Table<Transaction> }) {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (columnId: string) => {
-    setOpenDropdown((prev) => (prev === columnId ? null : columnId));
-  };
-
-  const sortOptions: Record<string, string[]> = {
-    date: ["Newest", "Oldest"],
-    amount: ["Default", "Highest", "Lowest"],
-  };
-
-  const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
-    type: "date",
-    value: "Newest",
-  });
-
-  return (
-    <thead>
-      {table.getHeaderGroups().map((headerGroup: HeaderGroup<Transaction>) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <th key={header.id}>
-              <div className="relative flex items-center gap-0.5 px-4 pt-2 pb-3 text-xs font-medium text-gray-500">
-                <span>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </span>
-
-                {sortOptions[header.id] && (
-                  <SortDropDown
-                    openDropdown={openDropdown}
-                    setOpenDropdown={setOpenDropdown}
-                    toggleDropdown={toggleDropdown}
-                    sortOptions={sortOptions}
-                    selectedSort={selectedSort}
-                    setSelectedSort={setSelectedSort}
-                    header={header}
-                  />
-                )}
-              </div>
-            </th>
-          ))}
-        </tr>
-      ))}
-    </thead>
-  );
-}
-
-function SortDropDown({
-  openDropdown,
-  setOpenDropdown,
-  toggleDropdown,
-  sortOptions,
-  selectedSort,
-  setSelectedSort,
-  header,
-}: {
-  openDropdown: string | null;
-  setOpenDropdown: Dispatch<SetStateAction<string | null>>;
-  toggleDropdown: (columnId: string) => void;
-  sortOptions: Record<string, string[]>;
-  selectedSort: SelectedOptions;
-  setSelectedSort: Dispatch<SetStateAction<SelectedOptions>>;
-  header: Header<Transaction, unknown>;
-}) {
-  return (
-    <div
-      onMouseEnter={() => setOpenDropdown(header.id)}
-      onMouseLeave={() => setOpenDropdown(null)}
-      className="relative flex items-center"
-    >
-      <button
-        onClick={() => toggleDropdown(header.id)}
-        className="cursor-pointer rounded p-0.5 focus-within:bg-neutral-100 hover:bg-neutral-100"
-      >
-        <svg className="h-4 w-4">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#sort"></use>
-        </svg>
-      </button>
-
-      {openDropdown === header.id && (
-        <DropDownMenu
-          options={sortOptions}
-          id={header.id}
-          setOpenDropdown={setOpenDropdown}
-          selectedOption={selectedSort}
-          setSelectedOption={setSelectedSort}
-        />
-      )}
+      <TransactionTable
+        table={table}
+        sortOptions={sortOptions}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+      />
     </div>
   );
 }
 
-function TableBody({ table }: { table: Table<Transaction> }) {
-  return (
-    <tbody className="divide-y divide-gray-200">
-      {table.getRowModel().rows.map((row: Row<Transaction>) => (
-        <tr key={row.id}>
-          {row.getVisibleCells().map((cell) => (
-            <td
-              key={cell.id}
-              className="px-4 py-3 whitespace-nowrap text-gray-700"
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  );
-}
-
-export default TransactionTable;
+export default TransactionContainer;
