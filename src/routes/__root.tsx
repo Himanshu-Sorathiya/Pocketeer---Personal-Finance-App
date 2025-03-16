@@ -1,7 +1,12 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import {
+  createRootRoute,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-import GlobalSpinner from "../components/spinners/GlobalSpinner.tsx";
+import FlowLoader from "../components/loaders/FlowLoader.tsx";
+import GlobalSpinner from "../components/loaders/GlobalSpinner.tsx";
 
 const Route = createRootRoute({
   component: RootComponent,
@@ -9,8 +14,12 @@ const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const { status } = useRouterState();
+
   return (
     <>
+      {status === "pending" && <FlowLoader />}
+
       <Outlet />
 
       <TanStackRouterDevtools />

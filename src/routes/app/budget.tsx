@@ -1,10 +1,10 @@
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
 import AppLayout from "../../layouts/AppLayout.tsx";
 
 import Budget from "../../pages/Budget.tsx";
 
-import GlobalSpinner from "../../components/spinners/GlobalSpinner.tsx";
+import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 const Route = createFileRoute("/app/budget")({
   component: RouteComponent,
@@ -12,12 +12,8 @@ const Route = createFileRoute("/app/budget")({
 });
 
 function RouteComponent() {
-  const { status } = useRouterState();
-
   return (
     <AppLayout>
-      {status === "pending" && <GlobalSpinner />}
-
       <Budget />
     </AppLayout>
   );

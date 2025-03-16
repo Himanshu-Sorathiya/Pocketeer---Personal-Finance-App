@@ -1,8 +1,8 @@
-import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 
-import { Route as loginRoute } from './login.tsx';
+import { Route as loginRoute } from "./login.tsx";
 
-import GlobalSpinner from "../../components/spinners/GlobalSpinner.tsx";
+import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 const Route = createFileRoute("/auth/")({
   component: RouteComponent,

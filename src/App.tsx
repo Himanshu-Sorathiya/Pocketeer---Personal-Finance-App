@@ -1,10 +1,10 @@
-import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 
-import { routeTree } from './routeTree.gen.ts';
+import { routeTree } from "./routeTree.gen.ts";
 
 import PageNotFound from "./pages/PageNotFound.tsx";
 
-import GlobalSpinner from "./components/spinners/GlobalSpinner.tsx";
+import GlobalSpinner from "./components/loaders/GlobalSpinner.tsx";
 
 const router = createRouter({
   routeTree,
