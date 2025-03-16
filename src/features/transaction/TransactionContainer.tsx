@@ -1,6 +1,11 @@
 import { useState } from "react";
 
 import {
+  type RankingInfo,
+  compareItems,
+  rankItem,
+} from "@tanstack/match-sorter-utils";
+import {
   type ColumnFiltersState,
   type ColumnHelper,
   type FilterFn,
@@ -9,21 +14,19 @@ import {
   createColumnHelper,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   sortingFns,
   useReactTable,
 } from "@tanstack/react-table";
 
+import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
+import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
-import {
-  type RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
 
@@ -47,168 +50,7 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
 };
 
 function TransactionContainer() {
-  const [transactions, _] = useState<Transaction[]>([
-    {
-      id: "111",
-      recipient: "Amazon",
-      category: "shopping",
-      date: "2025-03-08",
-      amount: 1299,
-      currency: "₹",
-    },
-    {
-      id: "112",
-      recipient: "John Doe",
-      category: "debt_loans",
-      date: "2025-03-07",
-      amount: 15000,
-      currency: "₹",
-    },
-    {
-      id: "113",
-      recipient: "Netflix",
-      category: "entertainment",
-      date: "2025-03-06",
-      amount: 499,
-      currency: "₹",
-    },
-    {
-      id: "114",
-      recipient: "Uber",
-      category: "transportation",
-      date: "2025-03-05",
-      amount: 250,
-      currency: "₹",
-    },
-    {
-      id: "115",
-      recipient: "Jane Smith",
-      category: "debt_loans",
-      date: "2025-03-04",
-      amount: 5000,
-      currency: "₹",
-    },
-    {
-      id: "116",
-      recipient: "Starbucks",
-      category: "food",
-      date: "2025-03-03",
-      amount: 350,
-      currency: "₹",
-    },
-    {
-      id: "117",
-      recipient: "Zomato",
-      category: "food",
-      date: "2025-03-02",
-      amount: 800,
-      currency: "₹",
-    },
-    {
-      id: "118",
-      recipient: "Gym Membership",
-      category: "health_fitness",
-      date: "2025-03-01",
-      amount: 1500,
-      currency: "₹",
-    },
-    {
-      id: "119",
-      recipient: "Electricity Bill",
-      category: "bills",
-      date: "2025-02-28",
-      amount: 2200,
-      currency: "₹",
-    },
-    {
-      id: "120",
-      recipient: "Phone Recharge",
-      category: "bills",
-      date: "2025-02-27",
-      amount: 599,
-      currency: "₹",
-    },
-    {
-      id: "121",
-      recipient: "Spotify",
-      category: "entertainment",
-      date: "2025-02-26",
-      amount: 199,
-      currency: "₹",
-    },
-    {
-      id: "122",
-      recipient: "Swiggy",
-      category: "food",
-      date: "2025-02-25",
-      amount: 650,
-      currency: "₹",
-    },
-    {
-      id: "123",
-      recipient: "Flight Ticket",
-      category: "transportation",
-      date: "2025-02-24",
-      amount: 4500,
-      currency: "₹",
-    },
-    {
-      id: "124",
-      recipient: "Book Store",
-      category: "education",
-      date: "2025-02-23",
-      amount: 1200,
-      currency: "₹",
-    },
-    {
-      id: "125",
-      recipient: "Credit Card Payment",
-      category: "debt_loans",
-      date: "2025-02-22",
-      amount: 7000,
-      currency: "₹",
-    },
-    {
-      id: "126",
-      recipient: "Hospital Bill",
-      category: "health_fitness",
-      date: "2025-02-21",
-      amount: 3000,
-      currency: "₹",
-    },
-    {
-      id: "127",
-      recipient: "Mutual Fund Investment",
-      category: "investments",
-      date: "2025-02-20",
-      amount: 10000,
-      currency: "₹",
-    },
-    {
-      id: "128",
-      recipient: "Theater Tickets",
-      category: "entertainment",
-      date: "2025-02-19",
-      amount: 1200,
-      currency: "₹",
-    },
-    {
-      id: "129",
-      recipient: "Mobile Accessories",
-      category: "shopping",
-      date: "2025-02-18",
-      amount: 800,
-      currency: "₹",
-    },
-    {
-      id: "130",
-      recipient: "Tax Payment",
-      category: "taxes",
-      date: "2025-02-17",
-      amount: 5000,
-      currency: "₹",
-    },
-  ]);
+  const [transactions] = useState<Transaction[]>(getTransactions());
 
   const columnHelper: ColumnHelper<Transaction> =
     createColumnHelper<Transaction>();
@@ -328,17 +170,26 @@ function TransactionContainer() {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
   const table: Table<Transaction> = useReactTable({
     data: transactions,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
 
     state: {
       columnFilters,
+      pagination,
     },
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
+
     filterFns: {
       fuzzyFilter: fuzzyFilter,
     },
@@ -362,7 +213,7 @@ function TransactionContainer() {
   }
 
   return (
-    <div className="bg-shade-100 flex flex-col gap-3 overflow-x-auto rounded-[20px] p-4">
+    <div className="bg-shade-100 flex flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
         table={table}
         categoryOptions={categoryOptions}
@@ -377,6 +228,8 @@ function TransactionContainer() {
         selectedSort={selectedSort}
         setSelectedSort={setSelectedSort}
       />
+
+      <TransactionPagination table={table} />
     </div>
   );
 }
