@@ -3,10 +3,14 @@ import { useState } from "react";
 import {
   type ColumnFiltersState,
   type ColumnHelper,
+  type FilterFn,
+  type SortingFn,
   type Table,
   createColumnHelper,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
+  sortingFns,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -15,8 +19,32 @@ import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
+import {
+  type RankingInfo,
+  compareItems,
+  rankItem,
+} from "@tanstack/match-sorter-utils";
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  const itemRank = rankItem(row.getValue(columnId), value);
+  addMeta({ itemRank });
+  return itemRank?.passed;
+};
+
+const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+  const metaA = rowA.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+  const metaB = rowB.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+
+  let dir = 0;
+
+  if (metaA?.itemRank && metaB?.itemRank) {
+    dir = compareItems(metaA.itemRank, metaB.itemRank);
+  }
+
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+};
 
 function TransactionContainer() {
   const [transactions, _] = useState<Transaction[]>([
@@ -216,6 +244,8 @@ function TransactionContainer() {
         );
       },
       header: () => "Recipient",
+      filterFn: fuzzyFilter,
+      sortingFn: fuzzySort,
     }),
     columnHelper.accessor("category", {
       cell: (info) =>
@@ -294,6 +324,8 @@ function TransactionContainer() {
     value: "default",
   });
 
+  const [searchedRecipient, setSearchedRecipient] = useState<string>("");
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table: Table<Transaction> = useReactTable({
@@ -301,11 +333,18 @@ function TransactionContainer() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
 
     state: {
       columnFilters,
     },
     onColumnFiltersChange: setColumnFilters,
+    filterFns: {
+      fuzzyFilter: fuzzyFilter,
+    },
+    sortingFns: {
+      fuzzySort: fuzzySort,
+    },
 
     getRowId: (row) => row.id,
   });
@@ -313,16 +352,23 @@ function TransactionContainer() {
   function handleCategoryChange(newCategory: string) {
     setSelectedCategory({ type: "category", value: newCategory });
     setColumnFilters(
-      newCategory === "default" ? [] : [{ id: "category", value: newCategory }],
+      newCategory === "default"
+        ? [{ id: "recipient", value: searchedRecipient }]
+        : [
+            { id: "category", value: newCategory },
+            { id: "recipient", value: searchedRecipient },
+          ],
     );
   }
 
   return (
     <div className="bg-shade-100 flex flex-col gap-3 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
+        table={table}
         categoryOptions={categoryOptions}
         selectedCategory={selectedCategory}
         setSelectedCategory={handleCategoryChange}
+        setSearchedRecipient={setSearchedRecipient}
       />
 
       <TransactionTable
