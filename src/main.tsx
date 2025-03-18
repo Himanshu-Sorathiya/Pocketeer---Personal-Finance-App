@@ -1,6 +1,8 @@
-import { StrictMode } from "react";
+import { StrictMode } from 'react';
 
-import { createRoot } from "react-dom/client";
+import { createRoot } from 'react-dom/client';
+
+import "react-day-picker/style.css";
 
 import "./styles/index.css";
 
