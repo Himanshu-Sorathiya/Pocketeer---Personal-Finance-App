@@ -1,26 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react';
 
+import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-  type RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
-import {
-  type ColumnFiltersState,
-  type ColumnHelper,
-  type FilterFn,
-  type SortingFn,
-  type Table,
-  createColumnHelper,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  sortingFns,
-  useReactTable,
+	type ColumnFiltersState,
+	type ColumnHelper,
+	type FilterFn,
+	type SortingFn,
+	type Table,
+	createColumnHelper,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	sortingFns,
+	useReactTable
 } from "@tanstack/react-table";
 
-import { getTransactions } from "./data/transaction_data.ts";
+import { getTransactions } from './data/transaction_data.ts';
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
@@ -213,7 +209,7 @@ function TransactionContainer() {
   }
 
   return (
-    <div className="bg-shade-100 flex flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
+    <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
         table={table}
         categoryOptions={categoryOptions}
