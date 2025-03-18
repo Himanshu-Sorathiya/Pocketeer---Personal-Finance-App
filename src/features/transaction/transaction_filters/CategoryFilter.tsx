@@ -21,9 +21,6 @@ function CategoryFilter({
 
   return (
     <div
-      onClick={() =>
-        setOpenDropdown(openDropdown === "category" ? null : "category")
-      }
       onMouseEnter={() => setOpenDropdown("category")}
       onMouseLeave={() => setOpenDropdown(null)}
       className="relative flex w-52 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 outline-gray-300"

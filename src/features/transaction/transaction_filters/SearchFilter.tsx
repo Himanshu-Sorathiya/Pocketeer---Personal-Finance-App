@@ -1,5 +1,7 @@
-import type { Table } from "@tanstack/react-table";
 import type { Dispatch } from "react";
+
+import type { Table } from "@tanstack/react-table";
+
 import type { Transaction } from "../transaction.types.ts";
 
 function SearchFilter({

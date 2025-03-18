@@ -7,7 +7,7 @@ import type { Transaction } from "../transaction.types.ts";
 
 function TransactionPagination({ table }: { table: Table<Transaction> }) {
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="mt-auto flex flex-col items-center gap-1">
       <PaginationInfo table={table} />
 
       <PaginationControls table={table} />
