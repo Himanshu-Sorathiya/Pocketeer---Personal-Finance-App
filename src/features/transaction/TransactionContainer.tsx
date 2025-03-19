@@ -196,26 +196,31 @@ function TransactionContainer() {
     getRowId: (row) => row.id,
   });
 
+  function updateFilter(category: string, search: string) {
+    const filters = [{ id: "recipient", value: search }];
+    if (category !== "default")
+      filters.push({ id: "category", value: category });
+
+    setColumnFilters(filters);
+  }
+
   function handleCategoryChange(newCategory: string) {
     setSelectedCategory({ type: "category", value: newCategory });
-    setColumnFilters(
-      newCategory === "default"
-        ? [{ id: "recipient", value: searchedRecipient }]
-        : [
-            { id: "category", value: newCategory },
-            { id: "recipient", value: searchedRecipient },
-          ],
-    );
+    updateFilter(newCategory, searchedRecipient);
+  }
+
+  function handleSearchChange(value: string) {
+    setSearchedRecipient(value);
+    updateFilter(selectedCategory.value, value);
   }
 
   return (
     <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
-        table={table}
         categoryOptions={categoryOptions}
         selectedCategory={selectedCategory}
         setSelectedCategory={handleCategoryChange}
-        setSearchedRecipient={setSearchedRecipient}
+        setSearchedRecipient={handleSearchChange}
       />
 
       <TransactionTable
