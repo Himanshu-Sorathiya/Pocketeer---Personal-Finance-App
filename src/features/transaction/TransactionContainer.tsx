@@ -1,22 +1,26 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-	type ColumnFiltersState,
-	type ColumnHelper,
-	type FilterFn,
-	type SortingFn,
-	type Table,
-	createColumnHelper,
-	getCoreRowModel,
-	getFilteredRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	sortingFns,
-	useReactTable
+  type RankingInfo,
+  compareItems,
+  rankItem,
+} from "@tanstack/match-sorter-utils";
+import {
+  type ColumnFiltersState,
+  type ColumnHelper,
+  type FilterFn,
+  type SortingFn,
+  type Table,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  sortingFns,
+  useReactTable,
 } from "@tanstack/react-table";
 
-import { getTransactions } from './data/transaction_data.ts';
+import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
@@ -101,6 +105,20 @@ function TransactionContainer() {
     columnHelper.accessor("date", {
       cell: (info) => info.getValue(),
       header: () => "Date",
+      filterFn: (row, columnId, filterValue) => {
+        if (!filterValue) return true;
+
+        const [startDateStr, endDateStr] = JSON.parse(filterValue) as [
+          string,
+          string,
+        ];
+
+        const startDate = new Date(startDateStr);
+        const endDate = new Date(endDateStr);
+        const transactionDate = new Date(row.getValue(columnId));
+
+        return transactionDate >= startDate && transactionDate <= endDate;
+      },
     }),
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
       id: "amount",
@@ -164,6 +182,11 @@ function TransactionContainer() {
 
   const [searchedRecipient, setSearchedRecipient] = useState<string>("");
 
+  const [selectedWeek, setSelectedWeek] = useState<[Date, Date]>([
+    new Date(2020, 0, 1),
+    new Date(),
+  ]);
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [pagination, setPagination] = useState({
@@ -196,22 +219,35 @@ function TransactionContainer() {
     getRowId: (row) => row.id,
   });
 
-  function updateFilter(category: string, search: string) {
+  function updateFilter(
+    search: string,
+    category: string,
+    dateRange: [Date, Date],
+  ) {
     const filters = [{ id: "recipient", value: search }];
-    if (category !== "default")
+
+    if (category !== "default") {
       filters.push({ id: "category", value: category });
+    }
+
+    filters.push({ id: "date", value: JSON.stringify(dateRange) });
 
     setColumnFilters(filters);
   }
 
-  function handleCategoryChange(newCategory: string) {
-    setSelectedCategory({ type: "category", value: newCategory });
-    updateFilter(newCategory, searchedRecipient);
+  function handleSearchChange(newValue: string) {
+    setSearchedRecipient(newValue);
+    updateFilter(newValue, selectedCategory.value, selectedWeek);
   }
 
-  function handleSearchChange(value: string) {
-    setSearchedRecipient(value);
-    updateFilter(selectedCategory.value, value);
+  function handleCategoryChange(newCategory: string) {
+    setSelectedCategory({ type: "category", value: newCategory });
+    updateFilter(searchedRecipient, newCategory, selectedWeek);
+  }
+
+  function handleDateRangeChange(newRange: [Date, Date]) {
+    setSelectedWeek(newRange);
+    updateFilter(searchedRecipient, selectedCategory.value, newRange);
   }
 
   return (
@@ -219,8 +255,10 @@ function TransactionContainer() {
       <TransactionFilter
         categoryOptions={categoryOptions}
         selectedCategory={selectedCategory}
+        selectedWeek={selectedWeek}
         setSelectedCategory={handleCategoryChange}
         setSearchedRecipient={handleSearchChange}
+        setSelectedWeek={handleDateRangeChange}
       />
 
       <TransactionTable

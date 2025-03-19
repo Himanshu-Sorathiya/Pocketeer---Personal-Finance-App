@@ -7,13 +7,17 @@ import type { SelectedOptions } from "../transaction.types.ts";
 function TransactionFilter({
   categoryOptions,
   selectedCategory,
+  selectedWeek,
   setSelectedCategory,
   setSearchedRecipient,
+  setSelectedWeek,
 }: {
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
+  selectedWeek: [Date, Date];
   setSelectedCategory: (newCategory: string) => void;
   setSearchedRecipient: (value: string) => void;
+  setSelectedWeek: (value: [Date, Date]) => void;
 }) {
   return (
     <div className="mt-1 flex min-w-full gap-8">
@@ -25,7 +29,10 @@ function TransactionFilter({
         setSelectedCategory={setSelectedCategory}
       />
 
-      <DateFilter />
+      <DateFilter
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+      />
     </div>
   );
 }

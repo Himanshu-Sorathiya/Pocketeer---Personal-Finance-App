@@ -2,7 +2,13 @@ import { useState } from "react";
 
 import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
 
-function DateFilter() {
+function DateFilter({
+  selectedWeek,
+  setSelectedWeek,
+}: {
+  selectedWeek: [Date, Date];
+  setSelectedWeek: (value: [Date, Date]) => void;
+}) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (columnId: string) => {
@@ -20,6 +26,8 @@ function DateFilter() {
       <DateDropDown
         openDropdown={openDropdown}
         toggleDropdown={toggleDropdown}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
       />
     </div>
   );
@@ -28,9 +36,13 @@ function DateFilter() {
 function DateDropDown({
   openDropdown,
   toggleDropdown,
+  selectedWeek,
+  setSelectedWeek,
 }: {
   openDropdown: string | null;
   toggleDropdown: (columnId: string) => void;
+  selectedWeek: [Date, Date];
+  setSelectedWeek: (value: [Date, Date]) => void;
 }) {
   return (
     <div className="relative flex items-center">
@@ -43,7 +55,12 @@ function DateDropDown({
         </svg>
       </button>
 
-      {openDropdown === "date" && <DropDownDayPicker />}
+      {openDropdown === "date" && (
+        <DropDownDayPicker
+          selectedWeek={selectedWeek}
+          setSelectedWeek={setSelectedWeek}
+        />
+      )}
     </div>
   );
 }
