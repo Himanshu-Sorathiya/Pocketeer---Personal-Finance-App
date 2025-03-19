@@ -42,6 +42,12 @@
   --color-dark-shade-10: #303030;
 }
 
+.rdp-root {
+  --rdp-accent-color: #1e88e5;
+  --rdp-animation_duration: 0.5s;
+  --rdp-dropdown-gap: 1rem;
+}
+
 body {
   @apply font-poppins m-0 box-border p-0;
 }
