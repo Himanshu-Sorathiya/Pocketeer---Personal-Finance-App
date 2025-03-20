@@ -1,10 +1,10 @@
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 import {
-	type Header,
-	type HeaderGroup,
-	type Table,
-	flexRender
+  type Header,
+  type HeaderGroup,
+  type Table,
+  flexRender,
 } from "@tanstack/react-table";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
@@ -20,7 +20,7 @@ function TableHeader({
   table: Table<Transaction>;
   sortOptions: Record<string, string[]>;
   selectedSort: SelectedOptions;
-  setSelectedSort: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedSort: (type: string, value: string) => void;
 }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -63,21 +63,21 @@ function TableHeader({
 }
 
 function SortDropDown({
+  header,
   openDropdown,
   setOpenDropdown,
   toggleDropdown,
   sortOptions,
   selectedSort,
   setSelectedSort,
-  header,
 }: {
+  header: Header<Transaction, unknown>;
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
   toggleDropdown: (columnId: string) => void;
   sortOptions: Record<string, string[]>;
   selectedSort: SelectedOptions;
-  setSelectedSort: Dispatch<SetStateAction<SelectedOptions>>;
-  header: Header<Transaction, unknown>;
+  setSelectedSort: (type: string, value: string) => void;
 }) {
   return (
     <div

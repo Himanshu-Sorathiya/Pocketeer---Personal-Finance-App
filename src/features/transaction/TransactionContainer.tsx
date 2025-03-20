@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-	type ColumnFiltersState,
-	type ColumnHelper,
-	type FilterFn,
-	type SortingFn,
-	type Table,
-	createColumnHelper,
-	getCoreRowModel,
-	getFilteredRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	sortingFns,
-	useReactTable
+  type RankingInfo,
+  compareItems,
+  rankItem,
+} from "@tanstack/match-sorter-utils";
+import {
+  type ColumnFiltersState,
+  type ColumnHelper,
+  type FilterFn,
+  type SortingFn,
+  type SortingState,
+  type Table,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  sortingFns,
+  useReactTable,
 } from "@tanstack/react-table";
-import { startOfDay } from 'date-fns';
+import { startOfDay } from "date-fns";
 
-import { getTransactions } from './data/transaction_data.ts';
+import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
@@ -97,7 +102,8 @@ function TransactionContainer() {
           .join(" & "),
       header: () => "Category",
       filterFn: (row, columnId, filterValue) => {
-        if (!filterValue || filterValue === "default") return true;
+        if (!filterValue || filterValue === "all") return true;
+
         return row.getValue(columnId) === filterValue;
       },
     }),
@@ -118,6 +124,12 @@ function TransactionContainer() {
 
         return startDate <= transactionDate && transactionDate <= endDate;
       },
+      sortingFn: (rowA, rowB, columnId) => {
+        return (
+          new Date(rowA.getValue(columnId)).getTime() -
+          new Date(rowB.getValue(columnId)).getTime()
+        );
+      },
     }),
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
       id: "amount",
@@ -127,6 +139,15 @@ function TransactionContainer() {
         </span>
       ),
       header: () => "Amount",
+      sortingFn: (rowA, rowB, columnId) => {
+        const valueA = rowA.getValue(columnId) as string;
+        const valueB = rowB.getValue(columnId) as string;
+
+        const amountA = parseFloat(valueA.slice(1));
+        const amountB = parseFloat(valueB.slice(1));
+
+        return amountA - amountB;
+      },
     }),
 
     columnHelper.display({
@@ -146,7 +167,7 @@ function TransactionContainer() {
 
   const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
     type: "date",
-    value: "newest",
+    value: "latest",
   });
 
   const [selectedCategory, setSelectedCategory] = useState<SelectedOptions>({
@@ -161,7 +182,24 @@ function TransactionContainer() {
     new Date(),
   ]);
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(() => {
+    const filters = [{ id: "recipient", value: searchedRecipient }];
+
+    if (selectedCategory.value !== "all") {
+      filters.push({ id: "category", value: selectedCategory.value });
+    }
+
+    filters.push({ id: "date", value: JSON.stringify(selectedWeek) });
+
+    return filters;
+  });
+
+  const [sorting, setSorting] = useState<SortingState>(() => [
+    {
+      id: selectedSort.type,
+      desc: selectedSort.value === "latest" || selectedSort.value === "highest",
+    },
+  ]);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -178,9 +216,11 @@ function TransactionContainer() {
 
     state: {
       columnFilters,
+      sorting,
       pagination,
     },
     onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
     onPaginationChange: setPagination,
 
     filterFns: {
@@ -209,12 +249,16 @@ function TransactionContainer() {
     setColumnFilters(filters);
   }
 
+  function updateSorter(newSorting: SortingState) {
+    setSorting(newSorting);
+  }
+
   function handleSearchChange(newValue: string) {
     setSearchedRecipient(newValue);
     updateFilter(newValue, selectedCategory.value, selectedWeek);
   }
 
-  function handleCategoryChange(newCategory: string) {
+  function handleCategoryChange(_: string, newCategory: string) {
     setSelectedCategory({ type: "category", value: newCategory });
     updateFilter(searchedRecipient, newCategory, selectedWeek);
   }
@@ -222,6 +266,13 @@ function TransactionContainer() {
   function handleDateRangeChange(newRange: [Date, Date]) {
     setSelectedWeek(newRange);
     updateFilter(searchedRecipient, selectedCategory.value, newRange);
+  }
+
+  function handleSortChange(type: string, value: string) {
+    setSelectedSort({ type, value });
+    updateSorter([
+      { id: type, desc: value === "latest" || value === "highest" },
+    ]);
   }
 
   return (
@@ -239,7 +290,7 @@ function TransactionContainer() {
         table={table}
         sortOptions={sortOptions}
         selectedSort={selectedSort}
-        setSelectedSort={setSelectedSort}
+        setSelectedSort={handleSortChange}
       />
 
       <TransactionPagination table={table} />

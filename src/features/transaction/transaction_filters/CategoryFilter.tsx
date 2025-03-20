@@ -11,7 +11,7 @@ function CategoryFilter({
 }: {
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
-  setSelectedCategory: (newCategory: string) => void;
+  setSelectedCategory: (type: string, value: string) => void;
 }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -63,7 +63,7 @@ function FilterDropDown({
   toggleDropdown: (columnId: string) => void;
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
-  setSelectedCategory: (newCategory: string) => void;
+  setSelectedCategory: (type: string, value: string) => void;
 }) {
   return (
     <div className="relative flex items-center">

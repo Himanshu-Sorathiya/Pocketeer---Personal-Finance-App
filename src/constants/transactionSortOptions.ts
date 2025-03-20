@@ -1,6 +1,6 @@
 const sortOptions: Record<string, string[]> = {
-  date: ["newest", "oldest"],
-  amount: ["default", "highest", "lowest"],
+  date: ["latest", "oldest"],
+  amount: ["highest", "lowest"],
 };
 
 export default sortOptions;

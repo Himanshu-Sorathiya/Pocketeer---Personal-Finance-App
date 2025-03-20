@@ -15,7 +15,7 @@ function TransactionFilter({
   categoryOptions: Record<string, string[]>;
   selectedCategory: SelectedOptions;
   selectedWeek: [Date, Date];
-  setSelectedCategory: (newCategory: string) => void;
+  setSelectedCategory: (type: string, value: string) => void;
   setSearchedRecipient: (value: string) => void;
   setSelectedWeek: (value: [Date, Date]) => void;
 }) {

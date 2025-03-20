@@ -1,5 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
-
 import type { Table } from "@tanstack/react-table";
 
 import TableBody from "./TableBody.tsx";
@@ -16,7 +14,7 @@ function TransactionTable({
   table: Table<Transaction>;
   sortOptions: Record<string, string[]>;
   selectedSort: SelectedOptions;
-  setSelectedSort: Dispatch<SetStateAction<SelectedOptions>>;
+  setSelectedSort: (type: string, value: string) => void;
 }) {
   return (
     <table className="min-w-full">
