@@ -27,8 +27,10 @@ import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
+import categoryOptions from "../../constants/transactionCategoryOptions.ts";
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
+import sortOptions from "../../constants/transactionSortOptions.ts";
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
@@ -145,31 +147,6 @@ function TransactionContainer() {
     }),
   ];
 
-  const sortOptions: Record<string, string[]> = {
-    date: ["newest", "oldest"],
-    amount: ["default", "highest", "lowest"],
-  };
-
-  const categoryOptions = {
-    category: [
-      "default",
-      "entertainment",
-      "bills",
-      "food",
-      "transportation",
-      "education",
-      "shopping",
-      "health_fitness",
-      "savings",
-      "investments",
-      "debt_loans",
-      "income",
-      "taxes",
-      "miscellaneous",
-      "general",
-    ],
-  };
-
   const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
     type: "date",
     value: "newest",
@@ -177,7 +154,7 @@ function TransactionContainer() {
 
   const [selectedCategory, setSelectedCategory] = useState<SelectedOptions>({
     type: "category",
-    value: "default",
+    value: "all",
   });
 
   const [searchedRecipient, setSearchedRecipient] = useState<string>("");
@@ -226,7 +203,7 @@ function TransactionContainer() {
   ) {
     const filters = [{ id: "recipient", value: search }];
 
-    if (category !== "default") {
+    if (category !== "all") {
       filters.push({ id: "category", value: category });
     }
 

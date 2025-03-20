@@ -26,7 +26,7 @@ function CategoryFilter({
       className="relative flex w-52 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 outline-gray-300"
     >
       <span>
-        {selectedCategory.value === "default"
+        {selectedCategory.value === "all"
           ? "Select Category"
           : selectedCategory.value
               .split("_")
