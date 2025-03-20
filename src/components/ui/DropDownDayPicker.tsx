@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useState } from 'react';
+
+import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
+import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 
 import {
-  eachDayOfInterval,
-  endOfWeek,
-  startOfDay,
-  startOfWeek,
-} from "date-fns";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
+	DEFAULT_END_DATE,
+	DEFAULT_START_DATE,
+	isDefaultDateRange
+} from "../../utilities/dateUtils.ts";
 
-const DEFAULT_START_DATE = new Date(2020, 0, 1);
-const DEFAULT_END_DATE = new Date();
+function isSameSelectedRange(
+  newStart: Date,
+  newEnd: Date,
+  prevStart: Date,
+  prevEnd: Date,
+): boolean {
+  return (
+    prevStart.getTime() === newStart.getTime() &&
+    prevEnd.getTime() === newEnd.getTime()
+  );
+}
 
 function DropDownDayPicker({
   selectedWeek,
@@ -21,12 +31,7 @@ function DropDownDayPicker({
   const [selected, setSelected] = useState<Date[]>(() => {
     const [start, end] = selectedWeek;
 
-    if (
-      startOfDay(start).getTime() ===
-        startOfDay(DEFAULT_START_DATE).getTime() &&
-      startOfDay(end).getTime() === startOfDay(DEFAULT_END_DATE).getTime()
-    )
-      return [];
+    if (isDefaultDateRange(start, end)) return [];
 
     return eachDayOfInterval({ start, end });
   });
@@ -42,24 +47,15 @@ function DropDownDayPicker({
 
     const weekStart = startOfWeek(dates[0], { weekStartsOn: 1 });
     const weekEnd = endOfWeek(dates[0], { weekStartsOn: 1 });
-
     const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+
     const filteredWeekDays = weekDays.filter((day) => day <= today);
 
-    const normalizeDate = (date: Date) => {
-      const d = new Date(date);
-      d.setHours(0, 0, 0, 0);
-      return d;
-    };
+    const [prevStart, prevEnd] = selectedWeek;
+    const newStart = filteredWeekDays[0];
+    const newEnd = filteredWeekDays[filteredWeekDays.length - 1];
 
-    const [currentStart, currentEnd] = selectedWeek;
-    const newStart = normalizeDate(filteredWeekDays[0]);
-    const newEnd = normalizeDate(filteredWeekDays[filteredWeekDays.length - 1]);
-
-    if (
-      newStart.getTime() === normalizeDate(currentStart).getTime() &&
-      newEnd.getTime() === normalizeDate(currentEnd).getTime()
-    ) {
+    if (isSameSelectedRange(newStart, newEnd, prevStart, prevEnd)) {
       setSelected([]);
       setSelectedWeek([DEFAULT_START_DATE, DEFAULT_END_DATE]);
       return;
@@ -80,7 +76,6 @@ function DropDownDayPicker({
         captionLayout="dropdown"
         month={month}
         onMonthChange={setMonth}
-        defaultMonth={selected[0]}
         startMonth={new Date(2020, 0, 1)}
         endMonth={new Date()}
         showOutsideDays={true}
@@ -89,7 +84,7 @@ function DropDownDayPicker({
         max={maxVal}
         mode="multiple"
         selected={selected}
-        onSelect={(date) => date && handleSelect(date)}
+        onSelect={(dates) => dates && handleSelect(dates)}
         components={{ Dropdown: CustomSelectDropdown }}
         classNames={{
           today: `text-inherit`,

@@ -1,26 +1,23 @@
-import { useState } from "react";
+import { useState } from 'react';
 
+import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-  type RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
-import {
-  type ColumnFiltersState,
-  type ColumnHelper,
-  type FilterFn,
-  type SortingFn,
-  type Table,
-  createColumnHelper,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  sortingFns,
-  useReactTable,
+	type ColumnFiltersState,
+	type ColumnHelper,
+	type FilterFn,
+	type SortingFn,
+	type Table,
+	createColumnHelper,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	sortingFns,
+	useReactTable
 } from "@tanstack/react-table";
+import { startOfDay } from 'date-fns';
 
-import { getTransactions } from "./data/transaction_data.ts";
+import { getTransactions } from './data/transaction_data.ts';
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
@@ -115,11 +112,11 @@ function TransactionContainer() {
           string,
         ];
 
-        const startDate = new Date(startDateStr);
-        const endDate = new Date(endDateStr);
-        const transactionDate = new Date(row.getValue(columnId));
+        const startDate = startOfDay(new Date(startDateStr));
+        const endDate = startOfDay(new Date(endDateStr));
+        const transactionDate = startOfDay(new Date(row.getValue(columnId)));
 
-        return transactionDate >= startDate && transactionDate <= endDate;
+        return startDate <= transactionDate && transactionDate <= endDate;
       },
     }),
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
