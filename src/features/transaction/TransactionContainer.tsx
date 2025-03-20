@@ -1,35 +1,34 @@
-import { useState } from "react";
+import { useState } from 'react';
 
+import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-  type RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
-import {
-  type ColumnFiltersState,
-  type ColumnHelper,
-  type FilterFn,
-  type SortingFn,
-  type SortingState,
-  type Table,
-  createColumnHelper,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  sortingFns,
-  useReactTable,
+	type ColumnFiltersState,
+	type ColumnHelper,
+	type FilterFn,
+	type SortingFn,
+	type SortingState,
+	type Table,
+	createColumnHelper,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	sortingFns,
+	useReactTable
 } from "@tanstack/react-table";
-import { startOfDay } from "date-fns";
+import { startOfDay } from 'date-fns';
 
-import { getTransactions } from "./data/transaction_data.ts";
+import { getTransactions } from './data/transaction_data.ts';
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
+import DropDownActions from "../../components/ui/DropDownActions.tsx";
+
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
 
+import appActions from "../../constants/appActions.tsx";
 import categoryOptions from "../../constants/transactionCategoryOptions.ts";
 import transactionIcons from "../../constants/transactionIcons.ts";
 import transactionIconsBgColors from "../../constants/transactionIconsBgColors.ts";
@@ -153,15 +152,32 @@ function TransactionContainer() {
 
     columnHelper.display({
       id: "actions",
-      cell: () => (
-        <div className="flex items-center justify-center">
-          <button className="p-2 text-gray-500 hover:text-gray-700">
-            <svg className="flex h-6 w-6 items-center justify-center">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#actions-vertical"></use>
-            </svg>
-          </button>
-        </div>
-      ),
+      cell: () => {
+        const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+
+        return (
+          <div className="relative flex items-center justify-center">
+            <button
+              onMouseEnter={() => setOpenDropdown(true)}
+              onMouseLeave={() => setOpenDropdown(false)}
+              onClick={() => setOpenDropdown(!openDropdown)}
+              className="cursor-pointer rounded text-gray-500 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100 hover:text-gray-700"
+            >
+              <svg className="flex h-6 w-6 items-center justify-center">
+                <use href="/src/assets/icons/ui_icons_sprite.svg#actions-vertical"></use>
+              </svg>
+            </button>
+
+            {openDropdown && (
+              <DropDownActions
+                options={appActions}
+                id="transaction"
+                setOpenDropdown={setOpenDropdown}
+              />
+            )}
+          </div>
+        );
+      },
       header: () => null,
     }),
   ];
