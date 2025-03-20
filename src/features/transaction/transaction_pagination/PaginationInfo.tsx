@@ -7,7 +7,7 @@ function PaginationInfo({ table }: { table: Table<Transaction> }) {
   const pageSize = table.getState().pagination.pageSize;
   const totalRecords = table.getPrePaginationRowModel().rows.length;
 
-  const start = pageIndex * pageSize + 1;
+  const start = totalRecords === 0 ? 0 : pageIndex * pageSize + 1;
   const end = Math.min((pageIndex + 1) * pageSize, totalRecords);
 
   return (
