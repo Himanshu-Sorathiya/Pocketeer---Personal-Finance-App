@@ -59,9 +59,15 @@ function DateDropDown({
         onClick={() => toggleDropdown("date")}
         className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
-        <svg className="h-6 w-6">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#calendar"></use>
-        </svg>
+        {isDefaultDateRange(selectedWeek[0], selectedWeek[1]) ? (
+          <svg className="h-6 w-6">
+            <use href="/src/assets/icons/ui_icons_sprite.svg#calendar"></use>
+          </svg>
+        ) : (
+          <svg className="h-6 w-6">
+            <use href="/src/assets/icons/ui_icons_sprite.svg#calendar-range"></use>
+          </svg>
+        )}
       </button>
 
       {openDropdown === "date" && (

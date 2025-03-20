@@ -1,15 +1,27 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-import type { Table } from "@tanstack/react-table";
-
-import type { Transaction } from "../transaction.types.ts";
-
-function PaginationControls({ table }: { table: Table<Transaction> }) {
+function PaginationControls({
+  firstPage,
+  previousPage,
+  nextPage,
+  lastPage,
+  getCanPreviousPage,
+  getCanNextPage,
+  pageIndex,
+}: {
+  firstPage: () => void;
+  previousPage: () => void;
+  nextPage: () => void;
+  lastPage: () => void;
+  getCanPreviousPage: () => boolean;
+  getCanNextPage: () => boolean;
+  pageIndex: number;
+}) {
   return (
     <div className="flex gap-5">
       <PaginationButton
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
+        onClick={() => firstPage()}
+        disabled={!getCanPreviousPage()}
       >
         <svg className="h-5 w-5" aria-hidden="true">
           <use href="/src/assets/icons/ui_icons_sprite.svg#page-first" />
@@ -18,8 +30,8 @@ function PaginationControls({ table }: { table: Table<Transaction> }) {
       </PaginationButton>
 
       <PaginationButton
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
+        onClick={() => previousPage()}
+        disabled={!getCanPreviousPage()}
       >
         <svg className="h-5 w-5" aria-hidden="true">
           <use href="/src/assets/icons/ui_icons_sprite.svg#page-prev" />
@@ -28,23 +40,17 @@ function PaginationControls({ table }: { table: Table<Transaction> }) {
       </PaginationButton>
 
       <div className="flex size-12 items-center justify-center rounded-md bg-neutral-100 px-4 py-2">
-        {table.getState().pagination.pageIndex + 1}
+        {pageIndex + 1}
       </div>
 
-      <PaginationButton
-        onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      >
+      <PaginationButton onClick={() => nextPage()} disabled={!getCanNextPage()}>
         <span>Next Page</span>
         <svg className="h-5 w-5" aria-hidden="true">
           <use href="/src/assets/icons/ui_icons_sprite.svg#page-next" />
         </svg>
       </PaginationButton>
 
-      <PaginationButton
-        onClick={() => table.lastPage()}
-        disabled={!table.getCanNextPage()}
-      >
+      <PaginationButton onClick={() => lastPage()} disabled={!getCanNextPage()}>
         <span>Last Page</span>
         <svg className="h-5 w-5" aria-hidden="true">
           <use href="/src/assets/icons/ui_icons_sprite.svg#page-last" />

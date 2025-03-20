@@ -1,11 +1,11 @@
-import { type Row, type Table, flexRender } from '@tanstack/react-table';
+import { type Row, type RowModel, flexRender } from "@tanstack/react-table";
 
 import type { Transaction } from "../transaction.types.ts";
 
-function TableBody({ table }: { table: Table<Transaction> }) {
+function TableBody({ rowModels }: { rowModels: RowModel<Transaction> }) {
   return (
     <tbody className="divide-y divide-gray-200">
-      {table.getRowModel().rows.map((row: Row<Transaction>) => (
+      {rowModels.rows.map((row: Row<Transaction>) => (
         <tr key={row.id}>
           {row.getVisibleCells().map((cell) => (
             <td

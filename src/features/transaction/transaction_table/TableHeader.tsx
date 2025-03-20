@@ -3,7 +3,6 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import {
   type Header,
   type HeaderGroup,
-  type Table,
   flexRender,
 } from "@tanstack/react-table";
 
@@ -12,12 +11,12 @@ import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 import type { SelectedOptions, Transaction } from "../transaction.types.ts";
 
 function TableHeader({
-  table,
+  headerGroups,
   sortOptions,
   selectedSort,
   setSelectedSort,
 }: {
-  table: Table<Transaction>;
+  headerGroups: HeaderGroup<Transaction>[];
   sortOptions: Record<string, string[]>;
   selectedSort: SelectedOptions;
   setSelectedSort: (type: string, value: string) => void;
@@ -30,7 +29,7 @@ function TableHeader({
 
   return (
     <thead>
-      {table.getHeaderGroups().map((headerGroup: HeaderGroup<Transaction>) => (
+      {headerGroups.map((headerGroup: HeaderGroup<Transaction>) => (
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <th key={header.id}>

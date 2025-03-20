@@ -1,12 +1,12 @@
-import type { Table } from "@tanstack/react-table";
-
-import type { Transaction } from "../transaction.types.ts";
-
-function PaginationInfo({ table }: { table: Table<Transaction> }) {
-  const pageIndex = table.getState().pagination.pageIndex;
-  const pageSize = table.getState().pagination.pageSize;
-  const totalRecords = table.getPrePaginationRowModel().rows.length;
-
+function PaginationInfo({
+  pageIndex,
+  pageSize,
+  totalRecords,
+}: {
+  pageIndex: number;
+  pageSize: number;
+  totalRecords: number;
+}) {
   const start = totalRecords === 0 ? 0 : pageIndex * pageSize + 1;
   const end = Math.min((pageIndex + 1) * pageSize, totalRecords);
 

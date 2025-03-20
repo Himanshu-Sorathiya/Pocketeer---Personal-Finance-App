@@ -1,14 +1,14 @@
 import type { SelectedOptions } from "../transaction.types.ts";
 
-import { isDefaultDateRange } from '../../../utilities/dateUtils.ts';
+import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function TransactionPlaceholder({
-  selectedCategory,
   searchedRecipient,
+  selectedCategory,
   selectedWeek,
 }: {
-  selectedCategory: SelectedOptions;
   searchedRecipient: string;
+  selectedCategory: SelectedOptions;
   selectedWeek: [Date, Date];
 }) {
   const hasCategory = selectedCategory.value !== "all";

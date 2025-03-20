@@ -1,16 +1,48 @@
-import type { Table } from "@tanstack/react-table";
-
 import PaginationControls from "./PaginationControls.tsx";
 import PaginationInfo from "./PaginationInfo.tsx";
 
-import type { Transaction } from "../transaction.types.ts";
-
-function TransactionPagination({ table }: { table: Table<Transaction> }) {
+function TransactionPagination({
+  pageIndex,
+  pageSize,
+  totalRecords,
+  pageCount,
+  firstPage,
+  previousPage,
+  nextPage,
+  lastPage,
+  getCanPreviousPage,
+  getCanNextPage,
+}: {
+  pageIndex: number;
+  pageSize: number;
+  totalRecords: number;
+  pageCount: number;
+  firstPage: () => void;
+  previousPage: () => void;
+  nextPage: () => void;
+  lastPage: () => void;
+  getCanPreviousPage: () => boolean;
+  getCanNextPage: () => boolean;
+}) {
   return (
     <div className="mt-auto flex flex-col items-center gap-1">
-      <PaginationInfo table={table} />
+      <PaginationInfo
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        totalRecords={totalRecords}
+      />
 
-      {table.getPageCount() > 1 && <PaginationControls table={table} />}
+      {pageCount > 1 && (
+        <PaginationControls
+          firstPage={firstPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          lastPage={lastPage}
+          getCanPreviousPage={getCanPreviousPage}
+          getCanNextPage={getCanNextPage}
+          pageIndex={pageIndex}
+        />
+      )}
     </div>
   );
 }
