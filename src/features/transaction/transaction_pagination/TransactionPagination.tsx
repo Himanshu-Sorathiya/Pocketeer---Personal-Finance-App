@@ -10,7 +10,7 @@ function TransactionPagination({ table }: { table: Table<Transaction> }) {
     <div className="mt-auto flex flex-col items-center gap-1">
       <PaginationInfo table={table} />
 
-      <PaginationControls table={table} />
+      {table.getPageCount() > 1 && <PaginationControls table={table} />}
     </div>
   );
 }

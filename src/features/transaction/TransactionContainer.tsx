@@ -1,30 +1,27 @@
-import { useState } from "react";
+import { useState } from 'react';
 
+import { type RankingInfo, compareItems, rankItem,  } from '@tanstack/match-sorter-utils';
 import {
-  type RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
-import {
-  type ColumnFiltersState,
-  type ColumnHelper,
-  type FilterFn,
-  type SortingFn,
-  type SortingState,
-  type Table,
-  createColumnHelper,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  sortingFns,
-  useReactTable,
+	type ColumnFiltersState,
+	type ColumnHelper,
+	type FilterFn,
+	type SortingFn,
+	type SortingState,
+	type Table,
+	createColumnHelper,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	sortingFns,
+	useReactTable
 } from "@tanstack/react-table";
-import { startOfDay } from "date-fns";
+import { startOfDay } from 'date-fns';
 
-import { getTransactions } from "./data/transaction_data.ts";
+import { getTransactions } from './data/transaction_data.ts';
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
+import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { SelectedOptions, Transaction } from "./transaction.types.ts";
@@ -275,6 +272,8 @@ function TransactionContainer() {
     ]);
   }
 
+  const shouldShowPlaceholder = table.getRowModel().rows.length === 0;
+
   return (
     <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
       <TransactionFilter
@@ -286,12 +285,20 @@ function TransactionContainer() {
         setSelectedWeek={handleDateRangeChange}
       />
 
-      <TransactionTable
-        table={table}
-        sortOptions={sortOptions}
-        selectedSort={selectedSort}
-        setSelectedSort={handleSortChange}
-      />
+      {shouldShowPlaceholder ? (
+        <TransactionPlaceholder
+          selectedCategory={selectedCategory}
+          searchedRecipient={searchedRecipient}
+          selectedWeek={selectedWeek}
+        />
+      ) : (
+        <TransactionTable
+          table={table}
+          sortOptions={sortOptions}
+          selectedSort={selectedSort}
+          setSelectedSort={handleSortChange}
+        />
+      )}
 
       <TransactionPagination table={table} />
     </div>
