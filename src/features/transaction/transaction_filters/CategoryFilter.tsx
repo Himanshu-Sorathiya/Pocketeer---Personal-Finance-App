@@ -23,7 +23,11 @@ function CategoryFilter({
     <div
       onMouseEnter={() => setOpenDropdown("category")}
       onMouseLeave={() => setOpenDropdown(null)}
-      className="relative flex w-52 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 outline-gray-300"
+      className={`relative flex w-52 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 transition-all duration-100 ${
+        selectedCategory.value === "all"
+          ? "outline-gray-300"
+          : "outline-gray-500"
+      }`}
     >
       <span>
         {selectedCategory.value === "all"
@@ -65,7 +69,7 @@ function FilterDropDown({
     <div className="relative flex items-center">
       <button
         onClick={() => toggleDropdown("category")}
-        className="cursor-pointer rounded p-0.5 focus-within:bg-neutral-100 hover:bg-neutral-100"
+        className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
         <svg className="h-6 w-6">
           <use href="/src/assets/icons/ui_icons_sprite.svg#filter"></use>
