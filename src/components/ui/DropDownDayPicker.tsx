@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
-import { DayPicker, getDefaultClassNames } from 'react-day-picker';
+import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
+import { DayPicker, getDefaultClassNames } from "react-day-picker";
 
 import {
-	DEFAULT_END_DATE,
-	DEFAULT_START_DATE,
-	isDefaultDateRange
+  DEFAULT_END_DATE,
+  DEFAULT_START_DATE,
+  isDefaultDateRange,
 } from "../../utilities/dateUtils.ts";
 
 function isSameSelectedRange(

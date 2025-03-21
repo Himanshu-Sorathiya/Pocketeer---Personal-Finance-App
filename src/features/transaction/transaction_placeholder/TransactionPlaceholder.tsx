@@ -1,4 +1,4 @@
-import type { SelectedOptions } from "../transaction.types.ts";
+import type { SelectedOptions } from "../types/transaction.types.ts";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
@@ -59,7 +59,7 @@ function TransactionPlaceholder({
           <span className="font-semibold text-gray-700">
             {selectedWeek[1].toLocaleDateString()}
           </span>
-          {" this range"}
+          {" Week"}
         </>
       )}
       {"."}

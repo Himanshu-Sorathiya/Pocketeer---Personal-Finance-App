@@ -1,6 +1,6 @@
 import { type Row, type RowModel, flexRender } from "@tanstack/react-table";
 
-import type { Transaction } from "../transaction.types.ts";
+import type { Transaction } from "../types/transaction.types.ts";
 
 function TableBody({ rowModels }: { rowModels: RowModel<Transaction> }) {
   return (

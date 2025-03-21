@@ -3,7 +3,10 @@ import type { HeaderGroup, RowModel } from "@tanstack/react-table";
 import TableBody from "./TableBody.tsx";
 import TableHeader from "./TableHeader.tsx";
 
-import type { SelectedOptions, Transaction } from "../transaction.types.ts";
+import type {
+  SelectedOptions,
+  Transaction,
+} from "../types/transaction.types.ts";
 
 function TransactionTable({
   headerGroups,

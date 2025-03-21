@@ -1,6 +1,6 @@
 import type { SetStateAction } from "react";
 
-import type { SelectedOptions } from "../../features/transaction/transaction.types.ts";
+import type { SelectedOptions } from "../../features/transaction/types/transaction.types.ts";
 
 function DropDownMenu({
   options,

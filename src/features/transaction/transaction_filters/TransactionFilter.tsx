@@ -1,8 +1,8 @@
-import CategoryFilter from "./CategoryFilter.tsx";
-import DateFilter from "./DateFilter.tsx";
-import SearchFilter from "./SearchFilter.tsx";
+import CategoryFilter from "./FilterCategory.tsx";
+import DateFilter from "./FilterDate.tsx";
+import SearchFilter from "./FilterSearch.tsx";
 
-import type { SelectedOptions } from "../transaction.types.ts";
+import type { SelectedOptions } from "../types/transaction.types.ts";
 
 function TransactionFilter({
   categoryOptions,

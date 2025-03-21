@@ -1,4 +1,4 @@
-import TransactionContainer from "./TransactionContainer.tsx";
+import TransactionMain from "./TransactionMain.tsx";
 
 import Header from "../../components/ui/Header.tsx";
 
@@ -14,7 +14,7 @@ function Transaction() {
         </button>
       </Header>
 
-      <TransactionContainer />
+      <TransactionMain />
     </>
   );
 }

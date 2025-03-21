@@ -8,7 +8,10 @@ import {
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
-import type { SelectedOptions, Transaction } from "../transaction.types.ts";
+import type {
+  SelectedOptions,
+  Transaction,
+} from "../types/transaction.types.ts";
 
 function TableHeader({
   headerGroups,

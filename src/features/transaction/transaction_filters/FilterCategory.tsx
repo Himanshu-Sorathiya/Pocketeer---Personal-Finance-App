@@ -2,7 +2,7 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
-import type { SelectedOptions } from "../transaction.types.ts";
+import type { SelectedOptions } from "../types/transaction.types.ts";
 
 function CategoryFilter({
   categoryOptions,

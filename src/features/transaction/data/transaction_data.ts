@@ -1,4 +1,4 @@
-import type { Transaction } from "../transaction.types.ts";
+import type { Transaction } from "../types/transaction.types.ts";
 
 function getTransactions(): Transaction[] {
   return [
