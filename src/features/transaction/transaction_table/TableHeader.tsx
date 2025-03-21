@@ -6,29 +6,20 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
+import { useTransactionContext } from "../TransactionContext.tsx";
+
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
-import type {
-  SelectedOptions,
-  Transaction,
-} from "../types/transaction.types.ts";
+import type { Transaction } from "../types/transaction.types.ts";
+
+import sortOptions from "../../../constants/transactionSortOptions.ts";
 
 function TableHeader({
   headerGroups,
-  sortOptions,
-  selectedSort,
-  setSelectedSort,
 }: {
   headerGroups: HeaderGroup<Transaction>[];
-  sortOptions: Record<string, string[]>;
-  selectedSort: SelectedOptions;
-  setSelectedSort: (type: string, value: string) => void;
 }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (columnId: string) => {
-    setOpenDropdown((prev) => (prev === columnId ? null : columnId));
-  };
 
   return (
     <thead>
@@ -46,13 +37,9 @@ function TableHeader({
 
                 {sortOptions[header.id] && (
                   <SortDropDown
+                    header={header}
                     openDropdown={openDropdown}
                     setOpenDropdown={setOpenDropdown}
-                    toggleDropdown={toggleDropdown}
-                    sortOptions={sortOptions}
-                    selectedSort={selectedSort}
-                    setSelectedSort={setSelectedSort}
-                    header={header}
                   />
                 )}
               </div>
@@ -68,19 +55,13 @@ function SortDropDown({
   header,
   openDropdown,
   setOpenDropdown,
-  toggleDropdown,
-  sortOptions,
-  selectedSort,
-  setSelectedSort,
 }: {
   header: Header<Transaction, unknown>;
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
-  toggleDropdown: (columnId: string) => void;
-  sortOptions: Record<string, string[]>;
-  selectedSort: SelectedOptions;
-  setSelectedSort: (type: string, value: string) => void;
 }) {
+  const { selectedSort, handleSortChange } = useTransactionContext();
+
   return (
     <div
       onMouseEnter={() => setOpenDropdown(header.id)}
@@ -88,7 +69,9 @@ function SortDropDown({
       className="relative flex items-center"
     >
       <button
-        onClick={() => toggleDropdown(header.id)}
+        onClick={() =>
+          setOpenDropdown((prev) => (prev === header.id ? null : header.id))
+        }
         className="cursor-pointer rounded p-0.5 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
         <svg className="h-4 w-4">
@@ -98,11 +81,11 @@ function SortDropDown({
 
       {openDropdown === header.id && (
         <DropDownMenu
-          options={sortOptions}
           id={header.id}
+          options={sortOptions}
           setOpenDropdown={setOpenDropdown}
           selectedOption={selectedSort}
-          setSelectedOption={setSelectedSort}
+          setSelectedOption={handleSortChange}
         />
       )}
     </div>

@@ -1,21 +1,14 @@
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
+
+import { useTransactionContext } from "../TransactionContext.tsx";
 
 import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
-function DateFilter({
-  selectedWeek,
-  setSelectedWeek,
-}: {
-  selectedWeek: [Date, Date];
-  setSelectedWeek: (value: [Date, Date]) => void;
-}) {
+function DateFilter() {
+  const { selectedWeek } = useTransactionContext();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (columnId: string) => {
-    setOpenDropdown((prev) => (prev === columnId ? null : columnId));
-  };
 
   return (
     <div
@@ -35,9 +28,7 @@ function DateFilter({
 
       <DateDropDown
         openDropdown={openDropdown}
-        toggleDropdown={toggleDropdown}
-        selectedWeek={selectedWeek}
-        setSelectedWeek={setSelectedWeek}
+        setOpenDropdown={setOpenDropdown}
       />
     </div>
   );
@@ -45,19 +36,19 @@ function DateFilter({
 
 function DateDropDown({
   openDropdown,
-  toggleDropdown,
-  selectedWeek,
-  setSelectedWeek,
+  setOpenDropdown,
 }: {
   openDropdown: string | null;
-  toggleDropdown: (columnId: string) => void;
-  selectedWeek: [Date, Date];
-  setSelectedWeek: (value: [Date, Date]) => void;
+  setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
+  const { selectedWeek, handleDateRangeChange } = useTransactionContext();
+
   return (
     <div className="relative flex items-center">
       <button
-        onClick={() => toggleDropdown("date")}
+        onClick={() =>
+          setOpenDropdown((prev) => (prev === "date" ? null : "date"))
+        }
         className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
         {isDefaultDateRange(selectedWeek[0], selectedWeek[1]) ? (
@@ -74,7 +65,7 @@ function DateDropDown({
       {openDropdown === "date" && (
         <DropDownDayPicker
           selectedWeek={selectedWeek}
-          setSelectedWeek={setSelectedWeek}
+          setSelectedWeek={handleDateRangeChange}
         />
       )}
     </div>

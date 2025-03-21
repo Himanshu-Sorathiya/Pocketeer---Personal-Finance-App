@@ -1,18 +1,13 @@
-import type { SelectedOptions } from "../types/transaction.types.ts";
+import { useTransactionContext } from "../TransactionContext.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
-function TransactionPlaceholder({
-  searchedRecipient,
-  selectedCategory,
-  selectedWeek,
-}: {
-  searchedRecipient: string;
-  selectedCategory: SelectedOptions;
-  selectedWeek: [Date, Date];
-}) {
-  const hasCategory = selectedCategory.value !== "all";
+function TransactionPlaceholder() {
+  const { searchedRecipient, selectedCategory, selectedWeek } =
+    useTransactionContext();
+
   const hasSearch = searchedRecipient.trim() !== "";
+  const hasCategory = selectedCategory.value !== "all";
   const hasDate = !isDefaultDateRange(selectedWeek[0], selectedWeek[1]);
 
   if (!hasCategory && !hasSearch && !hasDate)

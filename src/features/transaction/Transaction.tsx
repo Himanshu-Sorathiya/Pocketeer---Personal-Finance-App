@@ -1,3 +1,5 @@
+import { TransactionProvider } from "./TransactionContext.tsx";
+
 import TransactionMain from "./TransactionMain.tsx";
 
 import Header from "../../components/ui/Header.tsx";
@@ -14,7 +16,9 @@ function Transaction() {
         </button>
       </Header>
 
-      <TransactionMain />
+      <TransactionProvider>
+        <TransactionMain />
+      </TransactionProvider>
     </>
   );
 }

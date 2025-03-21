@@ -1,23 +1,14 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
+import { useTransactionContext } from "../TransactionContext.tsx";
+
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
-import type { SelectedOptions } from "../types/transaction.types.ts";
+import categoryOptions from "../../../constants/transactionCategoryOptions.ts";
 
-function CategoryFilter({
-  categoryOptions,
-  selectedCategory,
-  setSelectedCategory,
-}: {
-  categoryOptions: Record<string, string[]>;
-  selectedCategory: SelectedOptions;
-  setSelectedCategory: (type: string, value: string) => void;
-}) {
+function CategoryFilter() {
+  const { selectedCategory } = useTransactionContext();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (columnId: string) => {
-    setOpenDropdown((prev) => (prev === columnId ? null : columnId));
-  };
 
   return (
     <div
@@ -41,10 +32,6 @@ function CategoryFilter({
       <FilterDropDown
         openDropdown={openDropdown}
         setOpenDropdown={setOpenDropdown}
-        toggleDropdown={toggleDropdown}
-        categoryOptions={categoryOptions}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
       />
     </div>
   );
@@ -53,22 +40,18 @@ function CategoryFilter({
 function FilterDropDown({
   openDropdown,
   setOpenDropdown,
-  toggleDropdown,
-  categoryOptions,
-  selectedCategory,
-  setSelectedCategory,
 }: {
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
-  toggleDropdown: (columnId: string) => void;
-  categoryOptions: Record<string, string[]>;
-  selectedCategory: SelectedOptions;
-  setSelectedCategory: (type: string, value: string) => void;
 }) {
+  const { selectedCategory, handleCategoryChange } = useTransactionContext();
+
   return (
     <div className="relative flex items-center">
       <button
-        onClick={() => toggleDropdown("category")}
+        onClick={() =>
+          setOpenDropdown((prev) => (prev === "category" ? null : "category"))
+        }
         className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
         <svg className="h-6 w-6">
@@ -78,11 +61,11 @@ function FilterDropDown({
 
       {openDropdown === "category" && (
         <DropDownMenu
-          options={{ category: categoryOptions.category }}
           id="category"
+          options={{ category: categoryOptions.category }}
           setOpenDropdown={setOpenDropdown}
           selectedOption={selectedCategory}
-          setSelectedOption={setSelectedCategory}
+          setSelectedOption={handleCategoryChange}
         />
       )}
     </div>

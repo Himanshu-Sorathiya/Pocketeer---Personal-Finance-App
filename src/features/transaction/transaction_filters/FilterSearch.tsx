@@ -1,15 +1,15 @@
-function SearchFilter({
-  setSearchedRecipient,
-}: {
-  setSearchedRecipient: (value: string) => void;
-}) {
+import { useTransactionContext } from "../TransactionContext.tsx";
+
+function SearchFilter() {
+  const { handleSearchChange } = useTransactionContext();
+
   return (
     <div className="flex w-72 items-center gap-2 rounded-md bg-white p-3 text-gray-500 outline-1 outline-gray-300 transition-all duration-100 focus-within:text-gray-700 focus-within:outline-gray-500">
       <input
         type="text"
         name="search"
         onChange={(e) => {
-          setSearchedRecipient(e.target.value);
+          handleSearchChange(e.target.value);
         }}
         placeholder="Search..."
         className="w-full bg-transparent outline-none"

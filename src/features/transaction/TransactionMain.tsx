@@ -11,7 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useTransactionState } from "./useTransactionsState.ts";
+import { useTransactionContext } from "./TransactionContext.tsx";
 
 import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
@@ -33,9 +33,6 @@ import {
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { Transaction } from "./types/transaction.types.ts";
-
-import categoryOptions from "../../constants/transactionCategoryOptions.ts";
-import sortOptions from "../../constants/transactionSortOptions.ts";
 
 import { fuzzyFilter, fuzzySort } from "../../utilities/tableUtils.ts";
 
@@ -92,17 +89,7 @@ function TransactionMain() {
     setColumnFilters,
     setSorting,
     setPagination,
-
-    searchedRecipient,
-    selectedCategory,
-    selectedWeek,
-    selectedSort,
-
-    handleSearchChange,
-    handleCategoryChange,
-    handleDateRangeChange,
-    handleSortChange,
-  } = useTransactionState();
+  } = useTransactionContext();
 
   const table: Table<Transaction> = useReactTable({
     data: transactions,
@@ -135,28 +122,14 @@ function TransactionMain() {
 
   return (
     <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
-      <TransactionFilter
-        categoryOptions={categoryOptions}
-        selectedCategory={selectedCategory}
-        selectedWeek={selectedWeek}
-        setSelectedCategory={handleCategoryChange}
-        setSearchedRecipient={handleSearchChange}
-        setSelectedWeek={handleDateRangeChange}
-      />
+      <TransactionFilter />
 
       {shouldShowPlaceholder ? (
-        <TransactionPlaceholder
-          searchedRecipient={searchedRecipient}
-          selectedCategory={selectedCategory}
-          selectedWeek={selectedWeek}
-        />
+        <TransactionPlaceholder />
       ) : (
         <TransactionTable
           headerGroups={table.getHeaderGroups()}
           rowModels={table.getRowModel()}
-          sortOptions={sortOptions}
-          selectedSort={selectedSort}
-          setSelectedSort={handleSortChange}
         />
       )}
 

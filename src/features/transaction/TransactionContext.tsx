@@ -1,4 +1,9 @@
-import { useState } from "react";
+import {
+  type SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 
@@ -9,7 +14,34 @@ import {
   DEFAULT_START_DATE,
 } from "../../utilities/dateUtils.ts";
 
-function useTransactionState() {
+type TransactionContextType = {
+  columnFilters: ColumnFiltersState;
+  sorting: SortingState;
+  pagination: { pageIndex: number; pageSize: number };
+  setColumnFilters: React.Dispatch<SetStateAction<ColumnFiltersState>>;
+  setSorting: React.Dispatch<SetStateAction<SortingState>>;
+  setPagination: React.Dispatch<
+    SetStateAction<{ pageIndex: number; pageSize: number }>
+  >;
+
+  searchedRecipient: string;
+  selectedCategory: SelectedOptions;
+  selectedWeek: [Date, Date];
+  selectedSort: SelectedOptions;
+
+  handleSearchChange: (newValue: string) => void;
+  handleCategoryChange: (_: string, newCategory: string) => void;
+  handleDateRangeChange: (newRange: [Date, Date]) => void;
+  handleSortChange: (type: string, value: string) => void;
+};
+
+const TransactionContext = createContext<TransactionContextType | null>(null);
+
+export function TransactionProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
     type: "date",
     value: "latest",
@@ -101,24 +133,38 @@ function useTransactionState() {
     updateSorter(type, value);
   }
 
-  return {
-    columnFilters,
-    sorting,
-    pagination,
-    setColumnFilters,
-    setSorting,
-    setPagination,
+  return (
+    <TransactionContext.Provider
+      value={{
+        columnFilters,
+        sorting,
+        pagination,
+        setColumnFilters,
+        setSorting,
+        setPagination,
 
-    searchedRecipient,
-    selectedCategory,
-    selectedWeek,
-    selectedSort,
+        searchedRecipient,
+        selectedCategory,
+        selectedWeek,
+        selectedSort,
 
-    handleSearchChange,
-    handleCategoryChange,
-    handleDateRangeChange,
-    handleSortChange,
-  };
+        handleSearchChange,
+        handleCategoryChange,
+        handleDateRangeChange,
+        handleSortChange,
+      }}
+    >
+      {children}
+    </TransactionContext.Provider>
+  );
 }
 
-export { useTransactionState };
+export function useTransactionContext() {
+  const context = useContext(TransactionContext);
+  if (!context) {
+    throw new Error(
+      "useTransactionContext must be used within a TransactionProvider",
+    );
+  }
+  return context;
+}
