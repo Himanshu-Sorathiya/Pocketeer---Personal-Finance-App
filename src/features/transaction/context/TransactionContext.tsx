@@ -7,12 +7,12 @@ import {
 
 import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 
-import type { SelectedOptions } from "./types/transaction.types.ts";
+import type { SelectedOptions } from "./../types/transaction.types.ts";
 
 import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
-} from "../../utilities/dateUtils.ts";
+} from "../../../utilities/dateUtils.ts";
 
 type TransactionContextType = {
   columnFilters: ColumnFiltersState;
@@ -37,11 +37,7 @@ type TransactionContextType = {
 
 const TransactionContext = createContext<TransactionContextType | null>(null);
 
-export function TransactionProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function TransactionProvider({ children }: { children: React.ReactNode }) {
   const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
     type: "date",
     value: "latest",
@@ -159,7 +155,7 @@ export function TransactionProvider({
   );
 }
 
-export function useTransactionContext() {
+function useTransactionContext() {
   const context = useContext(TransactionContext);
   if (!context) {
     throw new Error(
@@ -168,3 +164,5 @@ export function useTransactionContext() {
   }
   return context;
 }
+
+export { TransactionProvider, useTransactionContext };

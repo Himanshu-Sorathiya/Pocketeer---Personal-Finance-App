@@ -6,7 +6,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
-import { useTransactionContext } from "../TransactionContext.tsx";
+import { useTransactionContext } from "../context/TransactionContext.tsx";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 

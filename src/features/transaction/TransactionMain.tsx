@@ -11,7 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useTransactionContext } from "./TransactionContext.tsx";
+import { useTransactionContext } from "./context/TransactionContext.tsx";
 
 import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";

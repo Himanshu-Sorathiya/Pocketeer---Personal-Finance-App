@@ -1,4 +1,4 @@
-import { TransactionProvider } from "./TransactionContext.tsx";
+import { TransactionProvider } from "./context/TransactionContext.tsx";
 
 import TransactionMain from "./TransactionMain.tsx";
 

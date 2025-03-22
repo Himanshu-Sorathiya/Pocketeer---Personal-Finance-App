@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { useTransactionContext } from "../TransactionContext.tsx";
+import { useTransactionContext } from "../context/TransactionContext.tsx";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 

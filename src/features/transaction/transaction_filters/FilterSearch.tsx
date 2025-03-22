@@ -1,4 +1,4 @@
-import { useTransactionContext } from "../TransactionContext.tsx";
+import { useTransactionContext } from "../context/TransactionContext.tsx";
 
 function SearchFilter() {
   const { handleSearchChange } = useTransactionContext();
