@@ -29,14 +29,17 @@ function DropDownDayPicker({
   setSelectedWeek: (value: [Date, Date]) => void;
 }) {
   const [selected, setSelected] = useState<Date[]>(() => {
-    const [start, end] = selectedWeek;
+    if (isDefaultDateRange(selectedWeek[0], selectedWeek[1])) return [];
 
-    if (isDefaultDateRange(start, end)) return [];
-
-    return eachDayOfInterval({ start, end });
+    return eachDayOfInterval({ start: selectedWeek[0], end: selectedWeek[1] });
   });
   const [month, setMonth] = useState(selected[0] ?? new Date());
-  const [maxVal, setMaxVal] = useState(7);
+  const [maxVal, setMaxVal] = useState(() => {
+    if (isDefaultDateRange(selectedWeek[0], selectedWeek[1])) return 7;
+
+    return eachDayOfInterval({ start: selectedWeek[0], end: selectedWeek[1] })
+      .length;
+  });
 
   const defaultClassNames = getDefaultClassNames();
 
@@ -56,6 +59,7 @@ function DropDownDayPicker({
     const newEnd = filteredWeekDays[filteredWeekDays.length - 1];
 
     if (isSameSelectedRange(newStart, newEnd, prevStart, prevEnd)) {
+      setMaxVal(7);
       setSelected([]);
       setSelectedWeek([DEFAULT_START_DATE, DEFAULT_END_DATE]);
       return;
