@@ -3,6 +3,9 @@ import { startOfDay } from "date-fns";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
+import transactionIconsMap from "../../../constants/transactionIcons.ts";
+import transactionIconsBgColors from "../../../constants/transactionIconsBgColors.ts";
+
 function filterCategory(
   row: Row<Transaction>,
   columnId: string,
@@ -56,4 +59,25 @@ function sortAmount(
   return amountA - amountB;
 }
 
-export { filterCategory, filterDate, sortAmount, sortDate };
+function getRandomIcon(category: string) {
+  const maxIcons =
+    transactionIconsMap[category as keyof typeof transactionIconsMap] || 1;
+  const randomNum = Math.floor(Math.random() * maxIcons) + 1;
+
+  return `/src/assets/icons/transaction_icons_sprite.svg#${category}${randomNum}`;
+}
+
+function getRandomColor() {
+  return transactionIconsBgColors[
+    Math.floor(Math.random() * transactionIconsBgColors.length)
+  ];
+}
+
+export {
+  filterCategory,
+  filterDate,
+  getRandomColor,
+  getRandomIcon,
+  sortAmount,
+  sortDate
+};

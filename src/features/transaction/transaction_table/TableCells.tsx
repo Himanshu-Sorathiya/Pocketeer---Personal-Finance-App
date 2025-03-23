@@ -1,34 +1,35 @@
 import { useState } from "react";
 
+import { getTransactionData } from "../store/transactionStore.ts";
+
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 
 import appActions from "../../../constants/appActions.ts";
-import transactionIcons from "../../../constants/transactionIcons.ts";
-import transactionIconsBgColors from "../../../constants/transactionIconsBgColors.ts";
 
 function RecipientCell({
+  transactionId,
   recipient,
   category,
 }: {
+  transactionId: string;
   recipient: string;
   category: string;
 }) {
-  const randomNum =
-    Math.floor(
-      Math.random() *
-        (transactionIcons[category as keyof typeof transactionIcons] || 1),
-    ) + 1;
-  const iconPath = `/src/assets/icons/transaction_icons_sprite.svg#${category}${randomNum}`;
-  const randomColor = transactionIconsBgColors[Math.floor(Math.random() * 14)];
+  const { iconPath, bgColor } = getTransactionData(transactionId, category);
 
   return (
     <div className="flex items-center gap-2 font-medium">
       <div
         className="flex h-10 w-10 items-center justify-center rounded-full"
-        style={{ backgroundColor: randomColor }}
+        style={{ backgroundColor: bgColor }}
       >
         <svg className="h-6 w-6">
-          <use href={iconPath} />
+          <use
+            href={
+              iconPath ||
+              "/src/assets/icons/ui_icons_sprite.svg#fallback"
+            }
+          />
         </svg>
       </div>
 
@@ -80,3 +81,4 @@ function ActionsCell() {
 }
 
 export { ActionsCell, AmountCell, CategoryCell, DateCell, RecipientCell };
+

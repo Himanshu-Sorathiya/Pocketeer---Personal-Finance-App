@@ -47,6 +47,7 @@ function TransactionMain() {
       id: "recipient",
       cell: (info) => (
         <RecipientCell
+          transactionId={info.row.id}
           recipient={info.getValue()}
           category={info.row.original.category}
         />

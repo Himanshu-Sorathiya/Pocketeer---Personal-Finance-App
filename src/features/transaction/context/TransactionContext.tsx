@@ -38,22 +38,22 @@ type TransactionContextType = {
 const TransactionContext = createContext<TransactionContextType | null>(null);
 
 function TransactionProvider({ children }: { children: React.ReactNode }) {
-  const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
-    type: "date",
-    value: "latest",
-  });
+  const [searchedRecipient, setSearchedRecipient] = useState<string>("");
 
   const [selectedCategory, setSelectedCategory] = useState<SelectedOptions>({
     type: "category",
     value: "all",
   });
 
-  const [searchedRecipient, setSearchedRecipient] = useState<string>("");
-
   const [selectedWeek, setSelectedWeek] = useState<[Date, Date]>([
     DEFAULT_START_DATE,
     DEFAULT_END_DATE,
   ]);
+
+  const [selectedSort, setSelectedSort] = useState<SelectedOptions>({
+    type: "date",
+    value: "latest",
+  });
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(() => {
     const filters: ColumnFiltersState = [
@@ -157,11 +157,13 @@ function TransactionProvider({ children }: { children: React.ReactNode }) {
 
 function useTransactionContext() {
   const context = useContext(TransactionContext);
+
   if (!context) {
     throw new Error(
       "useTransactionContext must be used within a TransactionProvider",
     );
   }
+
   return context;
 }
 
