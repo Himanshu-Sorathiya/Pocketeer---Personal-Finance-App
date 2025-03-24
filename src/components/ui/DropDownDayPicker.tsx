@@ -44,7 +44,12 @@ function DropDownDayPicker({
   const defaultClassNames = getDefaultClassNames();
 
   function handleSelect(dates: Date[]) {
-    if (!dates || dates.length === 0) return;
+    if (!dates || dates.length === 0) {
+      setMaxVal(7);
+      setSelected([]);
+      setSelectedWeek([DEFAULT_START_DATE, DEFAULT_END_DATE]);
+      return;
+    }
 
     const today = new Date();
 

@@ -24,7 +24,7 @@ function PaginationInfo({
       </span>{" "}
       transactions –{" "}
       <span className="text-gray-700">
-        Every transaction echoes in your finances.
+        Every transaction fuels your financial adventure.
       </span>
     </div>
   );
