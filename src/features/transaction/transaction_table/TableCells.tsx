@@ -25,10 +25,7 @@ function RecipientCell({
       >
         <svg className="h-6 w-6">
           <use
-            href={
-              iconPath ||
-              "/src/assets/icons/ui_icons_sprite.svg#fallback"
-            }
+            href={iconPath || "/src/assets/icons/ui_icons_sprite.svg#fallback"}
           />
         </svg>
       </div>
@@ -81,4 +78,3 @@ function ActionsCell() {
 }
 
 export { ActionsCell, AmountCell, CategoryCell, DateCell, RecipientCell };
-

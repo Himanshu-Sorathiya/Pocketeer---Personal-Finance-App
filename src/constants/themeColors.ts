@@ -1,4 +1,4 @@
-const transactionIconsBgColors = [
+const themeColors = [
   "#FF6B6B",
   "#546E7A",
   "#4CAF50",
@@ -16,4 +16,4 @@ const transactionIconsBgColors = [
   "#B0B0B0",
 ];
 
-export default transactionIconsBgColors;
+export default themeColors;

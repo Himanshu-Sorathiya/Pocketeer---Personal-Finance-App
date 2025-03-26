@@ -1,3 +1,5 @@
+import PotMain from "./PotMain.tsx";
+
 import Header from "../../components/ui/Header.tsx";
 
 function Pot() {
@@ -11,6 +13,8 @@ function Pot() {
           Action
         </button>
       </Header>
+
+      <PotMain />
     </>
   );
 }

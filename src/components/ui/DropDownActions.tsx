@@ -13,7 +13,7 @@ function DropDownActions({
     <div
       onMouseEnter={() => setOpenDropdown(true)}
       onMouseLeave={() => setOpenDropdown(false)}
-      className="absolute top-7/12 -left-full z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white p-1 shadow-md"
+      className="absolute top-7/12 -left-20 z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white p-1 shadow-md"
     >
       {options[id].map((option) => (
         <button

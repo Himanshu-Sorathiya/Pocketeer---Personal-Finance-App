@@ -63,7 +63,7 @@ function SidebarLink({
   return (
     <li className="rounded-md">
       <Link to={to} className="sidebar_link">
-        <svg className={`h-6 w-6`}>
+        <svg className="h-6 w-6">
           <use href={`/src/assets/icons/ui_icons_sprite.svg#${icon}`} />
         </svg>
 

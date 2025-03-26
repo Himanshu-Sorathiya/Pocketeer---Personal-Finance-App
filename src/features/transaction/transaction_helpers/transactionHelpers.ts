@@ -3,8 +3,8 @@ import { startOfDay } from "date-fns";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
 import transactionIconsMap from "../../../constants/transactionIcons.ts";
-import transactionIconsBgColors from "../../../constants/transactionIconsBgColors.ts";
 
 function filterCategory(
   row: Row<Transaction>,
@@ -68,9 +68,7 @@ function getRandomIcon(category: string) {
 }
 
 function getRandomColor() {
-  return transactionIconsBgColors[
-    Math.floor(Math.random() * transactionIconsBgColors.length)
-  ];
+  return themeColors[Math.floor(Math.random() * themeColors.length)];
 }
 
 export {
@@ -79,5 +77,5 @@ export {
   getRandomColor,
   getRandomIcon,
   sortAmount,
-  sortDate
+  sortDate,
 };
