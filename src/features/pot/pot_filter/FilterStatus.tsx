@@ -1,18 +1,13 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
+import { usePotContext } from "../context/PotContext.tsx";
 
-import type { SelectedOptions } from "../../../types/global.types.ts";
+import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
 import statusOptions from "../../../constants/potStatusOptions.ts";
 
-function FilterStatus({
-  handleStatusChange,
-  selectedStatus,
-}: {
-  handleStatusChange: (_: string, value: string) => void;
-  selectedStatus: SelectedOptions;
-}) {
+function FilterStatus() {
+  const { selectedStatus } = usePotContext();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -35,8 +30,6 @@ function FilterStatus({
       <FilterDropDown
         openDropdown={openDropdown}
         setOpenDropdown={setOpenDropdown}
-        selectedStatus={selectedStatus}
-        handleStatusChange={handleStatusChange}
       />
     </div>
   );
@@ -45,14 +38,12 @@ function FilterStatus({
 function FilterDropDown({
   openDropdown,
   setOpenDropdown,
-  selectedStatus,
-  handleStatusChange,
 }: {
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
-  selectedStatus: SelectedOptions;
-  handleStatusChange: (_: string, value: string) => void;
 }) {
+  const { selectedStatus, handleStatusChange } = usePotContext();
+
   return (
     <div className="relative flex items-center">
       <button

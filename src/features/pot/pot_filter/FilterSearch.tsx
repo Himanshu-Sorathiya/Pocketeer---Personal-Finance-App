@@ -1,8 +1,8 @@
-function FilterSearch({
-  handleSearchChange,
-}: {
-  handleSearchChange: (value: string) => void;
-}) {
+import { usePotContext } from "../context/PotContext.tsx";
+
+function FilterSearch() {
+  const { handleSearchChange } = usePotContext();
+
   return (
     <div className="flex w-72 items-center gap-2 rounded-md bg-white p-3 text-gray-500 outline-1 outline-gray-300 transition-all duration-100 focus-within:text-gray-700 focus-within:outline-gray-500">
       <input

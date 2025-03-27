@@ -1,18 +1,13 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
+import { usePotContext } from "../context/PotContext.tsx";
 
-import type { SelectedOptions } from "../../../types/global.types.ts";
+import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
 
 import sortOptions from "../../../constants/potSortOptions.ts";
 
-function PotSort({
-  selectedSort,
-  handleSortChange,
-}: {
-  selectedSort: SelectedOptions;
-  handleSortChange: (type: string, value: string) => void;
-}) {
+function PotSort() {
+  const { selectedSort } = usePotContext();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -38,8 +33,6 @@ function PotSort({
       <SortDropDown
         openDropdown={openDropdown}
         setOpenDropdown={setOpenDropdown}
-        selectedSort={selectedSort}
-        handleSortChange={handleSortChange}
       />
     </div>
   );
@@ -48,14 +41,12 @@ function PotSort({
 function SortDropDown({
   openDropdown,
   setOpenDropdown,
-  selectedSort,
-  handleSortChange,
 }: {
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
-  selectedSort: SelectedOptions;
-  handleSortChange: (type: string, value: string) => void;
 }) {
+  const { selectedSort, handleSortChange } = usePotContext();
+
   return (
     <div className="relative flex items-center">
       <button

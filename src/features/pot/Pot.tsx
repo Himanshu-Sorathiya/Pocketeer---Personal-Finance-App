@@ -1,3 +1,5 @@
+import { PotProvider } from "./context/PotContext.tsx";
+
 import PotMain from "./PotMain.tsx";
 
 import Header from "../../components/ui/Header.tsx";
@@ -14,7 +16,9 @@ function Pot() {
         </button>
       </Header>
 
-      <PotMain />
+      <PotProvider>
+        <PotMain />
+      </PotProvider>
     </>
   );
 }
