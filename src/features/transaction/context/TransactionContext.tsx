@@ -7,7 +7,7 @@ import {
 
 import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 
-import type { SelectedOptions } from "./../types/transaction.types.ts";
+import type { SelectedOptions } from "../../../types/global.types.ts";
 
 import {
   DEFAULT_END_DATE,
@@ -55,18 +55,11 @@ function TransactionProvider({ children }: { children: React.ReactNode }) {
     value: "latest",
   });
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(() => {
-    const filters: ColumnFiltersState = [
-      { id: "recipient", value: searchedRecipient },
-      { id: "date", value: JSON.stringify(selectedWeek) },
-    ];
-
-    if (selectedCategory.value !== "all") {
-      filters.push({ id: "category", value: selectedCategory.value });
-    }
-
-    return filters;
-  });
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
+    { id: "recipient", value: searchedRecipient },
+    { id: "date", value: JSON.stringify(selectedWeek) },
+    { id: "category", value: selectedCategory.value },
+  ]);
 
   const [sorting, setSorting] = useState<SortingState>(() => {
     const sorts: SortingState = [
@@ -92,11 +85,8 @@ function TransactionProvider({ children }: { children: React.ReactNode }) {
     const filters: ColumnFiltersState = [
       { id: "recipient", value: search },
       { id: "date", value: JSON.stringify(dateRange) },
+      { id: "category", value: category },
     ];
-
-    if (category !== "all") {
-      filters.push({ id: "category", value: category });
-    }
 
     setColumnFilters(filters);
   }

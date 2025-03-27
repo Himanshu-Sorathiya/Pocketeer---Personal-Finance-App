@@ -6,7 +6,7 @@ import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
-function DateFilter() {
+function FilterDate() {
   const { selectedWeek } = useTransactionContext();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -72,4 +72,4 @@ function DateDropDown({
   );
 }
 
-export default DateFilter;
+export default FilterDate;

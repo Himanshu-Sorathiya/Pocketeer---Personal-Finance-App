@@ -1,3 +1,8 @@
+type FilterState = {
+  id: "search" | "status";
+  value: string;
+};
+
 type Pot = {
   id: string;
   name: string;
@@ -7,4 +12,4 @@ type Pot = {
   theme: string;
 };
 
-export { type Pot };
+export { type FilterState, type Pot };

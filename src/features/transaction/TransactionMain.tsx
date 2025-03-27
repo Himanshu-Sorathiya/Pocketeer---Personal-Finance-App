@@ -122,7 +122,7 @@ function TransactionMain() {
   const shouldShowPlaceholder = table.getRowModel().rows.length === 0;
 
   return (
-    <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-x-auto rounded-[20px] p-4">
+    <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-visible rounded-[20px] p-4">
       <TransactionFilter />
 
       {shouldShowPlaceholder ? (
