@@ -1,6 +1,11 @@
 type FilterState = {
-  id: "search" | "status";
+  id: string;
   value: string;
+};
+
+type SortingState = {
+  id: string;
+  desc: boolean;
 };
 
 type Pot = {
@@ -12,4 +17,4 @@ type Pot = {
   theme: string;
 };
 
-export { type FilterState, type Pot };
+export { type FilterState, type Pot, type SortingState };

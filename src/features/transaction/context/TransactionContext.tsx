@@ -61,16 +61,12 @@ function TransactionProvider({ children }: { children: React.ReactNode }) {
     { id: "category", value: selectedCategory.value },
   ]);
 
-  const [sorting, setSorting] = useState<SortingState>(() => {
-    const sorts: SortingState = [
-      {
-        id: selectedSort.type,
-        desc: ["latest", "highest"].includes(selectedSort.value),
-      },
-    ];
-
-    return sorts;
-  });
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: selectedSort.type,
+      desc: ["latest", "highest"].includes(selectedSort.value),
+    },
+  ]);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,

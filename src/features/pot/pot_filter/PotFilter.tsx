@@ -13,12 +13,12 @@ function PotFilter({
   selectedStatus: SelectedOptions;
 }) {
   return (
-    <div className="bg-shade-100 flex gap-5 overflow-visible rounded-md p-4">
+    <div className="flex gap-8">
       <FilterSearch handleSearchChange={handleSearchChange} />
 
       <FilterStatus
-        handleStatusChange={handleStatusChange}
         selectedStatus={selectedStatus}
+        handleStatusChange={handleStatusChange}
       />
     </div>
   );
