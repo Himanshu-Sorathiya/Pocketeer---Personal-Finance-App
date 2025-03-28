@@ -1,7 +1,12 @@
 import { useState } from "react";
 
+import { useStore } from "@tanstack/react-store";
 import {
+  type ColumnFiltersState,
   type ColumnHelper,
+  type OnChangeFn,
+  type PaginationState,
+  type SortingState,
   type Table,
   createColumnHelper,
   getCoreRowModel,
@@ -11,16 +16,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useTransactionContext } from "./context/TransactionContext.tsx";
+import { transactionStore } from "./store/transactionStore.ts";
 
 import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
-import {
-  filterCategory,
-  filterDate,
-  sortAmount,
-  sortDate,
-} from "./transaction_helpers/transactionHelpers.ts";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
 import {
@@ -35,6 +34,12 @@ import TransactionTable from "./transaction_table/TransactionTable.tsx";
 import type { Transaction } from "./types/transaction.types.ts";
 
 import { fuzzyFilter, fuzzySort } from "../../utilities/tableUtils.ts";
+import {
+  filterCategory,
+  filterDate,
+  sortAmount,
+  sortDate,
+} from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
   const [transactions] = useState<Transaction[]>(getTransactions());
@@ -83,14 +88,39 @@ function TransactionMain() {
     }),
   ];
 
-  const {
-    columnFilters,
-    sorting,
-    pagination,
-    setColumnFilters,
-    setSorting,
-    setPagination,
-  } = useTransactionContext();
+  const columnFilters = useStore(transactionStore, (s) => s.columnFilters);
+  const sorting = useStore(transactionStore, (s) => s.sorting);
+  const pagination = useStore(transactionStore, (s) => s.pagination);
+
+  const setColumnFilters: OnChangeFn<ColumnFiltersState> = (updaterOrValue) => {
+    transactionStore.setState((prev) => ({
+      ...prev,
+      columnFilters:
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(prev.columnFilters)
+          : updaterOrValue,
+    }));
+  };
+
+  const setSorting: OnChangeFn<SortingState> = (updaterOrValue) => {
+    transactionStore.setState((prev) => ({
+      ...prev,
+      sorting:
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(prev.sorting)
+          : updaterOrValue,
+    }));
+  };
+
+  const setPagination: OnChangeFn<PaginationState> = (updaterOrValue) => {
+    transactionStore.setState((prev) => ({
+      ...prev,
+      pagination:
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(prev.pagination)
+          : updaterOrValue,
+    }));
+  };
 
   const table: Table<Transaction> = useReactTable({
     data: transactions,

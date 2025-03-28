@@ -1,13 +1,28 @@
-import { useTransactionContext } from "../context/TransactionContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import {
+  handleSearchChange,
+  transactionStore,
+} from "../store/transactionStore.ts";
 
 function FilterSearch() {
-  const { handleSearchChange } = useTransactionContext();
+  const searchedRecipient = useStore(
+    transactionStore,
+    (s) => s.searchedRecipient,
+  );
 
   return (
-    <div className="flex w-72 items-center gap-2 rounded-md bg-white p-3 text-gray-500 outline-1 outline-gray-300 transition-all duration-100 focus-within:text-gray-700 focus-within:outline-gray-500">
+    <div
+      className={`flex w-72 items-center gap-2 rounded-md bg-white p-3 outline-1 outline-gray-300 transition-all duration-100 focus-within:text-gray-700 focus-within:outline-gray-500 ${
+        searchedRecipient === ""
+          ? "text-gray-700 outline-gray-300"
+          : "text-gray-500 outline-gray-500"
+      }`}
+    >
       <input
         type="text"
         name="search"
+        value={searchedRecipient}
         onChange={(e) => {
           handleSearchChange(e.target.value);
         }}

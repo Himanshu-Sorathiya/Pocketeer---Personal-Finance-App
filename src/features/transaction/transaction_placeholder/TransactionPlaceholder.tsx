@@ -1,10 +1,19 @@
-import { useTransactionContext } from "../context/TransactionContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { transactionStore } from "../store/transactionStore.ts";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function TransactionPlaceholder() {
-  const { searchedRecipient, selectedCategory, selectedWeek } =
-    useTransactionContext();
+  const searchedRecipient = useStore(
+    transactionStore,
+    (s) => s.searchedRecipient,
+  );
+  const selectedCategory = useStore(
+    transactionStore,
+    (s) => s.selectedCategory,
+  );
+  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
 
   const hasSearch = searchedRecipient.trim() !== "";
   const hasCategory = selectedCategory.value !== "all";

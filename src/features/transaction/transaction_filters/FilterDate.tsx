@@ -1,13 +1,19 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { useTransactionContext } from "../context/TransactionContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import {
+  handleDateRangeChange,
+  transactionStore,
+} from "../store/transactionStore.ts";
 
 import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function FilterDate() {
-  const { selectedWeek } = useTransactionContext();
+  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
+  
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -41,7 +47,7 @@ function DateDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { selectedWeek, handleDateRangeChange } = useTransactionContext();
+  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
 
   return (
     <div className="relative flex items-center">

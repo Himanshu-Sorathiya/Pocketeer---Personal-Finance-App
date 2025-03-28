@@ -1,13 +1,22 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { useTransactionContext } from "../context/TransactionContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import {
+  handleCategoryChange,
+  transactionStore,
+} from "../store/transactionStore.ts";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
 import categoryOptions from "../../../constants/transactionCategoryOptions.ts";
 
 function FilterCategory() {
-  const { selectedCategory } = useTransactionContext();
+  const selectedCategory = useStore(
+    transactionStore,
+    (s) => s.selectedCategory,
+  );
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -44,7 +53,10 @@ function FilterDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { selectedCategory, handleCategoryChange } = useTransactionContext();
+  const selectedCategory = useStore(
+    transactionStore,
+    (s) => s.selectedCategory,
+  );
 
   return (
     <div className="relative flex items-center">

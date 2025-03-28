@@ -1,12 +1,16 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
+import { useStore } from "@tanstack/react-store";
 import {
   type Header,
   type HeaderGroup,
   flexRender,
 } from "@tanstack/react-table";
 
-import { useTransactionContext } from "../context/TransactionContext.tsx";
+import {
+  handleSortChange,
+  transactionStore,
+} from "../store/transactionStore.ts";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
@@ -60,7 +64,7 @@ function SortDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { selectedSort, handleSortChange } = useTransactionContext();
+  const selectedSort = useStore(transactionStore, (s) => s.selectedSort);
 
   return (
     <div

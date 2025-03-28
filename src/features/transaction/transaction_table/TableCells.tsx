@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { getTransactionData } from "../store/transactionStore.ts";
+import { getTransactionData } from "../store/transactionStyleStore.ts";
 
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 
