@@ -7,6 +7,7 @@ import { potStore } from "./store/potStore.ts";
 import { getPots } from "./data/pot_data.ts";
 import PotBoard from "./pot_board/PotBoard.tsx";
 import PotFilter from "./pot_filter/PotFilter.tsx";
+import PotPlaceholder from "./pot_placeholder/PotPlaceholder.tsx";
 import PotSort from "./pot_sort/PotSort.tsx";
 
 import type { Pot } from "./types/pot.types.ts";
@@ -22,6 +23,8 @@ function PotMain() {
   const filteredPots = filterPots(pots, filters);
   const sortedPots = sortPots(filteredPots, sorting);
 
+  const shouldShowPlaceholder = sortedPots.length === 0;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="bg-shade-100 flex justify-between overflow-visible rounded-md p-4">
@@ -30,7 +33,11 @@ function PotMain() {
         <PotSort />
       </div>
 
-      <PotBoard pots={sortedPots} />
+      {shouldShowPlaceholder ? (
+        <PotPlaceholder />
+      ) : (
+        <PotBoard pots={sortedPots} />
+      )}
     </div>
   );
 }
