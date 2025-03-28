@@ -1,13 +1,16 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { usePotContext } from "../context/PotContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { handleStatusChange, potStore } from "../store/potStore.ts";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
 import statusOptions from "../../../constants/potStatusOptions.ts";
 
 function FilterStatus() {
-  const { selectedStatus } = usePotContext();
+  const selectedStatus = useStore(potStore, (s) => s.selectedStatus);
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -42,7 +45,7 @@ function FilterDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { selectedStatus, handleStatusChange } = usePotContext();
+  const selectedStatus = useStore(potStore, (s) => s.selectedStatus);
 
   return (
     <div className="relative flex items-center">

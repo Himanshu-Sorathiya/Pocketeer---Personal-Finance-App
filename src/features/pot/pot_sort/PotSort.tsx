@@ -1,13 +1,16 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { usePotContext } from "../context/PotContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { handleSortChange, potStore } from "../store/potStore.ts";
 
 import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
 
 import sortOptions from "../../../constants/potSortOptions.ts";
 
 function PotSort() {
-  const { selectedSort } = usePotContext();
+  const selectedSort = useStore(potStore, (s) => s.selectedSort);
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -45,7 +48,7 @@ function SortDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { selectedSort, handleSortChange } = usePotContext();
+  const selectedSort = useStore(potStore, (s) => s.selectedSort);
 
   return (
     <div className="relative flex items-center">
