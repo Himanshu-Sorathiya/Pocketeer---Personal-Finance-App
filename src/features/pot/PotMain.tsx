@@ -11,40 +11,16 @@ import PotSort from "./pot_sort/PotSort.tsx";
 
 import type { Pot } from "./types/pot.types.ts";
 
+import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
+
 function PotMain() {
   const [pots] = useState<Pot[]>(getPots());
 
   const filters = useStore(potStore, (s) => s.filters);
   const sorting = useStore(potStore, (s) => s.sorting);
 
-  const filteredPots = pots.filter((pot) => {
-    const searchFilter =
-      filters.find((f) => f.id === "search")?.value.toLowerCase() || "";
-    const statusFilter = filters.find((f) => f.id === "status")?.value;
-
-    return (
-      pot.name.toLowerCase().includes(searchFilter) &&
-      (statusFilter === "all" ||
-        (statusFilter === "completed" && pot.savedAmount >= pot.targetAmount) ||
-        (statusFilter === "ongoing" && pot.savedAmount < pot.targetAmount))
-    );
-  });
-
-  const sortedPots = filteredPots.sort((a, b) => {
-    const sortKey = sorting[0]?.id;
-    const isDescending = sorting[0]?.desc;
-
-    if (sortKey === "target") {
-      return isDescending
-        ? b.targetAmount - a.targetAmount
-        : a.targetAmount - b.targetAmount;
-    } else if (sortKey === "progress") {
-      return isDescending
-        ? b.savedAmount / b.targetAmount - a.savedAmount / a.targetAmount
-        : a.savedAmount / a.targetAmount - b.savedAmount / b.targetAmount;
-    }
-    return 0;
-  });
+  const filteredPots = filterPots(pots, filters);
+  const sortedPots = sortPots(filteredPots, sorting);
 
   return (
     <div className="flex flex-col gap-6">
