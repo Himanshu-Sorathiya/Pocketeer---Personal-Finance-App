@@ -1,5 +1,13 @@
-import type { Row } from "@tanstack/react-table";
+import type {
+  ColumnFiltersState,
+  OnChangeFn,
+  PaginationState,
+  Row,
+  SortingState,
+} from "@tanstack/react-table";
 import { startOfDay } from "date-fns";
+
+import { transactionStore } from "../store/transactionStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -59,6 +67,36 @@ function sortAmount(
   return amountA - amountB;
 }
 
+const setColumnFilters: OnChangeFn<ColumnFiltersState> = (updaterOrValue) => {
+  transactionStore.setState((prev) => ({
+    ...prev,
+    columnFilters:
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(prev.columnFilters)
+        : updaterOrValue,
+  }));
+};
+
+const setSorting: OnChangeFn<SortingState> = (updaterOrValue) => {
+  transactionStore.setState((prev) => ({
+    ...prev,
+    sorting:
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(prev.sorting)
+        : updaterOrValue,
+  }));
+};
+
+const setPagination: OnChangeFn<PaginationState> = (updaterOrValue) => {
+  transactionStore.setState((prev) => ({
+    ...prev,
+    pagination:
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(prev.pagination)
+        : updaterOrValue,
+  }));
+};
+
 function getRandomIcon(category: string) {
   const maxIcons =
     transactionIconsMap[category as keyof typeof transactionIconsMap] || 1;
@@ -76,6 +114,9 @@ export {
   filterDate,
   getRandomColor,
   getRandomIcon,
+  setColumnFilters,
+  setPagination,
+  setSorting,
   sortAmount,
   sortDate,
 };

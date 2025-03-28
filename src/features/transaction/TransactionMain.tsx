@@ -2,11 +2,7 @@ import { useState } from "react";
 
 import { useStore } from "@tanstack/react-store";
 import {
-  type ColumnFiltersState,
   type ColumnHelper,
-  type OnChangeFn,
-  type PaginationState,
-  type SortingState,
   type Table,
   createColumnHelper,
   getCoreRowModel,
@@ -37,6 +33,9 @@ import { fuzzyFilter, fuzzySort } from "../../utilities/tableUtils.ts";
 import {
   filterCategory,
   filterDate,
+  setColumnFilters,
+  setPagination,
+  setSorting,
   sortAmount,
   sortDate,
 } from "./transaction_helpers/transactionHelpers.ts";
@@ -91,36 +90,6 @@ function TransactionMain() {
   const columnFilters = useStore(transactionStore, (s) => s.columnFilters);
   const sorting = useStore(transactionStore, (s) => s.sorting);
   const pagination = useStore(transactionStore, (s) => s.pagination);
-
-  const setColumnFilters: OnChangeFn<ColumnFiltersState> = (updaterOrValue) => {
-    transactionStore.setState((prev) => ({
-      ...prev,
-      columnFilters:
-        typeof updaterOrValue === "function"
-          ? updaterOrValue(prev.columnFilters)
-          : updaterOrValue,
-    }));
-  };
-
-  const setSorting: OnChangeFn<SortingState> = (updaterOrValue) => {
-    transactionStore.setState((prev) => ({
-      ...prev,
-      sorting:
-        typeof updaterOrValue === "function"
-          ? updaterOrValue(prev.sorting)
-          : updaterOrValue,
-    }));
-  };
-
-  const setPagination: OnChangeFn<PaginationState> = (updaterOrValue) => {
-    transactionStore.setState((prev) => ({
-      ...prev,
-      pagination:
-        typeof updaterOrValue === "function"
-          ? updaterOrValue(prev.pagination)
-          : updaterOrValue,
-    }));
-  };
 
   const table: Table<Transaction> = useReactTable({
     data: transactions,
