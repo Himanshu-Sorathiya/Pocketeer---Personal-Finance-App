@@ -22,7 +22,7 @@ function BoardActions() {
 
       {openDropdown && (
         <DropDownActions
-          options={appActions.pot}
+          options={appActions.budget}
           setOpenDropdown={setOpenDropdown}
         />
       )}

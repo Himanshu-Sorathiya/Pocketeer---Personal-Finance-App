@@ -71,7 +71,15 @@ function BoardProgressChart({
                     position: "absolute",
                   }}
                 >
-                  <p style={{ color: payload[0].fill }}>
+                  <p style={{ color: "#364153" }}>
+                    Total:{" "}
+                    <span className="font-space-grotesk">
+                      {targetAmount}
+                      {currency}
+                    </span>
+                  </p>
+
+                  <p style={{ color: payload[0].fill }} className="mt-2">
                     Saved:{" "}
                     <span className="font-space-grotesk">
                       {payload[0].value}

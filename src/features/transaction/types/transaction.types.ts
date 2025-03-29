@@ -1,18 +1,6 @@
-type TransactionCategory =
-  | "entertainment"
-  | "bills"
-  | "food"
-  | "transportation"
-  | "education"
-  | "shopping"
-  | "health_fitness"
-  | "savings"
-  | "investments"
-  | "debt_loans"
-  | "income"
-  | "taxes"
-  | "miscellaneous"
-  | "general";
+import type transactionCategories from "../../../constants/transactionCategory.ts";
+
+type TransactionCategory = (typeof transactionCategories)[number];
 
 type Transaction = {
   id: string;
@@ -23,4 +11,4 @@ type Transaction = {
   currency: string;
 };
 
-export { type Transaction };
+export { type Transaction, type TransactionCategory };

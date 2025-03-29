@@ -68,8 +68,7 @@ function ActionsCell() {
 
       {openDropdown && (
         <DropDownActions
-          options={appActions}
-          id="transaction"
+          options={appActions.transaction}
           setOpenDropdown={setOpenDropdown}
         />
       )}

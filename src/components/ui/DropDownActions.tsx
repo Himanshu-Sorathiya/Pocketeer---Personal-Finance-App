@@ -2,11 +2,9 @@ import type { SetStateAction } from "react";
 
 function DropDownActions({
   options,
-  id,
   setOpenDropdown,
 }: {
-  options: Record<string, string[]>;
-  id: string;
+  options: string[];
   setOpenDropdown: (value: SetStateAction<boolean>) => void;
 }) {
   return (
@@ -15,7 +13,7 @@ function DropDownActions({
       onMouseLeave={() => setOpenDropdown(false)}
       className="absolute top-7/12 -left-20 z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white p-1 shadow-md"
     >
-      {options[id].map((option) => (
+      {options.map((option) => (
         <button
           key={option}
           onClick={() => {

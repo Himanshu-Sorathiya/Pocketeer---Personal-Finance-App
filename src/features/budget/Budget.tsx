@@ -1,3 +1,5 @@
+import BudgetMain from "./BudgetMain.tsx";
+
 import Header from "../../components/ui/Header.tsx";
 
 function Budget() {
@@ -11,6 +13,8 @@ function Budget() {
           Action
         </button>
       </Header>
+
+      <BudgetMain />
     </>
   );
 }
