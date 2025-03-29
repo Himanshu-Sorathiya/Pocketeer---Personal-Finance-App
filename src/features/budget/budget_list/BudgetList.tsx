@@ -5,7 +5,7 @@ import type { Budget } from "../types/budget.types.ts";
 
 function BudgetList({ budgets }: { budgets: Budget[] }) {
   return (
-    <div className="flex basis-7/12 flex-col gap-4">
+    <div className="flex flex-col gap-4">
       {budgets.map((budget) => (
         <div
           key={budget.id}
