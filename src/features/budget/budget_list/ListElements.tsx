@@ -198,11 +198,27 @@ function ListRecentTransactions({ category }: { category: string }) {
         </Link>
       </div>
 
-      <div className="divide-y divide-gray-200">
-        {latestTransactions.map((transaction) => (
-          <RecentTransaction key={transaction.id} transaction={transaction} />
-        ))}
-      </div>
+      {latestTransactions.length === 0 ? (
+        <div className="py-2 text-gray-500">
+          No recent transactions in this{" "}
+          <span className="font-semibold text-gray-700">
+            {category
+              .split("_")
+              .map(
+                (part) =>
+                  part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
+              )
+              .join(" & ")}
+          </span>{" "}
+          Category.
+        </div>
+      ) : (
+        <div className="divide-y divide-gray-200">
+          {latestTransactions.map((transaction) => (
+            <RecentTransaction key={transaction.id} transaction={transaction} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -251,5 +267,5 @@ export {
   ListBalance,
   ListProgressChart,
   ListProgressInfo,
-  ListRecentTransactions,
+  ListRecentTransactions
 };

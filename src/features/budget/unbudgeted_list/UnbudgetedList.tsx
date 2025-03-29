@@ -1,6 +1,8 @@
 import type { TransactionCategory } from "../../transaction/types/transaction.types.ts";
 
 function UnbudgetedList({ categories }: { categories: TransactionCategory[] }) {
+  if (categories.length === 0) return null;
+
   return (
     <div className="bg-shade-100 rounded-md p-4">
       <h3 className="text-2xl font-medium text-gray-800">
