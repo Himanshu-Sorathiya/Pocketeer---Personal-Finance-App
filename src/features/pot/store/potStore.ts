@@ -62,8 +62,8 @@ function handleStatusChange(_: string, newStatus: string) {
   updateFilter(potStore.state.searchedPot, newStatus);
 }
 
-function handleSortChange(type: string, value: string) {
-  updateSorter(type, value);
+function handleSortChange(newType: string, newValue: string) {
+  updateSorter(newType, newValue);
 }
 
 export { handleSearchChange, handleSortChange, handleStatusChange, potStore };

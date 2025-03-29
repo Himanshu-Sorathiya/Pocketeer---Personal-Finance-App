@@ -8,6 +8,12 @@ import {
   YAxis,
 } from "recharts";
 
+import { Route as transactionRoute } from "../../../routes/app/transaction.tsx";
+
+import {
+  handleCategoryChange,
+  handlePageIndexChange,
+} from "../../transaction/store/transactionStore.ts";
 import { getTransactionData } from "../../transaction/store/transactionStyleStore.ts";
 
 import { getTransactions } from "../../transaction/data/transaction_data.ts";
@@ -165,7 +171,14 @@ function ListRecentTransactions({ category }: { category: string }) {
       <div className="flex items-center justify-between gap-4">
         <span className="text-text font-semibold">Recent Transactions</span>
 
-        <Link to="/app/transaction" className="flex items-center gap-0.5">
+        <Link
+          to={transactionRoute.to}
+          onClick={() => {
+            handleCategoryChange("", category);
+            handlePageIndexChange(0);
+          }}
+          className="flex items-center gap-0.5"
+        >
           <span className="hover:text-primary font-medium text-gray-700 transition-all duration-100">
             View All
           </span>

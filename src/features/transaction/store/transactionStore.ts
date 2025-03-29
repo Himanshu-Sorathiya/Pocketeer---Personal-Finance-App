@@ -71,6 +71,14 @@ function updateSorter(type: string, value: string) {
   }));
 }
 
+function updatePaginator(pageIndex: number, pageSize: number) {
+  transactionStore.setState((prev) => ({
+    ...prev,
+
+    pagination: { pageIndex: pageIndex, pageSize: pageSize },
+  }));
+}
+
 function handleSearchChange(newValue: string) {
   if (newValue.length > transactionStore.state.maxSearchLength) return;
 
@@ -97,13 +105,23 @@ function handleDateRangeChange(newRange: [Date, Date]) {
   );
 }
 
-function handleSortChange(type: string, value: string) {
-  updateSorter(type, value);
+function handleSortChange(newType: string, newValue: string) {
+  updateSorter(newType, newValue);
+}
+
+function handlePageIndexChange(newPageIndex: number) {
+  updatePaginator(newPageIndex, transactionStore.state.pagination.pageSize);
+}
+
+function handlePageSizeChange(newPageSize: number) {
+  updatePaginator(transactionStore.state.pagination.pageIndex, newPageSize);
 }
 
 export {
   handleCategoryChange,
   handleDateRangeChange,
+  handlePageIndexChange,
+  handlePageSizeChange,
   handleSearchChange,
   handleSortChange,
   transactionStore,
