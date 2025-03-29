@@ -13,23 +13,23 @@ import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function FilterDate() {
   const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
-  
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
     <div
       onMouseEnter={() => setOpenDropdown("date")}
       onMouseLeave={() => setOpenDropdown(null)}
-      className={`relative flex w-52 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 transition-all duration-100 ${
+      className={`relative flex w-56 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 transition-all duration-100 ${
         isDefaultDateRange(selectedWeek[0], selectedWeek[1])
           ? "outline-gray-300"
           : "outline-gray-500"
       }`}
     >
-      <span>
+      <span className="whitespace-nowrap">
         {isDefaultDateRange(selectedWeek[0], selectedWeek[1])
           ? "Select Week"
-          : `${selectedWeek[0].getDate()}/${selectedWeek[0].getMonth() + 1}/${selectedWeek[0].getFullYear() % 100} - ${selectedWeek[1].getDate()}/${selectedWeek[1].getMonth() + 1}/${selectedWeek[1].getFullYear() % 100}`}
+          : `${String(selectedWeek[0].getDate()).padStart(2, "0")}/${String(selectedWeek[0].getMonth() + 1).padStart(2, "0")}/${selectedWeek[0].getFullYear() % 100} - ${String(selectedWeek[1].getDate()).padStart(2, "0")}/${String(selectedWeek[1].getMonth() + 1).padStart(2, "0")}/${selectedWeek[1].getFullYear() % 100}`}
       </span>
 
       <DateDropDown

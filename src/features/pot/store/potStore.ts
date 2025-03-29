@@ -10,6 +10,8 @@ type PotState = {
 
   filters: FilterState[];
   sorting: SortingState[];
+
+  maxSearchLength: number;
 };
 
 const potStore = new Store<PotState>({
@@ -22,6 +24,8 @@ const potStore = new Store<PotState>({
     { id: "status", value: "all" },
   ],
   sorting: [{ id: "progress", desc: true }],
+
+  maxSearchLength: 15,
 });
 
 function updateFilter(search: string, status: string) {
@@ -44,11 +48,13 @@ function updateSorter(type: string, value: string) {
 
     selectedSort: { type, value },
 
-    sorting: [{ id: type, desc: value === "highest" }],
+    sorting: [{ id: type, desc: ["highest"].includes(value) }],
   }));
 }
 
 function handleSearchChange(newValue: string) {
+  if (newValue.length > potStore.state.maxSearchLength) return;
+
   updateFilter(newValue, potStore.state.selectedStatus.value);
 }
 

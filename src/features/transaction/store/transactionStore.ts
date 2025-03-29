@@ -21,6 +21,8 @@ type TransactionState = {
   columnFilters: ColumnFiltersState;
   sorting: SortingState;
   pagination: PaginationState;
+
+  maxSearchLength: number;
 };
 
 const transactionStore = new Store<TransactionState>({
@@ -39,6 +41,8 @@ const transactionStore = new Store<TransactionState>({
   ],
   sorting: [{ id: "date", desc: true }],
   pagination: { pageIndex: 0, pageSize: 10 },
+
+  maxSearchLength: 15,
 });
 
 function updateFilter(search: string, category: string, week: [Date, Date]) {
@@ -68,6 +72,8 @@ function updateSorter(type: string, value: string) {
 }
 
 function handleSearchChange(newValue: string) {
+  if (newValue.length > transactionStore.state.maxSearchLength) return;
+
   updateFilter(
     newValue,
     transactionStore.state.selectedCategory.value,

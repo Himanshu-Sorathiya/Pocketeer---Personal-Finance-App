@@ -85,10 +85,10 @@ function DropDownDayPicker({
         captionLayout="dropdown"
         month={month}
         onMonthChange={setMonth}
-        startMonth={new Date(2020, 0, 1)}
-        endMonth={new Date()}
+        startMonth={DEFAULT_START_DATE}
+        endMonth={DEFAULT_END_DATE}
         showOutsideDays={true}
-        disabled={{ after: new Date() }}
+        disabled={{ after: DEFAULT_END_DATE, before: DEFAULT_START_DATE }}
         ISOWeek={true}
         max={maxVal}
         mode="multiple"
