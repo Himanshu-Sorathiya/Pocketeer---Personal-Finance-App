@@ -105,7 +105,12 @@ function ListProgressChart({
           }}
         />
 
-        <Bar dataKey="spent" fill={theme} barSize={30} stackId="budget" />
+        <Bar
+          dataKey="spent"
+          fill={spentAmount >= targetAmount ? "#d90429" : theme}
+          barSize={30}
+          stackId="budget"
+        />
         <Bar
           dataKey="remaining"
           fill={"#e0e0e0"}
@@ -138,7 +143,9 @@ function ListProgressInfo({
 
         <div className="flex flex-col">
           <span className="text-sm text-gray-500">Spent</span>
-          <span className="font-space-grotesk text-text font-medium">
+          <span
+            className={`font-space-grotesk font-medium ${spentAmount >= targetAmount ? "text-error" : "text-text"}`}
+          >
             {currency}
             {spentAmount}
           </span>
@@ -150,7 +157,9 @@ function ListProgressInfo({
 
         <div className="flex flex-col">
           <span className="text-sm text-gray-500">Remaining</span>
-          <span className="font-space-grotesk text-text font-medium">
+          <span
+            className={`font-space-grotesk font-medium ${spentAmount >= targetAmount ? "text-error" : "text-text"}`}
+          >
             {currency}
             {targetAmount - spentAmount}
           </span>

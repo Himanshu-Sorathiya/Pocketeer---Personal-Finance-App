@@ -7,9 +7,9 @@ function UnbudgetedList({ categories }: { categories: TransactionCategory[] }) {
         Unbudgeted Spending Categories
       </h3>
 
-      <div className='p-2 grid grid-cols-3 '>
+      <div className="grid grid-cols-3 p-2">
         {categories.map((category) => (
-          <span className="flex items-center gap-1.5">
+          <span key={category} className="flex items-center gap-1.5">
             <span className="block size-2 rounded-full bg-[#B0B0B0]"></span>
 
             <span className="text-text">
