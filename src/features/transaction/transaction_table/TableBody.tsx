@@ -8,10 +8,7 @@ function TableBody({ rowModels }: { rowModels: RowModel<Transaction> }) {
       {rowModels.rows.map((row: Row<Transaction>) => (
         <tr key={row.id}>
           {row.getVisibleCells().map((cell) => (
-            <td
-              key={cell.id}
-              className="px-4 py-3 whitespace-nowrap text-gray-700"
-            >
+            <td key={cell.id} className="px-4 py-3 text-gray-700">
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>
           ))}

@@ -10,15 +10,19 @@ import {
 function BoardBalance({
   currency,
   savedAmount,
+  targetAmount,
 }: {
   currency: string;
   savedAmount: number;
+  targetAmount: number;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-4">
       <span className="text-text text-sm">Amount saved</span>
 
-      <span className="font-space-grotesk text-3xl font-semibold text-gray-900">
+      <span
+        className={`font-space-grotesk text-3xl font-semibold ${savedAmount >= targetAmount ? "text-green-500" : "text-gray-900"}`}
+      >
         {currency}
         {savedAmount}
       </span>
@@ -59,7 +63,7 @@ function BoardProgressChart({
 
               return (
                 <div
-                  className="bg-shade-100 z-10 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium whitespace-nowrap opacity-100 shadow-md"
+                  className="bg-shade-100 z-10 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium opacity-100 shadow-md"
                   style={{
                     left: coordinate.x,
                     top: coordinate.y,
@@ -109,10 +113,12 @@ function BoardProgressInfo({
   currency: string;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-4">
       <div className="text-xs font-medium text-gray-700">
         Progress:{" "}
-        <span className="font-space-grotesk">
+        <span
+          className={`font-space-grotesk ${savedAmount >= targetAmount ? "font-semibold text-green-500" : ""}`}
+        >
           {((savedAmount / targetAmount) * 100).toFixed(2)}%
         </span>
       </div>
@@ -128,21 +134,29 @@ function BoardProgressInfo({
   );
 }
 
-function BoardPotActions() {
+function BoardPotActions({
+  savedAmount,
+  targetAmount,
+}: {
+  savedAmount: number;
+  targetAmount: number;
+}) {
   return (
     <div className="mt-4 flex items-center gap-3">
-      <PotActionButton>Add Money</PotActionButton>
+      <button
+        className="bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed"
+        disabled={savedAmount >= targetAmount}
+      >
+        Add Money
+      </button>
 
-      <PotActionButton>Withdraw</PotActionButton>
+      <button
+        className="bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed"
+        disabled={savedAmount === 0}
+      >
+        Withdraw Money
+      </button>
     </div>
-  );
-}
-
-function PotActionButton({ children }: { children: React.ReactNode }) {
-  return (
-    <button className="bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200">
-      {children}
-    </button>
   );
 }
 

@@ -1,5 +1,5 @@
 import BoardBody from "./BoardBody.tsx";
-import { BoardBadge } from './BoardElements.tsx';
+import { BoardBadge } from "./BoardElements.tsx";
 import BoardHeader from "./BoardHeader.tsx";
 
 import type { Pot } from "../types/pot.types.ts";

@@ -4,7 +4,7 @@ import type { Pot } from "../types/pot.types.ts";
 
 function BoardHeader({ pot }: { pot: Pot }) {
   return (
-    <div key={pot.id} className="flex items-center justify-between">
+    <div key={pot.id} className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-2">
         <div
           className="flex size-8 items-center justify-center rounded-full"

@@ -26,7 +26,7 @@ function FilterDate() {
           : "outline-gray-500"
       }`}
     >
-      <span className="whitespace-nowrap">
+      <span>
         {isDefaultDateRange(selectedWeek[0], selectedWeek[1])
           ? "Select Week"
           : `${String(selectedWeek[0].getDate()).padStart(2, "0")}/${String(selectedWeek[0].getMonth() + 1).padStart(2, "0")}/${selectedWeek[0].getFullYear() % 100} - ${String(selectedWeek[1].getDate()).padStart(2, "0")}/${String(selectedWeek[1].getMonth() + 1).padStart(2, "0")}/${selectedWeek[1].getFullYear() % 100}`}

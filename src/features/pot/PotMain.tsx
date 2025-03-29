@@ -26,8 +26,8 @@ function PotMain() {
   const shouldShowPlaceholder = sortedPots.length === 0;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="bg-shade-100 flex justify-between overflow-visible rounded-md p-4">
+    <div className="flex flex-col gap-6 whitespace-nowrap">
+      <div className="bg-shade-100 flex justify-between gap-8 overflow-visible rounded-md p-4">
         <PotFilter />
 
         <PotSort />

@@ -10,7 +10,11 @@ import type { Pot } from "../types/pot.types.ts";
 function BoardBody({ pot }: { pot: Pot }) {
   return (
     <div className="flex flex-col">
-      <BoardBalance currency={pot.currency} savedAmount={pot.savedAmount} />
+      <BoardBalance
+        currency={pot.currency}
+        savedAmount={pot.savedAmount}
+        targetAmount={pot.targetAmount}
+      />
 
       <BoardProgressChart
         savedAmount={pot.savedAmount}
@@ -25,7 +29,10 @@ function BoardBody({ pot }: { pot: Pot }) {
         currency={pot.currency}
       />
 
-      <BoardPotActions />
+      <BoardPotActions
+        savedAmount={pot.savedAmount}
+        targetAmount={pot.targetAmount}
+      />
     </div>
   );
 }
