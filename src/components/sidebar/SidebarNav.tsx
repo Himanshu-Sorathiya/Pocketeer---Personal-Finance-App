@@ -37,8 +37,8 @@ function SidebarNav() {
           label="Notification"
         />
 
-        <li className={`rounded-md`}>
-          <a className="flex items-center space-x-3 rounded-md p-3 hover:bg-gray-800">
+        <li className="rounded-md">
+          <a className="flex cursor-pointer items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800">
             <svg className="h-6 w-6">
               <use href="/src/assets/icons/ui_icons_sprite.svg#logout" />
             </svg>
@@ -62,7 +62,12 @@ function SidebarLink({
 }) {
   return (
     <li className="rounded-md">
-      <Link to={to} className="sidebar_link">
+      <Link
+        to={to}
+        className="flex items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800"
+        activeProps={{ className: "text-primary bg-gray-800" }}
+        inactiveProps={{ className: "text-white" }}
+      >
         <svg className="h-6 w-6">
           <use href={`/src/assets/icons/ui_icons_sprite.svg#${icon}`} />
         </svg>

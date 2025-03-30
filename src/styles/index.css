@@ -53,18 +53,6 @@ body {
   caret-color: transparent;
 }
 
-.sidebar_link {
-  @apply flex items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800;
-}
-
-.active {
-  @apply text-primary bg-gray-800;
-}
-
-.inactive {
-  @apply text-shade-60;
-}
-
 .animate-main-progress {
   animation: slide-main 5s infinite linear;
   animation-delay: 1s;

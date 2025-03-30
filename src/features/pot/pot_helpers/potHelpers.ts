@@ -44,8 +44,8 @@ function filterPots(pots: Pot[], filters: FilterState[]): Pot[] {
 }
 
 function sortPots(pots: Pot[], sorting: SortingState[]): Pot[] {
-  const sortKey = sorting[0].id || "progress";
-  const isDescending = sorting[0].desc || true;
+  const sortKey = sorting[0].id ?? "progress";
+  const isDescending = sorting[0].desc ?? true;
 
   return pots.slice().sort((a, b) => {
     if (sortKey === "target") {

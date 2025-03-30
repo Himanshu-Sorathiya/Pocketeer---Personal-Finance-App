@@ -12,7 +12,9 @@ import { Route as transactionRoute } from "../../../routes/app/transaction.tsx";
 
 import {
   handleCategoryChange,
+  handleDateRangeChange,
   handlePageIndexChange,
+  handleSearchChange,
 } from "../../transaction/store/transactionStore.ts";
 import { getTransactionData } from "../../transaction/store/transactionStyleStore.ts";
 
@@ -20,6 +22,11 @@ import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 import { getTransactions } from "../../transaction/data/transaction_data.ts";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
+
+import {
+  DEFAULT_END_DATE,
+  DEFAULT_START_DATE,
+} from "../../../utilities/dateUtils.ts";
 
 function ListBalance({
   targetAmount,
@@ -192,7 +199,9 @@ function ListRecentTransactions({ category }: { category: string }) {
         <Link
           to={transactionRoute.to}
           onClick={() => {
+            handleSearchChange("");
             handleCategoryChange("", category);
+            handleDateRangeChange([DEFAULT_START_DATE, DEFAULT_END_DATE]);
             handlePageIndexChange(0);
           }}
           className="group flex items-center gap-0.5"
