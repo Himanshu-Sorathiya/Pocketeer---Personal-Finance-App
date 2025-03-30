@@ -1,21 +1,23 @@
+import { useStore } from "@tanstack/react-store";
+
+import { budgetStore } from "../store/budgetStore.ts";
+
 import ListBody from "./ListBody.tsx";
 import ListHeader from "./ListHeader.tsx";
 
-import type { Budget } from "../types/budget.types.ts";
+function BudgetList() {
+  const { budgets, selectedBudget } = useStore(budgetStore, (state) => state);
 
-function BudgetList({ budgets }: { budgets: Budget[] }) {
+  const budget = budgets.find((b) => b.id === selectedBudget) || budgets[0];
+
   return (
-    <div className="flex flex-col gap-4">
-      {budgets.map((budget) => (
-        <div
-          key={budget.id}
-          className="bg-shade-100 flex flex-col gap-3 rounded-md px-6 py-4"
-        >
-          <ListHeader budget={budget} />
+    <div
+      key={budget.id}
+      className="bg-shade-100 flex basis-7/12 flex-col gap-3 rounded-md px-6 py-4"
+    >
+      <ListHeader budget={budget} />
 
-          <ListBody budget={budget} />
-        </div>
-      ))}
+      <ListBody budget={budget} />
     </div>
   );
 }

@@ -1,8 +1,11 @@
+import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-import type { Budget } from "../types/budget.types.ts";
+import { budgetStore } from "../store/budgetStore.ts";
 
-function BudgetPieChart({ budgets }: { budgets: Budget[] }) {
+function BudgetPieChart() {
+  const { budgets } = useStore(budgetStore, (state) => state);
+
   const totalSpent = budgets.reduce(
     (sum, budget) => sum + budget.spentAmount,
     0,

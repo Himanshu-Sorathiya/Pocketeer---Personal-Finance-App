@@ -50,6 +50,7 @@
 
 body {
   @apply font-poppins m-0 box-border p-0;
+  caret-color: transparent;
 }
 
 .sidebar_link {
