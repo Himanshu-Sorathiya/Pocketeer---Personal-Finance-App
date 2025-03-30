@@ -59,8 +59,6 @@
     id="arrow-right"
     viewBox="0 0 24 24"
     stroke-width="1.5"
-    stroke="currentColor"
-    fill="#333333"
   >
     <path
       fill-rule="evenodd"

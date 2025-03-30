@@ -16,6 +16,7 @@ import {
 } from "../../transaction/store/transactionStore.ts";
 import { getTransactionData } from "../../transaction/store/transactionStyleStore.ts";
 
+import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 import { getTransactions } from "../../transaction/data/transaction_data.ts";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
@@ -178,7 +179,15 @@ function ListRecentTransactions({ category }: { category: string }) {
   return (
     <div className="rounded-md bg-orange-50 p-4 pb-2">
       <div className="flex items-center justify-between gap-4">
-        <span className="text-text font-semibold">Recent Transactions</span>
+        <div className="flex items-center gap-1">
+          <h3 className="text-text font-semibold">Recent Transactions</h3>
+
+          <TooltipInfo
+            id="info-circle"
+            text1="Only recent transactions made after budget creation are shown here. View all to explore older records for this category."
+            className="text-primary size-4"
+          />
+        </div>
 
         <Link
           to={transactionRoute.to}
@@ -186,13 +195,13 @@ function ListRecentTransactions({ category }: { category: string }) {
             handleCategoryChange("", category);
             handlePageIndexChange(0);
           }}
-          className="flex items-center gap-0.5"
+          className="group flex items-center gap-0.5"
         >
-          <span className="hover:text-primary font-medium text-gray-700 transition-all duration-100">
+          <span className="group-hover:text-primary font-medium text-gray-700 transition-all duration-100">
             View All
           </span>
 
-          <svg className="text-text size-4 fill-current">
+          <svg className="text-text group-hover:fill-primary size-4 fill-current transition-all duration-100">
             <use href="/src/assets/icons/ui_icons_sprite.svg#arrow-right"></use>
           </svg>
         </Link>
@@ -262,10 +271,9 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
     </div>
   );
 }
-
 export {
   ListBalance,
   ListProgressChart,
   ListProgressInfo,
-  ListRecentTransactions
+  ListRecentTransactions,
 };
