@@ -53,6 +53,16 @@ function sortDate(
   );
 }
 
+function filterAmount(
+  row: Row<Transaction>,
+  _: string,
+  filterValue: "all" | "income" | "expense",
+) {
+  if (filterValue === "all") return true;
+
+  return row.original.type === filterValue;
+}
+
 function sortAmount(
   rowA: Row<Transaction>,
   rowB: Row<Transaction>,
@@ -110,6 +120,7 @@ function getRandomColor() {
 }
 
 export {
+  filterAmount,
   filterCategory,
   filterDate,
   getRandomColor,

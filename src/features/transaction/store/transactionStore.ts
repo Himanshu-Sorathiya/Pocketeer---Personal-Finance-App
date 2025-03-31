@@ -5,7 +5,10 @@ import type {
   SortingState,
 } from "@tanstack/react-table";
 
+import { getTransactions } from "../data/transaction_data.ts";
+
 import type { SelectedOptions } from "../../../types/global.types.ts";
+import type { Transaction } from "../types/transaction.types.ts";
 
 import {
   DEFAULT_END_DATE,
@@ -13,9 +16,12 @@ import {
 } from "../../../utilities/dateUtils.ts";
 
 type TransactionState = {
+  transactions: Transaction[];
+
   searchedRecipient: string;
   selectedCategory: SelectedOptions;
   selectedWeek: [Date, Date];
+  selectedType: SelectedOptions;
   selectedSort: SelectedOptions;
 
   columnFilters: ColumnFiltersState;
@@ -25,10 +31,15 @@ type TransactionState = {
   maxSearchLength: number;
 };
 
+const transactions: Transaction[] = getTransactions();
+
 const transactionStore = new Store<TransactionState>({
+  transactions,
+
   searchedRecipient: "",
   selectedCategory: { type: "category", value: "all" },
   selectedWeek: [DEFAULT_START_DATE, DEFAULT_END_DATE],
+  selectedType: { type: "type", value: "all" },
   selectedSort: { type: "date", value: "latest" },
 
   columnFilters: [
@@ -38,6 +49,7 @@ const transactionStore = new Store<TransactionState>({
       value: JSON.stringify([DEFAULT_START_DATE, DEFAULT_END_DATE]),
     },
     { id: "category", value: "all" },
+    { id: "amount", value: "all" },
   ],
   sorting: [{ id: "date", desc: true }],
   pagination: { pageIndex: 0, pageSize: 10 },
@@ -45,18 +57,25 @@ const transactionStore = new Store<TransactionState>({
   maxSearchLength: 15,
 });
 
-function updateFilter(search: string, category: string, week: [Date, Date]) {
+function updateFilter(
+  search: string,
+  category: string,
+  week: [Date, Date],
+  type: string,
+) {
   transactionStore.setState((prev) => ({
     ...prev,
 
     searchedRecipient: search,
     selectedCategory: { type: "category", value: category },
     selectedWeek: week,
+    selectedType: { type: "type", value: type },
 
     columnFilters: [
       { id: "recipient", value: search },
       { id: "date", value: JSON.stringify(week) },
       { id: "category", value: category },
+      { id: "amount", value: type },
     ],
   }));
 }
@@ -86,6 +105,7 @@ function handleSearchChange(newValue: string) {
     newValue,
     transactionStore.state.selectedCategory.value,
     transactionStore.state.selectedWeek,
+    transactionStore.state.selectedType.value,
   );
 }
 
@@ -94,6 +114,7 @@ function handleCategoryChange(_: string, newCategory: string) {
     transactionStore.state.searchedRecipient,
     newCategory,
     transactionStore.state.selectedWeek,
+    transactionStore.state.selectedType.value,
   );
 }
 
@@ -102,6 +123,16 @@ function handleDateRangeChange(newRange: [Date, Date]) {
     transactionStore.state.searchedRecipient,
     transactionStore.state.selectedCategory.value,
     newRange,
+    transactionStore.state.selectedType.value,
+  );
+}
+
+function handleTypeChange(_: string, newType: string) {
+  updateFilter(
+    transactionStore.state.searchedRecipient,
+    transactionStore.state.selectedCategory.value,
+    transactionStore.state.selectedWeek,
+    newType,
   );
 }
 
@@ -124,5 +155,6 @@ export {
   handlePageSizeChange,
   handleSearchChange,
   handleSortChange,
+  handleTypeChange,
   transactionStore,
 };

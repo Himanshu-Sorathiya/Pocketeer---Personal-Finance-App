@@ -1,6 +1,7 @@
 import FilterCategory from "./FilterCategory.tsx";
 import FilterDate from "./FilterDate.tsx";
 import FilterSearch from "./FilterSearch.tsx";
+import FilterType from "./FilterType.tsx";
 
 function TransactionFilter() {
   return (
@@ -10,6 +11,8 @@ function TransactionFilter() {
       <FilterCategory />
 
       <FilterDate />
+
+      <FilterType />
     </div>
   );
 }

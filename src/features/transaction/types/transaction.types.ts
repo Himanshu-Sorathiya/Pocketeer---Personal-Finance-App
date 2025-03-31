@@ -1,6 +1,9 @@
 import type transactionCategories from "../../../constants/transactionCategory.ts";
+import type transactionTypes from "../../../constants/transactionType.ts";
 
 type TransactionCategory = (typeof transactionCategories)[number];
+
+type TransactionType = (typeof transactionTypes)[number];
 
 type Transaction = {
   id: string;
@@ -9,6 +12,7 @@ type Transaction = {
   date: string;
   amount: number;
   currency: string;
+  type: TransactionType;
 };
 
-export { type Transaction, type TransactionCategory };
+export { type Transaction, type TransactionCategory, type TransactionType };

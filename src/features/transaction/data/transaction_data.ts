@@ -9,6 +9,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-08",
       amount: 1299,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "112",
@@ -17,6 +18,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-07",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "113",
@@ -25,6 +27,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-06",
       amount: 499,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "114",
@@ -33,6 +36,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-05",
       amount: 250,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "115",
@@ -41,6 +45,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-04",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "116",
@@ -49,6 +54,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-03",
       amount: 350,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "117",
@@ -57,6 +63,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-02",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "118",
@@ -65,6 +72,7 @@ function getTransactions(): Transaction[] {
       date: "2025-03-01",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "119",
@@ -73,6 +81,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-28",
       amount: 2200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "120",
@@ -81,6 +90,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-27",
       amount: 599,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "121",
@@ -89,6 +99,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-26",
       amount: 199,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "122",
@@ -97,6 +108,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-25",
       amount: 650,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "123",
@@ -105,6 +117,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-24",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "124",
@@ -113,6 +126,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-23",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "125",
@@ -121,6 +135,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-22",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "126",
@@ -129,6 +144,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-21",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "127",
@@ -137,6 +153,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-20",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "128",
@@ -145,6 +162,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-19",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "129",
@@ -153,6 +171,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-18",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "130",
@@ -161,6 +180,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-17",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
 
     {
@@ -170,6 +190,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-16",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "132",
@@ -178,6 +199,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-15",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "133",
@@ -186,6 +208,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-14",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "134",
@@ -194,6 +217,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-13",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "135",
@@ -202,6 +226,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-12",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "136",
@@ -210,6 +235,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-11",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "137",
@@ -218,6 +244,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-10",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "138",
@@ -226,6 +253,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-09",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "139",
@@ -234,6 +262,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-08",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "140",
@@ -242,6 +271,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-07",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
 
     {
@@ -251,6 +281,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-06",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "142",
@@ -259,6 +290,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-05",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "143",
@@ -267,6 +299,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-04",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "144",
@@ -275,6 +308,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-03",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "145",
@@ -283,6 +317,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-02",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "146",
@@ -291,6 +326,7 @@ function getTransactions(): Transaction[] {
       date: "2025-02-01",
       amount: 2200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "147",
@@ -299,6 +335,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-31",
       amount: 299,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "148",
@@ -307,6 +344,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-30",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "149",
@@ -315,6 +353,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-29",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "150",
@@ -323,6 +362,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-28",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
 
     {
@@ -332,6 +372,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-27",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "152",
@@ -340,6 +381,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-26",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "153",
@@ -348,6 +390,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-25",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "154",
@@ -356,6 +399,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-24",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "155",
@@ -364,6 +408,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-23",
       amount: 2200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "156",
@@ -372,6 +417,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-22",
       amount: 500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "157",
@@ -380,6 +426,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-21",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "158",
@@ -388,6 +435,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-20",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "159",
@@ -396,6 +444,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-19",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "160",
@@ -404,6 +453,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-18",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
 
     {
@@ -413,6 +463,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-17",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "162",
@@ -421,6 +472,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-16",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "163",
@@ -429,6 +481,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-15",
       amount: 799,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "164",
@@ -437,6 +490,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-14",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "165",
@@ -445,6 +499,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-13",
       amount: 550,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "166",
@@ -453,6 +508,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-12",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "167",
@@ -461,6 +517,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-11",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "168",
@@ -469,6 +526,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-10",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "169",
@@ -477,6 +535,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-09",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "170",
@@ -485,6 +544,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-08",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "171",
@@ -493,6 +553,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-07",
       amount: 9000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "172",
@@ -501,6 +562,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-06",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "173",
@@ -509,6 +571,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-05",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "174",
@@ -517,6 +580,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-04",
       amount: 600,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "175",
@@ -525,6 +589,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-03",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "176",
@@ -533,6 +598,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-02",
       amount: 55000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "177",
@@ -541,6 +607,7 @@ function getTransactions(): Transaction[] {
       date: "2025-01-01",
       amount: 2700,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "178",
@@ -549,6 +616,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-31",
       amount: 22000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "179",
@@ -557,6 +625,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-30",
       amount: 1499,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "180",
@@ -565,6 +634,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-29",
       amount: 1000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "181",
@@ -573,6 +643,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-28",
       amount: 750,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "182",
@@ -581,6 +652,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-27",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "183",
@@ -589,6 +661,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-26",
       amount: 1600,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "184",
@@ -597,6 +670,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-25",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "185",
@@ -605,6 +679,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-24",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "186",
@@ -613,6 +688,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-23",
       amount: 8000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "187",
@@ -621,6 +697,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-22",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "188",
@@ -629,6 +706,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-21",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "189",
@@ -637,6 +715,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-20",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "190",
@@ -645,6 +724,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-19",
       amount: 4000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "191",
@@ -653,6 +733,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-18",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "192",
@@ -661,6 +742,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-17",
       amount: 45000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "193",
@@ -669,6 +751,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-16",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "194",
@@ -677,6 +760,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-15",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "195",
@@ -685,6 +769,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-14",
       amount: 129,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "196",
@@ -693,6 +778,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-13",
       amount: 900,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "197",
@@ -701,6 +787,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-12",
       amount: 850,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "198",
@@ -709,6 +796,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-11",
       amount: 2800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "199",
@@ -717,6 +805,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-10",
       amount: 2600,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "200",
@@ -725,6 +814,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-09",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "201",
@@ -733,6 +823,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-08",
       amount: 20000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "202",
@@ -741,6 +832,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-07",
       amount: 9500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "203",
@@ -749,6 +841,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-06",
       amount: 11000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "204",
@@ -757,6 +850,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-05",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "205",
@@ -765,6 +859,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-04",
       amount: 20000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "206",
@@ -773,6 +868,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-03",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "207",
@@ -781,6 +877,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-02",
       amount: 2200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "208",
@@ -789,6 +886,7 @@ function getTransactions(): Transaction[] {
       date: "2024-12-01",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "209",
@@ -797,6 +895,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-30",
       amount: 5400,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "210",
@@ -805,6 +904,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-29",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "211",
@@ -813,6 +913,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-28",
       amount: 599,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "212",
@@ -821,6 +922,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-27",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "213",
@@ -829,6 +931,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-26",
       amount: 700,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "214",
@@ -837,6 +940,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-25",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "215",
@@ -845,6 +949,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-24",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "216",
@@ -853,6 +958,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-23",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "217",
@@ -861,6 +967,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-22",
       amount: 30000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "218",
@@ -869,6 +976,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-21",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "219",
@@ -877,6 +985,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-20",
       amount: 14000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "220",
@@ -885,6 +994,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-19",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "221",
@@ -893,6 +1003,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-18",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "222",
@@ -901,6 +1012,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-17",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "223",
@@ -909,6 +1021,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-16",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "224",
@@ -917,6 +1030,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-15",
       amount: 4000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "225",
@@ -925,6 +1039,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-14",
       amount: 499,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "226",
@@ -933,6 +1048,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-13",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "227",
@@ -941,6 +1057,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-12",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "228",
@@ -949,6 +1066,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-11",
       amount: 350,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "229",
@@ -957,6 +1075,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-10",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "230",
@@ -965,6 +1084,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-09",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "231",
@@ -973,6 +1093,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-08",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "232",
@@ -981,6 +1102,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-07",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "233",
@@ -989,6 +1111,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-06",
       amount: 8000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "234",
@@ -997,6 +1120,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-05",
       amount: 6000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "235",
@@ -1005,6 +1129,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-04",
       amount: 50000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "236",
@@ -1013,6 +1138,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-03",
       amount: 7500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "237",
@@ -1021,6 +1147,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-02",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "238",
@@ -1029,6 +1156,7 @@ function getTransactions(): Transaction[] {
       date: "2024-11-01",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "239",
@@ -1037,6 +1165,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-31",
       amount: 199,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "240",
@@ -1045,6 +1174,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-30",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "241",
@@ -1053,6 +1183,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-29",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "242",
@@ -1061,6 +1192,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-28",
       amount: 500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "243",
@@ -1069,6 +1201,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-27",
       amount: 20000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "244",
@@ -1077,6 +1210,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-26",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "245",
@@ -1085,6 +1219,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-25",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "246",
@@ -1093,6 +1228,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-24",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "247",
@@ -1101,6 +1237,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-23",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "248",
@@ -1109,6 +1246,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-22",
       amount: 9000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "249",
@@ -1117,6 +1255,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-21",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "250",
@@ -1125,6 +1264,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-20",
       amount: 6500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "251",
@@ -1133,6 +1273,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-19",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "252",
@@ -1141,6 +1282,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-18",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "253",
@@ -1149,6 +1291,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-17",
       amount: 499,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "254",
@@ -1157,6 +1300,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-16",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "255",
@@ -1165,6 +1309,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-15",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "256",
@@ -1173,6 +1318,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-14",
       amount: 700,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "257",
@@ -1181,6 +1327,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-13",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "258",
@@ -1189,6 +1336,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-12",
       amount: 6000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "259",
@@ -1197,6 +1345,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-11",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "260",
@@ -1205,6 +1354,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-10",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "261",
@@ -1213,6 +1363,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-09",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "262",
@@ -1221,6 +1372,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-08",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "263",
@@ -1229,6 +1381,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-07",
       amount: 75000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "264",
@@ -1237,6 +1390,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-06",
       amount: 8000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "265",
@@ -1245,6 +1399,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-05",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "266",
@@ -1253,6 +1408,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-04",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "267",
@@ -1261,6 +1417,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-03",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "268",
@@ -1269,6 +1426,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-02",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "269",
@@ -1277,6 +1435,7 @@ function getTransactions(): Transaction[] {
       date: "2024-10-01",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "270",
@@ -1285,6 +1444,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-30",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "271",
@@ -1293,6 +1453,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-29",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "272",
@@ -1301,6 +1462,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-28",
       amount: 4200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "273",
@@ -1309,6 +1471,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-27",
       amount: 3000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "274",
@@ -1317,6 +1480,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-26",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "275",
@@ -1325,6 +1489,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-25",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "276",
@@ -1333,6 +1498,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-24",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "277",
@@ -1341,6 +1507,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-23",
       amount: 50000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "278",
@@ -1349,6 +1516,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-22",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "279",
@@ -1357,6 +1525,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-21",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "280",
@@ -1365,6 +1534,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-20",
       amount: 2800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "281",
@@ -1373,6 +1543,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-19",
       amount: 900,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "282",
@@ -1381,6 +1552,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-18",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "283",
@@ -1389,6 +1561,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-17",
       amount: 5200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "284",
@@ -1397,6 +1570,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-16",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "285",
@@ -1405,6 +1579,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-15",
       amount: 20000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "286",
@@ -1413,6 +1588,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-14",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "287",
@@ -1421,6 +1597,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-13",
       amount: 8500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "288",
@@ -1429,6 +1606,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-12",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "289",
@@ -1437,6 +1615,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-11",
       amount: 1500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "290",
@@ -1445,6 +1624,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-10",
       amount: 3200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "291",
@@ -1453,6 +1633,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-09",
       amount: 4000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "292",
@@ -1461,6 +1642,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-08",
       amount: 1200,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "293",
@@ -1469,6 +1651,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-07",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "294",
@@ -1477,6 +1660,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-06",
       amount: 10000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "295",
@@ -1485,6 +1669,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-05",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "296",
@@ -1493,6 +1678,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-04",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "297",
@@ -1501,6 +1687,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-03",
       amount: 20000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "298",
@@ -1509,6 +1696,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-02",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "299",
@@ -1517,6 +1705,7 @@ function getTransactions(): Transaction[] {
       date: "2024-09-01",
       amount: 60000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "300",
@@ -1525,6 +1714,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-31",
       amount: 1300,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "301",
@@ -1533,6 +1723,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-30",
       amount: 3500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "302",
@@ -1541,6 +1732,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-29",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "303",
@@ -1549,6 +1741,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-28",
       amount: 2100,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "304",
@@ -1557,6 +1750,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-27",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "305",
@@ -1565,6 +1759,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-26",
       amount: 45000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "306",
@@ -1573,6 +1768,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-25",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "307",
@@ -1581,6 +1777,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-24",
       amount: 30000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "308",
@@ -1589,6 +1786,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-23",
       amount: 15000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "309",
@@ -1597,6 +1795,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-22",
       amount: 12000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "310",
@@ -1605,6 +1804,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-21",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "311",
@@ -1613,6 +1813,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-20",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "312",
@@ -1621,6 +1822,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-19",
       amount: 800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "313",
@@ -1629,6 +1831,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-18",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "314",
@@ -1637,6 +1840,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-17",
       amount: 2000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "315",
@@ -1645,6 +1849,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-16",
       amount: 4500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "316",
@@ -1653,6 +1858,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-15",
       amount: 6000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "317",
@@ -1661,6 +1867,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-14",
       amount: 2500,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "318",
@@ -1669,6 +1876,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-13",
       amount: 100000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "319",
@@ -1677,6 +1885,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-12",
       amount: 5000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "320",
@@ -1685,6 +1894,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-11",
       amount: 14000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "321",
@@ -1693,6 +1903,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-10",
       amount: 75000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "322",
@@ -1701,6 +1912,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-09",
       amount: 1800,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "323",
@@ -1709,6 +1921,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-08",
       amount: 600,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "324",
@@ -1717,6 +1930,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-07",
       amount: 900,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "325",
@@ -1725,6 +1939,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-06",
       amount: 4000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "326",
@@ -1733,6 +1948,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-05",
       amount: 7000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "327",
@@ -1741,6 +1957,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-04",
       amount: 90000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "328",
@@ -1749,6 +1966,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-03",
       amount: 18000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "329",
@@ -1757,6 +1975,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-02",
       amount: 50000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "330",
@@ -1765,6 +1984,7 @@ function getTransactions(): Transaction[] {
       date: "2024-08-01",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "331",
@@ -1773,6 +1993,7 @@ function getTransactions(): Transaction[] {
       date: "2024-07-31",
       amount: 25000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
     {
       id: "332",
@@ -1781,6 +2002,7 @@ function getTransactions(): Transaction[] {
       date: "2024-07-30",
       amount: 30000,
       currency: "₹",
+      type: Math.random() < 0.5 ? "income" : "expense",
     },
   ];
 }

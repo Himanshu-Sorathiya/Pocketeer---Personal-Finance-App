@@ -5,6 +5,7 @@ import { getTransactionData } from "../store/transactionStyleStore.ts";
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 
 import appActions from "../../../constants/appActions.ts";
+import type { TransactionType } from "../types/transaction.types.ts";
 
 function RecipientCell({
   transactionId,
@@ -46,8 +47,20 @@ function DateCell({ date }: { date: string }) {
   return <span>{date}</span>;
 }
 
-function AmountCell({ amount }: { amount: string }) {
-  return <span className="font-space-grotesk font-medium">{amount}</span>;
+function AmountCell({
+  amount,
+  type,
+}: {
+  amount: string;
+  type: TransactionType;
+}) {
+  return (
+    <span
+      className={`font-space-grotesk font-semibold ${type === "income" && "text-green-500"}`}
+    >
+      {amount}
+    </span>
+  );
 }
 
 function ActionsCell() {

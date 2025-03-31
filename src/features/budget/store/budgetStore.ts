@@ -9,10 +9,11 @@ type BudgetState = {
   selectedBudget: string;
 };
 
-const budgets = getBudgets();
+const budgets: Budget[] = getBudgets();
 
 const budgetStore = new Store<BudgetState>({
   budgets,
+
   selectedBudget: budgets.length > 0 ? budgets[0].id : "",
 });
 

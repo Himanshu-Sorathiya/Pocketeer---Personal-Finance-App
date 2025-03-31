@@ -7,8 +7,10 @@ import BudgetPieChart from "./budget_pie_chart/BudgetPieChart.tsx";
 import BudgetPlaceholder from "./budget_placeholder/BudgetPlaceholder.tsx";
 import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 
+import type { Budget } from "./types/budget.types.ts";
+
 function BudgetMain() {
-  const { budgets } = useStore(budgetStore, (state) => state);
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   const shouldShowPlaceholder = budgets.length === 0;
 

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useStore } from "@tanstack/react-store";
 import {
   type ColumnHelper,
@@ -14,7 +12,6 @@ import {
 
 import { transactionStore } from "./store/transactionStore.ts";
 
-import { getTransactions } from "./data/transaction_data.ts";
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
@@ -31,6 +28,7 @@ import type { Transaction } from "./types/transaction.types.ts";
 
 import { fuzzyFilter, fuzzySort } from "../../utilities/tableUtils.ts";
 import {
+  filterAmount,
   filterCategory,
   filterDate,
   setColumnFilters,
@@ -41,7 +39,10 @@ import {
 } from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
-  const [transactions] = useState<Transaction[]>(getTransactions());
+  const transactions: Transaction[] = useStore(
+    transactionStore,
+    (s) => s.transactions,
+  );
 
   const columnHelper: ColumnHelper<Transaction> =
     createColumnHelper<Transaction>();
@@ -75,8 +76,11 @@ function TransactionMain() {
     }),
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
       id: "amount",
-      cell: (info) => <AmountCell amount={info.getValue()} />,
+      cell: (info) => (
+        <AmountCell amount={info.getValue()} type={info.row.original.type} />
+      ),
       header: () => "Amount",
+      filterFn: filterAmount,
       sortingFn: sortAmount,
     }),
 
