@@ -10,7 +10,7 @@ export default function Header({ title, children }: HeaderProps) {
     <div className="flex items-center justify-between pb-6">
       <h1 className="text-4xl font-bold text-gray-800">{title}</h1>
 
-      <div>{children}</div>
+      {children && <div>{children}</div>}
     </div>
   );
 }
