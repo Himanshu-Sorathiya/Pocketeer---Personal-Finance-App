@@ -2,18 +2,23 @@ import { useStore } from "@tanstack/react-store";
 
 import { transactionStore } from "../store/transactionStore.ts";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function TransactionPlaceholder() {
-  const searchedRecipient = useStore(
+  const searchedRecipient: string = useStore(
     transactionStore,
     (s) => s.searchedRecipient,
   );
-  const selectedCategory = useStore(
+  const selectedCategory: SelectedOptions = useStore(
     transactionStore,
     (s) => s.selectedCategory,
   );
-  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
+  const selectedWeek: [Date, Date] = useStore(
+    transactionStore,
+    (s) => s.selectedWeek,
+  );
 
   const hasSearch = searchedRecipient.trim() !== "";
   const hasCategory = selectedCategory.value !== "all";

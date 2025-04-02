@@ -12,7 +12,10 @@ import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
 function FilterDate() {
-  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
+  const selectedWeek: [Date, Date] = useStore(
+    transactionStore,
+    (s) => s.selectedWeek,
+  );
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -47,7 +50,10 @@ function DateDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedWeek = useStore(transactionStore, (s) => s.selectedWeek);
+  const selectedWeek: [Date, Date] = useStore(
+    transactionStore,
+    (s) => s.selectedWeek,
+  );
 
   return (
     <div className="relative flex items-center">

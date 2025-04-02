@@ -9,10 +9,12 @@ import {
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 import categoryOptions from "../../../constants/transactionCategoryOptions.ts";
 
 function FilterCategory() {
-  const selectedCategory = useStore(
+  const selectedCategory: SelectedOptions = useStore(
     transactionStore,
     (s) => s.selectedCategory,
   );
@@ -53,7 +55,7 @@ function FilterDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedCategory = useStore(
+  const selectedCategory: SelectedOptions = useStore(
     transactionStore,
     (s) => s.selectedCategory,
   );

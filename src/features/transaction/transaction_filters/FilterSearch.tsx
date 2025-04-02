@@ -6,7 +6,7 @@ import {
 } from "../store/transactionStore.ts";
 
 function FilterSearch() {
-  const searchedRecipient = useStore(
+  const searchedRecipient: string = useStore(
     transactionStore,
     (s) => s.searchedRecipient,
   );

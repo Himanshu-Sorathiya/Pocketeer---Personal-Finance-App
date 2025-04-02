@@ -22,6 +22,8 @@ import {
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
+
 import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
@@ -177,7 +179,7 @@ function ListProgressInfo({
 }
 
 function ListRecentTransactions({ category }: { category: string }) {
-  const latestTransactions = [
+  const latestTransactions: Transaction[] = [
     ...useStore(transactionStore, (s) => s.transactions),
   ]
     .filter((t) => t.category === category)

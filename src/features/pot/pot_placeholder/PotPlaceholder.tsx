@@ -2,9 +2,14 @@ import { useStore } from "@tanstack/react-store";
 
 import { potStore } from "../store/potStore.ts";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 function PotPlaceholder() {
-  const searchedPot = useStore(potStore, (s) => s.searchedPot);
-  const selectedStatus = useStore(potStore, (s) => s.selectedStatus);
+  const searchedPot: string = useStore(potStore, (s) => s.searchedPot);
+  const selectedStatus: SelectedOptions = useStore(
+    potStore,
+    (s) => s.selectedStatus,
+  );
 
   const hasSearch = searchedPot.trim() !== "";
   const hasStatus = selectedStatus.value !== "all";

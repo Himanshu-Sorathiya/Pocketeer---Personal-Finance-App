@@ -1,6 +1,9 @@
 import { useStore } from "@tanstack/react-store";
 import {
+  type ColumnFiltersState,
   type ColumnHelper,
+  type PaginationState,
+  type SortingState,
   type Table,
   createColumnHelper,
   getCoreRowModel,
@@ -39,10 +42,9 @@ import {
 } from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
 
   const columnHelper: ColumnHelper<Transaction> =
     createColumnHelper<Transaction>();
@@ -91,9 +93,15 @@ function TransactionMain() {
     }),
   ];
 
-  const columnFilters = useStore(transactionStore, (s) => s.columnFilters);
-  const sorting = useStore(transactionStore, (s) => s.sorting);
-  const pagination = useStore(transactionStore, (s) => s.pagination);
+  const columnFilters: ColumnFiltersState = useStore(
+    transactionStore,
+    (s) => s.columnFilters,
+  );
+  const sorting: SortingState = useStore(transactionStore, (s) => s.sorting);
+  const pagination: PaginationState = useStore(
+    transactionStore,
+    (s) => s.pagination,
+  );
 
   const table: Table<Transaction> = useReactTable({
     data: transactions,
@@ -125,7 +133,7 @@ function TransactionMain() {
   const shouldShowPlaceholder = table.getRowModel().rows.length === 0;
 
   return (
-    <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-visible rounded-[20px] p-4 whitespace-nowrap">
+    <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-visible rounded-md p-4 whitespace-nowrap">
       <TransactionFilter />
 
       {shouldShowPlaceholder ? (

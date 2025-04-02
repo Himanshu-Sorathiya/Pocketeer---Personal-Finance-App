@@ -6,10 +6,15 @@ import { handleStatusChange, potStore } from "../store/potStore.ts";
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 import statusOptions from "../../../constants/potStatusOptions.ts";
 
 function FilterStatus() {
-  const selectedStatus = useStore(potStore, (s) => s.selectedStatus);
+  const selectedStatus: SelectedOptions = useStore(
+    potStore,
+    (s) => s.selectedStatus,
+  );
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -45,7 +50,10 @@ function FilterDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedStatus = useStore(potStore, (s) => s.selectedStatus);
+  const selectedStatus: SelectedOptions = useStore(
+    potStore,
+    (s) => s.selectedStatus,
+  );
 
   return (
     <div className="relative flex items-center">

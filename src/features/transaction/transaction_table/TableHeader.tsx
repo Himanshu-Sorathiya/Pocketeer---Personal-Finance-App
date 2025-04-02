@@ -14,6 +14,7 @@ import {
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { Transaction } from "../types/transaction.types.ts";
 
 import sortOptions from "../../../constants/transactionSortOptions.ts";
@@ -64,7 +65,10 @@ function SortDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedSort = useStore(transactionStore, (s) => s.selectedSort);
+  const selectedSort: SelectedOptions = useStore(
+    transactionStore,
+    (s) => s.selectedSort,
+  );
 
   return (
     <div

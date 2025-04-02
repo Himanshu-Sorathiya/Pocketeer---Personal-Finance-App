@@ -9,10 +9,15 @@ import {
 
 import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 import typeOptions from "../../../constants/transactionTypeOptions.ts";
 
 function FilterType() {
-  const selectedType = useStore(transactionStore, (s) => s.selectedType);
+  const selectedType: SelectedOptions = useStore(
+    transactionStore,
+    (s) => s.selectedType,
+  );
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -48,7 +53,10 @@ function FilterDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedType = useStore(transactionStore, (s) => s.selectedType);
+  const selectedType: SelectedOptions = useStore(
+    transactionStore,
+    (s) => s.selectedType,
+  );
 
   return (
     <div className="relative flex items-center">

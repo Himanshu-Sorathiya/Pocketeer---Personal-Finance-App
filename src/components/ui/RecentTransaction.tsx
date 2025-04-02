@@ -31,7 +31,9 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
       </div>
 
       <div className="flex flex-col items-end">
-        <span className="font-space-grotesk font-medium">
+        <span
+          className={`font-space-grotesk font-medium ${transaction.type === "income" && "text-green-500"}`}
+        >
           {transaction.currency}
           {transaction.amount}
         </span>

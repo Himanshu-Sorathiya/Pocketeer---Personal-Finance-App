@@ -3,7 +3,7 @@ import { useStore } from "@tanstack/react-store";
 import { handleSearchChange, potStore } from "../store/potStore.ts";
 
 function FilterSearch() {
-  const searchedPot = useStore(potStore, (s) => s.searchedPot);
+  const searchedPot: string = useStore(potStore, (s) => s.searchedPot);
 
   return (
     <div

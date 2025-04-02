@@ -6,10 +6,15 @@ import { handleSortChange, potStore } from "../store/potStore.ts";
 
 import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
 
+import type { SelectedOptions } from "../../../types/global.types.ts";
+
 import sortOptions from "../../../constants/potSortOptions.ts";
 
 function PotSort() {
-  const selectedSort = useStore(potStore, (s) => s.selectedSort);
+  const selectedSort: SelectedOptions = useStore(
+    potStore,
+    (s) => s.selectedSort,
+  );
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -48,7 +53,10 @@ function SortDropDown({
   openDropdown: string | null;
   setOpenDropdown: Dispatch<SetStateAction<string | null>>;
 }) {
-  const selectedSort = useStore(potStore, (s) => s.selectedSort);
+  const selectedSort: SelectedOptions = useStore(
+    potStore,
+    (s) => s.selectedSort,
+  );
 
   return (
     <div className="relative flex items-center">

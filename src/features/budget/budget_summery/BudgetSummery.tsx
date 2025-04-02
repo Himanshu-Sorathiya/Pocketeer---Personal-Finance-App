@@ -2,8 +2,11 @@ import { useStore } from "@tanstack/react-store";
 
 import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
+import type { Budget } from "../types/budget.types.ts";
+
 function BudgetSummery() {
-  const { budgets, selectedBudget } = useStore(budgetStore, (state) => state);
+  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
 
   return (
     <div className="flex flex-col gap-3">
@@ -19,6 +22,7 @@ function BudgetSummery() {
                 budget.id === selectedBudget
                   ? `${budget.theme}13`
                   : "transparent",
+              borderBottom: `1px solid ${budget.theme}`,
             }}
             onClick={() => handleBudgetChange(budget.id)}
           >

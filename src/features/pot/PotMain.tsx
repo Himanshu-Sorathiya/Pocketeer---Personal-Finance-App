@@ -7,18 +7,18 @@ import PotFilter from "./pot_filter/PotFilter.tsx";
 import PotPlaceholder from "./pot_placeholder/PotPlaceholder.tsx";
 import PotSort from "./pot_sort/PotSort.tsx";
 
-import type { Pot } from "./types/pot.types.ts";
+import type { FilterState, Pot, SortingState } from "./types/pot.types.ts";
 
 import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
 
 function PotMain() {
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
+  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
 
-  const filters = useStore(potStore, (s) => s.filters);
-  const sorting = useStore(potStore, (s) => s.sorting);
+  const filters: FilterState[] = useStore(potStore, (s) => s.filters);
+  const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
-  const filteredPots = filterPots(pots, filters);
-  const sortedPots = sortPots(filteredPots, sorting);
+  const filteredPots: Pot[] = filterPots(pots, filters);
+  const sortedPots: Pot[] = sortPots(filteredPots, sorting);
 
   const shouldShowPlaceholder = sortedPots.length === 0;
 
@@ -30,11 +30,7 @@ function PotMain() {
         <PotSort />
       </div>
 
-      {shouldShowPlaceholder ? (
-        <PotPlaceholder />
-      ) : (
-        <PotBoard pots={sortedPots} />
-      )}
+      {shouldShowPlaceholder ? <PotPlaceholder /> : <PotBoard />}
     </div>
   );
 }

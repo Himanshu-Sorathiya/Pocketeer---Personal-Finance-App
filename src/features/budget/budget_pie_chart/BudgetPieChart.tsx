@@ -3,8 +3,10 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { budgetStore } from "../store/budgetStore.ts";
 
+import type { Budget } from "../types/budget.types.ts";
+
 function BudgetPieChart() {
-  const budgets = useStore(budgetStore, (s) => s.budgets);
+  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
 
   const totalSpent = budgets.reduce(
     (sum, budget) => sum + budget.spentAmount,

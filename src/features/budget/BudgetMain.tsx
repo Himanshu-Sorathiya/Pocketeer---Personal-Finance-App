@@ -10,15 +10,15 @@ import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 import type { Budget } from "./types/budget.types.ts";
 
 function BudgetMain() {
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
+  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
 
   const shouldShowPlaceholder = budgets.length === 0;
 
   return shouldShowPlaceholder ? (
     <BudgetPlaceholder />
   ) : (
-    <div className="flex items-start justify-between gap-10 whitespace-nowrap">
-      <div className="bg-shade-100 flex basis-5/12 flex-col gap-3 rounded-md px-6 py-4 pt-0">
+    <div className="grid grid-cols-[5fr_7fr] items-start gap-10 whitespace-nowrap">
+      <div className="bg-shade-100 flex flex-col gap-3 rounded-md px-6 pb-4">
         <BudgetPieChart />
 
         <BudgetSummery />

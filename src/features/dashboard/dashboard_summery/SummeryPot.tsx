@@ -30,6 +30,7 @@ function SummeryPot() {
 
 function PotBalance() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+
   const totalSaved = pots
     .reduce((acc, pot) => acc + pot.savedAmount, 0)
     .toFixed(2);

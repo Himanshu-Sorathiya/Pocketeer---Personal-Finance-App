@@ -1,3 +1,7 @@
+import { useStore } from "@tanstack/react-store";
+
+import { budgetStore } from "../store/budgetStore.ts";
+
 import {
   ListBalance,
   ListProgressChart,
@@ -7,29 +11,33 @@ import {
 
 import type { Budget } from "../types/budget.types.ts";
 
-function ListBody({ budget }: { budget: Budget }) {
+function ListBody() {
+  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+
+  const budget: Budget =
+    budgets.find((b) => b.id === selectedBudget) || budgets[0];
+  const { targetAmount, spentAmount, currency, theme, category } = budget;
+
   return (
     <div className="flex flex-col gap-3">
-      <ListBalance
-        targetAmount={budget.targetAmount}
-        currency={budget.currency}
-      />
+      <ListBalance targetAmount={targetAmount} currency={currency} />
 
       <ListProgressChart
-        spentAmount={budget.spentAmount}
-        targetAmount={budget.targetAmount}
-        currency={budget.currency}
-        theme={budget.theme}
+        spentAmount={spentAmount}
+        targetAmount={targetAmount}
+        currency={currency}
+        theme={theme}
       />
 
       <ListProgressInfo
-        spentAmount={budget.spentAmount}
-        targetAmount={budget.targetAmount}
-        currency={budget.currency}
-        theme={budget.theme}
+        spentAmount={spentAmount}
+        targetAmount={targetAmount}
+        currency={currency}
+        theme={theme}
       />
 
-      <ListRecentTransactions category={budget.category} />
+      <ListRecentTransactions category={category} />
     </div>
   );
 }
