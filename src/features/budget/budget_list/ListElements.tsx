@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
 import {
   Bar,
   BarChart,
@@ -15,13 +16,11 @@ import {
   handleDateRangeChange,
   handlePageIndexChange,
   handleSearchChange,
+  transactionStore,
 } from "../../transaction/store/transactionStore.ts";
-import { getTransactionData } from "../../transaction/store/transactionStyleStore.ts";
 
+import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
-import { getTransactions } from "../../transaction/data/transaction_data.ts";
-
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
 import {
   DEFAULT_END_DATE,
@@ -178,7 +177,9 @@ function ListProgressInfo({
 }
 
 function ListRecentTransactions({ category }: { category: string }) {
-  const latestTransactions = getTransactions()
+  const latestTransactions = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ]
     .filter((t) => t.category === category)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
@@ -241,45 +242,6 @@ function ListRecentTransactions({ category }: { category: string }) {
   );
 }
 
-function RecentTransaction({ transaction }: { transaction: Transaction }) {
-  const { iconPath, bgColor } = getTransactionData(
-    transaction.id,
-    transaction.category,
-  );
-
-  return (
-    <div
-      className="flex justify-between px-1 py-3 text-gray-700"
-      key={transaction.id}
-    >
-      <div className="flex items-center gap-2 font-medium">
-        <div
-          className="flex h-10 w-10 items-center justify-center rounded-full"
-          style={{ backgroundColor: bgColor }}
-        >
-          <svg className="h-6 w-6">
-            <use
-              href={
-                iconPath || "/src/assets/icons/ui_icons_sprite.svg#fallback"
-              }
-            />
-          </svg>
-        </div>
-
-        <span>{transaction.recipient}</span>
-      </div>
-
-      <div className="flex flex-col items-end">
-        <span className="font-space-grotesk font-medium">
-          {transaction.currency}
-          {transaction.amount}
-        </span>
-
-        <span className="text-sm font-light">{transaction.date}</span>
-      </div>
-    </div>
-  );
-}
 export {
   ListBalance,
   ListProgressChart,

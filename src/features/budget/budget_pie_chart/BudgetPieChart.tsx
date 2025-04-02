@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { budgetStore } from "../store/budgetStore.ts";
 
 function BudgetPieChart() {
-  const { budgets } = useStore(budgetStore, (state) => state);
+  const budgets = useStore(budgetStore, (s) => s.budgets);
 
   const totalSpent = budgets.reduce(
     (sum, budget) => sum + budget.spentAmount,
@@ -42,7 +42,7 @@ function BudgetPieChart() {
 
               return (
                 <div
-                  className="bg-shade-100 z-10 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium opacity-100 shadow-md"
+                  className="bg-shade-100 z-10 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium whitespace-nowrap opacity-100 shadow-md"
                   style={{
                     left: coordinate.x,
                     top: coordinate.y,
