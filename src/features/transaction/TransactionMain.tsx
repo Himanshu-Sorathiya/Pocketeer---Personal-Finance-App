@@ -128,6 +128,7 @@ function TransactionMain() {
     },
 
     getRowId: (row) => row.id,
+    autoResetPageIndex: false,
   });
 
   const shouldShowPlaceholder = table.getRowModel().rows.length === 0;

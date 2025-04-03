@@ -77,6 +77,8 @@ function updateFilter(
       { id: "category", value: category },
       { id: "amount", value: type },
     ],
+
+    pagination: { ...prev.pagination, pageIndex: 0 },
   }));
 }
 
