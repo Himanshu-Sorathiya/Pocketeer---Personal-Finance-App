@@ -11,13 +11,20 @@ import {
 
 import type { Budget } from "../types/budget.types.ts";
 
+import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
+
 function ListBody() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
 
   const budget: Budget =
     budgets.find((b) => b.id === selectedBudget) || budgets[0];
-  const { targetAmount, spentAmount, currency, theme, category } = budget;
+  const { targetAmount, currency, theme, category, creationDate } = budget;
+
+  const spentAmount = filterTransactionsByBudget(
+    budget.creationDate,
+    category,
+  ).reduce((sum, t) => sum + t.amount, 0);
 
   return (
     <div className="flex flex-col gap-3">
@@ -37,7 +44,7 @@ function ListBody() {
         theme={theme}
       />
 
-      <ListRecentTransactions category={category} />
+      <ListRecentTransactions category={category} creationDate={creationDate} />
     </div>
   );
 }

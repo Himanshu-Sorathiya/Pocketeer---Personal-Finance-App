@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
 import {
   Bar,
   BarChart,
@@ -16,7 +15,6 @@ import {
   handleDateRangeChange,
   handlePageIndexChange,
   handleSearchChange,
-  transactionStore,
 } from "../../transaction/store/transactionStore.ts";
 
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
@@ -28,6 +26,7 @@ import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
 } from "../../../utilities/dateUtils.ts";
+import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function ListBalance({
   targetAmount,
@@ -178,11 +177,17 @@ function ListProgressInfo({
   );
 }
 
-function ListRecentTransactions({ category }: { category: string }) {
-  const latestTransactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ]
-    .filter((t) => t.category === category)
+function ListRecentTransactions({
+  category,
+  creationDate,
+}: {
+  category: string;
+  creationDate: string;
+}) {
+  const latestTransactions: Transaction[] = filterTransactionsByBudget(
+    creationDate,
+    category,
+  )
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 
@@ -194,7 +199,7 @@ function ListRecentTransactions({ category }: { category: string }) {
 
           <TooltipInfo
             id="info-circle"
-            text1="Only recent transactions made after budget creation are shown here. View all to explore older records for this category."
+            text1="Only recent transactions made after budget creation are considered. View all to explore older records for this category."
             className="text-primary size-4"
           />
         </div>
@@ -221,7 +226,7 @@ function ListRecentTransactions({ category }: { category: string }) {
 
       {latestTransactions.length === 0 ? (
         <div className="py-2 text-gray-500">
-          No recent transactions in this{" "}
+          No recent transactions in{" "}
           <span className="font-semibold text-gray-700">
             {category
               .split("_")

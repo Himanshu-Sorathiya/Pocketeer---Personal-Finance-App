@@ -5,8 +5,18 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
+import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
+
 function BudgetPieChart() {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const budgets: (Budget & { spentAmount: number })[] = [
+    ...useStore(budgetStore, (s) => s.budgets),
+  ].map((budget) => ({
+    ...budget,
+    spentAmount: filterTransactionsByBudget(
+      budget.creationDate,
+      budget.category,
+    ).reduce((sum, t) => sum + t.amount, 0),
+  }));
 
   const totalSpent = budgets.reduce(
     (sum, budget) => sum + budget.spentAmount,
@@ -26,7 +36,7 @@ function BudgetPieChart() {
             innerRadius={80}
             outerRadius={105}
             fill="#e0e0e0"
-            paddingAngle={2}
+            paddingAngle={1}
             dataKey="spentAmount"
           >
             {budgets.map((budget) => (

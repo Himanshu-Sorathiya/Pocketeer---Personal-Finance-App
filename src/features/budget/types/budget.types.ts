@@ -7,9 +7,9 @@ type Budget = {
   id: string;
   category: TransactionCategory;
   targetAmount: number;
-  spentAmount: number;
   currency: string;
   theme: string;
+  creationDate: string;
 };
 
 type BudgetTransaction = Omit<Transaction, "category">;
