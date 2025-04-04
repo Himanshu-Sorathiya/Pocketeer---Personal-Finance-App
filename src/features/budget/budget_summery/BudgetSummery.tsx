@@ -4,10 +4,15 @@ import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function BudgetSummery() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
 
   return (
@@ -19,6 +24,7 @@ function BudgetSummery() {
           const spentAmount = filterTransactionsByBudget(
             budget.creationDate,
             budget.category,
+            transactions,
           ).reduce((sum, t) => sum + t.amount, 0);
 
           return (

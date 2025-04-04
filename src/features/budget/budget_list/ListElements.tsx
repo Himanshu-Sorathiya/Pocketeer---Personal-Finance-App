@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
 import {
   Bar,
   BarChart,
@@ -15,6 +16,7 @@ import {
   handleDateRangeChange,
   handlePageIndexChange,
   handleSearchChange,
+  transactionStore,
 } from "../../transaction/store/transactionStore.ts";
 
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
@@ -184,9 +186,14 @@ function ListRecentTransactions({
   category: string;
   creationDate: string;
 }) {
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
+
   const latestTransactions: Transaction[] = filterTransactionsByBudget(
     creationDate,
     category,
+    transactions,
   )
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);

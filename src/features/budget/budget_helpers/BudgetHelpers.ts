@@ -1,7 +1,3 @@
-import { useStore } from "@tanstack/react-store";
-
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
-
 import type {
   Transaction,
   TransactionCategory,
@@ -10,12 +6,9 @@ import type {
 function filterTransactionsByBudget(
   creationDate: string,
   category: TransactionCategory,
+  transactions: Transaction[],
 ): Transaction[] {
   const budgetDate = new Date(creationDate);
-
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
 
   return transactions.filter(
     (t) =>

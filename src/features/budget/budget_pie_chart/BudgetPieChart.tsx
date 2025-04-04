@@ -1,13 +1,18 @@
 import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
 import { budgetStore } from "../store/budgetStore.ts";
 
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Budget } from "../types/budget.types.ts";
 
 import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function BudgetPieChart() {
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
   const budgets: (Budget & { spentAmount: number })[] = [
     ...useStore(budgetStore, (s) => s.budgets),
   ].map((budget) => ({
@@ -15,6 +20,7 @@ function BudgetPieChart() {
     spentAmount: filterTransactionsByBudget(
       budget.creationDate,
       budget.category,
+      transactions,
     ).reduce((sum, t) => sum + t.amount, 0),
   }));
 
