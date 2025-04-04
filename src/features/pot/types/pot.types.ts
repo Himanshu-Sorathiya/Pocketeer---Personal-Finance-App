@@ -12,9 +12,9 @@ type Pot = {
   id: string;
   name: string;
   targetAmount: number;
-  savedAmount: number;
   currency: string;
   theme: string;
+  creationDate: string;
 };
 
 export { type FilterState, type Pot, type SortingState };

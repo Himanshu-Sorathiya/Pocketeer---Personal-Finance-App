@@ -3,10 +3,14 @@ import { useStore } from "@tanstack/react-store";
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
 import { potStore } from "../../pot/store/potStore.ts";
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
 import type { Pot } from "../../pot/types/pot.types.ts";
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
+
+import { filterTransactionsByPot } from "../../pot/pot_helpers/potHelpers.ts";
 
 function SummeryPot() {
   return (
@@ -30,10 +34,22 @@ function SummeryPot() {
 
 function PotBalance() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
 
   const totalSaved = pots
-    .reduce((acc, pot) => acc + pot.savedAmount, 0)
+    .reduce((acc, pot) => {
+      const saved = filterTransactionsByPot(
+        pot.name,
+        pot.creationDate,
+        transactions,
+      ).reduce((sum, t) => sum + t.amount, 0);
+
+      return acc + saved;
+    }, 0)
     .toFixed(2);
+
   const currency = pots[0]?.currency;
 
   return (
@@ -49,40 +65,68 @@ function PotBalance() {
 }
 
 function PotSummery() {
+  const transactions: Transaction[] = [
+    ...useStore(transactionStore, (s) => s.transactions),
+  ];
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)]
-    .sort((a, b) => b.savedAmount - a.savedAmount)
+    .sort((a, b) => {
+      const savedA = filterTransactionsByPot(
+        a.name,
+        a.creationDate,
+        transactions,
+      ).reduce((sum, t) => sum + t.amount, 0);
+      const savedB = filterTransactionsByPot(
+        b.name,
+        b.creationDate,
+        transactions,
+      ).reduce((sum, t) => sum + t.amount, 0);
+
+      const percentA = savedA / a.targetAmount;
+      const percentB = savedB / b.targetAmount;
+
+      return percentB - percentA;
+    })
     .slice(0, 4);
 
   return (
     <div className="grid grid-cols-2">
-      {pots.map((pot) => (
-        <div
-          key={pot.id}
-          className="flex h-full items-center gap-3 rounded-md px-2 py-1.5"
-        >
+      {pots.map((pot) => {
+        const savedAmount = filterTransactionsByPot(
+          pot.name,
+          pot.creationDate,
+          transactions,
+        ).reduce((sum, t) => sum + t.amount, 0);
+
+        return (
           <div
-            className="h-full w-1 rounded-sm"
-            style={{ backgroundColor: pot.theme }}
-          ></div>
+            key={pot.id}
+            className="flex h-full items-center gap-3 rounded-md px-2 py-1.5"
+          >
+            <div
+              className="h-full w-1 rounded-sm"
+              style={{ backgroundColor: pot.theme }}
+            ></div>
 
-          <div className="flex flex-col">
-            <span className="text-xs font-medium text-gray-500">
-              {pot.name
-                .split("_")
-                .map(
-                  (part) =>
-                    part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
-                )
-                .join(" & ")}
-            </span>
+            <div className="flex flex-col">
+              <span className="text-xs font-medium text-gray-500">
+                {pot.name
+                  .split("_")
+                  .map(
+                    (part) =>
+                      part.charAt(0).toUpperCase() +
+                      part.slice(1).toLowerCase(),
+                  )
+                  .join(" & ")}
+              </span>
 
-            <span className="font-space-grotesk text-lg font-semibold text-gray-900">
-              {pot.currency}
-              {pot.savedAmount}
-            </span>
+              <span className="font-space-grotesk text-lg font-semibold text-gray-900">
+                {pot.currency}
+                {savedAmount}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
