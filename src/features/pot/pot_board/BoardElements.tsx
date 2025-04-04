@@ -152,14 +152,14 @@ function BoardPotActions({
   return (
     <div className="mt-4 flex items-center gap-3">
       <button
-        className="bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed"
+        className="disabled:text-shade-40 bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed disabled:font-normal"
         disabled={savedAmount >= targetAmount}
       >
         Add Money
       </button>
 
       <button
-        className="bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed"
+        className="disabled:text-shade-40 bg-shade-95 hover:bg-shade-80 flex-1 cursor-pointer rounded-md py-2 font-medium text-gray-700 transition-all duration-200 disabled:cursor-not-allowed disabled:font-normal"
         disabled={savedAmount === 0}
       >
         Withdraw Money
