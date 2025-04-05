@@ -17,7 +17,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Transaction() {
   const id = useStore(modalStore, (s) => s.id);
-  const data = useStore(modalStore, (s) => s.data);
+  const transactionId = useStore(modalStore, (s) => s.data);
 
   function handleOpenModal() {
     openModal("create_transaction");
@@ -47,9 +47,11 @@ function Transaction() {
         ].includes(id) && (
           <ModalLayout onClose={handleCloseModal}>
             {id === "create_transaction" && <CreateTransactionModal />}
-            {id === "edit_transaction" && <EditTransactionModal data={data} />}
+            {id === "edit_transaction" && (
+              <EditTransactionModal transactionId={transactionId} />
+            )}
             {id === "delete_transaction" && (
-              <DeleteTransactionModal data={data} />
+              <DeleteTransactionModal transactionId={transactionId} />
             )}
           </ModalLayout>
         )}

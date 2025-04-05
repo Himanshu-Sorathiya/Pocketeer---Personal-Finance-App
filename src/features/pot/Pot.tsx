@@ -19,7 +19,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Pot() {
   const id = useStore(modalStore, (s) => s.id);
-  const data = useStore(modalStore, (s) => s.data);
+  const potId = useStore(modalStore, (s) => s.data);
 
   function handleOpenModal() {
     openModal("create_pot");
@@ -51,11 +51,11 @@ function Pot() {
         ].includes(id) && (
           <ModalLayout onClose={handleCloseModal}>
             {id === "create_pot" && <CreatePotModal />}
-            {id === "edit_pot" && <EditPotModal data={data} />}
-            {id === "delete_pot" && <DeletePotModal data={data} />}
-            {id === "pot_add_money" && <AddMoneyToPotModal data={data} />}
+            {id === "edit_pot" && <EditPotModal potId={potId} />}
+            {id === "delete_pot" && <DeletePotModal potId={potId} />}
+            {id === "pot_add_money" && <AddMoneyToPotModal potId={potId} />}
             {id === "pot_withdraw_money" && (
-              <WithdrawMoneyFromPotModal data={data} />
+              <WithdrawMoneyFromPotModal potId={potId} />
             )}
           </ModalLayout>
         )}

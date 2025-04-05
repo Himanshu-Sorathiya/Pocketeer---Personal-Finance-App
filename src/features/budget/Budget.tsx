@@ -17,7 +17,7 @@ import Header from "../../components/ui/Header.tsx";
 
 function Budget() {
   const id = useStore(modalStore, (s) => s.id);
-  const data = useStore(modalStore, (s) => s.data);
+  const budgetId = useStore(modalStore, (s) => s.data);
 
   function handleOpenModal() {
     openModal("create_budget");
@@ -42,8 +42,8 @@ function Budget() {
       {id && ["create_budget", "edit_budget", "delete_budget"].includes(id) && (
         <ModalLayout onClose={handleCloseModal}>
           {id === "create_budget" && <CreateBudgetModal />}
-          {id === "edit_budget" && <EditBudgetModal data={data} />}
-          {id === "delete_budget" && <DeleteBudgetModal data={data} />}
+          {id === "edit_budget" && <EditBudgetModal budgetId={budgetId} />}
+          {id === "delete_budget" && <DeleteBudgetModal budgetId={budgetId} />}
         </ModalLayout>
       )}
 

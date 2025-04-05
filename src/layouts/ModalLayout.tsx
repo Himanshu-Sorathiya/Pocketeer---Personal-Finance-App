@@ -15,7 +15,7 @@ function ModalLayout({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-lg"
+        className="relative w-full max-w-xl rounded-lg bg-white p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
