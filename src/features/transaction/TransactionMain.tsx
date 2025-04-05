@@ -88,7 +88,7 @@ function TransactionMain() {
 
     columnHelper.display({
       id: "actions",
-      cell: () => <ActionsCell />,
+      cell: (info) => <ActionsCell transactionId={info.row.original.id} />,
       header: () => null,
     }),
   ];

@@ -47,6 +47,7 @@ function BoardBody({ pot }: { pot: Pot }) {
       />
 
       <BoardPotActions
+        potId={pot.id}
         savedAmount={savedAmount}
         targetAmount={pot.targetAmount}
       />

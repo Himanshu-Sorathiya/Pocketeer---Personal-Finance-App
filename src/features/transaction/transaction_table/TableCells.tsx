@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import { openModal } from "../../../store/appModalStore.ts";
 import { getTransactionData } from "../store/transactionStyleStore.ts";
 
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 
-import appActions from "../../../constants/appActions.ts";
 import type { TransactionType } from "../types/transaction.types.ts";
 
 function RecipientCell({
@@ -63,8 +63,14 @@ function AmountCell({
   );
 }
 
-function ActionsCell() {
+function ActionsCell({ transactionId }: { transactionId: string }) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+
+  function handleActionClick(action: string) {
+    if (action === "edit") openModal("edit_transaction", transactionId);
+    else if (action === "delete")
+      openModal("delete_transaction", transactionId);
+  }
 
   return (
     <div className="relative flex items-center justify-center">
@@ -81,8 +87,9 @@ function ActionsCell() {
 
       {openDropdown && (
         <DropDownActions
-          options={appActions.transaction}
+          action="transaction"
           setOpenDropdown={setOpenDropdown}
+          handleActionClick={handleActionClick}
         />
       )}
     </div>

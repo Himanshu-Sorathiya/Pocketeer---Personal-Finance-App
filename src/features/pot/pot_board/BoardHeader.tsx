@@ -2,7 +2,7 @@ import { useStore } from "@tanstack/react-store";
 
 import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
-import BoardActions from "./BoardActions.tsx";
+import { BoardActions } from "./BoardElements.tsx";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
@@ -41,7 +41,7 @@ function BoardHeader({ pot }: { pot: Pot }) {
         <div className="text-lg font-medium text-gray-900">{pot.name}</div>
       </div>
 
-      <BoardActions />
+      <BoardActions potId={pot.id} />
     </div>
   );
 }

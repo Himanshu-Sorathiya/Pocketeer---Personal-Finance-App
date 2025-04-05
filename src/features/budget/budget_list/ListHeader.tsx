@@ -2,7 +2,7 @@ import { useStore } from "@tanstack/react-store";
 
 import { budgetStore } from "../store/budgetStore.ts";
 
-import ListActions from "./ListActions.tsx";
+import { ListActions } from "./ListElements.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 

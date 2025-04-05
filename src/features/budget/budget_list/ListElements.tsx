@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import {
@@ -11,6 +13,7 @@ import {
 
 import { Route as transactionRoute } from "../../../routes/app/transaction.tsx";
 
+import { openModal } from "../../../store/appModalStore.ts";
 import {
   handleCategoryChange,
   handleDateRangeChange,
@@ -18,7 +21,9 @@ import {
   handleSearchChange,
   transactionStore,
 } from "../../transaction/store/transactionStore.ts";
+import { budgetStore } from "../store/budgetStore.ts";
 
+import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
@@ -256,7 +261,42 @@ function ListRecentTransactions({
   );
 }
 
+function ListActions() {
+  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+
+  const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+
+  function handleActionClick(action: string) {
+    if (action === "edit") openModal("edit_budget", selectedBudget);
+    else if (action === "delete") openModal("delete_budget", selectedBudget);
+  }
+
+  return (
+    <div className="relative flex items-center justify-center">
+      <button
+        onMouseEnter={() => setOpenDropdown(true)}
+        onMouseLeave={() => setOpenDropdown(false)}
+        onClick={() => setOpenDropdown(!openDropdown)}
+        className="cursor-pointer rounded text-gray-500 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100 hover:text-gray-700"
+      >
+        <svg className="flex h-6 w-6 items-center justify-center">
+          <use href="/src/assets/icons/ui_icons_sprite.svg#actions-horizontal"></use>
+        </svg>
+      </button>
+
+      {openDropdown && (
+        <DropDownActions
+          action="budget"
+          setOpenDropdown={setOpenDropdown}
+          handleActionClick={handleActionClick}
+        />
+      )}
+    </div>
+  );
+}
+
 export {
+  ListActions,
   ListBalance,
   ListProgressChart,
   ListProgressInfo,
