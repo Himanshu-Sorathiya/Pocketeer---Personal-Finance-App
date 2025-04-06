@@ -7,7 +7,7 @@ function getPots(): Pot[] {
       name: "Vacation Fund",
       targetAmount: 5000,
       currency: "₹",
-      theme: "#FF6B6B",
+      theme: "crimson_flame",
       creationDate: "2024-04-01",
     },
     {
@@ -15,7 +15,7 @@ function getPots(): Pot[] {
       name: "Emergency Fund",
       targetAmount: 4000,
       currency: "₹",
-      theme: "#4CAF50",
+      theme: "forest_emerald",
       creationDate: "2024-03-28",
     },
     {
@@ -23,7 +23,7 @@ function getPots(): Pot[] {
       name: "New Car",
       targetAmount: 3000,
       currency: "₹",
-      theme: "#1E88E5",
+      theme: "skyline_blue",
       creationDate: "2024-03-25",
     },
     {
@@ -31,7 +31,7 @@ function getPots(): Pot[] {
       name: "Home Renovation",
       targetAmount: 4500,
       currency: "₹",
-      theme: "#FF9800",
+      theme: "amber_blaze",
       creationDate: "2024-04-02",
     },
     {
@@ -39,7 +39,7 @@ function getPots(): Pot[] {
       name: "Gadgets Upgrade",
       targetAmount: 3500,
       currency: "₹",
-      theme: "#9C27B0",
+      theme: "orchid_purple",
       creationDate: "2024-03-30",
     },
   ];

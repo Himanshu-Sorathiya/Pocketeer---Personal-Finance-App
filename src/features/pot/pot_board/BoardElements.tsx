@@ -13,6 +13,8 @@ import { openModal } from "../../../store/appModalStore.ts";
 
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 function BoardBalance({
   currency,
   savedAmount,
@@ -104,7 +106,12 @@ function BoardProgressChart({
             }}
           />
 
-          <Bar dataKey="saved" fill={theme} barSize={20} stackId="pot" />
+          <Bar
+            dataKey="saved"
+            fill={themeColors.find((c) => c.name === theme)?.hex}
+            barSize={20}
+            stackId="pot"
+          />
           <Bar
             dataKey="remaining"
             fill={"#e0e0e0"}

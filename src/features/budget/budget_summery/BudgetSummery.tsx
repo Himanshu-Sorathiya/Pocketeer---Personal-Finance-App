@@ -1,11 +1,13 @@
 import { useStore } from "@tanstack/react-store";
 
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
 import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Budget } from "../types/budget.types.ts";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
+import themeColors from "../../../constants/themeColors.ts";
+
 import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function BudgetSummery() {
@@ -34,16 +36,20 @@ function BudgetSummery() {
               style={{
                 backgroundColor:
                   budget.id === selectedBudget
-                    ? `${budget.theme}13`
+                    ? `${themeColors.find((c) => c.name === budget.theme)?.hex}13`
                     : "transparent",
-                borderBottom: `1px solid ${budget.theme}`,
+                borderBottom: `1px solid ${themeColors.find((c) => c.name === budget.theme)?.hex}`,
               }}
               onClick={() => handleBudgetChange(budget.id)}
             >
               <div className="flex items-center gap-2">
                 <div
                   className="h-8 w-1 rounded-sm"
-                  style={{ backgroundColor: budget.theme }}
+                  style={{
+                    backgroundColor: themeColors.find(
+                      (c) => c.name === budget.theme,
+                    )?.hex,
+                  }}
                 ></div>
 
                 <span className="text-lg font-medium text-gray-800">

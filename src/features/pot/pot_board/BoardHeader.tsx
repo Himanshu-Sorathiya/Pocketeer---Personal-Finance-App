@@ -7,6 +7,8 @@ import { BoardActions } from "./BoardElements.tsx";
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 import { filterTransactionsByPot } from "../pot_helpers/potHelpers.ts";
 
 function BoardHeader({ pot }: { pot: Pot }) {
@@ -25,7 +27,9 @@ function BoardHeader({ pot }: { pot: Pot }) {
       <div className="flex items-center gap-2">
         <div
           className="flex size-8 items-center justify-center rounded-full"
-          style={{ backgroundColor: pot.theme }}
+          style={{
+            backgroundColor: themeColors.find((c) => c.name === pot.theme)?.hex,
+          }}
         >
           {savedAmount === pot.targetAmount ? (
             <svg className="h-6 w-6">

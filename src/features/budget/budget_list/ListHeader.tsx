@@ -6,6 +6,8 @@ import { ListActions } from "./ListElements.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 function ListHeader() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
@@ -18,7 +20,10 @@ function ListHeader() {
       <div className="flex items-center gap-2">
         <div
           className="size-4 rounded-full"
-          style={{ backgroundColor: budget.theme }}
+          style={{
+            backgroundColor: themeColors.find((c) => c.name === budget.theme)
+              ?.hex,
+          }}
         ></div>
 
         <div className="text-lg font-medium text-gray-900">

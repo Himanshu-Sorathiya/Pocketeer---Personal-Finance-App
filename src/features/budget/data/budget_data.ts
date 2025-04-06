@@ -7,7 +7,7 @@ function getBudgets(): Budget[] {
       category: "entertainment",
       targetAmount: 4000,
       currency: "₹",
-      theme: "#E91E63",
+      theme: "velvet_rose",
       creationDate: "2025-02-01",
     },
     {
@@ -15,7 +15,7 @@ function getBudgets(): Budget[] {
       category: "shopping",
       targetAmount: 5500,
       currency: "₹",
-      theme: "#9C27B0",
+      theme: "orchid_purple",
       creationDate: "2025-01-15",
     },
     {
@@ -23,7 +23,7 @@ function getBudgets(): Budget[] {
       category: "bills",
       targetAmount: 6000,
       currency: "₹",
-      theme: "#3F51B5",
+      theme: "royal_indigo",
       creationDate: "2025-01-10",
     },
     {
@@ -31,7 +31,7 @@ function getBudgets(): Budget[] {
       category: "food",
       targetAmount: 5000,
       currency: "₹",
-      theme: "#FF9800",
+      theme: "amber_blaze",
       creationDate: "2025-04-02",
     },
     {
@@ -39,7 +39,7 @@ function getBudgets(): Budget[] {
       category: "health_fitness",
       targetAmount: 3500,
       currency: "₹",
-      theme: "#4CAF50",
+      theme: "forest_emerald",
       creationDate: "2025-02-10",
     },
     {
@@ -47,7 +47,7 @@ function getBudgets(): Budget[] {
       category: "transportation",
       targetAmount: 4000,
       currency: "₹",
-      theme: "#00ACC1",
+      theme: "aqua_pulse",
       creationDate: "2025-02-05",
     },
     {
@@ -55,10 +55,11 @@ function getBudgets(): Budget[] {
       category: "education",
       targetAmount: 6500,
       currency: "₹",
-      theme: "#2E7D32",
+      theme: "pine_green",
       creationDate: "2025-01-12",
     },
   ];
 }
 
 export { getBudgets };
+

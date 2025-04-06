@@ -29,6 +29,8 @@ import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
@@ -122,7 +124,11 @@ function ListProgressChart({
 
         <Bar
           dataKey="spent"
-          fill={spentAmount >= targetAmount ? "#d90429" : theme}
+          fill={
+            spentAmount >= targetAmount
+              ? "#d90429"
+              : themeColors.find((c) => c.name === theme)?.hex
+          }
           barSize={30}
           stackId="budget"
         />
@@ -153,7 +159,9 @@ function ListProgressInfo({
       <div className="flex items-center gap-4">
         <div
           className="h-10 w-1 rounded-sm"
-          style={{ backgroundColor: theme }}
+          style={{
+            backgroundColor: themeColors.find((c) => c.name === theme)?.hex,
+          }}
         ></div>
 
         <div className="flex flex-col">

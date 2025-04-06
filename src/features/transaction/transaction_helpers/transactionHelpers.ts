@@ -116,7 +116,7 @@ function getRandomIcon(category: string) {
 }
 
 function getRandomColor() {
-  return themeColors[Math.floor(Math.random() * themeColors.length)];
+  return themeColors[Math.floor(Math.random() * (themeColors.length - 1))].hex;
 }
 
 export {

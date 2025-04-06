@@ -7,6 +7,8 @@ import { budgetStore } from "../store/budgetStore.ts";
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Budget } from "../types/budget.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function BudgetPieChart() {
@@ -46,7 +48,10 @@ function BudgetPieChart() {
             dataKey="spentAmount"
           >
             {budgets.map((budget) => (
-              <Cell key={budget.id} fill={budget.theme} />
+              <Cell
+                key={budget.id}
+                fill={themeColors.find((c) => c.name === budget.theme)?.hex}
+              />
             ))}
           </Pie>
 
@@ -81,7 +86,8 @@ function BudgetPieChart() {
                       color:
                         budget.spentAmount >= budget.targetAmount
                           ? "#d90429"
-                          : budget.theme,
+                          : themeColors.find((c) => c.name === budget.theme)
+                              ?.hex,
                     }}
                     className="mt-2"
                   >
