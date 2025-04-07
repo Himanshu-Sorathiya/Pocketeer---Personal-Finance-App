@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg">
   <symbol
-    id="page-prev"
+    id="chevron-left"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
@@ -14,7 +14,7 @@
   </symbol>
 
   <symbol
-    id="page-next"
+    id="chevron-right"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
@@ -28,7 +28,7 @@
   </symbol>
 
   <symbol
-    id="page-first"
+    id="chevron-double-left"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
@@ -42,7 +42,7 @@
   </symbol>
 
   <symbol
-    id="page-last"
+    id="chevron-double-right"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
@@ -56,10 +56,34 @@
   </symbol>
 
   <symbol
-    id="arrow-right"
+    id="chevron-down"
     viewBox="0 0 24 24"
     stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
   >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m19.5 8.25-7.5 7.5-7.5-7.5"
+    />
+  </symbol>
+
+  <symbol
+    id="chevron-up"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m4.5 15.75 7.5-7.5 7.5 7.5"
+    />
+  </symbol>
+
+  <symbol id="arrow-right" viewBox="0 0 24 24" stroke-width="1.5">
     <path
       fill-rule="evenodd"
       d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"

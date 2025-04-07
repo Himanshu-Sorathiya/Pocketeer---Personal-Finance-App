@@ -1,10 +1,18 @@
 import { useForm, useStore } from "@tanstack/react-form";
+
 import { potStore } from "../store/potStore.ts";
 
+import AmountField from "../../../components/modals/AmountField.tsx";
+import NameField from "../../../components/modals/NameField.tsx";
+import SubmitButton from "../../../components/modals/SubmitButton.tsx";
+import ThemeField from "../../../components/modals/ThemeField.tsx";
+
+import type { Pot } from "../types/pot.types.ts";
+
 function EditPotModal({ potId }: { potId: string }) {
-  const pot = [...useStore(potStore, (s) => s.pots)].find(
-    (pot) => pot.id === potId,
-  );
+  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+
+  const pot: Pot | undefined = pots.find((pot) => pot.id === potId);
 
   const form = useForm({
     defaultValues: {
@@ -37,72 +45,33 @@ function EditPotModal({ potId }: { potId: string }) {
       >
         <form.Field
           name="name"
-          children={(field) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium text-gray-800"
-                >
-                  Pot Name
-                </label>
-
-                <input
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className={`rounded-md px-4 py-3 caret-black outline-1 transition-all duration-100 focus:text-gray-700 focus:outline-gray-500 ${
-                    field.state.value !== ""
-                      ? "text-gray-700 outline-gray-500"
-                      : "text-gray-500 outline-gray-400"
-                  }`}
-                />
-              </div>
-            );
-          }}
+          children={(field) => <NameField field={field} label="Pot Name" />}
         />
 
         <form.Field
           name="targetAmount"
-          children={(field) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium text-gray-800"
-                >
-                  Target Amount
-                </label>
+          children={(field) => (
+            <AmountField
+              field={field}
+              label="Target Amount"
+              currency={pot!.currency}
+            />
+          )}
+        />
 
-                <input
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) =>
-                    field.handleChange(e.target.valueAsNumber || 0)
-                  }
-                  className={`rounded-md px-4 py-3 caret-black outline-1 transition-all duration-100 focus:text-gray-700 focus:outline-gray-500 ${
-                    field.state.value !== 0
-                      ? "text-gray-700 outline-gray-500"
-                      : "text-gray-500 outline-gray-400"
-                  }`}
-                />
-              </div>
-            );
-          }}
+        <form.Field
+          name="theme"
+          children={(field) => <ThemeField field={field} items={pots} />}
         />
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <div className="flex">
-              <button
-                type="submit"
-                className="w-full cursor-pointer rounded-md bg-gray-800 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-gray-900"
-                disabled={!canSubmit || isSubmitting}
-              >
-                Update Pot
-              </button>
-            </div>
+            <SubmitButton
+              canSubmit={canSubmit}
+              isSubmitting={isSubmitting}
+              label="Update Pot"
+            />
           )}
         />
       </form>

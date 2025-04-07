@@ -1,5 +1,9 @@
 import { useStore } from "@tanstack/react-store";
+
 import { budgetStore } from "../store/budgetStore.ts";
+
+import CancelButton from "../../../components/modals/CancelButton.tsx";
+import DeleteButton from "../../../components/modals/DeleteButton.tsx";
 
 function DeleteBudgetModal({ budgetId }: any) {
   const budget = [...useStore(budgetStore, (s) => s.budgets)].find(
@@ -25,23 +29,9 @@ function DeleteBudgetModal({ budgetId }: any) {
         tracking—make sure it fits your financial shift with Pocketeer!{" "}
       </p>
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="w-full cursor-pointer rounded-md bg-orange-600 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-orange-700"
-        >
-          Yes, Delete
-        </button>
-      </div>
+      <DeleteButton label="Yes, Delete" />
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="text-text w-full cursor-pointer rounded-md bg-gray-200 py-3 text-lg font-medium transition-all duration-150 hover:bg-gray-300"
-        >
-          Cancel
-        </button>
-      </div>
+      <CancelButton label="Cancel" />
     </div>
   );
 }

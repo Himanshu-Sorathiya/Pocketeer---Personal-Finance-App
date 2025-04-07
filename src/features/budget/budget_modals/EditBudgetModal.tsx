@@ -1,9 +1,19 @@
 import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
+
 import { budgetStore } from "../store/budgetStore.ts";
 
+import AmountField from "../../../components/modals/AmountField.tsx";
+import CategoryField from "../../../components/modals/CategoryField.tsx";
+import SubmitButton from "../../../components/modals/SubmitButton.tsx";
+import ThemeField from "../../../components/modals/ThemeField.tsx";
+
+import type { Budget } from "../types/budget.types.ts";
+
 function EditBudgetModal({ budgetId }: any) {
-  const budget = [...useStore(budgetStore, (s) => s.budgets)].find(
+  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+
+  const budget: Budget | undefined = budgets.find(
     (budget) => budget.id === budgetId,
   );
 
@@ -45,44 +55,34 @@ function EditBudgetModal({ budgetId }: any) {
         className="flex flex-col gap-4"
       >
         <form.Field
-          name="targetAmount"
-          children={(field) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium text-gray-800"
-                >
-                  Maximum Spend
-                </label>
+          name="category"
+          children={(field) => <CategoryField field={field} items={budgets} />}
+        />
 
-                <input
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                  className={`rounded-md px-4 py-3 caret-black outline-1 transition-all duration-100 focus:text-gray-700 focus:outline-gray-500 ${
-                    field.state.value !== 0
-                      ? "text-gray-700 outline-gray-500"
-                      : "text-gray-500 outline-gray-400"
-                  }`}
-                />
-              </div>
-            );
-          }}
+        <form.Field
+          name="targetAmount"
+          children={(field) => (
+            <AmountField
+              field={field}
+              label="Maximum to Spend"
+              currency={budget!.currency}
+            />
+          )}
+        />
+
+        <form.Field
+          name="theme"
+          children={(field) => <ThemeField field={field} items={budgets} />}
         />
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <div className="flex">
-              <button
-                type="submit"
-                className="w-full cursor-pointer rounded-md bg-gray-800 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-gray-900"
-                disabled={!canSubmit || isSubmitting}
-              >
-                Update Budget
-              </button>
-            </div>
+            <SubmitButton
+              canSubmit={canSubmit}
+              isSubmitting={isSubmitting}
+              label="Update Budget"
+            />
           )}
         />
       </form>

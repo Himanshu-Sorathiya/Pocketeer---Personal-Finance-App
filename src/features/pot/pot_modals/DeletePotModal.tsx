@@ -1,5 +1,9 @@
 import { useStore } from "@tanstack/react-store";
+
 import { potStore } from "../store/potStore.ts";
+
+import CancelButton from "../../../components/modals/CancelButton.tsx";
+import DeleteButton from "../../../components/modals/DeleteButton.tsx";
 
 function DeletePotModal({ potId }: { potId: string }) {
   const pot = [...useStore(potStore, (s) => s.pots)].find(
@@ -18,23 +22,9 @@ function DeletePotModal({ potId }: { potId: string }) {
         with Pocketeer!
       </p>
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="w-full cursor-pointer rounded-md bg-orange-600 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-orange-700"
-        >
-          Yes, Delete
-        </button>
-      </div>
+      <DeleteButton label="Yes, Delete" />
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="text-text w-full cursor-pointer rounded-md bg-gray-200 py-3 text-lg font-medium transition-all duration-150 hover:bg-gray-300"
-        >
-          Cancel
-        </button>
-      </div>
+      <CancelButton label="Cancel" />
     </div>
   );
 }

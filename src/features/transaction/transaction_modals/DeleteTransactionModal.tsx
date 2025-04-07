@@ -1,5 +1,9 @@
 import { useStore } from "@tanstack/react-store";
+
 import { transactionStore } from "../store/transactionStore.ts";
+
+import CancelButton from "../../../components/modals/CancelButton.tsx";
+import DeleteButton from "../../../components/modals/DeleteButton.tsx";
 
 function DeleteTransactionModal({ transactionId }: any) {
   const transaction = [
@@ -14,26 +18,12 @@ function DeleteTransactionModal({ transactionId }: any) {
 
       <p className="text-text text-sm">
         Want to clean up your records? Deleting this transaction will remove it
-        from your financial history in Pocketeer.{" "}
+        from your financial history in Pocketeer!.
       </p>
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="w-full cursor-pointer rounded-md bg-orange-600 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-orange-700"
-        >
-          Yes, Delete
-        </button>
-      </div>
+      <DeleteButton label="Yes, Delete" />
 
-      <div className="flex">
-        <button
-          type="submit"
-          className="text-text w-full cursor-pointer rounded-md bg-gray-200 py-3 text-lg font-medium transition-all duration-150 hover:bg-gray-300"
-        >
-          Cancel
-        </button>
-      </div>
+      <CancelButton label="Cancel" />
     </div>
   );
 }

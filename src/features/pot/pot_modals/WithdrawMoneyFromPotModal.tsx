@@ -1,6 +1,10 @@
 import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
+
 import { potStore } from "../store/potStore.ts";
+
+import AmountField from "../../../components/modals/AmountField.tsx";
+import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 
 function WithdrawMoneyFromPotModal({ potId }: any) {
   const pot = [...useStore(potStore, (s) => s.pots)].find(
@@ -36,43 +40,23 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
       >
         <form.Field
           name="amount"
-          children={(field) => {
-            return (
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium text-gray-800"
-                >
-                  Amount to Withdraw
-                </label>
-
-                <input
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                  className={`rounded-md px-4 py-3 caret-black outline-1 transition-all duration-100 focus:text-gray-700 focus:outline-gray-500 ${
-                    field.state.value !== 0
-                      ? "text-gray-700 outline-gray-500"
-                      : "text-gray-500 outline-gray-400"
-                  }`}
-                />
-              </div>
-            );
-          }}
+          children={(field) => (
+            <AmountField
+              field={field}
+              label="Amount to Withdraw"
+              currency={pot!.currency}
+            />
+          )}
         />
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <div className="flex">
-              <button
-                type="submit"
-                className="w-full cursor-pointer rounded-md bg-gray-800 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-gray-900"
-                disabled={!canSubmit || isSubmitting}
-              >
-                Withdraw Money
-              </button>
-            </div>
+            <SubmitButton
+              canSubmit={canSubmit}
+              isSubmitting={isSubmitting}
+              label="Withdraw Money"
+            />
           )}
         />
       </form>

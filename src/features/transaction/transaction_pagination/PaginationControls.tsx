@@ -24,7 +24,7 @@ function PaginationControls({
         disabled={!getCanPreviousPage()}
       >
         <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#page-first" />
+          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-double-left" />
         </svg>
         <span>First Page</span>
       </PaginationButton>
@@ -34,7 +34,7 @@ function PaginationControls({
         disabled={!getCanPreviousPage()}
       >
         <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#page-prev" />
+          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-left" />
         </svg>
         <span>Previous Page</span>
       </PaginationButton>
@@ -46,14 +46,14 @@ function PaginationControls({
       <PaginationButton onClick={() => nextPage()} disabled={!getCanNextPage()}>
         <span>Next Page</span>
         <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#page-next" />
+          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-right" />
         </svg>
       </PaginationButton>
 
       <PaginationButton onClick={() => lastPage()} disabled={!getCanNextPage()}>
         <span>Last Page</span>
         <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#page-last" />
+          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-double-right" />
         </svg>
       </PaginationButton>
     </div>
