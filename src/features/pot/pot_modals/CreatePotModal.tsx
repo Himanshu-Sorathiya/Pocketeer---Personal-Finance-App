@@ -9,26 +9,16 @@ import ThemeField from "../../../components/modals/ThemeField.tsx";
 
 import type { Pot } from "../types/pot.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
-
 function CreatePotModal() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
 
-  const availableThemeColors = themeColors
-    .filter((c) => c.name !== "platinum_ash")
-    .map((c) => ({
-      name: c.name,
-      value: c.hex,
-      used: pots.some((p) => p.theme === c.name),
-    }))
-    .sort((a, b) => Number(a.used) - Number(b.used));
   const currency = pots[0]?.currency;
 
   const form = useForm({
     defaultValues: {
       name: "",
       targetAmount: 0,
-      theme: availableThemeColors.find((c) => !c.used)?.name || "",
+      theme: "",
     },
     onSubmit: async (values) => {
       console.log("from", values);

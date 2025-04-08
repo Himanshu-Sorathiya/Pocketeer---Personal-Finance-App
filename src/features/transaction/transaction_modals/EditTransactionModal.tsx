@@ -9,8 +9,10 @@ import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 
+import type { Transaction } from "../types/transaction.types.ts";
+
 function EditTransactionModal({ transactionId }: any) {
-  const transaction = [
+  const transaction: Transaction | undefined = [
     ...useStore(transactionStore, (s) => s.transactions),
   ].find((transaction) => transaction.id === transactionId);
 
@@ -61,7 +63,12 @@ function EditTransactionModal({ transactionId }: any) {
 
         <form.Field
           name="category"
-          children={(field) => <CategoryField field={field} />}
+          children={(field) => (
+            <CategoryField
+              field={field}
+              currentCategory={transaction?.category}
+            />
+          )}
         />
 
         <form.Field

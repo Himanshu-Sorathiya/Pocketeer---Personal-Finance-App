@@ -9,34 +9,16 @@ import ThemeField from "../../../components/modals/ThemeField.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
-import transactionCategories from "../../../constants/transactionCategory.ts";
-
 function CreateBudgetModal() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
 
-  const availableCategories = transactionCategories
-    .map((c) => ({
-      category: c,
-      used: budgets.some((b) => b.category === c),
-    }))
-    .sort((a, b) => Number(a.used) - Number(b.used));
-
-  const availableThemeColors = themeColors
-    .filter((c) => c.name !== "platinum_ash")
-    .map((c) => ({
-      name: c.name,
-      value: c.hex,
-      used: budgets.some((p) => p.theme === c.name),
-    }))
-    .sort((a, b) => Number(a.used) - Number(b.used));
   const currency = budgets[0]?.currency;
 
   const form = useForm({
     defaultValues: {
-      category: availableCategories.find((c) => !c.used)?.category || "",
+      category: "",
       targetAmount: 0,
-      theme: availableThemeColors.find((c) => !c.used)?.name || "",
+      theme: "",
     },
     onSubmit: async (values) => {
       console.log("from", values);

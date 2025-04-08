@@ -61,7 +61,9 @@ function EditPotModal({ potId }: { potId: string }) {
 
         <form.Field
           name="theme"
-          children={(field) => <ThemeField field={field} items={pots} />}
+          children={(field) => (
+            <ThemeField field={field} items={pots} currentTheme={pot?.theme} />
+          )}
         />
 
         <form.Subscribe

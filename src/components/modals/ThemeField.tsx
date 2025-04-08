@@ -2,17 +2,43 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 
 import themeColors from "../../constants/themeColors.ts";
 
-function ThemeField({ field, items }: { field: any; items: any }) {
+function ThemeField({
+  field,
+  items,
+  currentTheme,
+}: {
+  field: any;
+  items: any;
+  currentTheme?: string;
+}) {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
-    .map((c) => ({
-      name: c.name,
-      value: c.hex,
-      used: items.some((i: any) => i.theme === c.name),
-    }))
-    .sort((a, b) => Number(a.used) - Number(b.used));
+    .map((c) => {
+      const isCurrent = c.name === currentTheme;
+      const used = !isCurrent && items.some((i: any) => i.theme === c.name);
+      return {
+        name: c.name,
+        value: c.hex,
+        used,
+        isCurrent,
+      };
+    })
+    .sort((a, b) => {
+      if (a.isCurrent) return -1;
+      if (b.isCurrent) return 1;
+
+      return Number(a.used) - Number(b.used);
+    });
+
+  if (field.state.value === "" && availableThemeColors.length > 0) {
+    field.handleChange(
+      availableThemeColors.find((c) => !c.used || c.isCurrent)?.name ?? "",
+    );
+
+    return;
+  }
 
   return (
     <div className="flex flex-col gap-1">
@@ -61,6 +87,7 @@ function ThemeField({ field, items }: { field: any; items: any }) {
             field={field}
             setOpenDropdown={setOpenDropdown}
             items={items}
+            currentTheme={currentTheme}
           />
         )}
       </div>
@@ -72,19 +99,32 @@ function ThemeDropDown({
   field,
   setOpenDropdown,
   items,
+  currentTheme,
 }: {
   field: any;
   setOpenDropdown: Dispatch<SetStateAction<boolean>>;
   items: any;
+  currentTheme?: string;
 }) {
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
-    .map((c) => ({
-      name: c.name,
-      value: c.hex,
-      used: items.some((i: any) => i.theme === c.name),
-    }))
-    .sort((a, b) => Number(a.used) - Number(b.used));
+    .map((c) => {
+      const isCurrent = c.name === currentTheme;
+      const used = !isCurrent && items.some((i: any) => i.theme === c.name);
+
+      return {
+        name: c.name,
+        value: c.hex,
+        used,
+        isCurrent,
+      };
+    })
+    .sort((a, b) => {
+      if (a.isCurrent) return -1;
+      if (b.isCurrent) return 1;
+
+      return Number(a.used) - Number(b.used);
+    });
 
   return (
     <div
@@ -124,7 +164,11 @@ function ThemeDropDown({
               .join(" ")}
           </span>
 
-          {color.used && (
+          {color.isCurrent && (
+            <span className="text-primary text-xs">Current</span>
+          )}
+
+          {!color.isCurrent && color.used && (
             <span className="text-xs text-gray-500">Already used</span>
           )}
         </button>

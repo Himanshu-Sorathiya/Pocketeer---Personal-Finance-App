@@ -56,7 +56,13 @@ function EditBudgetModal({ budgetId }: any) {
       >
         <form.Field
           name="category"
-          children={(field) => <CategoryField field={field} items={budgets} />}
+          children={(field) => (
+            <CategoryField
+              field={field}
+              items={budgets}
+              currentCategory={budget?.category}
+            />
+          )}
         />
 
         <form.Field
@@ -72,7 +78,13 @@ function EditBudgetModal({ budgetId }: any) {
 
         <form.Field
           name="theme"
-          children={(field) => <ThemeField field={field} items={budgets} />}
+          children={(field) => (
+            <ThemeField
+              field={field}
+              items={budgets}
+              currentTheme={budget?.theme}
+            />
+          )}
         />
 
         <form.Subscribe

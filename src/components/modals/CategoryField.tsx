@@ -2,8 +2,38 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 
 import transactionCategories from "../../constants/transactionCategory.ts";
 
-function CategoryField({ field, items }: { field: any; items?: any }) {
+function CategoryField({
+  field,
+  items,
+  currentCategory,
+}: {
+  field: any;
+  items?: any;
+  currentCategory?: string;
+}) {
   const [openDropdown, setOpenDropdown] = useState(false);
+
+  const availableCategories = transactionCategories
+    .map((c) => {
+      const isCurrent = c === currentCategory;
+      const used = !isCurrent && items?.some((b: any) => b.category === c);
+
+      return { category: c, used, isCurrent };
+    })
+    .sort((a, b) => {
+      if (a.isCurrent) return -1;
+      if (b.isCurrent) return 1;
+
+      return Number(a.used) - Number(b.used);
+    });
+
+  if (field.state.value === "" && availableCategories.length > 0) {
+    field.handleChange(
+      availableCategories.find((c) => !c.used || c.isCurrent)?.category ?? "",
+    );
+
+    return;
+  }
 
   return (
     <div className="flex flex-col gap-1">
@@ -46,6 +76,7 @@ function CategoryField({ field, items }: { field: any; items?: any }) {
             field={field}
             setOpenDropdown={setOpenDropdown}
             items={items}
+            currentCategory={currentCategory}
           />
         )}
       </div>
@@ -57,17 +88,26 @@ function CategoryDropDown({
   field,
   setOpenDropdown,
   items,
+  currentCategory,
 }: {
   field: any;
   setOpenDropdown: Dispatch<SetStateAction<boolean>>;
   items?: any;
+  currentCategory?: string;
 }) {
   const availableCategories = transactionCategories
-    .map((c) => ({
-      category: c,
-      used: items?.some((b: any) => b.category === c) ?? false,
-    }))
-    .filter((c) => !items || !c.used);
+    .map((c) => {
+      const isCurrent = c === currentCategory;
+      const used = !isCurrent && items?.some((b: any) => b.category === c);
+
+      return { category: c, used, isCurrent };
+    })
+    .sort((a, b) => {
+      if (a.isCurrent) return -1;
+      if (b.isCurrent) return 1;
+
+      return Number(a.used) - Number(b.used);
+    });
 
   return (
     <div
@@ -106,7 +146,11 @@ function CategoryDropDown({
               .join(" & ")}
           </span>
 
-          {cat.used && (
+          {cat.isCurrent && (
+            <span className="text-primary text-xs font-medium">Current</span>
+          )}
+
+          {!cat.isCurrent && cat.used && (
             <span className="text-xs text-gray-500">Already made Budget</span>
           )}
         </button>

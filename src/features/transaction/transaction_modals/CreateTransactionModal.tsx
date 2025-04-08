@@ -4,10 +4,10 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import AmountField from "../../../components/modals/AmountField.tsx";
 import CategoryField from "../../../components/modals/CategoryField.tsx";
+import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 
-import DateField from "../../../components/modals/DateField.tsx";
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
 function CreateTransactionModal() {
@@ -59,7 +59,9 @@ function CreateTransactionModal() {
 
         <form.Field
           name="category"
-          children={(field) => <CategoryField field={field} />}
+          children={(field) => (
+            <CategoryField field={field} items={transactionCategories} />
+          )}
         />
 
         <form.Field
