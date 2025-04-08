@@ -73,7 +73,7 @@ function CategoryDropDown({
     <div
       onMouseEnter={() => setOpenDropdown(true)}
       onMouseLeave={() => setOpenDropdown(false)}
-      className="absolute z-10 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white p-1 px-2 shadow-md"
+      className="absolute z-10 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md"
     >
       {availableCategories.map((cat) => (
         <button

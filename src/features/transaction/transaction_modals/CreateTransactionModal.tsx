@@ -7,6 +7,7 @@ import CategoryField from "../../../components/modals/CategoryField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 
+import DateField from "../../../components/modals/DateField.tsx";
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
 function CreateTransactionModal() {
@@ -17,7 +18,7 @@ function CreateTransactionModal() {
     defaultValues: {
       recipientName: "",
       category: transactionCategories[0] || "",
-      date: "",
+      date: new Date().toISOString().slice(0, 10),
       amount: 0,
       type: "expense",
     },
@@ -49,6 +50,11 @@ function CreateTransactionModal() {
           children={(field) => (
             <NameField field={field} label="Recipient Name" />
           )}
+        />
+
+        <form.Field
+          name="date"
+          children={(field) => <DateField field={field} />}
         />
 
         <form.Field

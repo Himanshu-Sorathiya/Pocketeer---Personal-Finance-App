@@ -7,7 +7,7 @@ import {
   transactionStore,
 } from "../store/transactionStore.ts";
 
-import DropDownDayPicker from "../../../components/ui/DropDownDayPicker.tsx";
+import DropDownWeekPicker from "../../../components/ui/DropDownWeekPicker.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
@@ -75,7 +75,7 @@ function DateDropDown({
       </button>
 
       {openDropdown === "date" && (
-        <DropDownDayPicker
+        <DropDownWeekPicker
           selectedWeek={selectedWeek}
           setSelectedWeek={handleDateRangeChange}
         />

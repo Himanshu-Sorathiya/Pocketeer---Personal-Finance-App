@@ -5,6 +5,7 @@ import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import AmountField from "../../../components/modals/AmountField.tsx";
 import CategoryField from "../../../components/modals/CategoryField.tsx";
+import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 
@@ -48,6 +49,13 @@ function EditTransactionModal({ transactionId }: any) {
           name="recipientName"
           children={(field) => (
             <NameField field={field} label="Recipient Name" />
+          )}
+        />
+
+        <form.Field
+          name="date"
+          children={(field) => (
+            <DateField field={field} transactionDate={transaction?.date} />
           )}
         />
 

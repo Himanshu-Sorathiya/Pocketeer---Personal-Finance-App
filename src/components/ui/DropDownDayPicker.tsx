@@ -1,100 +1,56 @@
 import { useState } from "react";
 
-import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 
-import {
-  DEFAULT_END_DATE,
-  DEFAULT_START_DATE,
-  isDefaultDateRange,
-} from "../../utilities/dateUtils.ts";
-
-function isSameSelectedRange(
-  newStart: Date,
-  newEnd: Date,
-  prevStart: Date,
-  prevEnd: Date,
-): boolean {
-  return (
-    prevStart.getTime() === newStart.getTime() &&
-    prevEnd.getTime() === newEnd.getTime()
-  );
-}
+import { DEFAULT_END_DATE } from "../../utilities/dateUtils.ts";
 
 function DropDownDayPicker({
-  selectedWeek,
-  setSelectedWeek,
+  selectedDay,
+  setSelectedDay,
+  transactionDate,
 }: {
-  selectedWeek: [Date, Date];
-  setSelectedWeek: (value: [Date, Date]) => void;
+  selectedDay: Date;
+  setSelectedDay: (value: Date) => void;
+  transactionDate?: string;
 }) {
-  const [selected, setSelected] = useState<Date[]>(() => {
-    if (isDefaultDateRange(selectedWeek[0], selectedWeek[1])) return [];
+  const [selected, setSelected] = useState<Date>(selectedDay);
+  const [month, setMonth] = useState(selected);
 
-    return eachDayOfInterval({ start: selectedWeek[0], end: selectedWeek[1] });
-  });
-  const [month, setMonth] = useState(selected[0] ?? new Date());
-  const [maxVal, setMaxVal] = useState(() => {
-    if (isDefaultDateRange(selectedWeek[0], selectedWeek[1])) return 7;
-
-    return eachDayOfInterval({ start: selectedWeek[0], end: selectedWeek[1] })
-      .length;
-  });
+  const startLimit = new Date(
+    new Date(transactionDate || new Date()).getFullYear(),
+    new Date(transactionDate || new Date()).getMonth() - 1,
+    new Date(transactionDate || new Date()).getDate(),
+  );
 
   const defaultClassNames = getDefaultClassNames();
 
-  function handleSelect(dates: Date[]) {
-    if (!dates || dates.length === 0) {
-      setMaxVal(7);
-      setSelected([]);
-      setSelectedWeek([DEFAULT_START_DATE, DEFAULT_END_DATE]);
+  function handleSelect(date: Date) {
+    if (!date) {
+      setSelected(new Date());
+      setSelectedDay(new Date());
       return;
     }
 
-    const today = new Date();
-
-    const weekStart = startOfWeek(dates[0], { weekStartsOn: 1 });
-    const weekEnd = endOfWeek(dates[0], { weekStartsOn: 1 });
-    const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
-
-    const filteredWeekDays = weekDays.filter((day) => day <= today);
-
-    const [prevStart, prevEnd] = selectedWeek;
-    const newStart = filteredWeekDays[0];
-    const newEnd = filteredWeekDays[filteredWeekDays.length - 1];
-
-    if (isSameSelectedRange(newStart, newEnd, prevStart, prevEnd)) {
-      setMaxVal(7);
-      setSelected([]);
-      setSelectedWeek([DEFAULT_START_DATE, DEFAULT_END_DATE]);
-      return;
-    }
-
-    setMaxVal(filteredWeekDays.length);
-    setSelected(filteredWeekDays);
-    setSelectedWeek([
-      filteredWeekDays[0],
-      filteredWeekDays[filteredWeekDays.length - 1],
-    ]);
+    setSelected(date);
+    setSelectedDay(date);
   }
 
   return (
-    <div className="absolute top-7/12 -left-24 z-10 mt-2 flex w-auto items-center justify-center rounded-md border border-gray-100 bg-white p-2 shadow-md">
+    <div className="absolute left-8 z-10 flex w-auto items-center justify-center rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md">
       <DayPicker
         animate={true}
-        captionLayout="dropdown"
+        captionLayout="label"
         month={month}
         onMonthChange={setMonth}
-        startMonth={DEFAULT_START_DATE}
+        startMonth={startLimit}
         endMonth={DEFAULT_END_DATE}
         showOutsideDays={true}
-        disabled={{ after: DEFAULT_END_DATE, before: DEFAULT_START_DATE }}
+        disabled={{ after: DEFAULT_END_DATE, before: startLimit }}
         ISOWeek={true}
-        max={maxVal}
-        mode="multiple"
+        mode="single"
         selected={selected}
-        onSelect={(dates) => dates && handleSelect(dates)}
-        components={{ Dropdown: CustomSelectDropdown }}
+        onSelect={(date) => date && handleSelect(date)}
+        components={{ CaptionLabel: CustomLabel }}
         classNames={{
           today: `text-inherit`,
           outside: `${defaultClassNames.outside} text-gray-500`,
@@ -102,54 +58,18 @@ function DropDownDayPicker({
           disabled: `${defaultClassNames.disabled} bg-white text-gray-400 font-normal`,
           nav: `${defaultClassNames.nav} `,
         }}
+        required={true}
       />
     </div>
   );
 }
 
-function CustomSelectDropdown(props: {
-  options?: {
-    value: number;
-    label: string;
-    disabled?: boolean;
-  }[];
-  value?: string | number | readonly string[] | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  classNames: Record<string, string>;
-}) {
-  const { options, value, onChange } = props;
-
-  const handleValueChange = (newValue: string) => {
-    if (onChange) {
-      const syntheticEvent = {
-        target: {
-          value: newValue,
-        },
-      } as React.ChangeEvent<HTMLSelectElement>;
-
-      onChange(syntheticEvent);
-    }
-  };
-
+function CustomLabel(props: React.HTMLAttributes<HTMLSpanElement>) {
   return (
-    <div>
-      <select
-        value={value}
-        onChange={(e) => handleValueChange(e.target.value)}
-        className="cursor-pointer rounded-lg px-1 py-2 text-left text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-0"
-      >
-        {options?.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            disabled={option.disabled}
-            className="text-sm text-gray-500"
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <span
+      {...props}
+      className="mt-3 ml-3 text-xl font-semibold text-gray-800"
+    />
   );
 }
 
