@@ -72,8 +72,8 @@ function ListProgressChart({
         layout="vertical"
         data={[
           {
-            spent: spentAmount,
-            remaining: targetAmount - spentAmount,
+            spent: spentAmount > targetAmount ? targetAmount : spentAmount,
+            remaining: Math.max(targetAmount - spentAmount, 0),
           },
         ]}
       >
@@ -106,14 +106,14 @@ function ListProgressChart({
                 <p style={{ color: payload[0].fill }} className="mt-2">
                   Spent:{" "}
                   <span className="font-space-grotesk">
-                    {payload[0].value}
+                    {spentAmount}
                     {currency}
                   </span>
                 </p>
                 <p style={{ color: "#364153" }}>
                   Remaining:{" "}
                   <span className="font-space-grotesk">
-                    {payload[1].value}
+                    {targetAmount - spentAmount}
                     {currency}
                   </span>
                 </p>
