@@ -32,7 +32,7 @@ function BoardBalance({
         className={`font-space-grotesk text-3xl font-semibold ${savedAmount >= targetAmount ? "text-green-500" : "text-gray-900"}`}
       >
         {currency}
-        {savedAmount}
+        {savedAmount.toFixed(2)}
       </span>
     </div>
   );
