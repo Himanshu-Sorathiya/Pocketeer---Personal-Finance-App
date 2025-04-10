@@ -8,6 +8,7 @@ import CategoryField from "../../../components/modals/CategoryField.tsx";
 import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
+import TypeField from "../../../components/modals/TypeField.tsx";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -80,6 +81,11 @@ function EditTransactionModal({ transactionId }: any) {
               currency={transaction!.currency}
             />
           )}
+        />
+
+        <form.Field
+          name="type"
+          children={(field) => <TypeField field={field} label="Type" />}
         />
 
         <form.Subscribe

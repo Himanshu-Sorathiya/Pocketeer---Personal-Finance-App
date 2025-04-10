@@ -7,6 +7,7 @@ import CategoryField from "../../../components/modals/CategoryField.tsx";
 import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
+import TypeField from "../../../components/modals/TypeField.tsx";
 
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
@@ -69,6 +70,11 @@ function CreateTransactionModal() {
           children={(field) => (
             <AmountField field={field} label="Amount" currency={currency} />
           )}
+        />
+
+        <form.Field
+          name="type"
+          children={(field) => <TypeField field={field} label="Type" />}
         />
 
         <form.Subscribe
