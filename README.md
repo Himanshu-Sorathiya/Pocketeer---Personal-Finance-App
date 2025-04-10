@@ -19,10 +19,12 @@ Pocketeer is a **personal finance** app designed to help users **track transacti
 - **Build Tool:** Vite + SWC (for blazing-fast performance)
 - **Routing:** TanStack Router
 - **Data Fetching:** TanStack Query
+- **Forms & Validation:** TanStack Form
 - **State Management:** TanStack Store
 - **Tables & Grids:** TanStack Table
-- **Forms & Validation:** TanStack Form
 - **Virtualization:** TanStack Virtual
+- **Rate Limiting & Queueing:** TanStack Pacer
+- **Range Selector:** TanStack Ranger
 
 ---
 
@@ -40,7 +42,9 @@ Pocketeer                     // Root directory
 │  ├─ hooks/                  // Custom hooks
 │  ├─ layouts/                // Layout components
 │  ├─ pages/                  // Application pages
+│  ├─ routes/                 // Routing logic and route definitions
 │  ├─ services/               // API calls and backend logic
+│  ├─ store/                  // Global state management
 │  ├─ styles/                 // Global styles
 │  ├─ types/                  // TypeScript types/interfaces
 │  ├─ utilities/              // Helper functions

@@ -26,7 +26,9 @@ function SummeryTransaction() {
 function RecentTransactions() {
   const latestTransactions = [
     ...useStore(transactionStore, (s) => s.transactions),
-  ].slice(0, 7);
+  ]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 7);
 
   return (
     <div className="divide-y divide-gray-200">
