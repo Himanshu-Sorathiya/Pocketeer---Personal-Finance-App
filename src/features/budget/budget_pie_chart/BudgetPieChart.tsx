@@ -73,6 +73,25 @@ function BudgetPieChart() {
                     position: "absolute",
                   }}
                 >
+                  <p
+                    style={{
+                      color: themeColors.find((c) => c.name === budget.theme)
+                        ?.hex,
+                    }}
+                  >
+                    Budget:{" "}
+                    <span>
+                      {budget.category
+                        .split("_")
+                        .map(
+                          (part: string) =>
+                            part.charAt(0).toUpperCase() +
+                            part.slice(1).toLowerCase(),
+                        )
+                        .join(" & ")}
+                    </span>
+                  </p>
+
                   <p style={{ color: "#364153" }}>
                     Total:{" "}
                     <span className="font-space-grotesk">

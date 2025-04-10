@@ -10,6 +10,8 @@ import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import type { Pot } from "../../pot/types/pot.types.ts";
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 import { filterTransactionsByPot } from "../../pot/pot_helpers/potHelpers.ts";
 
 function SummeryPot() {
@@ -104,7 +106,10 @@ function PotSummery() {
           >
             <div
               className="h-full w-1 rounded-sm"
-              style={{ backgroundColor: pot.theme }}
+              style={{
+                backgroundColor: themeColors.find((c) => c.name === pot.theme)
+                  ?.hex,
+              }}
             ></div>
 
             <div className="flex flex-col">

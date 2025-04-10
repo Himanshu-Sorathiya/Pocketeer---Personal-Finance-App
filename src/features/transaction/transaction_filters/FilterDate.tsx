@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
 import { useStore } from "@tanstack/react-store";
+import { format } from "date-fns";
 
 import {
   handleDateRangeChange,
@@ -32,7 +33,7 @@ function FilterDate() {
       <span>
         {isDefaultDateRange(selectedWeek[0], selectedWeek[1])
           ? "Select Week"
-          : `${String(selectedWeek[0].getDate()).padStart(2, "0")}/${String(selectedWeek[0].getMonth() + 1).padStart(2, "0")}/${selectedWeek[0].getFullYear() % 100} - ${String(selectedWeek[1].getDate()).padStart(2, "0")}/${String(selectedWeek[1].getMonth() + 1).padStart(2, "0")}/${selectedWeek[1].getFullYear() % 100}`}
+          : `${format(selectedWeek[0], "dd/MM/yy")} - ${format(selectedWeek[1], "dd/MM/yy")}`}
       </span>
 
       <DateDropDown

@@ -11,6 +11,8 @@ import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
 import type { Budget } from "../../budget/types/budget.types.ts";
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 import { filterTransactionsByBudget } from "../../budget/budget_helpers/BudgetHelpers.ts";
 
 function SummeryBudget() {
@@ -73,7 +75,11 @@ function BudgetSummery() {
           >
             <div
               className="h-10 w-1 rounded-sm"
-              style={{ backgroundColor: budget.theme }}
+              style={{
+                backgroundColor: themeColors.find(
+                  (c) => c.name === budget.theme,
+                )?.hex,
+              }}
             ></div>
 
             <div className="flex flex-col">

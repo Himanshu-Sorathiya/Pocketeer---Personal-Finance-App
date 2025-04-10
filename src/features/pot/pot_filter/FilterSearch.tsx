@@ -28,8 +28,9 @@ function FilterSearch() {
         <use href="/src/assets/icons/ui_icons_sprite.svg#search"></use>
       </svg>
 
-      <div className="absolute right-1 bottom-0 text-[10px] text-gray-500">
-        {potStore.state.searchedPot.length}/{potStore.state.maxSearchLength}
+      <div className="absolute right-1 -bottom-5 text-xs text-gray-500">
+        {potStore.state.maxSearchLength - potStore.state.searchedPot.length}{" "}
+        characters left
       </div>
     </div>
   );
