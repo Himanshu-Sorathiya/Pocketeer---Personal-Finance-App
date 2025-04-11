@@ -1,4 +1,5 @@
-import { useForm, useStore } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
+import { useStore } from "@tanstack/react-store";
 
 import { budgetStore } from "../store/budgetStore.ts";
 
@@ -6,6 +7,7 @@ import AmountField from "../../../components/modals/AmountField.tsx";
 import CategoryField from "../../../components/modals/CategoryField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 import ThemeField from "../../../components/modals/ThemeField.tsx";
+import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -17,7 +19,7 @@ function CreateBudgetModal() {
   const form = useForm({
     defaultValues: {
       category: "",
-      targetAmount: 0,
+      targetAmount: "",
       theme: "",
     },
     onSubmit: async (values) => {
@@ -43,23 +45,90 @@ function CreateBudgetModal() {
       >
         <form.Field
           name="category"
-          children={(field) => <CategoryField field={field} items={budgets} />}
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <div className="relative">
+              <CategoryField field={field} items={budgets} />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
+          )}
         />
 
         <form.Field
           name="targetAmount"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              parseFloat(value) <= 0 &&
+                errors.push("Amount must be greater than 0");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <AmountField
-              field={field}
-              label="Maximum to Spend"
-              currency={currency}
-            />
+            <div className="relative">
+              <AmountField
+                field={field}
+                label="Maximum to Spend"
+                currency={currency}
+              />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="theme"
-          children={(field) => <ThemeField field={field} items={budgets} />}
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Theme is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <div className="relative">
+              <ThemeField field={field} items={budgets} />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
+          )}
         />
 
         <form.Subscribe

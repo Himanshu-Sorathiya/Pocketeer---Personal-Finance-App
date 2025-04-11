@@ -7,6 +7,7 @@ import AmountField from "../../../components/modals/AmountField.tsx";
 import CategoryField from "../../../components/modals/CategoryField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 import ThemeField from "../../../components/modals/ThemeField.tsx";
+import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -20,7 +21,7 @@ function EditBudgetModal({ budgetId }: any) {
   const form = useForm({
     defaultValues: {
       category: budget?.category ?? "",
-      targetAmount: budget?.targetAmount ?? 0,
+      targetAmount: String(budget?.targetAmount ?? ""),
       theme: budget?.theme ?? "",
     },
     onSubmit: async (values) => {
@@ -56,34 +57,97 @@ function EditBudgetModal({ budgetId }: any) {
       >
         <form.Field
           name="category"
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <CategoryField
-              field={field}
-              items={budgets}
-              currentCategory={budget?.category}
-            />
+            <div className="relative">
+              <CategoryField
+                field={field}
+                items={budgets}
+                currentCategory={budget?.category}
+              />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="targetAmount"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              parseFloat(value) <= 0 &&
+                errors.push("Amount must be greater than 0");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <AmountField
-              field={field}
-              label="Maximum to Spend"
-              currency={budget!.currency}
-            />
+            <div className="relative">
+              <AmountField
+                field={field}
+                label="Maximum to Spend"
+                currency={budget!.currency}
+              />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="theme"
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Theme is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <ThemeField
-              field={field}
-              items={budgets}
-              currentTheme={budget?.theme}
-            />
+            <div className="relative">
+              <ThemeField
+                field={field}
+                items={budgets}
+                currentTheme={budget?.theme}
+              />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 

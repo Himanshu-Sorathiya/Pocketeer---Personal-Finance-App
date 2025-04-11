@@ -18,7 +18,7 @@ function TypeField({ field, label }: { field: any; label: string }) {
       >
         <div className="flex items-center gap-1">
           <input
-            className="checked:border-primary checked:bg-primary checked:hover:border-primary checked:ring-primary checked:hover:bg-primary checked:focus:border-primary checked:focus:bg-primary size-4 cursor-pointer appearance-none rounded-full border-2 border-gray-400 bg-white transition-colors checked:ring-2 checked:ring-offset-2 focus:outline-none focus-visible:outline-none"
+            className="checked:border-primary checked:bg-primary checked:hover:border-primary checked:hover:bg-primary checked:focus:border-primary checked:focus:bg-primary size-4 cursor-pointer appearance-none rounded-full border-2 border-gray-400 bg-white transition-colors focus:outline-none focus-visible:outline-none"
             type="radio"
             value="expense"
             id="expense"
@@ -33,7 +33,7 @@ function TypeField({ field, label }: { field: any; label: string }) {
 
         <div className="flex items-center gap-1">
           <input
-            className="checked:border-primary checked:bg-primary checked:hover:border-primary checked:ring-primary checked:hover:bg-primary checked:focus:border-primary checked:focus:bg-primary size-4 cursor-pointer appearance-none rounded-full border-2 border-gray-400 bg-white transition-colors checked:ring-2 checked:ring-offset-2 focus:outline-none focus-visible:outline-none"
+            className="checked:border-primary checked:bg-primary checked:hover:border-primary checked:hover:bg-primary checked:focus:border-primary checked:focus:bg-primary size-4 cursor-pointer appearance-none rounded-full border-2 border-gray-400 bg-white transition-colors focus:outline-none focus-visible:outline-none"
             type="radio"
             value="income"
             id="income"

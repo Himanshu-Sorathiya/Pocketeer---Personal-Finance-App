@@ -1,4 +1,5 @@
-import { useForm, useStore } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
+import { useStore } from "@tanstack/react-store";
 
 import { transactionStore } from "../store/transactionStore.ts";
 
@@ -8,6 +9,7 @@ import DateField from "../../../components/modals/DateField.tsx";
 import NameField from "../../../components/modals/NameField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
 import TypeField from "../../../components/modals/TypeField.tsx";
+import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
 
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
@@ -20,7 +22,7 @@ function CreateTransactionModal() {
       recipientName: "",
       category: transactionCategories[0] || "",
       date: new Date().toISOString().slice(0, 10),
-      amount: 0,
+      amount: "",
       type: "expense",
     },
     onSubmit: async (values) => {
@@ -48,33 +50,175 @@ function CreateTransactionModal() {
       >
         <form.Field
           name="recipientName"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value.length > 3 &&
+                !/^[a-zA-Z\s]+$/.test(value) &&
+                errors.push(
+                  "Recipient name should only contain letters and spaces",
+                );
+
+              value.length > 3 &&
+                /\s{2,}/.test(value) &&
+                errors.push(
+                  "Recipient name should not have multiple consecutive spaces",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors = [];
+              value = value.trim();
+
+              value === "" && errors.push("Recipient name is required");
+
+              value.length < 3 &&
+                errors.push(
+                  "Recipient name should be at least 3 characters long",
+                );
+
+              value.length > 30 && errors.push("Recipient name is too long");
+
+              !/^[a-zA-Z\s]+$/.test(value) &&
+                errors.push(
+                  "Recipient name should only contain letters and spaces",
+                );
+
+              /\s{2,}/.test(value) &&
+                errors.push(
+                  "Recipient name should not have multiple consecutive spaces",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <NameField field={field} label="Recipient Name" />
+            <div className="relative">
+              <NameField field={field} label="Recipient Name" />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="date"
-          children={(field) => <DateField field={field} />}
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Date is required");
+
+              !/^\d{4}-\d{2}-\d{2}$/.test(value) &&
+                errors.push("Invalid date format. Please use YYYY-MM-DD.");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !/^\d{4}-\d{2}-\d{2}$/.test(value) &&
+                errors.push("Invalid date format. Please use YYYY-MM-DD.");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <div className="relative">
+              <DateField field={field} />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
+          )}
         />
 
         <form.Field
           name="category"
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <CategoryField field={field} items={transactionCategories} />
+            <div className="relative">
+              <CategoryField field={field} items={transactionCategories} />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="amount"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              parseFloat(value) <= 0 &&
+                errors.push("Amount must be greater than 0");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <AmountField field={field} label="Amount" currency={currency} />
+            <div className="relative">
+              <AmountField field={field} label="Amount" currency={currency} />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
         <form.Field
           name="type"
-          children={(field) => <TypeField field={field} label="Type" />}
+          validators={{
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Type is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <div className="relative">
+              <TypeField field={field} label="Type" />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
+          )}
         />
 
         <form.Subscribe

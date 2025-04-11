@@ -7,7 +7,7 @@ function AmountField({
   field: any;
   label: string;
   currency: string;
-  onChange?: (value: number) => void;
+  onChange?: (value: string) => void;
 }) {
   return (
     <div className="flex flex-col gap-1">
@@ -28,10 +28,11 @@ function AmountField({
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => {
-            field.handleChange(+e.target.value || field.state.value);
+            field.handleChange(e.target.value);
 
-            if (typeof onChange === "function") onChange(+e.target.value);
+            if (typeof onChange === "function") onChange(e.target.value);
           }}
+          placeholder="0.00"
           className={`w-full outline-0 focus:text-gray-700 focus:outline-gray-500 ${field.state.value !== 0 ? "text-gray-700" : "text-gray-500"}`}
         />
       </div>

@@ -11,7 +11,7 @@ function SubmitButton({
     <div className="flex">
       <button
         type="submit"
-        className="w-full cursor-pointer rounded-md bg-gray-800 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-gray-900"
+        className="w-full cursor-pointer rounded-md bg-gray-800 py-3 text-lg font-medium text-white transition-all duration-150 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-600"
         disabled={!canSubmit || isSubmitting}
       >
         {label}

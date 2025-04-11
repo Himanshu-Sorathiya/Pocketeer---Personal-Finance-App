@@ -89,6 +89,8 @@ function updateSorter(type: string, value: string) {
     selectedSort: { type, value },
 
     sorting: [{ id: type, desc: ["latest", "highest"].includes(value) }],
+
+    pagination: { ...prev.pagination, pageIndex: 0 },
   }));
 }
 

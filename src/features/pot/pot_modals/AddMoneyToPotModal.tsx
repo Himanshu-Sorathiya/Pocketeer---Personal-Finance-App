@@ -9,6 +9,7 @@ import { potStore } from "../store/potStore.ts";
 
 import AmountField from "../../../components/modals/AmountField.tsx";
 import SubmitButton from "../../../components/modals/SubmitButton.tsx";
+import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
@@ -33,7 +34,7 @@ function AddMoneyToPotModal({ potId }: any) {
 
   const form = useForm({
     defaultValues: {
-      amount: 0,
+      amount: "",
     },
     onSubmit: async (values) => {
       console.log("from", values);
@@ -57,21 +58,21 @@ function AddMoneyToPotModal({ potId }: any) {
         savedAmount={savedAmount}
         targetAmount={pot!.targetAmount}
         currency={pot!.currency}
-        amount={amount}
+        amount={+amount}
       />
 
       <PotProgressChart
         savedAmount={savedAmount}
         targetAmount={pot!.targetAmount}
         theme={pot!.theme}
-        amount={amount}
+        amount={+amount}
       />
 
       <PotProgressInfo
         savedAmount={savedAmount}
         targetAmount={pot!.targetAmount}
         currency={pot!.currency}
-        amount={amount}
+        amount={+amount}
       />
 
       <form
@@ -83,13 +84,48 @@ function AddMoneyToPotModal({ potId }: any) {
       >
         <form.Field
           name="amount"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              value === "" && errors.push("Amount is required");
+
+              !/^\d+(\.\d{1,2})?$/.test(value) &&
+                errors.push(
+                  "Invalid amount format. Please use numbers and at most 2 decimal places.",
+                );
+
+              parseFloat(value) <= 0 &&
+                errors.push("Amount must be greater than 0");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
           children={(field) => (
-            <AmountField
-              field={field}
-              label="Amount to Add"
-              currency={pot!.currency}
-              onChange={(amount) => setAmount(amount)}
-            />
+            <div className="relative">
+              <AmountField
+                field={field}
+                label="Amount to Add"
+                currency={pot!.currency}
+                onChange={(value) => setAmount(value)}
+              />
+
+              <ErrorTooltip errorMap={field.state.meta.errorMap} />
+            </div>
           )}
         />
 
