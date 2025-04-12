@@ -2,15 +2,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-function AmountField({
-  label,
-  currency,
-  onChange,
-}: {
-  label: string;
-  currency: string;
-  onChange?: (value: string) => void;
-}) {
+function AmountField({ label, currency }: { label: string; currency: string }) {
   const field = useFieldContext<string>();
 
   return (
@@ -33,8 +25,6 @@ function AmountField({
           onBlur={field.handleBlur}
           onChange={(e) => {
             field.handleChange(e.target.value);
-
-            if (typeof onChange === "function") onChange(e.target.value);
           }}
           placeholder="0.00"
           className={`w-full outline-0 focus:text-gray-700 focus:outline-gray-500 ${field.state.value !== "" ? "text-gray-700" : "text-gray-500"}`}

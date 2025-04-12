@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
@@ -38,8 +36,6 @@ function AddMoneyToPotModal({ potId }: any) {
     },
   });
 
-  const [amount, setAmount] = useState(form.state.values.amount);
-
   return (
     <div className="flex min-w-lg flex-col gap-3">
       <h1 className="text-3xl font-semibold wrap-normal">
@@ -51,25 +47,40 @@ function AddMoneyToPotModal({ potId }: any) {
         brings you closer to your goal with Pocketeer!
       </p>
 
-      <PotBalance
-        savedAmount={savedAmount}
-        targetAmount={pot!.targetAmount}
-        currency={pot!.currency}
-        amount={+amount}
+      <form.Subscribe
+        selector={(state) => state.values.amount}
+        children={(amount) => (
+          <PotBalance
+            savedAmount={savedAmount}
+            targetAmount={pot!.targetAmount}
+            currency={pot!.currency}
+            amount={+amount}
+          />
+        )}
       />
 
-      <PotProgressChart
-        savedAmount={savedAmount}
-        targetAmount={pot!.targetAmount}
-        theme={pot!.theme}
-        amount={+amount}
+      <form.Subscribe
+        selector={(state) => state.values.amount}
+        children={(amount) => (
+          <PotProgressChart
+            savedAmount={savedAmount}
+            targetAmount={pot!.targetAmount}
+            theme={pot!.theme}
+            amount={+amount}
+          />
+        )}
       />
 
-      <PotProgressInfo
-        savedAmount={savedAmount}
-        targetAmount={pot!.targetAmount}
-        currency={pot!.currency}
-        amount={+amount}
+      <form.Subscribe
+        selector={(state) => state.values.amount}
+        children={(amount) => (
+          <PotProgressInfo
+            savedAmount={savedAmount}
+            targetAmount={pot!.targetAmount}
+            currency={pot!.currency}
+            amount={+amount}
+          />
+        )}
       />
 
       <form
@@ -112,12 +123,17 @@ function AddMoneyToPotModal({ potId }: any) {
               return errors.length === 0 ? undefined : errors;
             },
           }}
+          listeners={{
+            onChange: ({ value }) => {
+              if (parseFloat(value) > pot!.targetAmount - savedAmount)
+                form.setFieldValue(
+                  "amount",
+                  String(pot!.targetAmount - savedAmount),
+                );
+            },
+          }}
           children={(field) => (
-            <field.AmountField
-              label="Amount to Add"
-              currency={pot!.currency}
-              onChange={(value) => setAmount(value)}
-            />
+            <field.AmountField label="Amount to Add" currency={pot!.currency} />
           )}
         />
 
