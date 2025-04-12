@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import AppLayout from "../../layouts/AppLayout.tsx";
-
 import Budget from "../../pages/Budget.tsx";
 
 import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
@@ -12,11 +10,7 @@ const Route = createFileRoute("/app/budget")({
 });
 
 function RouteComponent() {
-  return (
-    <AppLayout>
-      <Budget />
-    </AppLayout>
-  );
+  return <Budget />;
 }
 
 export { Route };
