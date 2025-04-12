@@ -151,9 +151,15 @@ function CreatePotModal() {
           children={(field) => <field.ThemeField items={pots} />}
         />
 
-        <form.AppForm>
-          <form.SubmitButton label="Create Pot" />
-        </form.AppForm>
+        <div className="flex gap-3">
+          <form.AppForm>
+            <form.ResetButton />
+          </form.AppForm>
+
+          <form.AppForm>
+            <form.SubmitButton label="Create Pot" />
+          </form.AppForm>
+        </div>
       </form>
     </div>
   );

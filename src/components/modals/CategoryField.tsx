@@ -40,7 +40,7 @@ function CategoryField({
   }
 
   return (
-    <div className="relative z-20 flex flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Category</label>
 
       <div className="relative">
@@ -121,7 +121,7 @@ function CategoryDropDown({
     <div
       onMouseEnter={() => setOpenDropdown(true)}
       onMouseLeave={() => setOpenDropdown(false)}
-      className="absolute z-10 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md"
+      className="absolute z-20 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md"
     >
       {availableCategories.map((cat) => (
         <button

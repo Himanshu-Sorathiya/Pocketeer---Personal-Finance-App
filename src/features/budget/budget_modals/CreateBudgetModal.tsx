@@ -122,9 +122,15 @@ function CreateBudgetModal() {
           children={(field) => <field.ThemeField items={budgets} />}
         />
 
-        <form.AppForm>
-          <form.SubmitButton label="Create Budget" />
-        </form.AppForm>
+        <div className="flex gap-3">
+          <form.AppForm>
+            <form.ResetButton />
+          </form.AppForm>
+
+          <form.AppForm>
+            <form.SubmitButton label="Create Budget" />
+          </form.AppForm>
+        </div>
       </form>
     </div>
   );

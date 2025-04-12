@@ -36,7 +36,7 @@ function DropDownDayPicker({
   }
 
   return (
-    <div className="absolute left-8 z-10 flex w-auto items-center justify-center rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md">
+    <div className="absolute left-8 z-20 flex w-auto items-center justify-center rounded-md border border-gray-100 bg-white px-2 py-1 shadow-md">
       <DayPicker
         animate={true}
         captionLayout="label"

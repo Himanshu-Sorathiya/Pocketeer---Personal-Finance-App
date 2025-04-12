@@ -144,9 +144,15 @@ function EditBudgetModal({ budgetId }: any) {
           )}
         />
 
-        <form.AppForm>
-          <form.SubmitButton label="Update Budget" />
-        </form.AppForm>
+        <div className="flex gap-3">
+          <form.AppForm>
+            <form.ResetButton />
+          </form.AppForm>
+
+          <form.AppForm>
+            <form.SubmitButton label="Update Budget" />
+          </form.AppForm>
+        </div>
       </form>
     </div>
   );

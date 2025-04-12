@@ -155,9 +155,15 @@ function EditPotModal({ potId }: { potId: string }) {
           )}
         />
 
-        <form.AppForm>
-          <form.SubmitButton label="Update Pot" />
-        </form.AppForm>
+        <div className="flex gap-3">
+          <form.AppForm>
+            <form.ResetButton />
+          </form.AppForm>
+
+          <form.AppForm>
+            <form.SubmitButton label="Update Pot" />
+          </form.AppForm>
+        </div>
       </form>
     </div>
   );

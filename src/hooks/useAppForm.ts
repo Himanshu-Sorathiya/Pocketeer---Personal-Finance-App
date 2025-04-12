@@ -4,6 +4,7 @@ import AmountField from "../components/modals/AmountField.tsx";
 import CategoryField from "../components/modals/CategoryField.tsx";
 import DateField from "../components/modals/DateField.tsx";
 import NameField from "../components/modals/NameField.tsx";
+import ResetButton from "../components/modals/ResetButton.tsx";
 import SubmitButton from "../components/modals/SubmitButton.tsx";
 import ThemeField from "../components/modals/ThemeField.tsx";
 import TypeField from "../components/modals/TypeField.tsx";
@@ -23,7 +24,7 @@ const { useAppForm } = createFormHook({
     ThemeField,
     TypeField,
   },
-  formComponents: { SubmitButton },
+  formComponents: { ResetButton, SubmitButton },
 });
 
 export { useAppForm, useFieldContext, useFormContext };

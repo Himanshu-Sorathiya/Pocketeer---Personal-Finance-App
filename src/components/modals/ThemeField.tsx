@@ -45,7 +45,7 @@ function ThemeField({
   }
 
   return (
-    <div className="relative z-20 flex flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Theme</label>
 
       <div className="relative">
@@ -138,7 +138,7 @@ function ThemeDropDown({
     <div
       onMouseEnter={() => setOpenDropdown(true)}
       onMouseLeave={() => setOpenDropdown(false)}
-      className="absolute z-10 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white p-1 px-2 shadow-md"
+      className="absolute z-20 block max-h-44 w-full overflow-y-auto rounded-md border border-gray-100 bg-white p-1 px-2 shadow-md"
     >
       {availableThemeColors.map((color) => (
         <button
