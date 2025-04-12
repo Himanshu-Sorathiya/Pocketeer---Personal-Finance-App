@@ -2,15 +2,14 @@ import { useState } from "react";
 
 import { format } from "date-fns";
 
-import DropDownDayPicker from "../ui/DropDownDayPicker.tsx";
+import { useFieldContext } from "../../hooks/useAppForm.ts";
 
-function DateField({
-  field,
-  transactionDate,
-}: {
-  field: any;
-  transactionDate?: string;
-}) {
+import DropDownDayPicker from "../ui/DropDownDayPicker.tsx";
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+
+function DateField({ transactionDate }: { transactionDate?: string }) {
+  const field = useFieldContext<string>();
+
   const [openDropdown, setOpenDropdown] = useState(false);
 
   function handleDateChange(newDate: Date) {
@@ -18,7 +17,7 @@ function DateField({
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Date</label>
 
       <div
@@ -52,6 +51,10 @@ function DateField({
           />
         )}
       </div>
+
+      {field.state.meta.isTouched && field.state.meta.errors && (
+        <ErrorTooltip meta={field.state.meta} />
+      )}
     </div>
   );
 }

@@ -1,23 +1,27 @@
+import { useFieldContext } from "../../hooks/useAppForm.ts";
+
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+
 function AmountField({
-  field,
   label,
   currency,
   onChange,
 }: {
-  field: any;
   label: string;
   currency: string;
   onChange?: (value: string) => void;
 }) {
+  const field = useFieldContext<string>();
+
   return (
-    <div className="flex flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label htmlFor="name" className="text-sm font-medium text-gray-800">
         {label}
       </label>
 
       <div
         className={`font-space-grotesk flex items-center gap-1 rounded-md px-4 py-3 caret-black outline-1 transition-all duration-100 focus-within:text-gray-700 focus-within:outline-gray-500 ${
-          field.state.value !== 0
+          field.state.value !== ""
             ? "text-gray-700 outline-gray-500"
             : "text-gray-500 outline-gray-400"
         }`}
@@ -33,9 +37,13 @@ function AmountField({
             if (typeof onChange === "function") onChange(e.target.value);
           }}
           placeholder="0.00"
-          className={`w-full outline-0 focus:text-gray-700 focus:outline-gray-500 ${field.state.value !== 0 ? "text-gray-700" : "text-gray-500"}`}
+          className={`w-full outline-0 focus:text-gray-700 focus:outline-gray-500 ${field.state.value !== "" ? "text-gray-700" : "text-gray-500"}`}
         />
       </div>
+
+      {field.state.meta.isTouched && field.state.meta.errors && (
+        <ErrorTooltip meta={field.state.meta} />
+      )}
     </div>
   );
 }

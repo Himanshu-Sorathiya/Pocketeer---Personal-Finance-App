@@ -1,15 +1,12 @@
 import { useState } from "react";
 
-import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { transactionStore } from "../../transaction/store/transactionStore.ts";
 import { potStore } from "../store/potStore.ts";
 
-import AmountField from "../../../components/modals/AmountField.tsx";
-import SubmitButton from "../../../components/modals/SubmitButton.tsx";
-import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
@@ -32,7 +29,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
     transactions,
   ).reduce((sum, t) => sum + t.amount, 0);
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       amount: "",
     },
@@ -81,7 +78,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
         }}
         className="flex flex-col gap-4"
       >
-        <form.Field
+        <form.AppField
           name="amount"
           validators={{
             onChange: ({ value }) => {
@@ -108,36 +105,24 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 0 &&
-                errors.push("Amount must be greater than 0");
+              parseFloat(value) <= 1 &&
+                errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <AmountField
-                field={field}
-                label="Amount to Withdraw"
-                currency={pot!.currency}
-                onChange={(value) => setAmount(value)}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
-        />
-
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <SubmitButton
-              canSubmit={canSubmit}
-              isSubmitting={isSubmitting}
-              label="Withdraw Money"
+            <field.AmountField
+              label="Amount to Withdraw"
+              currency={pot!.currency}
+              onChange={(value) => setAmount(value)}
             />
           )}
         />
+
+        <form.AppForm>
+          <form.SubmitButton label="Withdraw Money" />
+        </form.AppForm>
       </form>
     </div>
   );

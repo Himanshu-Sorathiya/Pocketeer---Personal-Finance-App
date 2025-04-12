@@ -1,16 +1,20 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
+import { useFieldContext } from "../../hooks/useAppForm.ts";
+
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+
 import transactionCategories from "../../constants/transactionCategory.ts";
 
 function CategoryField({
-  field,
   items,
   currentCategory,
 }: {
-  field: any;
   items?: any;
   currentCategory?: string;
 }) {
+  const field = useFieldContext<string>();
+
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const availableCategories = transactionCategories
@@ -36,7 +40,7 @@ function CategoryField({
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="relative z-20 flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Category</label>
 
       <div className="relative">
@@ -80,6 +84,10 @@ function CategoryField({
           />
         )}
       </div>
+
+      {field.state.meta.isTouched && field.state.meta.errors && (
+        <ErrorTooltip meta={field.state.meta} />
+      )}
     </div>
   );
 }

@@ -1,13 +1,8 @@
-import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 
 import { budgetStore } from "../store/budgetStore.ts";
 
-import AmountField from "../../../components/modals/AmountField.tsx";
-import CategoryField from "../../../components/modals/CategoryField.tsx";
-import SubmitButton from "../../../components/modals/SubmitButton.tsx";
-import ThemeField from "../../../components/modals/ThemeField.tsx";
-import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -16,7 +11,7 @@ function CreateBudgetModal() {
 
   const currency = budgets[0]?.currency;
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       category: "",
       targetAmount: "",
@@ -43,9 +38,17 @@ function CreateBudgetModal() {
         }}
         className="flex flex-col gap-4"
       >
-        <form.Field
+        <form.AppField
           name="category"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
@@ -55,16 +58,10 @@ function CreateBudgetModal() {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <CategoryField field={field} items={budgets} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.CategoryField items={budgets} />}
         />
 
-        <form.Field
+        <form.AppField
           name="targetAmount"
           validators={{
             onChange: ({ value }) => {
@@ -91,56 +88,43 @@ function CreateBudgetModal() {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 0 &&
-                errors.push("Amount must be greater than 0");
+              parseFloat(value) <= 1 &&
+                errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <AmountField
-                field={field}
-                label="Maximum to Spend"
-                currency={currency}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.AmountField label="Maximum to Spend" currency={currency} />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="theme"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              !value && errors.push("Theme is required");
+              !value && errors.push("Category is required");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <ThemeField field={field} items={budgets} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.ThemeField items={budgets} />}
         />
 
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <SubmitButton
-              canSubmit={canSubmit}
-              isSubmitting={isSubmitting}
-              label="Create Budget"
-            />
-          )}
-        />
+        <form.AppForm>
+          <form.SubmitButton label="Create Budget" />
+        </form.AppForm>
       </form>
     </div>
   );

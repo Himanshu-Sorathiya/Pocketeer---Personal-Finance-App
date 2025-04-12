@@ -1,15 +1,9 @@
-import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
+import { format } from "date-fns";
 
 import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
-import AmountField from "../../../components/modals/AmountField.tsx";
-import CategoryField from "../../../components/modals/CategoryField.tsx";
-import DateField from "../../../components/modals/DateField.tsx";
-import NameField from "../../../components/modals/NameField.tsx";
-import SubmitButton from "../../../components/modals/SubmitButton.tsx";
-import TypeField from "../../../components/modals/TypeField.tsx";
-import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -18,7 +12,7 @@ function EditTransactionModal({ transactionId }: any) {
     ...useStore(transactionStore, (s) => s.transactions),
   ].find((transaction) => transaction.id === transactionId);
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       recipientName: transaction?.recipient ?? "",
       category: transaction?.category ?? "",
@@ -49,21 +43,23 @@ function EditTransactionModal({ transactionId }: any) {
         }}
         className="flex flex-col gap-4"
       >
-        <form.Field
+        <form.AppField
           name="recipientName"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              value.length > 3 &&
-                !/^[a-zA-Z\s]+$/.test(value) &&
+              value === "" && errors.push("Recipient name is required");
+
+              value.length > 30 && errors.push("Recipient name is too long");
+
+              !/^[a-zA-Z\s]+$/.test(value) &&
                 errors.push(
                   "Recipient name should only contain letters and spaces",
                 );
 
-              value.length > 3 &&
-                /\s{2,}/.test(value) &&
+              /\s{2,}/.test(value) &&
                 errors.push(
                   "Recipient name should not have multiple consecutive spaces",
                 );
@@ -71,7 +67,7 @@ function EditTransactionModal({ transactionId }: any) {
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
-              const errors = [];
+              const errors: string[] = [];
               value = value.trim();
 
               value === "" && errors.push("Recipient name is required");
@@ -96,16 +92,10 @@ function EditTransactionModal({ transactionId }: any) {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <NameField field={field} label="Recipient Name" />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.NameField label="Recipient Name" />}
         />
 
-        <form.Field
+        <form.AppField
           name="date"
           validators={{
             onChange: ({ value }) => {
@@ -130,17 +120,25 @@ function EditTransactionModal({ transactionId }: any) {
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <DateField field={field} transactionDate={transaction?.date} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.DateField
+              transactionDate={
+                transaction?.date ?? format(new Date(), "yyyy-MM-dd")
+              }
+            />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="category"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
@@ -151,18 +149,11 @@ function EditTransactionModal({ transactionId }: any) {
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <CategoryField
-                field={field}
-                currentCategory={transaction?.category}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.CategoryField currentCategory={transaction?.category} />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="amount"
           validators={{
             onChange: ({ value }) => {
@@ -189,28 +180,31 @@ function EditTransactionModal({ transactionId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 0 &&
-                errors.push("Amount must be greater than 0");
+              parseFloat(value) <= 1 &&
+                errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <AmountField
-                field={field}
-                label="Amount"
-                currency={transaction!.currency}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.AmountField
+              label="Amount"
+              currency={transaction!.currency}
+            />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="type"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Type is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
@@ -220,25 +214,12 @@ function EditTransactionModal({ transactionId }: any) {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <TypeField field={field} label="Type" />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.TypeField label="Type" />}
         />
 
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <SubmitButton
-              canSubmit={canSubmit}
-              isSubmitting={isSubmitting}
-              label="Update Transaction"
-            />
-          )}
-        />
+        <form.AppForm>
+          <form.SubmitButton label="Update Transaction" />
+        </form.AppForm>
       </form>
     </div>
   );

@@ -1,16 +1,20 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
+import { useFieldContext } from "../../hooks/useAppForm.ts";
+
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+
 import themeColors from "../../constants/themeColors.ts";
 
 function ThemeField({
-  field,
   items,
   currentTheme,
 }: {
-  field: any;
   items: any;
   currentTheme?: string;
 }) {
+  const field = useFieldContext<string>();
+
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const availableThemeColors = themeColors
@@ -41,7 +45,7 @@ function ThemeField({
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="relative z-20 flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Theme</label>
 
       <div className="relative">
@@ -91,6 +95,10 @@ function ThemeField({
           />
         )}
       </div>
+
+      {field.state.meta.isTouched && field.state.meta.errors && (
+        <ErrorTooltip meta={field.state.meta} />
+      )}
     </div>
   );
 }

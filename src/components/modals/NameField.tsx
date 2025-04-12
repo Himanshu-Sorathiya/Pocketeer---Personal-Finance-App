@@ -1,6 +1,12 @@
-function NameField({ field, label }: { field: any; label: string }) {
+import { useFieldContext } from "../../hooks/useAppForm.ts";
+
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+
+function NameField({ label }: { label: string }) {
+  const field = useFieldContext<string>();
+
   return (
-    <div className="flex flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label htmlFor="name" className="text-sm font-medium text-gray-800">
         {label}
       </label>
@@ -15,6 +21,10 @@ function NameField({ field, label }: { field: any; label: string }) {
             : "text-gray-500 outline-gray-400"
         }`}
       />
+
+      {field.state.meta.isTouched && field.state.meta.errors && (
+        <ErrorTooltip meta={field.state.meta} />
+      )}
     </div>
   );
 }

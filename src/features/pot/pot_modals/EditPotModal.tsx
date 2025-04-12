@@ -1,13 +1,8 @@
-import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 
 import { potStore } from "../store/potStore.ts";
 
-import AmountField from "../../../components/modals/AmountField.tsx";
-import NameField from "../../../components/modals/NameField.tsx";
-import SubmitButton from "../../../components/modals/SubmitButton.tsx";
-import ThemeField from "../../../components/modals/ThemeField.tsx";
-import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Pot } from "../types/pot.types.ts";
 
@@ -16,7 +11,7 @@ function EditPotModal({ potId }: { potId: string }) {
 
   const pot: Pot | undefined = pots.find((pot) => pot.id === potId);
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       name: pot?.name ?? "New Pot Name",
       targetAmount: String(pot?.targetAmount ?? ""),
@@ -45,57 +40,59 @@ function EditPotModal({ potId }: { potId: string }) {
         }}
         className="flex flex-col gap-4"
       >
-        <form.Field
+        <form.AppField
           name="name"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              value.length > 3 &&
-                !/^[a-zA-Z\s]+$/.test(value) &&
-                errors.push("Pot name should only contain letters and spaces");
+              value === "" && errors.push("Recipient name is required");
 
-              value.length > 3 &&
-                /\s{2,}/.test(value) &&
+              value.length > 30 && errors.push("Recipient name is too long");
+
+              !/^[a-zA-Z\s]+$/.test(value) &&
                 errors.push(
-                  "Pot name should not have multiple consecutive spaces",
+                  "Recipient name should only contain letters and spaces",
+                );
+
+              /\s{2,}/.test(value) &&
+                errors.push(
+                  "Recipient name should not have multiple consecutive spaces",
                 );
 
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
-              const errors = [];
+              const errors: string[] = [];
               value = value.trim();
 
-              value === "" && errors.push("Pot name is required");
+              value === "" && errors.push("Recipient name is required");
 
               value.length < 3 &&
-                errors.push("Pot name should be at least 3 characters long");
+                errors.push(
+                  "Recipient name should be at least 3 characters long",
+                );
 
-              value.length > 30 && errors.push("Pot name is too long");
+              value.length > 30 && errors.push("Recipient name is too long");
 
               !/^[a-zA-Z\s]+$/.test(value) &&
-                errors.push("Pot name should only contain letters and spaces");
+                errors.push(
+                  "Recipient name should only contain letters and spaces",
+                );
 
               /\s{2,}/.test(value) &&
                 errors.push(
-                  "Pot name should not have multiple consecutive spaces",
+                  "Recipient name should not have multiple consecutive spaces",
                 );
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <NameField field={field} label="Pot Name" />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.NameField label="Pot Name" />}
         />
 
-        <form.Field
+        <form.AppField
           name="targetAmount"
           validators={{
             onChange: ({ value }) => {
@@ -122,60 +119,45 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 0 &&
-                errors.push("Amount must be greater than 0");
+              parseFloat(value) <= 1 &&
+                errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <AmountField
-                field={field}
-                label="Target Amount"
-                currency={pot!.currency}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.AmountField label="Target Amount" currency={pot!.currency} />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="theme"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              !value && errors.push("Theme is required");
+              !value && errors.push("Category is required");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <ThemeField
-                field={field}
-                items={pots}
-                currentTheme={pot!.theme}
-              />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.ThemeField items={pots} currentTheme={pot?.theme} />
           )}
         />
 
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <SubmitButton
-              canSubmit={canSubmit}
-              isSubmitting={isSubmitting}
-              label="Update Pot"
-            />
-          )}
-        />
+        <form.AppForm>
+          <form.SubmitButton label="Update Pot" />
+        </form.AppForm>
       </form>
     </div>
   );

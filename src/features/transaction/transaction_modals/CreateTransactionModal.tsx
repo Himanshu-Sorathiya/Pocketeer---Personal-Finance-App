@@ -1,15 +1,8 @@
-import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 
 import { transactionStore } from "../store/transactionStore.ts";
 
-import AmountField from "../../../components/modals/AmountField.tsx";
-import CategoryField from "../../../components/modals/CategoryField.tsx";
-import DateField from "../../../components/modals/DateField.tsx";
-import NameField from "../../../components/modals/NameField.tsx";
-import SubmitButton from "../../../components/modals/SubmitButton.tsx";
-import TypeField from "../../../components/modals/TypeField.tsx";
-import ErrorTooltip from "../../../components/ui/ErrorTooltip.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
@@ -17,7 +10,7 @@ function CreateTransactionModal() {
   const currency = [...useStore(transactionStore, (s) => s.transactions)][0]
     ?.currency;
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       recipientName: "",
       category: transactionCategories[0] || "",
@@ -48,21 +41,23 @@ function CreateTransactionModal() {
         }}
         className="flex flex-col gap-4"
       >
-        <form.Field
+        <form.AppField
           name="recipientName"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              value.length > 3 &&
-                !/^[a-zA-Z\s]+$/.test(value) &&
+              value === "" && errors.push("Recipient name is required");
+
+              value.length > 30 && errors.push("Recipient name is too long");
+
+              !/^[a-zA-Z\s]+$/.test(value) &&
                 errors.push(
                   "Recipient name should only contain letters and spaces",
                 );
 
-              value.length > 3 &&
-                /\s{2,}/.test(value) &&
+              /\s{2,}/.test(value) &&
                 errors.push(
                   "Recipient name should not have multiple consecutive spaces",
                 );
@@ -70,7 +65,7 @@ function CreateTransactionModal() {
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
-              const errors = [];
+              const errors: string[] = [];
               value = value.trim();
 
               value === "" && errors.push("Recipient name is required");
@@ -95,16 +90,10 @@ function CreateTransactionModal() {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <NameField field={field} label="Recipient Name" />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.NameField label="Recipient Name" />}
         />
 
-        <form.Field
+        <form.AppField
           name="date"
           validators={{
             onChange: ({ value }) => {
@@ -128,18 +117,20 @@ function CreateTransactionModal() {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <DateField field={field} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.DateField />}
         />
 
-        <form.Field
+        <form.AppField
           name="category"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
@@ -150,15 +141,11 @@ function CreateTransactionModal() {
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <CategoryField field={field} items={transactionCategories} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.CategoryField items={transactionCategories} />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="amount"
           validators={{
             onChange: ({ value }) => {
@@ -185,24 +172,28 @@ function CreateTransactionModal() {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 0 &&
-                errors.push("Amount must be greater than 0");
+              parseFloat(value) <= 1 &&
+                errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
           children={(field) => (
-            <div className="relative">
-              <AmountField field={field} label="Amount" currency={currency} />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
+            <field.AmountField label="Amount" currency={currency} />
           )}
         />
 
-        <form.Field
+        <form.AppField
           name="type"
           validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Type is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
             onSubmit: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
@@ -212,25 +203,12 @@ function CreateTransactionModal() {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <div className="relative">
-              <TypeField field={field} label="Type" />
-
-              <ErrorTooltip errorMap={field.state.meta.errorMap} />
-            </div>
-          )}
+          children={(field) => <field.TypeField label="Type" />}
         />
 
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <SubmitButton
-              canSubmit={canSubmit}
-              isSubmitting={isSubmitting}
-              label="Add Transaction"
-            />
-          )}
-        />
+        <form.AppForm>
+          <form.SubmitButton label="Add Transaction" />
+        </form.AppForm>
       </form>
     </div>
   );
