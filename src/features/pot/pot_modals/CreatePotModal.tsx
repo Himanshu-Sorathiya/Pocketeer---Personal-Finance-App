@@ -6,16 +6,32 @@ import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Pot } from "../types/pot.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+
 function CreatePotModal() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
 
   const currency = pots[0]?.currency;
 
+  const availableThemeColors = themeColors
+    .filter((c) => c.name !== "platinum_ash")
+    .map((c) => {
+      const used = pots.some((i: any) => i.theme === c.name);
+      return {
+        name: c.name,
+        value: c.hex,
+        used,
+      };
+    })
+    .sort((a, b) => {
+      return Number(a.used) - Number(b.used);
+    });
+
   const form = useAppForm({
     defaultValues: {
       name: "",
       targetAmount: "",
-      theme: "",
+      theme: availableThemeColors[0].name || "",
     },
     onSubmit: async (values) => {
       console.log("from", values);

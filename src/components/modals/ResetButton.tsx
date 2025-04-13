@@ -6,9 +6,7 @@ function ResetButton() {
   return (
     <button
       type="button"
-      onClick={() => {
-        form.reset();
-      }}
+      onClick={() => form.reset()}
       className="cursor-pointer rounded-md bg-gray-200 px-5 py-3 transition-all duration-150 hover:bg-gray-300"
     >
       <svg className="size-6">

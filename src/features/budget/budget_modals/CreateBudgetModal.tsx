@@ -6,16 +6,43 @@ import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
+import themeColors from "../../../constants/themeColors.ts";
+import transactionCategories from "../../../constants/transactionCategory.ts";
+
 function CreateBudgetModal() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
 
   const currency = budgets[0]?.currency;
 
+  const availableCategories = transactionCategories
+    .map((c) => {
+      const used = budgets?.some((b: any) => b.category === c);
+
+      return { category: c, used };
+    })
+    .sort((a, b) => {
+      return Number(a.used) - Number(b.used);
+    });
+
+  const availableThemeColors = themeColors
+    .filter((c) => c.name !== "platinum_ash")
+    .map((c) => {
+      const used = budgets.some((i: any) => i.theme === c.name);
+      return {
+        name: c.name,
+        value: c.hex,
+        used,
+      };
+    })
+    .sort((a, b) => {
+      return Number(a.used) - Number(b.used);
+    });
+
   const form = useAppForm({
     defaultValues: {
-      category: "",
+      category: availableCategories[0].category || "",
       targetAmount: "",
-      theme: "",
+      theme: availableThemeColors[0].name || "",
     },
     onSubmit: async (values) => {
       console.log("from", values);
