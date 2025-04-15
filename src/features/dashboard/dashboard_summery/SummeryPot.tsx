@@ -2,17 +2,14 @@ import { useStore } from "@tanstack/react-store";
 
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
+import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../../pot/store/potStore.ts";
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
 import type { Pot } from "../../pot/types/pot.types.ts";
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
 import themeColors from "../../../constants/themeColors.ts";
-
-import { filterTransactionsByPot } from "../../pot/pot_helpers/potHelpers.ts";
 
 function SummeryPot() {
   return (
@@ -36,17 +33,10 @@ function SummeryPot() {
 
 function PotBalance() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
 
   const totalSaved = pots
     .reduce((acc, pot) => {
-      const saved = filterTransactionsByPot(
-        pot.name,
-        pot.creationDate,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
+      const saved = useStore(potTransactionCacheStore).get(pot.id)?.amount ?? 0;
 
       return acc + saved;
     }, 0)
@@ -67,21 +57,11 @@ function PotBalance() {
 }
 
 function PotSummery() {
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
+  const potTransactionCache = useStore(potTransactionCacheStore);
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)]
     .sort((a, b) => {
-      const savedA = filterTransactionsByPot(
-        a.name,
-        a.creationDate,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
-      const savedB = filterTransactionsByPot(
-        b.name,
-        b.creationDate,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
+      const savedA = potTransactionCache.get(a.id)?.amount ?? 0;
+      const savedB = potTransactionCache.get(b.id)?.amount ?? 0;
 
       const percentA = savedA / a.targetAmount;
       const percentB = savedB / b.targetAmount;
@@ -93,11 +73,7 @@ function PotSummery() {
   return (
     <div className="grid grid-cols-2">
       {pots.map((pot) => {
-        const savedAmount = filterTransactionsByPot(
-          pot.name,
-          pot.creationDate,
-          transactions,
-        ).reduce((sum, t) => sum + t.amount, 0);
+        const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
 
         return (
           <div

@@ -2,18 +2,15 @@ import { useStore } from "@tanstack/react-store";
 
 import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
 
+import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { budgetStore } from "../../budget/store/budgetStore.ts";
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
 
 import type { Budget } from "../../budget/types/budget.types.ts";
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
 import themeColors from "../../../constants/themeColors.ts";
-
-import { filterTransactionsByBudget } from "../../budget/budget_helpers/BudgetHelpers.ts";
 
 function SummeryBudget() {
   return (
@@ -36,21 +33,11 @@ function SummeryBudget() {
 }
 
 function BudgetSummery() {
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
+  const budgetTransactionCache = useStore(budgetTransactionCacheStore);
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)]
     .sort((a, b) => {
-      const spentA = filterTransactionsByBudget(
-        a.creationDate,
-        a.category,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
-      const spentB = filterTransactionsByBudget(
-        b.creationDate,
-        b.category,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
+      const spentA = budgetTransactionCache.get(a.id)?.amount ?? 0;
+      const spentB = budgetTransactionCache.get(b.id)?.amount ?? 0;
 
       const percentA = spentA / a.targetAmount;
       const percentB = spentB / b.targetAmount;
@@ -62,11 +49,7 @@ function BudgetSummery() {
   return (
     <div className="flex flex-col gap-2">
       {budgets.map((budget) => {
-        const spentAmount = filterTransactionsByBudget(
-          budget.creationDate,
-          budget.category,
-          transactions,
-        ).reduce((sum, t) => sum + t.amount, 0);
+        const spentAmount = budgetTransactionCache.get(budget.id)?.amount ?? 0;
 
         return (
           <div

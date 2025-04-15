@@ -1,6 +1,6 @@
 import { useStore } from "@tanstack/react-store";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import {
   BoardBalance,
@@ -9,21 +9,11 @@ import {
   BoardProgressInfo,
 } from "./BoardElements.tsx";
 
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
 
-import { filterTransactionsByPot } from "../pot_helpers/potHelpers.ts";
-
 function BoardBody({ pot }: { pot: Pot }) {
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
-
-  const savedAmount = filterTransactionsByPot(
-    pot.name,
-    pot.creationDate,
-    transactions,
-  ).reduce((sum, t) => sum + t.amount, 0);
+  const savedAmount =
+    useStore(potTransactionCacheStore).get(pot.id)?.amount ?? 0;
 
   return (
     <div className="flex flex-col">

@@ -1,41 +1,35 @@
 import { useStore } from "@tanstack/react-store";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
 import BoardBody from "./BoardBody.tsx";
 import { BoardBadge } from "./BoardElements.tsx";
 import BoardHeader from "./BoardHeader.tsx";
 
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 
-import {
-  filterPots,
-  filterTransactionsByPot,
-  sortPots,
-} from "../pot_helpers/potHelpers.ts";
+import { filterPots, sortPots } from "../pot_helpers/potHelpers.ts";
 
 function PotBoard() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
-  const filteredPots: Pot[] = filterPots(pots, filters, transactions);
-  const sortedPots: Pot[] = sortPots(filteredPots, sorting, transactions);
+  const potTransactionCache = useStore(potTransactionCacheStore);
+
+  const filteredPots: Pot[] = filterPots(pots, filters, potTransactionCache);
+  const sortedPots: Pot[] = sortPots(
+    filteredPots,
+    sorting,
+    potTransactionCache,
+  );
 
   return (
     <div className="grid min-w-full grid-cols-3 gap-4">
       {sortedPots.map((pot) => {
-        const savedAmount = filterTransactionsByPot(
-          pot.name,
-          pot.creationDate,
-          transactions,
-        ).reduce((sum, t) => sum + t.amount, 0);
+        const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
 
         return (
           <div

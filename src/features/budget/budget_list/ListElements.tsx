@@ -13,13 +13,13 @@ import {
 
 import { Route as transactionRoute } from "../../../routes/app/transaction.tsx";
 
+import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { openModal } from "../../../store/appModalStore.ts";
 import {
   handleCategoryChange,
   handleDateRangeChange,
   handlePageIndexChange,
   handleSearchChange,
-  transactionStore,
 } from "../../transaction/store/transactionStore.ts";
 import { budgetStore } from "../store/budgetStore.ts";
 
@@ -35,7 +35,6 @@ import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
 } from "../../../utilities/dateUtils.ts";
-import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
 
 function ListBalance({
   targetAmount,
@@ -193,23 +192,15 @@ function ListProgressInfo({
 }
 
 function ListRecentTransactions({
+  id,
   category,
-  creationDate,
 }: {
+  id: string;
   category: string;
-  creationDate: string;
 }) {
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
-
-  const latestTransactions: Transaction[] = filterTransactionsByBudget(
-    creationDate,
-    category,
-    transactions,
-  )
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3);
+  const latestTransactions: Transaction[] =
+    useStore(budgetTransactionCacheStore).get(id)?.transactions.slice(0, 3) ??
+    [];
 
   return (
     <div className="rounded-md bg-orange-50 p-4 pb-2">

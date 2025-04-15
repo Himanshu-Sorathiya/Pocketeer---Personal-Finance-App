@@ -1,20 +1,4 @@
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
-
-function filterTransactionsByPot(
-  potName: string,
-  creationDate: string,
-  transactions: Transaction[],
-): Transaction[] {
-  const potDate = new Date(creationDate);
-
-  return transactions.filter(
-    (t) =>
-      t.type === "income" &&
-      new Date(t.date) >= potDate &&
-      t.recipient.trim() === potName.trim(),
-  );
-}
 
 function isFuzzyMatch(searchTerm: string, potName: string): boolean {
   if (!searchTerm) return true;
@@ -47,7 +31,7 @@ function isStatusMatch(
 function filterPots(
   pots: Pot[],
   filters: FilterState[],
-  transactions: Transaction[],
+  potTransactionCache: Map<string, { amount: number }>,
 ): Pot[] {
   const searchFilter =
     filters
@@ -57,11 +41,7 @@ function filterPots(
   const statusFilter = filters.find((f) => f.id === "status")?.value || "all";
 
   return pots.filter((pot) => {
-    const savedAmount = filterTransactionsByPot(
-      pot.name,
-      pot.creationDate,
-      transactions,
-    ).reduce((sum, t) => sum + t.amount, 0);
+    const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
 
     return (
       isFuzzyMatch(searchFilter, pot.name) &&
@@ -73,7 +53,7 @@ function filterPots(
 function sortPots(
   pots: Pot[],
   sorting: SortingState[],
-  transactions: Transaction[],
+  potTransactionCache: Map<string, { amount: number }>,
 ): Pot[] {
   const sortKey = sorting[0].id ?? "progress";
   const isDescending = sorting[0].desc ?? true;
@@ -84,16 +64,8 @@ function sortPots(
         ? b.targetAmount - a.targetAmount
         : a.targetAmount - b.targetAmount;
     } else if (sortKey === "progress") {
-      const savedA = filterTransactionsByPot(
-        a.name,
-        a.creationDate,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
-      const savedB = filterTransactionsByPot(
-        b.name,
-        b.creationDate,
-        transactions,
-      ).reduce((sum, t) => sum + t.amount, 0);
+      const savedA = potTransactionCache.get(a.id)?.amount ?? 0;
+      const savedB = potTransactionCache.get(b.id)?.amount ?? 0;
 
       return isDescending
         ? savedB / b.targetAmount - savedA / a.targetAmount
@@ -104,4 +76,4 @@ function sortPots(
   });
 }
 
-export { filterPots, filterTransactionsByPot, sortPots };
+export { filterPots, sortPots };

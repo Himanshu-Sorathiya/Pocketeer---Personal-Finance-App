@@ -1,31 +1,22 @@
 import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
 
 import themeColors from "../../../constants/themeColors.ts";
 
-import { filterTransactionsByPot } from "../pot_helpers/potHelpers.ts";
-
 function WithdrawMoneyFromPotModal({ potId }: any) {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
 
   const pot: Pot | undefined = pots.find((pot) => pot.id === potId);
 
-  const savedAmount = filterTransactionsByPot(
-    pot!.name,
-    pot!.creationDate,
-    transactions,
-  ).reduce((sum, t) => sum + t.amount, 0);
+  const savedAmount =
+    useStore(potTransactionCacheStore).get(pot!.id)?.amount ?? 0;
 
   const form = useAppForm({
     defaultValues: {

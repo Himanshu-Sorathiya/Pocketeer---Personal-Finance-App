@@ -1,21 +1,16 @@
 import { useStore } from "@tanstack/react-store";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
-import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Budget } from "../types/budget.types.ts";
 
 import themeColors from "../../../constants/themeColors.ts";
 
-import { filterTransactionsByBudget } from "../budget_helpers/BudgetHelpers.ts";
-
 function BudgetSummery() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+  const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
   return (
     <div className="flex flex-col gap-3">
@@ -23,11 +18,8 @@ function BudgetSummery() {
 
       <div className="flex flex-col gap-1">
         {budgets.map((budget) => {
-          const spentAmount = filterTransactionsByBudget(
-            budget.creationDate,
-            budget.category,
-            transactions,
-          ).reduce((sum, t) => sum + t.amount, 0);
+          const spentAmount =
+            budgetTransactionCache.get(budget.id)?.amount ?? 0;
 
           return (
             <div

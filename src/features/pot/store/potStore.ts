@@ -1,7 +1,8 @@
 import { Store } from "@tanstack/react-store";
 
-import type { SelectedOptions } from "../../../types/global.types.ts";
 import { getPots } from "../data/pot_data.ts";
+
+import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 
 type PotState = {

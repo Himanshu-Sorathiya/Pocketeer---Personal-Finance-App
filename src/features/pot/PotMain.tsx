@@ -1,6 +1,6 @@
 import { useStore } from "@tanstack/react-store";
 
-import { transactionStore } from "../transaction/store/transactionStore.ts";
+import { potTransactionCacheStore } from "../../store/appCacheStore.ts";
 import { potStore } from "./store/potStore.ts";
 
 import PotBoard from "./pot_board/PotBoard.tsx";
@@ -8,22 +8,24 @@ import PotFilter from "./pot_filter/PotFilter.tsx";
 import PotPlaceholder from "./pot_placeholder/PotPlaceholder.tsx";
 import PotSort from "./pot_sort/PotSort.tsx";
 
-import type { Transaction } from "../transaction/types/transaction.types.ts";
 import type { FilterState, Pot, SortingState } from "./types/pot.types.ts";
 
 import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
 
 function PotMain() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
-  const filteredPots: Pot[] = filterPots(pots, filters, transactions);
-  const sortedPots: Pot[] = sortPots(filteredPots, sorting, transactions);
+  const potTransactionCache = useStore(potTransactionCacheStore);
+
+  const filteredPots: Pot[] = filterPots(pots, filters, potTransactionCache);
+  const sortedPots: Pot[] = sortPots(
+    filteredPots,
+    sorting,
+    potTransactionCache,
+  );
 
   const shouldShowPlaceholder = sortedPots.length === 0;
 
