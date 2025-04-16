@@ -1,9 +1,17 @@
-import type {
-  ColumnFiltersState,
-  OnChangeFn,
-  PaginationState,
-  Row,
-  SortingState,
+import {
+  type RankingInfo,
+  compareItems,
+  rankItem,
+} from "@tanstack/match-sorter-utils";
+import {
+  type ColumnFiltersState,
+  type FilterFn,
+  type OnChangeFn,
+  type PaginationState,
+  type Row,
+  type SortingFn,
+  type SortingState,
+  sortingFns,
 } from "@tanstack/react-table";
 import { startOfDay } from "date-fns";
 
@@ -42,16 +50,24 @@ function filterDate(
   return startDate <= transactionDate && transactionDate <= endDate;
 }
 
-function sortDate(
-  rowA: Row<Transaction>,
-  rowB: Row<Transaction>,
-  columnId: string,
-) {
-  return (
-    new Date(rowA.getValue(columnId)).getTime() -
-    new Date(rowB.getValue(columnId)).getTime()
-  );
-}
+const filterFuzzy: FilterFn<any> = (row, columnId, value, addMeta) => {
+  const itemRank = rankItem(row.getValue(columnId), value);
+  addMeta({ itemRank });
+  return itemRank?.passed;
+};
+
+const sortFuzzy: SortingFn<any> = (rowA, rowB, columnId) => {
+  const metaA = rowA.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+  const metaB = rowB.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+
+  let dir = 0;
+
+  if (metaA?.itemRank && metaB?.itemRank) {
+    dir = compareItems(metaA.itemRank, metaB.itemRank);
+  }
+
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+};
 
 function filterAmount(
   row: Row<Transaction>,
@@ -61,6 +77,17 @@ function filterAmount(
   if (filterValue === "all") return true;
 
   return row.original.type === filterValue;
+}
+
+function sortDate(
+  rowA: Row<Transaction>,
+  rowB: Row<Transaction>,
+  columnId: string,
+) {
+  return (
+    new Date(rowA.getValue(columnId)).getTime() -
+    new Date(rowB.getValue(columnId)).getTime()
+  );
 }
 
 function sortAmount(
@@ -123,6 +150,7 @@ export {
   filterAmount,
   filterCategory,
   filterDate,
+  filterFuzzy,
   getRandomColor,
   getRandomIcon,
   setColumnFilters,
@@ -130,4 +158,5 @@ export {
   setSorting,
   sortAmount,
   sortDate,
+  sortFuzzy,
 };

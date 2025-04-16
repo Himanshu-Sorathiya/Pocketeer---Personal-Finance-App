@@ -29,16 +29,17 @@ import TransactionTable from "./transaction_table/TransactionTable.tsx";
 
 import type { Transaction } from "./types/transaction.types.ts";
 
-import { fuzzyFilter, fuzzySort } from "../../utilities/tableUtils.ts";
 import {
   filterAmount,
   filterCategory,
   filterDate,
+  filterFuzzy,
   setColumnFilters,
   setPagination,
   setSorting,
   sortAmount,
   sortDate,
+  sortFuzzy,
 } from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
@@ -60,8 +61,8 @@ function TransactionMain() {
         />
       ),
       header: () => "Recipient",
-      filterFn: fuzzyFilter,
-      sortingFn: fuzzySort,
+      filterFn: filterFuzzy,
+      sortingFn: sortFuzzy,
     }),
     columnHelper.accessor("category", {
       id: "category",
@@ -119,13 +120,6 @@ function TransactionMain() {
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
-
-    filterFns: {
-      fuzzyFilter: fuzzyFilter,
-    },
-    sortingFns: {
-      fuzzySort: fuzzySort,
-    },
 
     getRowId: (row) => row.id,
     autoResetPageIndex: false,
