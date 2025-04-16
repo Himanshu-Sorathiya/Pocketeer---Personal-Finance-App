@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import {
   Bar,
@@ -25,6 +24,7 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
+import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
@@ -204,36 +204,23 @@ function ListRecentTransactions({
 
   return (
     <div className="rounded-md bg-orange-50 p-4 pb-2">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-1">
-          <h3 className="text-text font-semibold">Recent Transactions</h3>
-
-          <TooltipInfo
-            id="info-circle"
-            text1="Only recent transactions made after budget creation are considered. View all to explore older records for this category."
-            className="text-primary size-4"
-          />
-        </div>
-
-        <Link
-          to={transactionRoute.to}
-          onClick={() => {
-            handleSearchChange("");
-            handleCategoryChange("", category);
-            handleDateRangeChange([DEFAULT_START_DATE, DEFAULT_END_DATE]);
-            handlePageIndexChange(0);
-          }}
-          className="group flex items-center gap-0.5"
-        >
-          <span className="group-hover:text-primary font-medium text-gray-700 transition-all duration-100">
-            View All
-          </span>
-
-          <svg className="text-text group-hover:fill-primary size-4 fill-current transition-all duration-100">
-            <use href="/src/assets/icons/ui_icons_sprite.svg#arrow-right"></use>
-          </svg>
-        </Link>
-      </div>
+      <SummeryHeader
+        to={transactionRoute.to}
+        header="Recent Transactions"
+        label="View All"
+        onClick={() => {
+          handleSearchChange("");
+          handleCategoryChange("", category);
+          handleDateRangeChange([DEFAULT_START_DATE, DEFAULT_END_DATE]);
+          handlePageIndexChange(0);
+        }}
+      >
+        <TooltipInfo
+          id="info-circle"
+          text1="Only recent transactions made after budget creation are considered. View all to explore older records for this category."
+          className="text-primary size-4"
+        />
+      </SummeryHeader>
 
       {latestTransactions.length === 0 ? (
         <div className="py-2 text-gray-500">

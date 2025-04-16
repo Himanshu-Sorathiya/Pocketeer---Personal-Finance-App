@@ -7,6 +7,8 @@ import { transactionStore } from "../../transaction/store/transactionStore.ts";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
+
 function SummeryTransaction() {
   return (
     <div className="bg-shade-100 row-span-2 rounded-md px-6 pt-7 pb-2">
@@ -24,7 +26,7 @@ function SummeryTransaction() {
 }
 
 function RecentTransactions() {
-  const latestTransactions = [
+  const latestTransactions: Transaction[] = [
     ...useStore(transactionStore, (s) => s.transactions),
   ]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

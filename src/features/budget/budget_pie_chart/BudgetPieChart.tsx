@@ -9,12 +9,12 @@ import type { Budget } from "../types/budget.types.ts";
 import themeColors from "../../../constants/themeColors.ts";
 
 function BudgetPieChart() {
+  const budgetTransactionCache = useStore(budgetTransactionCacheStore);
   const budgets: (Budget & { spentAmount: number })[] = [
     ...useStore(budgetStore, (s) => s.budgets),
   ].map((budget) => ({
     ...budget,
-    spentAmount:
-      useStore(budgetTransactionCacheStore).get(budget.id)?.amount ?? 0,
+    spentAmount: budgetTransactionCache.get(budget.id)?.amount ?? 0,
   }));
 
   const totalSpent = budgets.reduce(
