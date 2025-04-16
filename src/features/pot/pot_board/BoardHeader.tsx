@@ -6,7 +6,7 @@ import { BoardActions } from "./BoardElements.tsx";
 
 import type { Pot } from "../types/pot.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function BoardHeader({ pot }: { pot: Pot }) {
   const savedAmount =

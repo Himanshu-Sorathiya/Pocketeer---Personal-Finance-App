@@ -8,7 +8,7 @@ import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 
-import statusOptions from "../../../constants/potStatusOptions.ts";
+import { statusOptions } from "../../../constants/appOptions.ts";
 
 function FilterStatus() {
   const selectedStatus: SelectedOptions = useStore(

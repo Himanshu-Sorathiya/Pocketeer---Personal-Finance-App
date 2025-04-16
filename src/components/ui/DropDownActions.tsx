@@ -1,6 +1,6 @@
 import type { SetStateAction } from "react";
 
-import appActions from "../../constants/appActions.ts";
+import { appActions } from "../../constants/appOptions.ts";
 
 function DropDownActions({
   action,

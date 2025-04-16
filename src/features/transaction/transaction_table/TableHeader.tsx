@@ -17,7 +17,7 @@ import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { Transaction } from "../types/transaction.types.ts";
 
-import sortOptions from "../../../constants/transactionSortOptions.ts";
+import { sortOptions } from "../../../constants/appOptions.ts";
 
 function TableHeader({
   headerGroups,
@@ -40,7 +40,7 @@ function TableHeader({
                   )}
                 </span>
 
-                {sortOptions[header.id] && (
+                {sortOptions.transaction[header.id] && (
                   <SortDropDown
                     header={header}
                     openDropdown={openDropdown}
@@ -90,7 +90,7 @@ function SortDropDown({
       {openDropdown === header.id && (
         <DropDownMenu
           id={header.id}
-          options={sortOptions}
+          options={sortOptions.transaction}
           setOpenDropdown={setOpenDropdown}
           selectedOption={selectedSort}
           setSelectedOption={handleSortChange}

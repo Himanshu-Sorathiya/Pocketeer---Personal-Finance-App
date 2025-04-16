@@ -19,7 +19,7 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 import transactionIconsMap from "../../../constants/transactionIcons.ts";
 
 function filterCategory(
@@ -158,5 +158,5 @@ export {
   setSorting,
   sortAmount,
   sortDate,
-  sortFuzzy,
+  sortFuzzy
 };

@@ -5,7 +5,7 @@ import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetSummery() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];

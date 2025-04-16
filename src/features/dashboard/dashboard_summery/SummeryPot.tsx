@@ -9,7 +9,7 @@ import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
 import type { Pot } from "../../pot/types/pot.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryPot() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];

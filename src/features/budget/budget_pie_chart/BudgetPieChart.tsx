@@ -6,7 +6,7 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetPieChart() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);

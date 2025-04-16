@@ -11,7 +11,7 @@ import DropDownMenu from "../../../components/ui/DropDownMenu.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 
-import typeOptions from "../../../constants/transactionTypeOptions.ts";
+import { typeOptions } from "../../../constants/appOptions.ts";
 
 function FilterType() {
   const selectedType: SelectedOptions = useStore(

@@ -6,7 +6,7 @@ import { ListActions } from "./ListElements.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function ListHeader() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];

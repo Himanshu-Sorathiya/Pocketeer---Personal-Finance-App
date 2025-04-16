@@ -8,7 +8,7 @@ import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Pot } from "../types/pot.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function WithdrawMoneyFromPotModal({ potId }: any) {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];

@@ -4,7 +4,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-import themeColors from "../../constants/themeColors.ts";
+import { themeColors } from "../../constants/appOptions.ts";
 
 function ThemeField({
   items,

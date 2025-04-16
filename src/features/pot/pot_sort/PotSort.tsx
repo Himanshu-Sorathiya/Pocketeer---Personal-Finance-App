@@ -8,7 +8,7 @@ import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 
-import sortOptions from "../../../constants/potSortOptions.ts";
+import { sortOptions } from "../../../constants/appOptions.ts";
 
 function PotSort() {
   const selectedSort: SelectedOptions = useStore(
@@ -73,7 +73,7 @@ function SortDropDown({
 
       {openDropdown === "progress" && (
         <DropDownStagedMenu
-          options={sortOptions}
+          options={sortOptions.pot}
           setOpenDropdown={setOpenDropdown}
           selectedOption={selectedSort}
           setSelectedOption={handleSortChange}

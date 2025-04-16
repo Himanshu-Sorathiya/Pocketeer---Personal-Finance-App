@@ -10,7 +10,7 @@ import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
 
 import type { Budget } from "../../budget/types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryBudget() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);

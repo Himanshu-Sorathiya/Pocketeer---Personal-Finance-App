@@ -6,7 +6,7 @@ import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 import transactionCategories from "../../../constants/transactionCategory.ts";
 
 function CreateBudgetModal() {

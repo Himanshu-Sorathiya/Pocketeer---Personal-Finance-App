@@ -29,7 +29,7 @@ import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
 
-import themeColors from "../../../constants/themeColors.ts";
+import { themeColors } from "../../../constants/appOptions.ts";
 
 import {
   DEFAULT_END_DATE,
