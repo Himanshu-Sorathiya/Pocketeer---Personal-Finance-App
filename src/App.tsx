@@ -18,6 +18,8 @@ const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   defaultPreloadDelay: 100,
+  scrollRestoration: true,
+  scrollRestorationBehavior: "smooth",
   defaultNotFoundComponent: PageNotFound,
   defaultErrorComponent: ErrorPage,
   defaultPendingComponent: GlobalSpinner,

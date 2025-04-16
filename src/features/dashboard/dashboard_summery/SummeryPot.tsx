@@ -13,10 +13,11 @@ import themeColors from "../../../constants/themeColors.ts";
 
 function SummeryPot() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+  const potTransactionCache = useStore(potTransactionCacheStore);
 
   const totalSaved = pots
     .reduce((acc, pot) => {
-      const saved = useStore(potTransactionCacheStore).get(pot.id)?.amount ?? 0;
+      const saved = potTransactionCache.get(pot.id)?.amount ?? 0;
 
       return acc + saved;
     }, 0)
