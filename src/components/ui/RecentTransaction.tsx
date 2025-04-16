@@ -1,4 +1,4 @@
-import { getTransactionData } from "../../features/transaction/store/transactionStyleStore.ts";
+import { getTransactionData } from "../../features/transaction/store/transactionStore.ts";
 
 import type { Transaction } from "../../features/transaction/types/transaction.types.ts";
 

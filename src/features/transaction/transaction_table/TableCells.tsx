@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { openModal } from "../../../store/appModalStore.ts";
-import { getTransactionData } from "../store/transactionStyleStore.ts";
+import { getTransactionData } from "../store/transactionStore.ts";
 
 import DropDownActions from "../../../components/ui/DropDownActions.tsx";
 

@@ -14,6 +14,15 @@ import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
 } from "../../../utilities/dateUtils.ts";
+import {
+  getRandomColor,
+  getRandomIcon,
+} from "../transaction_helpers/transactionHelpers.ts";
+
+type TransactionData = {
+  iconPath: string;
+  bgColor: string;
+};
 
 type TransactionState = {
   transactions: Transaction[];
@@ -33,6 +42,8 @@ type TransactionState = {
 
 const transactions: Transaction[] = getTransactions();
 
+const transactionDataStore = new Store<Record<string, TransactionData>>({});
+
 const transactionStore = new Store<TransactionState>({
   transactions,
 
@@ -44,11 +55,11 @@ const transactionStore = new Store<TransactionState>({
 
   columnFilters: [
     { id: "recipient", value: "" },
+    { id: "category", value: "all" },
     {
       id: "date",
       value: JSON.stringify([DEFAULT_START_DATE, DEFAULT_END_DATE]),
     },
-    { id: "category", value: "all" },
     { id: "amount", value: "all" },
   ],
   sorting: [{ id: "date", desc: true }],
@@ -152,7 +163,25 @@ function handlePageSizeChange(newPageSize: number) {
   updatePaginator(transactionStore.state.pagination.pageIndex, newPageSize);
 }
 
+function getTransactionData(transactionId: string, category: string) {
+  let storeData = transactionDataStore.state[transactionId];
+
+  if (!storeData) {
+    storeData = {
+      iconPath: getRandomIcon(category),
+      bgColor: getRandomColor(),
+    };
+    transactionStore.setState((prev) => ({
+      ...prev,
+      [transactionId]: storeData,
+    }));
+  }
+
+  return storeData;
+}
+
 export {
+  getTransactionData,
   handleCategoryChange,
   handleDateRangeChange,
   handlePageIndexChange,
