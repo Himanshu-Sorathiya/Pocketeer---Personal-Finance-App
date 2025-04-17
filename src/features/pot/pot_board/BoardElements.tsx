@@ -11,7 +11,7 @@ import {
 
 import { openModal } from "../../../store/appModalStore.ts";
 
-import DropDownActions from "../../../components/ui/DropDownActions.tsx";
+import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
@@ -246,5 +246,5 @@ export {
   BoardBalance,
   BoardPotActions,
   BoardProgressChart,
-  BoardProgressInfo,
+  BoardProgressInfo
 };

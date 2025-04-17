@@ -22,7 +22,7 @@ import {
 } from "../../transaction/store/transactionStore.ts";
 import { budgetStore } from "../store/budgetStore.ts";
 
-import DropDownActions from "../../../components/ui/DropDownActions.tsx";
+import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
@@ -286,5 +286,5 @@ export {
   ListBalance,
   ListProgressChart,
   ListProgressInfo,
-  ListRecentTransactions,
+  ListRecentTransactions
 };

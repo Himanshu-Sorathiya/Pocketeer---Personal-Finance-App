@@ -8,7 +8,7 @@ import {
   transactionStore,
 } from "../store/transactionStore.ts";
 
-import DropDownWeekPicker from "../../../components/ui/DropDownWeekPicker.tsx";
+import DropDownWeekPicker from "../../../components/dropdowns/DropDownWeekPicker.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 

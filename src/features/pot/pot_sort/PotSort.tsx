@@ -4,7 +4,7 @@ import { useStore } from "@tanstack/react-store";
 
 import { handleSortChange, potStore } from "../store/potStore.ts";
 
-import DropDownStagedMenu from "../../../components/ui/DropDownStagedMenu.tsx";
+import DropDownStagedMenu from "../../../components/dropdowns/DropDownStagedMenu.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 

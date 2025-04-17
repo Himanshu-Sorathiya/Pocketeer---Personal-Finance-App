@@ -1,13 +1,13 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 
-import AmountField from "../components/modals/AmountField.tsx";
-import CategoryField from "../components/modals/CategoryField.tsx";
-import DateField from "../components/modals/DateField.tsx";
-import NameField from "../components/modals/NameField.tsx";
-import ResetButton from "../components/modals/ResetButton.tsx";
-import SubmitButton from "../components/modals/SubmitButton.tsx";
-import ThemeField from "../components/modals/ThemeField.tsx";
-import TypeField from "../components/modals/TypeField.tsx";
+import ResetButton from "../components/buttons/ResetButton.tsx";
+import SubmitButton from "../components/buttons/SubmitButton.tsx";
+import AmountField from "../components/fields/AmountField.tsx";
+import CategoryField from "../components/fields/CategoryField.tsx";
+import DateField from "../components/fields/DateField.tsx";
+import NameField from "../components/fields/NameField.tsx";
+import ThemeField from "../components/fields/ThemeField.tsx";
+import TypeField from "../components/fields/TypeField.tsx";
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts();

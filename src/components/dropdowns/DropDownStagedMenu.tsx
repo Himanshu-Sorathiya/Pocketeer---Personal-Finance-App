@@ -19,8 +19,8 @@ function DropDownStagedMenu({
         <div key={key}>
           <div className="text-sm font-semibold text-gray-600 capitalize">
             {key}
-          </div>{" "}
-          {/* Stage Name */}
+          </div>
+
           {options[key].map((option) => (
             <button
               key={option}

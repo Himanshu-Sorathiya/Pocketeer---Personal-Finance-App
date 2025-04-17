@@ -3,7 +3,7 @@ import { useState } from "react";
 import { openModal } from "../../../store/appModalStore.ts";
 import { getTransactionData } from "../store/transactionStore.ts";
 
-import DropDownActions from "../../../components/ui/DropDownActions.tsx";
+import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 
 import type { TransactionType } from "../types/transaction.types.ts";
 

@@ -2,8 +2,8 @@ import { useStore } from "@tanstack/react-store";
 
 import { potStore } from "../store/potStore.ts";
 
-import CancelButton from "../../../components/modals/CancelButton.tsx";
-import DeleteButton from "../../../components/modals/DeleteButton.tsx";
+import CancelButton from "../../../components/buttons/CancelButton.tsx";
+import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
 
 function DeletePotModal({ potId }: { potId: string }) {
   const pot = [...useStore(potStore, (s) => s.pots)].find(

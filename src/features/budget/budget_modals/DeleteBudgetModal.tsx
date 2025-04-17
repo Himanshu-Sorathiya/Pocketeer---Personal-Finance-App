@@ -2,8 +2,8 @@ import { useStore } from "@tanstack/react-store";
 
 import { budgetStore } from "../store/budgetStore.ts";
 
-import CancelButton from "../../../components/modals/CancelButton.tsx";
-import DeleteButton from "../../../components/modals/DeleteButton.tsx";
+import CancelButton from "../../../components/buttons/CancelButton.tsx";
+import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
 
 function DeleteBudgetModal({ budgetId }: any) {
   const budget = [...useStore(budgetStore, (s) => s.budgets)].find(

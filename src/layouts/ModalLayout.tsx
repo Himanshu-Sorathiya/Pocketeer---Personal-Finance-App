@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import CloseButton from "../components/ui/CloseButton.tsx";
+import CloseButton from "../components/buttons/CloseButton.tsx";
 
 function ModalLayout({
   children,
