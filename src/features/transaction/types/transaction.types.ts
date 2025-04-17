@@ -1,9 +1,7 @@
-import type transactionCategories from "../../../constants/transactionCategory.ts";
-import type transactionTypes from "../../../constants/transactionType.ts";
-
-type TransactionCategory = (typeof transactionCategories)[number];
-
-type TransactionType = (typeof transactionTypes)[number];
+import type {
+  TransactionCategory,
+  TransactionType,
+} from "../../../constants/transactionConfig.ts";
 
 type Transaction = {
   id: string;

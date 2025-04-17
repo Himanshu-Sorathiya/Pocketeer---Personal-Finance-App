@@ -4,7 +4,7 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
-import transactionCategories from "../../../constants/transactionCategory.ts";
+import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
   const currency = [...useStore(transactionStore, (s) => s.transactions)][0]

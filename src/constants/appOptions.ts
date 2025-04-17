@@ -2,7 +2,7 @@ const appActions: Record<string, Record<string, string>> = {
   transaction: { edit: "modify", delete: "remove" },
   pot: { edit: "tend", delete: "prune" },
   budget: { edit: "refine", delete: "erase" },
-};
+} as const;
 
 const sortOptions: Record<string, Record<string, string[]>> = {
   pot: {
@@ -13,15 +13,15 @@ const sortOptions: Record<string, Record<string, string[]>> = {
     date: ["latest", "oldest"],
     amount: ["highest", "lowest"],
   },
-};
+} as const;
 
 const statusOptions: Record<string, string[]> = {
   status: ["all", "completed", "ongoing"],
-};
+} as const;
 
 const typeOptions: Record<string, string[]> = {
   type: ["all", "income", "expense"],
-};
+} as const;
 
 const categoryOptions: Record<string, string[]> = {
   category: [
@@ -41,7 +41,7 @@ const categoryOptions: Record<string, string[]> = {
     "miscellaneous",
     "general",
   ],
-};
+} as const;
 
 const themeColors: { name: string; hex: string }[] = [
   { name: "crimson_flame", hex: "#FF6B6B" },
@@ -59,7 +59,7 @@ const themeColors: { name: string; hex: string }[] = [
   { name: "sunfire_gold", hex: "#FFA000" },
   { name: "steel_mist", hex: "#607D8B" },
   { name: "platinum_ash", hex: "#B0B0B0" },
-];
+] as const;
 
 export {
   appActions,

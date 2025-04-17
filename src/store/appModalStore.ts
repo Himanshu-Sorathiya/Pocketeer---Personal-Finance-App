@@ -1,6 +1,6 @@
 import { Store } from "@tanstack/react-store";
 
-import type ModalId from "../constants/appModalIds.ts";
+import { type ModalId } from "../constants/modalConfig.ts";
 
 type ModalState = {
   id: ModalId | null;

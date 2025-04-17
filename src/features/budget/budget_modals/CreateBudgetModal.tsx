@@ -7,7 +7,7 @@ import { useAppForm } from "../../../hooks/useAppForm.ts";
 import type { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
-import transactionCategories from "../../../constants/transactionCategory.ts";
+import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];

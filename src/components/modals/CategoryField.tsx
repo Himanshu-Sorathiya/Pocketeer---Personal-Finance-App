@@ -4,7 +4,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-import transactionCategories from "../../constants/transactionCategory.ts";
+import { transactionCategories } from "../../constants/transactionConfig.ts";
 
 function CategoryField({
   items,
