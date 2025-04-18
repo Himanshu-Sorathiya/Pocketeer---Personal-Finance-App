@@ -22,9 +22,6 @@ Pocketeer is a **personal finance** app designed to help users **track transacti
 - **Forms & Validation:** TanStack Form
 - **State Management:** TanStack Store
 - **Tables & Grids:** TanStack Table
-- **Virtualization:** TanStack Virtual
-- **Rate Limiting & Queueing:** TanStack Pacer
-- **Range Selector:** TanStack Ranger
 
 ---
 
@@ -37,7 +34,6 @@ Pocketeer                     // Root directory
 ├─ src/                       // Main source code
 │  ├─ assets/                 // Images, icons, SVGs
 │  ├─ components/             // Reusable UI components
-│  ├─ contexts/               // Context providers
 │  ├─ features/               // Independent features
 │  ├─ hooks/                  // Custom hooks
 │  ├─ layouts/                // Layout components
