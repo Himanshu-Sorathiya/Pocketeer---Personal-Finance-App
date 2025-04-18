@@ -4,6 +4,9 @@ import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Pot } from "../types/pot.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
@@ -40,12 +43,9 @@ function CreatePotModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">Create new Pot</h1>
+      <ModalHeader title={`Create New Pot`} />
 
-      <p className="text-text text-sm">
-        Ready to give your savings a purpose? Create a pot and start setting
-        targets for your financial goals with Pocketeer!
-      </p>
+      <ModalDescription description="Ready to give your savings a purpose? Create a pot and start setting targets for your financial goals with Pocketeer!" />
 
       <form
         onSubmit={(e) => {

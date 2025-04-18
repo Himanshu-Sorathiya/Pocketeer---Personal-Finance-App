@@ -4,6 +4,9 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
@@ -51,12 +54,9 @@ function CreateBudgetModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">Create new Budget</h1>
+      <ModalHeader title={`Create New Budget`} />
 
-      <p className="text-text text-sm">
-        Set limits for smarter spending. Create a budget to manage your expenses
-        and stay financially on track with Pocketeer!
-      </p>
+      <ModalDescription description="Set limits for smarter spending. Create a budget to manage your expenses and stay financially on track with Pocketeer!" />
 
       <form
         onSubmit={(e) => {

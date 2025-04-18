@@ -6,6 +6,9 @@ import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Pot } from "../types/pot.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
@@ -29,14 +32,9 @@ function AddMoneyToPotModal({ potId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Add to "{pot?.name}"
-      </h1>
+      <ModalHeader title={`Add Money to "${pot?.name}"`} />
 
-      <p className="text-text text-sm">
-        Fuel your savings journey by adding more to your pot. Every contribution
-        brings you closer to your goal with Pocketeer!
-      </p>
+      <ModalDescription description="Fuel your savings journey by adding more to your pot. Every contribution brings you closer to your goal with Pocketeer!" />
 
       <form.Subscribe
         selector={(state) => state.values.amount}

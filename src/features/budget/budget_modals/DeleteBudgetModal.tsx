@@ -4,6 +4,8 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function DeleteBudgetModal({ budgetId }: any) {
   const budget = [...useStore(budgetStore, (s) => s.budgets)].find(
@@ -12,22 +14,17 @@ function DeleteBudgetModal({ budgetId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Delete "
-        {budget?.category
+      <ModalHeader
+        title={`Delete "${budget?.category
           .split("_")
           .map(
             (part) =>
               part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
           )
-          .join(" & ")}
-        " Budget?
-      </h1>
+          .join(" & ")}" Budget?`}
+      />
 
-      <p className="text-text text-sm">
-        Ready to retire this budget? Deleting it will clear your set limits and
-        tracking—make sure it fits your financial shift with Pocketeer!{" "}
-      </p>
+      <ModalDescription description="Ready to retire this budget? Deleting it will clear your set limits and tracking—make sure it fits your financial shift with Pocketeer!" />
 
       <DeleteButton label="Yes, Delete" />
 

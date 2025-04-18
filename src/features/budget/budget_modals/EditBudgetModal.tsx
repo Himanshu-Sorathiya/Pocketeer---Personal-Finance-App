@@ -4,6 +4,9 @@ import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Budget } from "../types/budget.types.ts";
 
 function EditBudgetModal({ budgetId }: any) {
@@ -26,22 +29,14 @@ function EditBudgetModal({ budgetId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Edit "
-        {budget?.category
+      <ModalHeader
+        title={`Edit "${budget?.category
           .split("_")
-          .map(
-            (part) =>
-              part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
-          )
-          .join(" & ")}
-        " Budget
-      </h1>
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(" & ")}" Budget?`}
+      />
 
-      <p className="text-text text-sm">
-        Fine-tune your budgeting strategy by updating your limits. Keep your
-        finances aligned with your evolving goals.
-      </p>
+      <ModalDescription description="Fine-tune your budgeting strategy by updating your limits. Keep your finances aligned with your evolving goals." />
 
       <form
         onSubmit={(e) => {

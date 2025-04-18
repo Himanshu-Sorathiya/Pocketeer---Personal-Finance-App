@@ -4,6 +4,9 @@ import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Pot } from "../types/pot.types.ts";
 
 function EditPotModal({ potId }: { potId: string }) {
@@ -24,14 +27,9 @@ function EditPotModal({ potId }: { potId: string }) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Edit "{pot?.name}" Pot
-      </h1>
+      <ModalHeader title={`Edit "${pot?.name}" Pot`} />
 
-      <p className="text-text text-sm">
-        Need to adjust your savings plan? Edit your pot to reflect your updated
-        financial goals and keep moving forward with Pocketeer!
-      </p>
+      <ModalDescription description="Need to adjust your savings plan? Edit your pot to reflect your updated financial goals and keep moving forward with Pocketeer!" />
 
       <form
         onSubmit={(e) => {

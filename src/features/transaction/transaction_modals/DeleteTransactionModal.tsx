@@ -4,6 +4,8 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function DeleteTransactionModal({ transactionId }: any) {
   const transaction = [
@@ -12,14 +14,9 @@ function DeleteTransactionModal({ transactionId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Delete "{transaction?.recipient}" Transaction?
-      </h1>
+      <ModalHeader title={`Delete "${transaction?.recipient}" Transaction?`} />
 
-      <p className="text-text text-sm">
-        Want to clean up your records? Deleting this transaction will remove it
-        from your financial history in Pocketeer!.
-      </p>
+      <ModalDescription description="Want to clean up your records? Deleting this transaction will remove it from your financial history in Pocketeer!." />
 
       <DeleteButton label="Yes, Delete" />
 

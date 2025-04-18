@@ -5,6 +5,9 @@ import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Transaction } from "../types/transaction.types.ts";
 
 function EditTransactionModal({ transactionId }: any) {
@@ -27,14 +30,9 @@ function EditTransactionModal({ transactionId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Edit Transaction of "{transaction?.recipient}"
-      </h1>
+      <ModalHeader title={`Edit Transaction of "${transaction?.recipient}"`} />
 
-      <p className="text-text text-sm">
-        Need to make changes? Edit your transaction details to ensure your
-        financial records stay accurate with Pocketeer!{" "}
-      </p>
+      <ModalDescription description="Need to make changes? Edit your transaction details to ensure your financial records stay accurate with Pocketeer!" />
 
       <form
         onSubmit={(e) => {

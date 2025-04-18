@@ -4,6 +4,9 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
@@ -25,14 +28,9 @@ function CreateTransactionModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Create new Transaction
-      </h1>
+      <ModalHeader title={`Create new Transaction`} />
 
-      <p className="text-text text-sm">
-        Start tracking your finances by adding a new transaction. Stay on top of
-        your income and expenses with Pocketeer!{" "}
-      </p>
+      <ModalDescription description="Start tracking your finances by adding a new transaction. Stay on top of your income and expenses with Pocketeer!" />
 
       <form
         onSubmit={(e) => {

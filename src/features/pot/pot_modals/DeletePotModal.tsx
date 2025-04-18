@@ -4,6 +4,8 @@ import { potStore } from "../store/potStore.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function DeletePotModal({ potId }: { potId: string }) {
   const pot = [...useStore(potStore, (s) => s.pots)].find(
@@ -12,15 +14,9 @@ function DeletePotModal({ potId }: { potId: string }) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Delete "{pot?.name}" Pot?
-      </h1>
+      <ModalHeader title={`Delete "${pot?.name}" Pot?`} />
 
-      <p className="text-text text-sm">
-        Decided to close this savings pot? Deleting it will remove all
-        associated progress, so make sure it’s the right move for your journey
-        with Pocketeer!
-      </p>
+      <ModalDescription description="Decided to close this savings pot? Deleting it will remove all associated progress, so make sure it’s the right move for your journey with Pocketeer!" />
 
       <DeleteButton label="Yes, Delete" />
 

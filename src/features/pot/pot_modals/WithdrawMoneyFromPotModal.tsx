@@ -6,6 +6,9 @@ import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
+import ModalDescription from "../../../components/ui/ModalDescription.tsx";
+import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
 import type { Pot } from "../types/pot.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
@@ -29,14 +32,9 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      <h1 className="text-3xl font-semibold wrap-normal">
-        Withdraw from "{pot?.name}"
-      </h1>
+      <ModalHeader title={`Withdraw Money from "${pot?.name}"`} />
 
-      <p className="text-text text-sm">
-        Need to use some of your saved funds? Withdraw from your pot and stay in
-        control of your financial journey with Pocketeer!{" "}
-      </p>
+      <ModalDescription description="Need to use some of your saved funds? Withdraw from your pot and stay in control of your financial journey with Pocketeer!" />
 
       <form.Subscribe
         selector={(state) => state.values.amount}
