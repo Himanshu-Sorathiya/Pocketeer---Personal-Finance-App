@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import ErrorPage from "../../pages/ErrorPage.tsx";
-import PageNotFound from "../../pages/PageNotFound.tsx";
-import Transaction from "../../pages/Transaction.tsx";
+import Transaction from "../../pages/app/Transaction.tsx";
+import ErrorPage from "../../pages/common/ErrorPage.tsx";
+import NotFoundPage from "../../pages/common/NotFoundPage.tsx";
 
 import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 const Route = createFileRoute("/app/transaction")({
   component: Transaction,
   pendingComponent: GlobalSpinner,
-  notFoundComponent: PageNotFound,
+  notFoundComponent: NotFoundPage,
   errorComponent: ErrorPage,
 });
 

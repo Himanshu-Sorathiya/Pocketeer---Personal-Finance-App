@@ -3,8 +3,8 @@ import { useStore } from "@tanstack/react-store";
 
 import { routeTree } from "./routeTree.gen.ts";
 
-import ErrorPage from "./pages/ErrorPage.tsx";
-import PageNotFound from "./pages/PageNotFound.tsx";
+import ErrorPage from "./pages/common/ErrorPage.tsx";
+import NotFoundPage from "./pages/common/NotFoundPage.tsx";
 
 import { transactionStore } from "./features/transaction/store/transactionStore.ts";
 import { setBudgetCache, setPotCache } from "./store/appCacheStore.ts";
@@ -20,7 +20,7 @@ const router = createRouter({
   defaultPreloadDelay: 100,
   scrollRestoration: true,
   scrollRestorationBehavior: "smooth",
-  defaultNotFoundComponent: PageNotFound,
+  defaultNotFoundComponent: NotFoundPage,
   defaultErrorComponent: ErrorPage,
   defaultPendingComponent: GlobalSpinner,
 });

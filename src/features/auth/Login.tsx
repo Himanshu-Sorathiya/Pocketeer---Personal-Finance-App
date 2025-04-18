@@ -1,12 +1,33 @@
 import { Link } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
 
-import { Route as signupRoute } from "../routes/auth/signup.tsx";
+import { Route as signupRoute } from "../../routes/auth/signup.tsx";
 
-import { useAppForm } from "../hooks/useAppForm.ts";
+import ModalLayout from "../../layouts/ModalLayout.tsx";
 
-import ModalHeader from "../components/ui/ModalHeader.tsx";
+import {
+    closeModal,
+    modalStore,
+    openModal,
+} from "../../store/appModalStore.ts";
+
+import { useAppForm } from "../../hooks/useAppForm.ts";
+
+import ForgotPasswordModal from "./ForgotPasswordModal.tsx";
+
+import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function Login() {
+  const id = useStore(modalStore, (s) => s.id);
+
+  function handleOpenModal() {
+    openModal("forgot_password");
+  }
+
+  function handleCloseModal() {
+    closeModal();
+  }
+
   const form = useAppForm({
     defaultValues: {
       email: "",
@@ -103,7 +124,16 @@ function Login() {
               },
             }}
             children={(field) => (
-              <field.PasswordField label="Password" showForgotPassword={true} />
+              <div className="flex flex-col gap-0.5">
+                <field.PasswordField label="Password" />
+
+                <span
+                  onClick={handleOpenModal}
+                  className="hover:text-primary cursor-pointer self-end text-sm font-medium text-nowrap text-gray-700 underline transition-all duration-100"
+                >
+                  Forgot Password?
+                </span>
+              </div>
             )}
           />
 
@@ -127,6 +157,12 @@ function Login() {
           </span>
         </Link>
       </p>
+
+      {id && ["forgot_password"].includes(id) && (
+        <ModalLayout onClose={handleCloseModal}>
+          {id === "forgot_password" && <ForgotPasswordModal />}
+        </ModalLayout>
+      )}
     </div>
   );
 }

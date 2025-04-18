@@ -1,4 +1,4 @@
-import BudgetContainer from "../features/budget/Budget.tsx";
+import BudgetContainer from "../../features/budget/Budget.tsx";
 
 function Budget() {
   return <BudgetContainer />;

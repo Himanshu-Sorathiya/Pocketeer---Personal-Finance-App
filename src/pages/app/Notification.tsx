@@ -1,4 +1,4 @@
-import NotificationContainer from "../features/notification/Notification.tsx";
+import NotificationContainer from "../../features/notification/Notification.tsx";
 
 function Notification() {
   return <NotificationContainer />;

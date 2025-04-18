@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 
-import { Route as loginRoute } from "../routes/auth/login.tsx";
+import { Route as loginRoute } from "../../routes/auth/login.tsx";
 
-import { useAppForm } from "../hooks/useAppForm.ts";
+import { useAppForm } from "../../hooks/useAppForm.ts";
 
-import ModalHeader from "../components/ui/ModalHeader.tsx";
+import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function Signup() {
   const form = useAppForm({
@@ -13,6 +13,7 @@ function Signup() {
       email: "",
       password: "",
     },
+
     onSubmit: async (values) => {
       console.log("from", values);
     },
@@ -21,7 +22,7 @@ function Signup() {
   return (
     <div className="w-full max-w-xl p-6">
       <div className="flex w-full min-w-lg flex-col gap-3 rounded-lg bg-white px-4 pt-5 pb-6 shadow-xl">
-        <ModalHeader title={`Login to Pocketeer`} />
+        <ModalHeader title={`Signup with Pocketeer`} />
 
         <form
           onSubmit={(e) => {
@@ -156,7 +157,7 @@ function Signup() {
             </form.AppForm>
 
             <form.AppForm>
-              <form.SubmitButton label="Login" />
+              <form.SubmitButton label="Register" />
             </form.AppForm>
           </div>
         </form>

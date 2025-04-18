@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import ErrorLayout from "../layouts/ErrorLayout.tsx";
+import ErrorLayout from "../../layouts/ErrorLayout.tsx";
 
 function ErrorPage() {
   return (

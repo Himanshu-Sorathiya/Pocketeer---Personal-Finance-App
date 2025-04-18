@@ -2,13 +2,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-function PasswordField({
-  label,
-  showForgotPassword = false,
-}: {
-  label: string;
-  showForgotPassword?: boolean;
-}) {
+function PasswordField({ label }: { label: string }) {
   const field = useFieldContext<string>();
 
   return (
@@ -28,14 +22,6 @@ function PasswordField({
             : "text-gray-500 outline-gray-400"
         }`}
       />
-
-      {showForgotPassword && (
-        <div className="self-end">
-          <span className="hover:text-primary cursor-pointer text-right text-sm font-medium text-nowrap text-gray-700 underline transition-all duration-100">
-            Forgot Password?
-          </span>
-        </div>
-      )}
 
       {field.state.meta.isTouched && field.state.meta.errors && (
         <ErrorTooltip meta={field.state.meta} />

@@ -1,4 +1,4 @@
-import TransactionContainer from "../features/transaction/Transaction.tsx";
+import TransactionContainer from "../../features/transaction/Transaction.tsx";
 
 function Transaction() {
   return <TransactionContainer />;

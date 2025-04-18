@@ -1,4 +1,4 @@
-import AccountContainer from "../features/account/Account.tsx";
+import AccountContainer from "../../features/account/Account.tsx";
 
 function Account() {
   return <AccountContainer />;

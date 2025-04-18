@@ -10,9 +10,9 @@ const modalIds = [
   "delete_pot",
   "pot_add_money",
   "pot_withdraw_money",
+  "forgot_password",
 ] as const;
 
 type ModalId = (typeof modalIds)[number];
 
 export { type ModalId, modalIds };
-

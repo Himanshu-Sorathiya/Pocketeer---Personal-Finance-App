@@ -5,8 +5,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import ErrorPage from "../pages/ErrorPage.tsx";
-import PageNotFound from "../pages/PageNotFound.tsx";
+import ErrorPage from "../pages/common/ErrorPage.tsx";
+import NotFoundPage from "../pages/common/NotFoundPage.tsx";
 
 import FlowLoader from "../components/loaders/FlowLoader.tsx";
 import GlobalSpinner from "../components/loaders/GlobalSpinner.tsx";
@@ -14,7 +14,7 @@ import GlobalSpinner from "../components/loaders/GlobalSpinner.tsx";
 const Route = createRootRoute({
   component: RootComponent,
   pendingComponent: GlobalSpinner,
-  notFoundComponent: PageNotFound,
+  notFoundComponent: NotFoundPage,
   errorComponent: ErrorPage,
 });
 

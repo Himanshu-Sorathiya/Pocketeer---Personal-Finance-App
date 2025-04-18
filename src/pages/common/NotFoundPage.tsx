@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-import NotFoundLayout from "../layouts/NotFoundLayout.tsx";
+import NotFoundLayout from "../../layouts/NotFoundLayout.tsx";
 
-function PageNotFound() {
+function NotFoundPage() {
   return (
     <NotFoundLayout>
       <div className="flex flex-col items-center gap-2">
@@ -29,4 +29,4 @@ function PageNotFound() {
   );
 }
 
-export default PageNotFound;
+export default NotFoundPage;
