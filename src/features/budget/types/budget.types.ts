@@ -1,10 +1,10 @@
-import type {
-  Transaction,
-  TransactionCategory,
-} from "../../transaction/types/transaction.types.ts";
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
+
+import type { TransactionCategory } from "../../../constants/transactionConfig.ts";
 
 type Budget = {
-  id: string;
+  user_id: string;
+  budgetId: string;
   category: TransactionCategory;
   targetAmount: number;
   currency: string;

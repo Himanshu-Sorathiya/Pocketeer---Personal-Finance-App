@@ -13,7 +13,7 @@ function EditBudgetModal({ budgetId }: any) {
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
 
   const budget: Budget | undefined = budgets.find(
-    (budget) => budget.id === budgetId,
+    (budget) => budget.budgetId === budgetId,
   );
 
   const form = useAppForm({

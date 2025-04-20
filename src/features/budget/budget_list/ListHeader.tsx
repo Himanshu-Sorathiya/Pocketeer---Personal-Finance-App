@@ -13,7 +13,7 @@ function ListHeader() {
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
 
   const budget: Budget =
-    budgets.find((b) => b.id === selectedBudget) || budgets[0];
+    budgets.find((b) => b.budgetId === selectedBudget) || budgets[0];
 
   return (
     <div className="flex items-center justify-between gap-4">

@@ -29,11 +29,11 @@ function PotBoard() {
   return (
     <div className="grid min-w-full grid-cols-3 gap-4">
       {sortedPots.map((pot) => {
-        const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
+        const savedAmount = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
         return (
           <div
-            key={pot.id}
+            key={pot.potId}
             className="bg-shade-100 relative flex flex-col gap-3 rounded-md px-6 py-4"
           >
             <BoardHeader pot={pot} />

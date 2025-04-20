@@ -35,10 +35,10 @@ function App() {
   const transactions = [...useStore(transactionStore, (s) => s.transactions)];
 
   getBudgets().forEach((b) =>
-    setBudgetCache(b.id, b.category, b.creationDate, transactions),
+    setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
   );
   getPots().forEach((p) =>
-    setPotCache(p.id, p.name, p.creationDate, transactions),
+    setPotCache(p.potId, p.name, p.creationDate, transactions),
   );
 
   return <RouterProvider router={router} />;

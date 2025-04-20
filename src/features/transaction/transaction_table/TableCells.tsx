@@ -5,7 +5,7 @@ import { getTransactionData } from "../store/transactionStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 
-import type { TransactionType } from "../types/transaction.types.ts";
+import type { TransactionType } from "../../../constants/transactionConfig.ts";
 
 function RecipientCell({
   transactionId,

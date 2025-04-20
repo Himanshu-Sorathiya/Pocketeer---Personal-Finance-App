@@ -16,10 +16,10 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function WithdrawMoneyFromPotModal({ potId }: any) {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
 
-  const pot: Pot | undefined = pots.find((pot) => pot.id === potId);
+  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
   const savedAmount =
-    useStore(potTransactionCacheStore).get(pot!.id)?.amount ?? 0;
+    useStore(potTransactionCacheStore).get(pot!.potId)?.amount ?? 0;
 
   const form = useAppForm({
     defaultValues: {

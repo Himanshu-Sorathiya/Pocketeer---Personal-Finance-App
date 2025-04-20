@@ -9,7 +9,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function DeleteBudgetModal({ budgetId }: any) {
   const budget = [...useStore(budgetStore, (s) => s.budgets)].find(
-    (budget) => budget.id === budgetId,
+    (budget) => budget.budgetId === budgetId,
   );
 
   return (

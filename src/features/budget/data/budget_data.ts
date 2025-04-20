@@ -3,7 +3,8 @@ import type { Budget } from "../types/budget.types.ts";
 function getBudgets(): Budget[] {
   return [
     {
-      id: "201",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "201",
       category: "entertainment",
       targetAmount: 4000,
       currency: "₹",
@@ -11,7 +12,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-02-01",
     },
     {
-      id: "202",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "202",
       category: "shopping",
       targetAmount: 5500,
       currency: "₹",
@@ -19,7 +21,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-01-15",
     },
     {
-      id: "203",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "203",
       category: "bills",
       targetAmount: 6000,
       currency: "₹",
@@ -27,7 +30,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-01-10",
     },
     {
-      id: "204",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "204",
       category: "food",
       targetAmount: 5000,
       currency: "₹",
@@ -35,7 +39,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-04-02",
     },
     {
-      id: "205",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "205",
       category: "health_fitness",
       targetAmount: 3500,
       currency: "₹",
@@ -43,7 +48,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-02-10",
     },
     {
-      id: "206",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "206",
       category: "transportation",
       targetAmount: 4000,
       currency: "₹",
@@ -51,7 +57,8 @@ function getBudgets(): Budget[] {
       creationDate: "2025-02-05",
     },
     {
-      id: "207",
+      user_id: "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+      budgetId: "207",
       category: "education",
       targetAmount: 6500,
       currency: "₹",
@@ -62,4 +69,3 @@ function getBudgets(): Budget[] {
 }
 
 export { getBudgets };
-

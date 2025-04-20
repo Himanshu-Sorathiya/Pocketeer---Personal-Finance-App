@@ -9,7 +9,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function DeletePotModal({ potId }: { potId: string }) {
   const pot = [...useStore(potStore, (s) => s.pots)].find(
-    (pot) => pot.id === potId,
+    (pot) => pot.potId === potId,
   );
 
   return (

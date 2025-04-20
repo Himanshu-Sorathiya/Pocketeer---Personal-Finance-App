@@ -26,7 +26,7 @@ function setBudgetCache(
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
       t.type === "expense" &&
-      new Date(t.date) >= new Date(creationDate) &&
+      new Date(t.creationDate) >= new Date(creationDate) &&
       t.category.trim() === category.trim(),
   );
 
@@ -52,7 +52,7 @@ function setPotCache(
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
       t.type === "income" &&
-      new Date(t.date) >= new Date(creationDate) &&
+      new Date(t.creationDate) >= new Date(creationDate) &&
       t.recipient.trim() === potName.trim(),
   );
 

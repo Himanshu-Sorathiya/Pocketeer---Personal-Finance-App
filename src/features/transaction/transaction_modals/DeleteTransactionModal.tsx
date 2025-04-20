@@ -10,7 +10,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 function DeleteTransactionModal({ transactionId }: any) {
   const transaction = [
     ...useStore(transactionStore, (s) => s.transactions),
-  ].find((transaction) => transaction.id === transactionId);
+  ].find((transaction) => transaction.transactionId === transactionId);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

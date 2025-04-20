@@ -4,13 +4,14 @@ import type {
 } from "../../../constants/transactionConfig.ts";
 
 type Transaction = {
-  id: string;
+  user_id: string;
+  transactionId: string;
   recipient: string;
   category: TransactionCategory;
-  date: string;
   amount: number;
-  currency: string;
   type: TransactionType;
+  currency: string;
+  creationDate: string;
 };
 
-export { type Transaction, type TransactionCategory, type TransactionType };
+export { type Transaction };

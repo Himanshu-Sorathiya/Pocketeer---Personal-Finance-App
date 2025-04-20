@@ -10,10 +10,10 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function BoardHeader({ pot }: { pot: Pot }) {
   const savedAmount =
-    useStore(potTransactionCacheStore).get(pot.id)?.amount ?? 0;
+    useStore(potTransactionCacheStore).get(pot.potId)?.amount ?? 0;
 
   return (
-    <div key={pot.id} className="flex items-center justify-between gap-4">
+    <div key={pot.potId} className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-2">
         <div
           className="flex size-8 items-center justify-center rounded-full"
@@ -35,7 +35,7 @@ function BoardHeader({ pot }: { pot: Pot }) {
         <div className="text-lg font-medium text-gray-900">{pot.name}</div>
       </div>
 
-      <BoardActions potId={pot.id} />
+      <BoardActions potId={pot.potId} />
     </div>
   );
 }

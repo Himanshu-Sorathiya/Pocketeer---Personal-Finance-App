@@ -17,7 +17,7 @@ function SummeryPot() {
 
   const totalSaved = pots
     .reduce((acc, pot) => {
-      const saved = potTransactionCache.get(pot.id)?.amount ?? 0;
+      const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
       return acc + saved;
     }, 0)
@@ -67,8 +67,8 @@ function PotSummery() {
   const potTransactionCache = useStore(potTransactionCacheStore);
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)]
     .sort((a, b) => {
-      const savedA = potTransactionCache.get(a.id)?.amount ?? 0;
-      const savedB = potTransactionCache.get(b.id)?.amount ?? 0;
+      const savedA = potTransactionCache.get(a.potId)?.amount ?? 0;
+      const savedB = potTransactionCache.get(b.potId)?.amount ?? 0;
 
       const percentA = savedA / a.targetAmount;
       const percentB = savedB / b.targetAmount;
@@ -80,12 +80,12 @@ function PotSummery() {
   return (
     <div className="grid grid-cols-2">
       {pots.map((pot) => {
-        const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
+        const savedAmount = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
         return (
           savedAmount > 0 && (
             <div
-              key={pot.id}
+              key={pot.potId}
               className="flex h-14 items-center gap-3 rounded-md px-2 py-1.5"
             >
               <div

@@ -29,13 +29,19 @@ function RecentTransactions() {
   const latestTransactions: Transaction[] = [
     ...useStore(transactionStore, (s) => s.transactions),
   ]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
+    )
     .slice(0, 7);
 
   return (
     <div className="divide-y divide-gray-200">
       {latestTransactions.map((transaction) => (
-        <RecentTransaction key={transaction.id} transaction={transaction} />
+        <RecentTransaction
+          key={transaction.transactionId}
+          transaction={transaction}
+        />
       ))}
     </div>
   );

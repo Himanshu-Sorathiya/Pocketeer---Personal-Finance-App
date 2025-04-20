@@ -41,7 +41,7 @@ function filterPots(
   const statusFilter = filters.find((f) => f.id === "status")?.value || "all";
 
   return pots.filter((pot) => {
-    const savedAmount = potTransactionCache.get(pot.id)?.amount ?? 0;
+    const savedAmount = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
     return (
       isFuzzyMatch(searchFilter, pot.name) &&
@@ -64,8 +64,8 @@ function sortPots(
         ? b.targetAmount - a.targetAmount
         : a.targetAmount - b.targetAmount;
     } else if (sortKey === "progress") {
-      const savedA = potTransactionCache.get(a.id)?.amount ?? 0;
-      const savedB = potTransactionCache.get(b.id)?.amount ?? 0;
+      const savedA = potTransactionCache.get(a.potId)?.amount ?? 0;
+      const savedB = potTransactionCache.get(b.potId)?.amount ?? 0;
 
       return isDescending
         ? savedB / b.targetAmount - savedA / a.targetAmount

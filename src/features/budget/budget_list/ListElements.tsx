@@ -239,7 +239,10 @@ function ListRecentTransactions({
       ) : (
         <div className="divide-y divide-gray-200">
           {latestTransactions.map((transaction) => (
-            <RecentTransaction key={transaction.id} transaction={transaction} />
+            <RecentTransaction
+              key={transaction.transactionId}
+              transaction={transaction}
+            />
           ))}
         </div>
       )}
@@ -286,5 +289,5 @@ export {
   ListBalance,
   ListProgressChart,
   ListProgressInfo,
-  ListRecentTransactions
+  ListRecentTransactions,
 };

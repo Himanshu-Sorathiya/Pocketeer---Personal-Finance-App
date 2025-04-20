@@ -9,7 +9,8 @@ type SortingState = {
 };
 
 type Pot = {
-  id: string;
+  user_id: string;
+  potId: string;
   name: string;
   targetAmount: number;
   currency: string;

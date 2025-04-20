@@ -19,20 +19,20 @@ function BudgetSummery() {
       <div className="flex flex-col gap-1">
         {budgets.map((budget) => {
           const spentAmount =
-            budgetTransactionCache.get(budget.id)?.amount ?? 0;
+            budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
 
           return (
             <div
-              key={budget.id}
+              key={budget.budgetId}
               className="flex cursor-pointer items-center justify-between gap-4 rounded-md px-2 py-1.5"
               style={{
                 backgroundColor:
-                  budget.id === selectedBudget
+                  budget.budgetId === selectedBudget
                     ? `${themeColors.find((c) => c.name === budget.theme)?.hex}13`
                     : "transparent",
                 borderBottom: `1px solid ${themeColors.find((c) => c.name === budget.theme)?.hex}`,
               }}
-              onClick={() => handleBudgetChange(budget.id)}
+              onClick={() => handleBudgetChange(budget.budgetId)}
             >
               <div className="flex items-center gap-2">
                 <div

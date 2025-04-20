@@ -4,14 +4,14 @@ import type { Transaction } from "../../features/transaction/types/transaction.t
 
 function RecentTransaction({ transaction }: { transaction: Transaction }) {
   const { iconPath, bgColor } = getTransactionData(
-    transaction.id,
+    transaction.transactionId,
     transaction.category,
   );
 
   return (
     <div
       className="flex justify-between px-1 py-3 text-gray-700"
-      key={transaction.id}
+      key={transaction.transactionId}
     >
       <div className="flex items-center gap-2 font-medium">
         <div
@@ -38,7 +38,7 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
           {transaction.amount}
         </span>
 
-        <span className="text-sm font-light">{transaction.date}</span>
+        <span className="text-sm font-light">{transaction.creationDate}</span>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ function SummeryBudget() {
     ...useStore(budgetStore, (s) => s.budgets),
   ].map((budget) => ({
     ...budget,
-    spentAmount: budgetTransactionCache.get(budget.id)?.amount ?? 0,
+    spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
   }));
 
   const totalSpent = budgets
@@ -48,8 +48,8 @@ function BudgetSummery() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
   const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)]
     .sort((a, b) => {
-      const spentA = budgetTransactionCache.get(a.id)?.amount ?? 0;
-      const spentB = budgetTransactionCache.get(b.id)?.amount ?? 0;
+      const spentA = budgetTransactionCache.get(a.budgetId)?.amount ?? 0;
+      const spentB = budgetTransactionCache.get(b.budgetId)?.amount ?? 0;
 
       const percentA = spentA / a.targetAmount;
       const percentB = spentB / b.targetAmount;
@@ -61,12 +61,13 @@ function BudgetSummery() {
   return (
     <div className="flex flex-col gap-2">
       {budgets.map((budget) => {
-        const spentAmount = budgetTransactionCache.get(budget.id)?.amount ?? 0;
+        const spentAmount =
+          budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
 
         return (
           spentAmount > 0 && (
             <div
-              key={budget.id}
+              key={budget.budgetId}
               className="flex items-center gap-3 rounded-md px-2 py-1.5"
             >
               <div

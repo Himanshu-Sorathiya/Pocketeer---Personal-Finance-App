@@ -13,13 +13,13 @@ import type { Transaction } from "../types/transaction.types.ts";
 function EditTransactionModal({ transactionId }: any) {
   const transaction: Transaction | undefined = [
     ...useStore(transactionStore, (s) => s.transactions),
-  ].find((transaction) => transaction.id === transactionId);
+  ].find((transaction) => transaction.transactionId === transactionId);
 
   const form = useAppForm({
     defaultValues: {
       recipientName: transaction?.recipient ?? "",
       category: transaction?.category ?? "",
-      date: transaction?.date ?? "",
+      date: transaction?.creationDate ?? "",
       amount: String(transaction?.amount ?? ""),
       type: transaction?.type ?? "expense",
     },
@@ -120,7 +120,7 @@ function EditTransactionModal({ transactionId }: any) {
           children={(field) => (
             <field.DateField
               transactionDate={
-                transaction?.date ?? format(new Date(), "yyyy-MM-dd")
+                transaction?.creationDate ?? format(new Date(), "yyyy-MM-dd")
               }
             />
           )}

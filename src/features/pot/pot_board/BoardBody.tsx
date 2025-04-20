@@ -13,7 +13,7 @@ import type { Pot } from "../types/pot.types.ts";
 
 function BoardBody({ pot }: { pot: Pot }) {
   const savedAmount =
-    useStore(potTransactionCacheStore).get(pot.id)?.amount ?? 0;
+    useStore(potTransactionCacheStore).get(pot.potId)?.amount ?? 0;
 
   return (
     <div className="flex flex-col">
@@ -37,7 +37,7 @@ function BoardBody({ pot }: { pot: Pot }) {
       />
 
       <BoardPotActions
-        potId={pot.id}
+        potId={pot.potId}
         savedAmount={savedAmount}
         targetAmount={pot.targetAmount}
       />

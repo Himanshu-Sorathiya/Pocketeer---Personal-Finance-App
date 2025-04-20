@@ -17,11 +17,11 @@ function ListBody() {
   const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
 
   const budget: Budget =
-    budgets.find((b) => b.id === selectedBudget) || budgets[0];
+    budgets.find((b) => b.budgetId === selectedBudget) || budgets[0];
   const { targetAmount, currency, theme, category } = budget;
 
   const spentAmount =
-    useStore(budgetTransactionCacheStore).get(budget.id)?.amount ?? 0;
+    useStore(budgetTransactionCacheStore).get(budget.budgetId)?.amount ?? 0;
 
   return (
     <div className="flex flex-col gap-3">
@@ -41,7 +41,7 @@ function ListBody() {
         theme={theme}
       />
 
-      <ListRecentTransactions id={budget.id} category={category} />
+      <ListRecentTransactions id={budget.budgetId} category={category} />
     </div>
   );
 }

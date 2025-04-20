@@ -12,7 +12,7 @@ import type { Pot } from "../types/pot.types.ts";
 function EditPotModal({ potId }: { potId: string }) {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
 
-  const pot: Pot | undefined = pots.find((pot) => pot.id === potId);
+  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
   const form = useAppForm({
     defaultValues: {

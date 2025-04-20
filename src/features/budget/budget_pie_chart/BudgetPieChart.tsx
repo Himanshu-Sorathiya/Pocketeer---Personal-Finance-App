@@ -14,7 +14,7 @@ function BudgetPieChart() {
     ...useStore(budgetStore, (s) => s.budgets),
   ].map((budget) => ({
     ...budget,
-    spentAmount: budgetTransactionCache.get(budget.id)?.amount ?? 0,
+    spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
   }));
 
   const totalSpent = budgets.reduce(
@@ -40,7 +40,7 @@ function BudgetPieChart() {
           >
             {budgets.map((budget) => (
               <Cell
-                key={budget.id}
+                key={budget.budgetId}
                 fill={themeColors.find((c) => c.name === budget.theme)?.hex}
               />
             ))}

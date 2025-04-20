@@ -70,7 +70,7 @@ function TransactionMain() {
       header: () => "Category",
       filterFn: filterCategory,
     }),
-    columnHelper.accessor("date", {
+    columnHelper.accessor("creationDate", {
       id: "date",
       cell: (info) => <DateCell date={info.getValue()} />,
       header: () => "Date",
@@ -89,7 +89,9 @@ function TransactionMain() {
 
     columnHelper.display({
       id: "actions",
-      cell: (info) => <ActionsCell transactionId={info.row.original.id} />,
+      cell: (info) => (
+        <ActionsCell transactionId={info.row.original.transactionId} />
+      ),
       header: () => null,
     }),
   ];
@@ -121,7 +123,7 @@ function TransactionMain() {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
 
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.transactionId,
     autoResetPageIndex: false,
   });
 

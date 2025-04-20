@@ -14,7 +14,7 @@ const budgets: Budget[] = getBudgets();
 const budgetStore = new Store<BudgetState>({
   budgets,
 
-  selectedBudget: budgets.length > 0 ? budgets[0].id : "",
+  selectedBudget: budgets.length > 0 ? budgets[0].budgetId : "",
 });
 
 function handleBudgetChange(newValue: string) {
