@@ -5,7 +5,7 @@ import type {
   SortingState,
 } from "@tanstack/react-table";
 
-import { getTransactions } from "../data/transaction_data.ts";
+import { getTransactions } from "../../../services/apiTransaction.ts";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { Transaction } from "../types/transaction.types.ts";
@@ -14,15 +14,6 @@ import {
   DEFAULT_END_DATE,
   DEFAULT_START_DATE,
 } from "../../../utilities/dateUtils.ts";
-import {
-  getRandomColor,
-  getRandomIcon,
-} from "../transaction_helpers/transactionHelpers.ts";
-
-type TransactionData = {
-  iconPath: string;
-  bgColor: string;
-};
 
 type TransactionState = {
   transactions: Transaction[];
@@ -40,9 +31,9 @@ type TransactionState = {
   maxSearchLength: number;
 };
 
-const transactions: Transaction[] = getTransactions();
-
-const transactionDataStore = new Store<Record<string, TransactionData>>({});
+const transactions: Transaction[] = await getTransactions(
+  "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+);
 
 const transactionStore = new Store<TransactionState>({
   transactions,
@@ -163,25 +154,7 @@ function handlePageSizeChange(newPageSize: number) {
   updatePaginator(transactionStore.state.pagination.pageIndex, newPageSize);
 }
 
-function getTransactionData(transactionId: string, category: string) {
-  let storeData = transactionDataStore.state[transactionId];
-
-  if (!storeData) {
-    storeData = {
-      iconPath: getRandomIcon(category),
-      bgColor: getRandomColor(),
-    };
-    transactionStore.setState((prev) => ({
-      ...prev,
-      [transactionId]: storeData,
-    }));
-  }
-
-  return storeData;
-}
-
 export {
-  getTransactionData,
   handleCategoryChange,
   handleDateRangeChange,
   handlePageIndexChange,

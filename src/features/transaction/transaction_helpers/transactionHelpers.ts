@@ -19,9 +19,6 @@ import { transactionStore } from "../store/transactionStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
-import { themeColors } from "../../../constants/appOptions.ts";
-import { transactionIconsMap } from "../../../constants/transactionConfig.ts";
-
 function filterCategory(
   row: Row<Transaction>,
   columnId: string,
@@ -134,25 +131,11 @@ const setPagination: OnChangeFn<PaginationState> = (updaterOrValue) => {
   }));
 };
 
-function getRandomIcon(category: string) {
-  const maxIcons =
-    transactionIconsMap[category as keyof typeof transactionIconsMap] || 1;
-  const randomNum = Math.floor(Math.random() * maxIcons) + 1;
-
-  return `/src/assets/icons/transaction_icons_sprite.svg#${category}${randomNum}`;
-}
-
-function getRandomColor() {
-  return themeColors[Math.floor(Math.random() * (themeColors.length - 1))].hex;
-}
-
 export {
   filterAmount,
   filterCategory,
   filterDate,
   filterFuzzy,
-  getRandomColor,
-  getRandomIcon,
   setColumnFilters,
   setPagination,
   setSorting,

@@ -17,14 +17,12 @@ function BudgetPieChart() {
     spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
   }));
 
-  const totalSpent = budgets.reduce(
-    (sum, budget) => sum + budget.spentAmount,
-    0,
-  );
-  const totalBudget = budgets.reduce(
-    (sum, budget) => sum + budget.targetAmount,
-    0,
-  );
+  const totalSpent = budgets
+    .reduce((sum, budget) => sum + budget.spentAmount, 0)
+    .toFixed(2);
+  const totalBudget = budgets
+    .reduce((sum, budget) => sum + budget.targetAmount, 0)
+    .toFixed(2);
 
   return (
     <div className="relative">
@@ -86,8 +84,8 @@ function BudgetPieChart() {
                   <p style={{ color: "#364153" }}>
                     Total:{" "}
                     <span className="font-space-grotesk">
-                      {budget.targetAmount}
                       {budget.currency}
+                      {budget.targetAmount.toFixed(2)}
                     </span>
                   </p>
 
@@ -103,16 +101,18 @@ function BudgetPieChart() {
                   >
                     Spent:{" "}
                     <span className="font-space-grotesk">
-                      {payload[0]?.value}
                       {budget.currency}
+                      {payload[0]?.value.toFixed(2)}
                     </span>
                   </p>
 
                   <p style={{ color: "#364153" }}>
                     Remaining:{" "}
                     <span className="font-space-grotesk">
-                      {budget.targetAmount - budget.spentAmount || 0}
                       {budget.currency}
+                      {(budget.targetAmount - budget.spentAmount || 0).toFixed(
+                        2,
+                      )}
                     </span>
                   </p>
                 </div>
@@ -124,7 +124,7 @@ function BudgetPieChart() {
 
       <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
         <p
-          className={`font-space-grotesk text-4xl font-semibold ${totalSpent >= totalBudget ? "text-error" : "text-text"}`}
+          className={`font-space-grotesk text-3xl font-semibold ${totalSpent >= totalBudget ? "text-error" : "text-text"}`}
         >
           {budgets[0].currency}
           {totalSpent}

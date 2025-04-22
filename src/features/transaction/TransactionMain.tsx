@@ -57,7 +57,6 @@ function TransactionMain() {
         <RecipientCell
           transactionId={info.row.id}
           recipient={info.getValue()}
-          category={info.row.original.category}
         />
       ),
       header: () => "Recipient",
@@ -80,7 +79,11 @@ function TransactionMain() {
     columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
       id: "amount",
       cell: (info) => (
-        <AmountCell amount={info.getValue()} type={info.row.original.type} />
+        <AmountCell
+          amount={info.row.original.amount}
+          currency={info.row.original.currency}
+          type={info.row.original.type}
+        />
       ),
       header: () => "Amount",
       filterFn: filterAmount,

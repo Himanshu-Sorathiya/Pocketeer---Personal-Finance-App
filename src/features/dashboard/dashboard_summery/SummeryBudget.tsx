@@ -93,7 +93,7 @@ function BudgetSummery() {
 
                 <span className="font-space-grotesk text-lg font-semibold text-gray-900">
                   {budget.currency}
-                  {spentAmount}
+                  {spentAmount.toFixed(2)}
                 </span>
               </div>
             </div>

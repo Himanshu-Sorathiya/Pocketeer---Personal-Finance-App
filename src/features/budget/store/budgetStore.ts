@@ -1,6 +1,6 @@
 import { Store } from "@tanstack/react-store";
 
-import { getBudgets } from "../data/budget_data.ts";
+import { getBudgets } from "../../../services/apiBudget.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -9,7 +9,9 @@ type BudgetState = {
   selectedBudget: string;
 };
 
-const budgets: Budget[] = getBudgets();
+const budgets: Budget[] = await getBudgets(
+  "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
+);
 
 const budgetStore = new Store<BudgetState>({
   budgets,

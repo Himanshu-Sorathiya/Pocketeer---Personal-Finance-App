@@ -1,13 +1,16 @@
-import { getTransactionData } from "../../features/transaction/store/transactionStore.ts";
+import { useStore } from "@tanstack/react-store";
+
+import { transactionIconCacheStore } from "../../store/appCacheStore.ts";
 
 import type { Transaction } from "../../features/transaction/types/transaction.types.ts";
 
 function RecentTransaction({ transaction }: { transaction: Transaction }) {
-  const { iconPath, bgColor } = getTransactionData(
+  const { iconPath, bgColor } = useStore(transactionIconCacheStore).get(
     transaction.transactionId,
-    transaction.category,
-  );
-
+  ) ?? {
+    iconPath: "/src/assets/icons/ui_icons_sprite.svg#fallback",
+    bgColor: "#B0B0B0",
+  };
   return (
     <div
       className="flex justify-between px-1 py-3 text-gray-700"
@@ -35,7 +38,7 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
           className={`font-space-grotesk font-medium ${transaction.type === "income" && "text-green-500"}`}
         >
           {transaction.currency}
-          {transaction.amount}
+          {transaction.amount.toFixed(2)}
         </span>
 
         <span className="text-sm font-light">{transaction.creationDate}</span>

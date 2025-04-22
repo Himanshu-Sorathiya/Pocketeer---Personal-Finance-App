@@ -1,6 +1,6 @@
 import { Store } from "@tanstack/react-store";
 
-import { getPots } from "../data/pot_data.ts";
+import { getPots } from "../../../services/apiPot.ts";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
@@ -18,7 +18,7 @@ type PotState = {
   maxSearchLength: number;
 };
 
-const pots: Pot[] = getPots();
+const pots: Pot[] = await getPots("e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35");
 
 const potStore = new Store<PotState>({
   pots,

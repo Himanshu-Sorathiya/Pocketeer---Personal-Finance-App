@@ -48,7 +48,7 @@ function ListBalance({
       Capped at{" "}
       <span className="text-text font-space-grotesk font-semibold">
         {currency}
-        {targetAmount}
+        {targetAmount.toFixed(2)}
       </span>
     </div>
   );
@@ -97,23 +97,23 @@ function ListProgressChart({
                 <p style={{ color: "#364153" }}>
                   Total:{" "}
                   <span className="font-space-grotesk">
-                    {targetAmount}
                     {currency}
+                    {targetAmount.toFixed(2)}
                   </span>
                 </p>
 
                 <p style={{ color: payload[0].fill }} className="mt-2">
                   Spent:{" "}
                   <span className="font-space-grotesk">
-                    {spentAmount}
                     {currency}
+                    {spentAmount.toFixed(2)}
                   </span>
                 </p>
                 <p style={{ color: "#364153" }}>
                   Remaining:{" "}
                   <span className="font-space-grotesk">
-                    {targetAmount - spentAmount}
                     {currency}
+                    {(targetAmount - spentAmount || 0).toFixed(2)}
                   </span>
                 </p>
               </div>
@@ -169,7 +169,7 @@ function ListProgressInfo({
             className={`font-space-grotesk font-medium ${spentAmount >= targetAmount ? "text-error" : "text-text"}`}
           >
             {currency}
-            {spentAmount}
+            {spentAmount.toFixed(2)}
           </span>
         </div>
       </div>
@@ -183,7 +183,7 @@ function ListProgressInfo({
             className={`font-space-grotesk font-medium ${spentAmount >= targetAmount ? "text-error" : "text-text"}`}
           >
             {currency}
-            {targetAmount - spentAmount}
+            {(targetAmount - spentAmount || 0).toFixed(2)}
           </span>
         </div>
       </div>

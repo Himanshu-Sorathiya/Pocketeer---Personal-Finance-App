@@ -2,12 +2,36 @@ import { Store } from "@tanstack/react-store";
 
 import type { Transaction } from "../features/transaction/types/transaction.types.ts";
 
+import { themeColors } from "../constants/appOptions.ts";
+import { transactionIconsMap } from "../constants/transactionConfig.ts";
+
+function getRandomIcon(category: string) {
+  const maxIcons =
+    transactionIconsMap[category as keyof typeof transactionIconsMap] || 1;
+  const randomNum = Math.floor(Math.random() * maxIcons) + 1;
+
+  return `/src/assets/icons/transaction_icons_sprite.svg#${category}${randomNum}`;
+}
+
+function getRandomColor() {
+  return themeColors[Math.floor(Math.random() * (themeColors.length - 1))].hex;
+}
+
 type TransactionCache = {
   creationDate: string;
   transactionsLength: number;
   transactions: Transaction[];
   amount: number;
 };
+
+type TransactionIconCache = {
+  iconPath: string;
+  bgColor: string;
+};
+
+const transactionIconCacheStore = new Store<Map<string, TransactionIconCache>>(
+  new Map(),
+);
 
 const budgetTransactionCacheStore = new Store<Map<string, TransactionCache>>(
   new Map(),
@@ -16,6 +40,21 @@ const budgetTransactionCacheStore = new Store<Map<string, TransactionCache>>(
 const potTransactionCacheStore = new Store<Map<string, TransactionCache>>(
   new Map(),
 );
+
+function setTransactionCache(transactionId: string, category: string) {
+  const iconPath = getRandomIcon(category);
+  const bgColor = getRandomColor();
+
+  transactionIconCacheStore.setState((state) => {
+    const newCache = new Map(state);
+    newCache.set(transactionId, {
+      iconPath,
+      bgColor,
+    });
+
+    return newCache;
+  });
+}
 
 function setBudgetCache(
   budgetId: string,
@@ -74,4 +113,6 @@ export {
   potTransactionCacheStore,
   setBudgetCache,
   setPotCache,
+  setTransactionCache,
+  transactionIconCacheStore,
 };

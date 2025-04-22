@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+import { useStore } from "@tanstack/react-store";
+
+import { transactionIconCacheStore } from "../../../store/appCacheStore.ts";
 import { openModal } from "../../../store/appModalStore.ts";
-import { getTransactionData } from "../store/transactionStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 
@@ -10,13 +12,16 @@ import type { TransactionType } from "../../../constants/transactionConfig.ts";
 function RecipientCell({
   transactionId,
   recipient,
-  category,
 }: {
   transactionId: string;
   recipient: string;
-  category: string;
 }) {
-  const { iconPath, bgColor } = getTransactionData(transactionId, category);
+  const { iconPath, bgColor } = useStore(transactionIconCacheStore).get(
+    transactionId,
+  ) ?? {
+    iconPath: "/src/assets/icons/ui_icons_sprite.svg#fallback",
+    bgColor: "#B0B0B0",
+  };
 
   return (
     <div className="flex items-center gap-2 font-medium">
@@ -49,16 +54,19 @@ function DateCell({ date }: { date: string }) {
 
 function AmountCell({
   amount,
+  currency,
   type,
 }: {
-  amount: string;
+  amount: number;
+  currency: string;
   type: TransactionType;
 }) {
   return (
     <span
       className={`font-space-grotesk font-semibold ${type === "income" && "text-green-500"}`}
     >
-      {amount}
+      {currency}
+      {amount.toFixed(2)}
     </span>
   );
 }

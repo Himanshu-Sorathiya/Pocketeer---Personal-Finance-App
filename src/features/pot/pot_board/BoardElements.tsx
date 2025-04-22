@@ -82,23 +82,23 @@ function BoardProgressChart({
                   <p style={{ color: "#364153" }}>
                     Total:{" "}
                     <span className="font-space-grotesk">
-                      {targetAmount}
                       {currency}
+                      {targetAmount.toFixed(2)}
                     </span>
                   </p>
 
                   <p style={{ color: payload[0].fill }} className="mt-2">
                     Saved:{" "}
                     <span className="font-space-grotesk">
-                      {payload[0].value}
                       {currency}
+                      {payload[0].value.toFixed(2)}
                     </span>
                   </p>
                   <p style={{ color: "#364153" }}>
                     Remaining:{" "}
                     <span className="font-space-grotesk">
-                      {payload[1].value}
                       {currency}
+                      {payload[1].value.toFixed(2)}
                     </span>
                   </p>
                 </div>
@@ -148,7 +148,7 @@ function BoardProgressInfo({
         Target:{" "}
         <span className="font-space-grotesk">
           {currency}
-          {targetAmount}
+          {targetAmount.toFixed(2)}
         </span>
       </div>
     </div>
@@ -246,5 +246,5 @@ export {
   BoardBalance,
   BoardPotActions,
   BoardProgressChart,
-  BoardProgressInfo
+  BoardProgressInfo,
 };

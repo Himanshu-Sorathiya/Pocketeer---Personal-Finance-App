@@ -61,12 +61,12 @@ function BudgetSummery() {
                   className={`font-space-grotesk text-lg font-semibold ${spentAmount >= budget.targetAmount ? "text-error" : "text-text"}`}
                 >
                   {budget.currency}
-                  {spentAmount}
+                  {spentAmount.toFixed(2)}
                 </span>
                 <span className="text-sm text-gray-500"> of </span>
                 <span className="font-space-grotesk text-sm text-gray-500">
                   {budget.currency}
-                  {budget.targetAmount}
+                  {budget.targetAmount.toFixed(2)}
                 </span>
               </div>
             </div>

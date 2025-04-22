@@ -15,17 +15,15 @@ function SummeryPot() {
   const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
   const potTransactionCache = useStore(potTransactionCacheStore);
 
-  const totalSaved = pots
-    .reduce((acc, pot) => {
-      const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
+  const totalSaved = pots.reduce((acc, pot) => {
+    const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
-      return acc + saved;
-    }, 0)
-    .toFixed(2);
+    return acc + saved;
+  }, 0);
 
   const currency = pots[0]?.currency;
 
-  return totalSaved === "0.00" ? null : (
+  return totalSaved === 0 ? null : (
     <div className="bg-shade-100 flex flex-col gap-4 rounded-md px-6 pt-7 pb-4">
       <SummeryHeader
         to={PotRoute.to}
@@ -48,7 +46,7 @@ function PotBalance({
   totalSaved,
   currency,
 }: {
-  totalSaved: string;
+  totalSaved: number;
   currency: string;
 }) {
   return (
@@ -57,7 +55,7 @@ function PotBalance({
 
       <span className="text-4xl font-medium">
         {currency}
-        {totalSaved}
+        {totalSaved.toFixed(2)}
       </span>
     </div>
   );
@@ -110,7 +108,7 @@ function PotSummery() {
 
                 <span className="font-space-grotesk text-lg font-semibold text-gray-900">
                   {pot.currency}
-                  {savedAmount}
+                  {savedAmount.toFixed(2)}
                 </span>
               </div>
             </div>
