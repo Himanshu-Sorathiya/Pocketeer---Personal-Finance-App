@@ -9,9 +9,9 @@ type BudgetState = {
   selectedBudget: string;
 };
 
-const budgets: Budget[] = await getBudgets(
-  "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
-);
+const budgets: Budget[] = await getBudgets({
+  queryKey: ["", "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35"],
+});
 
 const budgetStore = new Store<BudgetState>({
   budgets,

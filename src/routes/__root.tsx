@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createRootRoute,
   Outlet,
@@ -27,7 +28,9 @@ function RootComponent() {
 
       <Outlet />
 
-      <TanStackRouterDevtools />
+      <TanStackRouterDevtools initialIsOpen={false} />
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 }

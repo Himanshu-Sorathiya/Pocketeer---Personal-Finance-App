@@ -31,9 +31,9 @@ type TransactionState = {
   maxSearchLength: number;
 };
 
-const transactions: Transaction[] = await getTransactions(
-  "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35",
-);
+const transactions: Transaction[] = await getTransactions({
+  queryKey: ["", "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35"],
+});
 
 const transactionStore = new Store<TransactionState>({
   transactions,

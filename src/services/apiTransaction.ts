@@ -1,3 +1,5 @@
+import type { QueryKey } from "@tanstack/react-query";
+
 import { supabase } from "./supabase.ts";
 
 import type { Transaction } from "../features/transaction/types/transaction.types.ts";
@@ -7,13 +9,21 @@ import type {
   TransactionType,
 } from "../constants/transactionConfig.ts";
 
-async function getTransactions(user_id: string): Promise<Transaction[]> {
+async function getTransactions({
+  queryKey,
+}: {
+  queryKey: QueryKey;
+}): Promise<Transaction[]> {
   const { data, error } = await supabase
     .from("transactions")
     .select("*")
-    .eq("user_id", user_id);
+    .eq("user_id", queryKey[1]);
 
-  if (error) throw error;
+  if (error) {
+    throw new Error(
+      "Uh-oh! We ran into an issue while fetching your transactions. But don’t worry—Pocketeer will get things back on track soon!",
+    );
+  }
 
   const transactions: Transaction[] = data.map((item) => ({
     user_id: item.user_id,

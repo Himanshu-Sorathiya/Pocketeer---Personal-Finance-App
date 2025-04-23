@@ -18,7 +18,9 @@ type PotState = {
   maxSearchLength: number;
 };
 
-const pots: Pot[] = await getPots("e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35");
+const pots: Pot[] = await getPots({
+  queryKey: ["", "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35"],
+});
 
 const potStore = new Store<PotState>({
   pots,
