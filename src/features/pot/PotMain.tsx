@@ -28,7 +28,11 @@ function PotMain() {
 
   if (isError) throw new Error(error?.message);
 
-  const filteredPots: Pot[] = filterPots(pots!, filters, potTransactionCache);
+  const filteredPots: Pot[] = filterPots(
+    [...pots!],
+    filters,
+    potTransactionCache,
+  );
   const sortedPots: Pot[] = sortPots(
     filteredPots,
     sorting,

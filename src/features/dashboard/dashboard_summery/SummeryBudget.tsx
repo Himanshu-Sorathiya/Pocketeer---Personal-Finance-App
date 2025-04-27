@@ -1,12 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { useStore } from "@tanstack/react-store";
 
 import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
-
-import {
-  budgetQueryOptions,
-  transactionQueryOptions,
-} from "../../../services/queryOptions.ts";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
@@ -57,37 +51,13 @@ function SummeryBudget() {
 function BudgetSummery() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
-  const {
-    status: transactionsStatus,
-    fetchStatus: transactionsFetchStatus,
-    error: transactionError,
-  } = useQuery({
-    ...transactionQueryOptions,
-  });
+  const { budgets, isLoading, isError, error } = useBudgets();
 
-  const {
-    data: budgets,
-    status: budgetsStatus,
-    fetchStatus: budgetsFetchStatus,
-    error: budgetError,
-  } = useQuery({
-    ...budgetQueryOptions,
-    enabled:
-      transactionsStatus === "success" && transactionsFetchStatus === "idle",
-  });
+  if (isLoading) return <GlobalSpinner />;
 
-  if (
-    transactionsStatus === "pending" ||
-    budgetsStatus === "pending" ||
-    transactionsFetchStatus === "paused" ||
-    budgetsFetchStatus === "paused"
-  )
-    return <GlobalSpinner />;
+  if (isError) throw new Error(error?.message);
 
-  if (transactionsStatus === "error" || budgetsStatus === "error")
-    throw new Error(transactionError?.message || budgetError?.message);
-
-  const budgetsFormatted: Budget[] = budgets!
+  const budgetsFormatted: Budget[] = [...budgets!]
     .sort((a, b) => {
       const spentA = budgetTransactionCache.get(a.budgetId)?.amount ?? 0;
       const spentB = budgetTransactionCache.get(b.budgetId)?.amount ?? 0;

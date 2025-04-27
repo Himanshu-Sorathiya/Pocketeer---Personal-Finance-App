@@ -31,7 +31,7 @@ function RecentTransactions() {
 
   if (isError) throw new Error(error?.message);
 
-  const latestTransactions: Transaction[] = transactions!
+  const latestTransactions: Transaction[] = [...transactions!]
     .sort(
       (a, b) =>
         new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
