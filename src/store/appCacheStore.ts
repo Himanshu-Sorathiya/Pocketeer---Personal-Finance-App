@@ -74,12 +74,15 @@ function setBudgetCache(
 
   budgetTransactionCacheStore.setState((state) => {
     const newCache = new Map(state);
-    newCache.set(budgetId, {
-      creationDate,
-      transactionsLength: filteredTransactions.length,
-      transactions: filteredTransactions,
-      amount: filteredTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
-    });
+
+    if (!newCache.has(budgetId)) {
+      newCache.set(budgetId, {
+        creationDate,
+        transactionsLength: filteredTransactions.length,
+        transactions: filteredTransactions,
+        amount: filteredTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
+      });
+    }
 
     return newCache;
   });
@@ -100,12 +103,15 @@ function setPotCache(
 
   potTransactionCacheStore.setState((state) => {
     const newCache = new Map(state);
-    newCache.set(potId, {
-      creationDate,
-      transactionsLength: filteredTransactions.length,
-      transactions: filteredTransactions,
-      amount: filteredTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
-    });
+
+    if (!newCache.has(potId)) {
+      newCache.set(potId, {
+        creationDate,
+        transactionsLength: filteredTransactions.length,
+        transactions: filteredTransactions,
+        amount: filteredTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
+      });
+    }
 
     return newCache;
   });

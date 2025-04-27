@@ -1,19 +1,14 @@
-import { useBudgets } from "../../../hooks/useBudgets.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
 function DeleteBudgetModal({ budgetId }: any) {
-  const { budgets, isLoading, isError, error } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets } = useData();
 
   const budget: Budget | undefined = budgets!.find(
     (budget) => budget.budgetId === budgetId,

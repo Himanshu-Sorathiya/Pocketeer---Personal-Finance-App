@@ -1,14 +1,14 @@
 import { format } from "date-fns";
 
-import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useTransactions } from "../../../hooks/useTransactions.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
+
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 function EditTransactionModal({ transactionId }: any) {
-  const { transactions, isLoading, isError, error } = useTransactions();
+  const { transactions } = useData();
 
   const transaction = transactions!.find(
     (transaction) => transaction.transactionId === transactionId,
@@ -26,10 +26,6 @@ function EditTransactionModal({ transactionId }: any) {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

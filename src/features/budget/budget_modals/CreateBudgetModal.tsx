@@ -1,7 +1,7 @@
-import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useBudgets } from "../../../hooks/useBudgets.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
+
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -9,7 +9,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
-  const { budgets, isLoading, isError, error } = useBudgets();
+  const { budgets } = useData();
 
   const availableCategories = transactionCategories
     .map((c) => {
@@ -45,10 +45,6 @@ function CreateBudgetModal() {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   const currency = budgets![0].currency;
 

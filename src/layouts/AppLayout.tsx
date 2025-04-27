@@ -1,64 +1,46 @@
 import { type ReactNode } from "react";
 
+import { useData } from "../contexts/DataContext.tsx";
+
 import {
   setBudgetCache,
   setPotCache,
   setTransactionCache,
 } from "../store/appCacheStore.ts";
 
-import GlobalSpinner from "../components/loaders/GlobalSpinner.tsx";
+import PageSpinner from "../components/loaders/PageSpinner.tsx";
 import Sidebar from "../components/sidebar/Sidebar.tsx";
-import { useBudgets } from "../hooks/useBudgets.ts";
-import { usePots } from "../hooks/usePots.ts";
-import { useTransactions } from "../hooks/useTransactions.ts";
 
 function AppLayout({ children }: { children?: ReactNode }) {
-  const {
-    transactions,
-    isLoading: isTransactionLoading,
-    isError: isTransactionError,
-    error: transactionError,
-  } = useTransactions();
+  const { transactions, budgets, pots, isLoading, isError, error } = useData();
 
-  const {
-    budgets,
-    isLoading: isBudgetLoading,
-    isError: isBudgetError,
-    error: budgetError,
-  } = useBudgets();
+  if (transactions && budgets && pots) {
+    transactions.forEach((transaction) => {
+      setTransactionCache(transaction.transactionId, transaction.category);
+    });
 
-  const {
-    pots,
-    isLoading: isPotLoading,
-    isError: isPotError,
-    error: potError,
-  } = usePots();
-
-  if (isTransactionLoading || isBudgetLoading || isPotLoading)
-    return <GlobalSpinner />;
-
-  if (isTransactionError || isBudgetError || isPotError)
-    throw new Error(
-      transactionError?.message || budgetError?.message || potError?.message,
+    budgets.forEach((b) =>
+      setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
     );
 
-  transactions!.forEach((transaction) => {
-    setTransactionCache(transaction.transactionId, transaction.category);
-  });
+    pots.forEach((p) =>
+      setPotCache(p.potId, p.name, p.creationDate, transactions),
+    );
+  }
 
-  budgets!.forEach((b) =>
-    setBudgetCache(b.budgetId, b.category, b.creationDate, transactions!),
-  );
-
-  pots!.forEach((p) =>
-    setPotCache(p.potId, p.name, p.creationDate, transactions!),
-  );
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex h-screen max-h-screen min-h-screen overflow-hidden">
       <Sidebar />
 
-      <div className="flex-1 overflow-y-auto bg-orange-50 p-8">{children}</div>
+      {isLoading && <PageSpinner />}
+
+      {!isLoading && (
+        <div className="flex-1 overflow-y-auto bg-orange-50 p-8">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,25 +1,12 @@
-import { useBudgets } from "../../hooks/useBudgets.ts";
+import { useData } from "../../contexts/DataContext.tsx";
 
 import BudgetList from "./budget_list/BudgetList.tsx";
 import BudgetPieChart from "./budget_pie_chart/BudgetPieChart.tsx";
 import BudgetPlaceholder from "./budget_placeholder/BudgetPlaceholder.tsx";
 import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 
-import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
-
 function BudgetMain() {
-  const {
-    budgets,
-    isLoading,
-    isError,
-    error,
-    selectedBudgetId,
-    setSelectedBudgetId,
-  } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets, selectedBudgetId, setSelectedBudgetId } = useData();
 
   const shouldShowPlaceholder = budgets!.length === 0;
 

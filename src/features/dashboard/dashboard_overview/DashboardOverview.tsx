@@ -1,15 +1,9 @@
-import { useTransactions } from "../../../hooks/useTransactions.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
 import OverviewBalance from "./OverviewBalance.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
-
 function DashboardOverview() {
-  const { transactions, isLoading, isError, error } = useTransactions();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { transactions } = useData();
 
   const income = transactions!
     .filter((t) => t.type === "income")

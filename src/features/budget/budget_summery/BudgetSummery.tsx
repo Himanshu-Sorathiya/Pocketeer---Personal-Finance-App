@@ -1,10 +1,8 @@
 import { useStore } from "@tanstack/react-store";
 
+import { useData } from "../../../contexts/DataContext.tsx";
+
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-
-import { useBudgets } from "../../../hooks/useBudgets.ts";
-
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
@@ -17,11 +15,7 @@ function BudgetSummery({
 }) {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
-  const { budgets, isLoading, isError, error } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets } = useData();
 
   return (
     <div className="flex flex-col gap-3">

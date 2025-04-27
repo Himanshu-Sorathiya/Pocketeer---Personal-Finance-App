@@ -2,11 +2,10 @@ import { useStore } from "@tanstack/react-store";
 
 import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
 
+import { useData } from "../../../contexts/DataContext.tsx";
+
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
-import { useBudgets } from "../../../hooks/useBudgets.ts";
-
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
 
@@ -17,11 +16,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function SummeryBudget() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
-  const { budgets, isLoading, isError, error } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets } = useData();
 
   const totalSpent = budgets!.reduce((acc, budget) => {
     const spent = budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
@@ -51,11 +46,7 @@ function SummeryBudget() {
 function BudgetSummery() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
-  const { budgets, isLoading, isError, error } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets } = useData();
 
   const budgetsFormatted: Budget[] = [...budgets!]
     .sort((a, b) => {

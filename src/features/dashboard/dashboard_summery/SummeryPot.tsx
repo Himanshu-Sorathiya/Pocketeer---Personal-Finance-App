@@ -2,11 +2,10 @@ import { useStore } from "@tanstack/react-store";
 
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
+import { useData } from "../../../contexts/DataContext.tsx";
+
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
-import { usePots } from "../../../hooks/usePots.ts";
-
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
 import type { Pot } from "../../pot/types/pot.types.ts";
@@ -16,11 +15,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function SummeryPot() {
   const potTransactionCache = useStore(potTransactionCacheStore);
 
-  const { pots, isLoading, isError, error } = usePots();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { pots } = useData();
 
   const totalSaved = pots!.reduce((acc, pot) => {
     const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
@@ -71,11 +66,7 @@ function PotBalance({
 function PotSummery() {
   const potTransactionCache = useStore(potTransactionCacheStore);
 
-  const { pots, isLoading, isError, error } = usePots();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { pots } = useData();
 
   const potsFormatted: Pot[] = pots!
     .sort((a, b) => {

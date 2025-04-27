@@ -1,17 +1,11 @@
-import { useTransactions } from "../../../hooks/useTransactions.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
 import SummeryBudget from "./SummeryBudget.tsx";
 import SummeryPot from "./SummeryPot.tsx";
 import SummeryTransaction from "./SummeryTransactions.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
-
 function DashboardSummery() {
-  const { transactions, isLoading, isError, error } = useTransactions();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { transactions } = useData();
 
   const shouldShowPlaceholder = transactions!.length === 0;
 

@@ -1,14 +1,14 @@
-import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useBudgets } from "../../../hooks/useBudgets.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
+
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
 function EditBudgetModal({ budgetId }: any) {
-  const { budgets, isLoading, isError, error } = useBudgets();
+  const { budgets } = useData();
 
   const budget: Budget | undefined = budgets!.find(
     (budget) => budget.budgetId === budgetId,
@@ -24,10 +24,6 @@ function EditBudgetModal({ budgetId }: any) {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

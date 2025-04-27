@@ -1,12 +1,12 @@
 import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
+import { useData } from "../../../contexts/DataContext.tsx";
+
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { usePots } from "../../../hooks/usePots.ts";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -15,7 +15,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function AddMoneyToPotModal({ potId }: any) {
-  const { pots, isLoading, isError, error } = usePots();
+  const { pots } = useData();
 
   const form = useAppForm({
     defaultValues: {
@@ -25,10 +25,6 @@ function AddMoneyToPotModal({ potId }: any) {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
 

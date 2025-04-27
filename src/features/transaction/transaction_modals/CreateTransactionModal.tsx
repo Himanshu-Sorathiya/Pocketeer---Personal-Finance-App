@@ -1,14 +1,14 @@
-import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useTransactions } from "../../../hooks/useTransactions.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
+
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
-  const { transactions, isLoading, isError, error } = useTransactions();
+  const { transactions } = useData();
 
   const form = useAppForm({
     defaultValues: {
@@ -22,10 +22,6 @@ function CreateTransactionModal() {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   const currency = transactions![0]?.currency;
 

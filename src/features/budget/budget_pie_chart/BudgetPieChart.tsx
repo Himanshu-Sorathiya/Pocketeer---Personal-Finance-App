@@ -1,11 +1,9 @@
 import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
+import { useData } from "../../../contexts/DataContext.tsx";
+
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-
-import { useBudgets } from "../../../hooks/useBudgets.ts";
-
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -14,11 +12,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function BudgetPieChart() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
 
-  const { budgets, isLoading, isError, error } = useBudgets();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { budgets } = useData();
 
   const budgetsWithSpent: (Budget & { spentAmount: number })[] = budgets!.map(
     (budget) => ({

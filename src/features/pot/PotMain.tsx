@@ -1,32 +1,26 @@
 import { useStore } from "@tanstack/react-store";
 
+import { useData } from "../../contexts/DataContext.tsx";
+
 import { potTransactionCacheStore } from "../../store/appCacheStore.ts";
 import { potStore } from "./store/potStore.ts";
-
-import { usePots } from "../../hooks/usePots.ts";
 
 import PotBoard from "./pot_board/PotBoard.tsx";
 import PotFilter from "./pot_filter/PotFilter.tsx";
 import PotPlaceholder from "./pot_placeholder/PotPlaceholder.tsx";
 import PotSort from "./pot_sort/PotSort.tsx";
 
-import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
-
 import type { FilterState, Pot, SortingState } from "./types/pot.types.ts";
 
 import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
 
 function PotMain() {
-  const { pots, isLoading, isError, error } = usePots();
+  const { pots } = useData();
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
   const potTransactionCache = useStore(potTransactionCacheStore);
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   const filteredPots: Pot[] = filterPots(
     [...pots!],

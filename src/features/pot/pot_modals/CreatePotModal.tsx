@@ -1,14 +1,14 @@
-import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { usePots } from "../../../hooks/usePots.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+import { useAppForm } from "../../../hooks/useAppForm.ts";
+
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
-  const { pots, isLoading, isError, error } = usePots();
+  const { pots } = useData();
 
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
@@ -34,10 +34,6 @@ function CreatePotModal() {
       console.log("from", values);
     },
   });
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   const currency = pots![0]?.currency;
 

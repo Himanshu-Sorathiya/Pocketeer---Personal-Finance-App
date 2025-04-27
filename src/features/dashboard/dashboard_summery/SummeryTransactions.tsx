@@ -1,8 +1,7 @@
 import { Route as TransactionRoute } from "../../../routes/app/transaction.tsx";
 
-import { useTransactions } from "../../../hooks/useTransactions.ts";
+import { useData } from "../../../contexts/DataContext.tsx";
 
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
@@ -25,11 +24,7 @@ function SummeryTransaction() {
 }
 
 function RecentTransactions() {
-  const { transactions, isLoading, isError, error } = useTransactions();
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
+  const { transactions } = useData();
 
   const latestTransactions: Transaction[] = [...transactions!]
     .sort(

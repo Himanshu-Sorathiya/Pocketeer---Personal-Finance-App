@@ -21,10 +21,7 @@ import {
   handleSearchChange,
 } from "../../transaction/store/transactionStore.ts";
 
-import { useBudgets } from "../../../hooks/useBudgets.ts";
-
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
-import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
@@ -253,13 +250,7 @@ function ListRecentTransactions({
 }
 
 function ListActions({ selectedBudgetId }: { selectedBudgetId: string }) {
-  const { isLoading, isError, error } = useBudgets();
-
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
-
-  if (isLoading) return <GlobalSpinner />;
-
-  if (isError) throw new Error(error?.message);
 
   function handleActionClick(action: string) {
     if (action === "edit") openModal("edit_budget", selectedBudgetId);
