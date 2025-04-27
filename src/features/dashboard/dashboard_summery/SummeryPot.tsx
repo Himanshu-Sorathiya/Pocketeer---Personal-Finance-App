@@ -3,8 +3,10 @@ import { useStore } from "@tanstack/react-store";
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { potStore } from "../../pot/store/potStore.ts";
 
+import { usePots } from "../../../hooks/usePots.ts";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
 import type { Pot } from "../../pot/types/pot.types.ts";
@@ -12,16 +14,21 @@ import type { Pot } from "../../pot/types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryPot() {
-  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
   const potTransactionCache = useStore(potTransactionCacheStore);
 
-  const totalSaved = pots.reduce((acc, pot) => {
+  const { pots, isLoading, isError, error } = usePots();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const totalSaved = pots!.reduce((acc, pot) => {
     const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
     return acc + saved;
   }, 0);
 
-  const currency = pots[0]?.currency;
+  const currency = pots![0]?.currency;
 
   return totalSaved === 0 ? null : (
     <div className="bg-shade-100 flex flex-col gap-4 rounded-md px-6 pt-7 pb-4">
@@ -63,7 +70,14 @@ function PotBalance({
 
 function PotSummery() {
   const potTransactionCache = useStore(potTransactionCacheStore);
-  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)]
+
+  const { pots, isLoading, isError, error } = usePots();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const potsFormatted: Pot[] = pots!
     .sort((a, b) => {
       const savedA = potTransactionCache.get(a.potId)?.amount ?? 0;
       const savedB = potTransactionCache.get(b.potId)?.amount ?? 0;
@@ -77,7 +91,7 @@ function PotSummery() {
 
   return (
     <div className="grid grid-cols-2">
-      {pots.map((pot) => {
+      {potsFormatted.map((pot) => {
         const savedAmount = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
         return (

@@ -1,23 +1,34 @@
 import { useStore } from "@tanstack/react-store";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
 
-import type { Budget } from "../types/budget.types.ts";
+import { useBudgets } from "../../../hooks/useBudgets.ts";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
-function BudgetSummery() {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
-  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+function BudgetSummery({
+  selectedBudgetId,
+  setSelectedBudgetId,
+}: {
+  selectedBudgetId: string;
+  setSelectedBudgetId: (id: string) => void;
+}) {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
+
+  const { budgets, isLoading, isError, error } = useBudgets();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-2xl font-semibold text-gray-800">Spending Summery</h3>
 
       <div className="flex flex-col gap-1">
-        {budgets.map((budget) => {
+        {budgets!.map((budget) => {
           const spentAmount =
             budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
 
@@ -27,12 +38,12 @@ function BudgetSummery() {
               className="flex cursor-pointer items-center justify-between gap-4 rounded-md px-2 py-1.5"
               style={{
                 backgroundColor:
-                  budget.budgetId === selectedBudget
+                  budget.budgetId === selectedBudgetId
                     ? `${themeColors.find((c) => c.name === budget.theme)?.hex}13`
                     : "transparent",
                 borderBottom: `1px solid ${themeColors.find((c) => c.name === budget.theme)?.hex}`,
               }}
-              onClick={() => handleBudgetChange(budget.budgetId)}
+              onClick={() => setSelectedBudgetId(budget.budgetId)}
             >
               <div className="flex items-center gap-2">
                 <div

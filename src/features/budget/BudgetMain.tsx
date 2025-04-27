@@ -1,18 +1,27 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "./store/budgetStore.ts";
+import { useBudgets } from "../../hooks/useBudgets.ts";
 
 import BudgetList from "./budget_list/BudgetList.tsx";
 import BudgetPieChart from "./budget_pie_chart/BudgetPieChart.tsx";
 import BudgetPlaceholder from "./budget_placeholder/BudgetPlaceholder.tsx";
 import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 
-import type { Budget } from "./types/budget.types.ts";
+import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 function BudgetMain() {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const {
+    budgets,
+    isLoading,
+    isError,
+    error,
+    selectedBudgetId,
+    setSelectedBudgetId,
+  } = useBudgets();
 
-  const shouldShowPlaceholder = budgets.length === 0;
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const shouldShowPlaceholder = budgets!.length === 0;
 
   return shouldShowPlaceholder ? (
     <BudgetPlaceholder />
@@ -21,10 +30,13 @@ function BudgetMain() {
       <div className="bg-shade-100 flex flex-col gap-3 rounded-md px-6 pb-4">
         <BudgetPieChart />
 
-        <BudgetSummery />
+        <BudgetSummery
+          selectedBudgetId={selectedBudgetId}
+          setSelectedBudgetId={setSelectedBudgetId}
+        />
       </div>
 
-      <BudgetList />
+      <BudgetList selectedBudgetId={selectedBudgetId} />
     </div>
   );
 }

@@ -2,7 +2,10 @@ import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../store/budgetStore.ts";
+
+import { useBudgets } from "../../../hooks/useBudgets.ts";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -10,17 +13,24 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetPieChart() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: (Budget & { spentAmount: number })[] = [
-    ...useStore(budgetStore, (s) => s.budgets),
-  ].map((budget) => ({
-    ...budget,
-    spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
-  }));
 
-  const totalSpent = budgets
+  const { budgets, isLoading, isError, error } = useBudgets();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const budgetsWithSpent: (Budget & { spentAmount: number })[] = budgets!.map(
+    (budget) => ({
+      ...budget,
+      spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
+    }),
+  );
+
+  const totalSpent = budgetsWithSpent!
     .reduce((sum, budget) => sum + budget.spentAmount, 0)
     .toFixed(2);
-  const totalBudget = budgets
+  const totalBudget = budgetsWithSpent!
     .reduce((sum, budget) => sum + budget.targetAmount, 0)
     .toFixed(2);
 
@@ -29,14 +39,14 @@ function BudgetPieChart() {
       <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
-            data={budgets}
+            data={budgetsWithSpent}
             innerRadius={80}
             outerRadius={105}
             fill="#e0e0e0"
             paddingAngle={1}
             dataKey="spentAmount"
           >
-            {budgets.map((budget) => (
+            {budgetsWithSpent.map((budget) => (
               <Cell
                 key={budget.budgetId}
                 fill={themeColors.find((c) => c.name === budget.theme)?.hex}
@@ -126,12 +136,12 @@ function BudgetPieChart() {
         <p
           className={`font-space-grotesk text-3xl font-semibold ${totalSpent >= totalBudget ? "text-error" : "text-text"}`}
         >
-          {budgets[0].currency}
+          {budgets![0].currency}
           {totalSpent}
         </p>
 
         <p className="text-sm font-semibold text-gray-500">
-          of {budgets[0].currency}
+          of {budgets![0].currency}
           {totalBudget}
         </p>
       </div>

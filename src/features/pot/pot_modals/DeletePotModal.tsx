@@ -1,16 +1,21 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potStore } from "../store/potStore.ts";
+import { usePots } from "../../../hooks/usePots.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
+import type { Pot } from "../types/pot.types.ts";
+
 function DeletePotModal({ potId }: { potId: string }) {
-  const pot = [...useStore(potStore, (s) => s.pots)].find(
-    (pot) => pot.potId === potId,
-  );
+  const { pots, isLoading, isError, error } = usePots();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

@@ -1,14 +1,21 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "../store/budgetStore.ts";
+import { useBudgets } from "../../../hooks/useBudgets.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
+import type { Budget } from "../types/budget.types.ts";
+
 function DeleteBudgetModal({ budgetId }: any) {
-  const budget = [...useStore(budgetStore, (s) => s.budgets)].find(
+  const { budgets, isLoading, isError, error } = useBudgets();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const budget: Budget | undefined = budgets!.find(
     (budget) => budget.budgetId === budgetId,
   );
 

@@ -3,23 +3,31 @@ import { useStore } from "@tanstack/react-store";
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
+import { usePots } from "../../../hooks/usePots.ts";
+
 import BoardBody from "./BoardBody.tsx";
 import { BoardBadge } from "./BoardElements.tsx";
 import BoardHeader from "./BoardHeader.tsx";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 
 import { filterPots, sortPots } from "../pot_helpers/potHelpers.ts";
 
 function PotBoard() {
-  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+  const { pots, isLoading, isError, error } = usePots();
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
   const potTransactionCache = useStore(potTransactionCacheStore);
 
-  const filteredPots: Pot[] = filterPots(pots, filters, potTransactionCache);
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const filteredPots: Pot[] = filterPots(pots!, filters, potTransactionCache);
   const sortedPots: Pot[] = sortPots(
     filteredPots,
     sorting,

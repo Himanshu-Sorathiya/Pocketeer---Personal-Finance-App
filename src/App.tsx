@@ -8,15 +8,20 @@ import NotFoundPage from "./pages/common/NotFoundPage.tsx";
 
 import GlobalSpinner from "./components/loaders/GlobalSpinner.tsx";
 
+const queryClient = new QueryClient();
+
 const router = createRouter({
   routeTree,
+
   defaultPreload: "intent",
   defaultPreloadDelay: 100,
+
   scrollRestoration: true,
   scrollRestorationBehavior: "smooth",
+
+  defaultPendingComponent: GlobalSpinner,
   defaultNotFoundComponent: NotFoundPage,
   defaultErrorComponent: ErrorPage,
-  defaultPendingComponent: GlobalSpinner,
 });
 
 declare module "@tanstack/react-router" {
@@ -24,8 +29,6 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-
-const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -36,3 +39,4 @@ function App() {
 }
 
 export default App;
+export { queryClient };

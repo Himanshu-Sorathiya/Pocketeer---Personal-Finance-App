@@ -47,10 +47,13 @@ function setTransactionCache(transactionId: string, category: string) {
 
   transactionIconCacheStore.setState((state) => {
     const newCache = new Map(state);
-    newCache.set(transactionId, {
-      iconPath,
-      bgColor,
-    });
+
+    if (!newCache.has(transactionId)) {
+      newCache.set(transactionId, {
+        iconPath,
+        bgColor,
+      });
+    }
 
     return newCache;
   });
@@ -64,9 +67,9 @@ function setBudgetCache(
 ) {
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
-      t.type === "expense" &&
+      t.category.trim() === category.trim() &&
       new Date(t.creationDate) >= new Date(creationDate) &&
-      t.category.trim() === category.trim(),
+      t.type === "expense",
   );
 
   budgetTransactionCacheStore.setState((state) => {
@@ -90,9 +93,9 @@ function setPotCache(
 ) {
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
-      t.type === "income" &&
+      t.recipient.trim() === potName.trim() &&
       new Date(t.creationDate) >= new Date(creationDate) &&
-      t.recipient.trim() === potName.trim(),
+      t.type === "income",
   );
 
   potTransactionCacheStore.setState((state) => {

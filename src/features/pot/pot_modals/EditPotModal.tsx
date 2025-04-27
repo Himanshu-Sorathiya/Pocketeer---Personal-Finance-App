@@ -1,18 +1,16 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potStore } from "../store/potStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { usePots } from "../../../hooks/usePots.ts";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import type { Pot } from "../types/pot.types.ts";
 
 function EditPotModal({ potId }: { potId: string }) {
-  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
+  const { pots, isLoading, isError, error } = usePots();
 
-  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
+  const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
 
   const form = useAppForm({
     defaultValues: {
@@ -24,6 +22,10 @@ function EditPotModal({ potId }: { potId: string }) {
       console.log("from", values);
     },
   });
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

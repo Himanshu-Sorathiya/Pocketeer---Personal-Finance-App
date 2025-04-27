@@ -1,25 +1,19 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potStore } from "../store/potStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { usePots } from "../../../hooks/usePots.ts";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
-
-import type { Pot } from "../types/pot.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
-  const pots: Pot[] = [...useStore(potStore, (s) => s.pots)];
-
-  const currency = pots[0]?.currency;
+  const { pots, isLoading, isError, error } = usePots();
 
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
     .map((c) => {
-      const used = pots.some((i: any) => i.theme === c.name);
+      const used = pots!.some((i: any) => i.theme === c.name);
       return {
         name: c.name,
         value: c.hex,
@@ -40,6 +34,12 @@ function CreatePotModal() {
       console.log("from", values);
     },
   });
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const currency = pots![0]?.currency;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

@@ -1,19 +1,18 @@
-import { useStore } from "@tanstack/react-store";
 import { format } from "date-fns";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useTransactions } from "../../../hooks/useTransactions.ts";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
-import type { Transaction } from "../types/transaction.types.ts";
-
 function EditTransactionModal({ transactionId }: any) {
-  const transaction: Transaction | undefined = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ].find((transaction) => transaction.transactionId === transactionId);
+  const { transactions, isLoading, isError, error } = useTransactions();
+
+  const transaction = transactions!.find(
+    (transaction) => transaction.transactionId === transactionId,
+  );
 
   const form = useAppForm({
     defaultValues: {
@@ -27,6 +26,10 @@ function EditTransactionModal({ transactionId }: any) {
       console.log("from", values);
     },
   });
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

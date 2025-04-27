@@ -1,18 +1,16 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "../store/budgetStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useBudgets } from "../../../hooks/useBudgets.ts";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
 function EditBudgetModal({ budgetId }: any) {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
+  const { budgets, isLoading, isError, error } = useBudgets();
 
-  const budget: Budget | undefined = budgets.find(
+  const budget: Budget | undefined = budgets!.find(
     (budget) => budget.budgetId === budgetId,
   );
 
@@ -26,6 +24,10 @@ function EditBudgetModal({ budgetId }: any) {
       console.log("from", values);
     },
   });
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

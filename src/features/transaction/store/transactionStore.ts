@@ -5,10 +5,7 @@ import type {
   SortingState,
 } from "@tanstack/react-table";
 
-import { getTransactions } from "../../../services/apiTransaction.ts";
-
 import type { SelectedOptions } from "../../../types/global.types.ts";
-import type { Transaction } from "../types/transaction.types.ts";
 
 import {
   DEFAULT_END_DATE,
@@ -16,8 +13,6 @@ import {
 } from "../../../utilities/dateUtils.ts";
 
 type TransactionState = {
-  transactions: Transaction[];
-
   searchedRecipient: string;
   selectedCategory: SelectedOptions;
   selectedWeek: [Date, Date];
@@ -31,13 +26,7 @@ type TransactionState = {
   maxSearchLength: number;
 };
 
-const transactions: Transaction[] = await getTransactions({
-  queryKey: ["", "e8c67e26-6d1e-4fd5-9a87-2bf852cb2c35"],
-});
-
 const transactionStore = new Store<TransactionState>({
-  transactions,
-
   searchedRecipient: "",
   selectedCategory: { type: "category", value: "all" },
   selectedWeek: [DEFAULT_START_DATE, DEFAULT_END_DATE],

@@ -1,9 +1,8 @@
-import { useStore } from "@tanstack/react-store";
-
 import { Route as TransactionRoute } from "../../../routes/app/transaction.tsx";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { useTransactions } from "../../../hooks/useTransactions.ts";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
@@ -26,9 +25,13 @@ function SummeryTransaction() {
 }
 
 function RecentTransactions() {
-  const latestTransactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ]
+  const { transactions, isLoading, isError, error } = useTransactions();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const latestTransactions: Transaction[] = transactions!
     .sort(
       (a, b) =>
         new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),

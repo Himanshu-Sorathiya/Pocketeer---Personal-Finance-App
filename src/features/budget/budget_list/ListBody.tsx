@@ -1,7 +1,8 @@
 import { useStore } from "@tanstack/react-store";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../store/budgetStore.ts";
+
+import { useBudgets } from "../../../hooks/useBudgets.ts";
 
 import {
   ListBalance,
@@ -10,18 +11,23 @@ import {
   ListRecentTransactions,
 } from "./ListElements.tsx";
 
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
+
 import type { Budget } from "../types/budget.types.ts";
 
-function ListBody() {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
-  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+function ListBody({ selectedBudgetId }: { selectedBudgetId: string }) {
+  const { budgets, isLoading, isError, error } = useBudgets();
 
   const budget: Budget =
-    budgets.find((b) => b.budgetId === selectedBudget) || budgets[0];
+    budgets!.find((b) => b.budgetId === selectedBudgetId) || budgets![0];
   const { targetAmount, currency, theme, category } = budget;
 
   const spentAmount =
     useStore(budgetTransactionCacheStore).get(budget.budgetId)?.amount ?? 0;
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   return (
     <div className="flex flex-col gap-3">

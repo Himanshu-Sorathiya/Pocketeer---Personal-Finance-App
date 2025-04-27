@@ -1,19 +1,22 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "../store/budgetStore.ts";
+import { useBudgets } from "../../../hooks/useBudgets.ts";
 
 import { ListActions } from "./ListElements.tsx";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
-function ListHeader() {
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)];
-  const selectedBudget: string = useStore(budgetStore, (s) => s.selectedBudget);
+function ListHeader({ selectedBudgetId }: { selectedBudgetId: string }) {
+  const { budgets, isLoading, isError, error } = useBudgets();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   const budget: Budget =
-    budgets.find((b) => b.budgetId === selectedBudget) || budgets[0];
+    budgets!.find((b) => b.budgetId === selectedBudgetId) || budgets![0];
 
   return (
     <div className="flex items-center justify-between gap-4">
@@ -37,7 +40,7 @@ function ListHeader() {
         </div>
       </div>
 
-      <ListActions />
+      <ListActions selectedBudgetId={selectedBudgetId} />
     </div>
   );
 }

@@ -1,10 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
 import { useStore } from "@tanstack/react-store";
 
 import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
 
-import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../../budget/store/budgetStore.ts";
+import {
+  budgetQueryOptions,
+  transactionQueryOptions,
+} from "../../../services/queryOptions.ts";
 
+import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
+
+import { useBudgets } from "../../../hooks/useBudgets.ts";
+
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
 
@@ -14,18 +22,20 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryBudget() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: (Budget & { spentAmount: number })[] = [
-    ...useStore(budgetStore, (s) => s.budgets),
-  ].map((budget) => ({
-    ...budget,
-    spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
-  }));
 
-  const totalSpent = budgets
-    .reduce((sum, budget) => sum + budget.spentAmount, 0)
-    .toFixed(2);
+  const { budgets, isLoading, isError, error } = useBudgets();
 
-  return totalSpent === "0.00" ? null : (
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const totalSpent = budgets!.reduce((acc, budget) => {
+    const spent = budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
+
+    return acc + spent;
+  }, 0);
+
+  return totalSpent === 0 ? null : (
     <div className="bg-shade-100 flex flex-col gap-4 rounded-md px-6 pt-7 pb-3">
       <SummeryHeader
         to={BudgetRoute.to}
@@ -46,7 +56,38 @@ function SummeryBudget() {
 
 function BudgetSummery() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: Budget[] = [...useStore(budgetStore, (s) => s.budgets)]
+
+  const {
+    status: transactionsStatus,
+    fetchStatus: transactionsFetchStatus,
+    error: transactionError,
+  } = useQuery({
+    ...transactionQueryOptions,
+  });
+
+  const {
+    data: budgets,
+    status: budgetsStatus,
+    fetchStatus: budgetsFetchStatus,
+    error: budgetError,
+  } = useQuery({
+    ...budgetQueryOptions,
+    enabled:
+      transactionsStatus === "success" && transactionsFetchStatus === "idle",
+  });
+
+  if (
+    transactionsStatus === "pending" ||
+    budgetsStatus === "pending" ||
+    transactionsFetchStatus === "paused" ||
+    budgetsFetchStatus === "paused"
+  )
+    return <GlobalSpinner />;
+
+  if (transactionsStatus === "error" || budgetsStatus === "error")
+    throw new Error(transactionError?.message || budgetError?.message);
+
+  const budgetsFormatted: Budget[] = budgets!
     .sort((a, b) => {
       const spentA = budgetTransactionCache.get(a.budgetId)?.amount ?? 0;
       const spentB = budgetTransactionCache.get(b.budgetId)?.amount ?? 0;
@@ -60,7 +101,7 @@ function BudgetSummery() {
 
   return (
     <div className="flex flex-col gap-2">
-      {budgets.map((budget) => {
+      {budgetsFormatted.map((budget) => {
         const spentAmount =
           budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
 

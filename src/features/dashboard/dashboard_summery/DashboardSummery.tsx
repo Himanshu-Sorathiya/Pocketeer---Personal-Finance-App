@@ -1,15 +1,19 @@
-import { useStore } from "@tanstack/react-store";
-
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { useTransactions } from "../../../hooks/useTransactions.ts";
 
 import SummeryBudget from "./SummeryBudget.tsx";
 import SummeryPot from "./SummeryPot.tsx";
 import SummeryTransaction from "./SummeryTransactions.tsx";
 
-function DashboardSummery() {
-  const transactions = [...useStore(transactionStore, (s) => s.transactions)];
+import GlobalSpinner from "../../../components/loaders/GlobalSpinner.tsx";
 
-  const shouldShowPlaceholder = transactions.length === 0;
+function DashboardSummery() {
+  const { transactions, isLoading, isError, error } = useTransactions();
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
+
+  const shouldShowPlaceholder = transactions!.length === 0;
 
   return shouldShowPlaceholder ? (
     <div className="flex flex-col items-center rounded-md bg-white py-3 text-xl font-semibold text-gray-900">

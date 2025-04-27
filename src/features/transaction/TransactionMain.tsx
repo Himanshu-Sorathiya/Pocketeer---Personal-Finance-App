@@ -15,6 +15,8 @@ import {
 
 import { transactionStore } from "./store/transactionStore.ts";
 
+import { useTransactions } from "../../hooks/useTransactions.ts";
+
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
@@ -26,6 +28,8 @@ import {
   RecipientCell,
 } from "./transaction_table/TableCells.tsx";
 import TransactionTable from "./transaction_table/TransactionTable.tsx";
+
+import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 import type { Transaction } from "./types/transaction.types.ts";
 
@@ -43,10 +47,6 @@ import {
 } from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
-  const transactions: Transaction[] = [
-    ...useStore(transactionStore, (s) => s.transactions),
-  ];
-
   const columnHelper: ColumnHelper<Transaction> =
     createColumnHelper<Transaction>();
 
@@ -99,6 +99,8 @@ function TransactionMain() {
     }),
   ];
 
+  const { transactions, isLoading, isError, error } = useTransactions();
+
   const columnFilters: ColumnFiltersState = useStore(
     transactionStore,
     (s) => s.columnFilters,
@@ -110,7 +112,7 @@ function TransactionMain() {
   );
 
   const table: Table<Transaction> = useReactTable({
-    data: transactions,
+    data: transactions ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -129,6 +131,10 @@ function TransactionMain() {
     getRowId: (row) => row.transactionId,
     autoResetPageIndex: false,
   });
+
+  if (isLoading) return <GlobalSpinner />;
+
+  if (isError) throw new Error(error?.message);
 
   const shouldShowPlaceholder = table.getRowModel().rows.length === 0;
 
