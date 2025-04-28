@@ -12,6 +12,7 @@ type Transaction = {
   type: TransactionType;
   currency: string;
   creationDate: string;
+  creationTime: string;
 };
 
 export { type Transaction };

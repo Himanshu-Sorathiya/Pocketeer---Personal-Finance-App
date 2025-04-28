@@ -1,13 +1,5 @@
 import { type ReactNode } from "react";
 
-import { useQuery } from "@tanstack/react-query";
-
-import {
-  budgetQueryOptions,
-  potQueryOptions,
-  transactionQueryOptions,
-} from "../services/queryOptions.ts";
-
 import { setBudgets } from "../features/budget/store/budgetStore.ts";
 import { setPots } from "../features/pot/store/potStore.ts";
 import { setTransactions } from "../features/transaction/store/transactionStore.ts";
@@ -17,42 +9,31 @@ import {
   setTransactionCache,
 } from "../store/appCacheStore.ts";
 
+import { useReadBudgets } from "../features/budget/hooks/useReadBudgets.ts";
+import { useReadPots } from "../features/pot/hooks/useReadPots.ts";
+import { useReadTransactions } from "../features/transaction/hooks/useReadTransactions.ts";
+
 import PageSpinner from "../components/loaders/PageSpinner.tsx";
 import Sidebar from "../components/sidebar/Sidebar.tsx";
 
 function AppLayout({ children }: { children?: ReactNode }) {
   const {
-    data: transactions,
-    status: transactionsStatus,
-    fetchStatus: transactionFetchStatus,
-    error: transactionsError,
-  } = useQuery({ ...transactionQueryOptions });
+    transactions,
+    transactionsStatus,
+    transactionsFetchStatus,
+    transactionsError,
+  } = useReadTransactions();
 
-  const {
-    data: budgets,
-    status: budgetsStatus,
-    fetchStatus: budgetsFetchStatus,
-    error: budgetsError,
-  } = useQuery({
-    ...budgetQueryOptions,
-    enabled: transactionsStatus === "success",
-  });
+  const { budgets, budgetsStatus, budgetsFetchStatus, budgetsError } =
+    useReadBudgets();
 
-  const {
-    data: pots,
-    status: potsStatus,
-    fetchStatus: potsFetchStatus,
-    error: potsError,
-  } = useQuery({
-    ...potQueryOptions,
-    enabled: transactionsStatus === "success",
-  });
+  const { pots, potsStatus, potsFetchStatus, potsError } = useReadPots();
 
   const isLoading =
     transactionsStatus === "pending" ||
     budgetsStatus === "pending" ||
     potsStatus === "pending" ||
-    transactionFetchStatus !== "idle" ||
+    transactionsFetchStatus !== "idle" ||
     budgetsFetchStatus !== "idle" ||
     potsFetchStatus !== "idle";
 
@@ -65,7 +46,7 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
   if (isError) throw new Error(error?.message);
 
-  if (transactions && budgets && pots) {
+  if (transactions.length > 0) {
     setTransactions(transactions);
     setBudgets(budgets);
     setPots(pots);

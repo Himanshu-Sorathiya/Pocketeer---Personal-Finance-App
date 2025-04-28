@@ -19,7 +19,7 @@ function setBudgets(budgets: Budget[]) {
     ...prev,
 
     budgets,
-    selectedBudgetId: budgets[0].budgetId,
+    selectedBudgetId: budgets?.[0]?.budgetId ?? "",
   }));
 }
 

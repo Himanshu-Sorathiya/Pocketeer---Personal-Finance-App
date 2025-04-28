@@ -16,6 +16,7 @@ type Pot = {
   currency: string;
   theme: string;
   creationDate: string;
+  creationTime: string;
 };
 
 export { type FilterState, type Pot, type SortingState };

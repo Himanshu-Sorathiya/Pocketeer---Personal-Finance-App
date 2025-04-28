@@ -10,6 +10,7 @@ type Budget = {
   currency: string;
   theme: string;
   creationDate: string;
+  creationTime: string;
 };
 
 type BudgetTransaction = Omit<Transaction, "category">;

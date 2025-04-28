@@ -81,10 +81,17 @@ function sortDate(
   rowB: Row<Transaction>,
   columnId: string,
 ) {
-  return (
-    new Date(rowA.getValue(columnId)).getTime() -
-    new Date(rowB.getValue(columnId)).getTime()
-  );
+  const dateA = new Date(rowA.getValue(columnId)).getTime();
+  const dateB = new Date(rowB.getValue(columnId)).getTime();
+
+  if (dateA === dateB) {
+    const timeA = rowA.original.creationTime.split(":").join("");
+    const timeB = rowB.original.creationTime.split(":").join("");
+
+    return Number(timeA) - Number(timeB);
+  }
+
+  return dateA - dateB;
 }
 
 function sortAmount(
@@ -141,5 +148,5 @@ export {
   setSorting,
   sortAmount,
   sortDate,
-  sortFuzzy,
+  sortFuzzy
 };
