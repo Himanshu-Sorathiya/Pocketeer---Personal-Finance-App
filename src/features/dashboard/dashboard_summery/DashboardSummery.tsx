@@ -1,13 +1,20 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import SummeryBudget from "./SummeryBudget.tsx";
 import SummeryPot from "./SummeryPot.tsx";
 import SummeryTransaction from "./SummeryTransactions.tsx";
 
-function DashboardSummery() {
-  const { transactions } = useData();
+import { Transaction } from "../../transaction/types/transaction.types.ts";
 
-  const shouldShowPlaceholder = transactions!.length === 0;
+function DashboardSummery() {
+  const transactions: Transaction[] = useStore(
+    transactionStore,
+    (s) => s.transactions,
+  );
+
+  const shouldShowPlaceholder = transactions.length === 0;
 
   return shouldShowPlaceholder ? (
     <div className="flex flex-col items-center rounded-md bg-white py-3 text-xl font-semibold text-gray-900">

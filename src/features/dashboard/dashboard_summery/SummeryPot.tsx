@@ -2,9 +2,8 @@ import { useStore } from "@tanstack/react-store";
 
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import { potStore } from "../../pot/store/potStore.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
@@ -14,16 +13,15 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryPot() {
   const potTransactionCache = useStore(potTransactionCacheStore);
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
-  const { pots } = useData();
-
-  const totalSaved = pots!.reduce((acc, pot) => {
+  const totalSaved = pots.reduce((acc, pot) => {
     const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
 
     return acc + saved;
   }, 0);
 
-  const currency = pots![0]?.currency;
+  const currency = pots[0]?.currency;
 
   return totalSaved === 0 ? null : (
     <div className="bg-shade-100 flex flex-col gap-4 rounded-md px-6 pt-7 pb-4">
@@ -65,10 +63,9 @@ function PotBalance({
 
 function PotSummery() {
   const potTransactionCache = useStore(potTransactionCacheStore);
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
-  const { pots } = useData();
-
-  const potsFormatted: Pot[] = pots!
+  const potsFormatted: Pot[] = pots
     .sort((a, b) => {
       const savedA = potTransactionCache.get(a.potId)?.amount ?? 0;
       const savedB = potTransactionCache.get(b.potId)?.amount ?? 0;

@@ -1,15 +1,19 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
+import type { Budget } from "../types/budget.types.ts";
+
 import { themeColors } from "../../../constants/appOptions.ts";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
-  const { budgets } = useData();
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   const availableCategories = transactionCategories
     .map((c) => {
@@ -46,7 +50,7 @@ function CreateBudgetModal() {
     },
   });
 
-  const currency = budgets![0].currency;
+  const currency = budgets[0].currency;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

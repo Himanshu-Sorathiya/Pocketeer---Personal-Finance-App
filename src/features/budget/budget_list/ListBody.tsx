@@ -1,7 +1,5 @@
 import { useStore } from "@tanstack/react-store";
 
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import {
@@ -13,15 +11,11 @@ import {
 
 import type { Budget } from "../types/budget.types.ts";
 
-function ListBody({ selectedBudgetId }: { selectedBudgetId: string }) {
-  const { budgets } = useData();
-
-  const budget: Budget =
-    budgets!.find((b) => b.budgetId === selectedBudgetId) || budgets![0];
-  const { targetAmount, currency, theme, category } = budget;
+function ListBody({ budget }: { budget: Budget }) {
+  const { budgetId, targetAmount, currency, theme, category } = budget;
 
   const spentAmount =
-    useStore(budgetTransactionCacheStore).get(budget.budgetId)?.amount ?? 0;
+    useStore(budgetTransactionCacheStore).get(budgetId)?.amount ?? 0;
 
   return (
     <div className="flex flex-col gap-3">

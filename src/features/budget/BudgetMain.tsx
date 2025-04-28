@@ -1,14 +1,19 @@
-import { useData } from "../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { budgetStore } from "./store/budgetStore.ts";
 
 import BudgetList from "./budget_list/BudgetList.tsx";
 import BudgetPieChart from "./budget_pie_chart/BudgetPieChart.tsx";
 import BudgetPlaceholder from "./budget_placeholder/BudgetPlaceholder.tsx";
 import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 
-function BudgetMain() {
-  const { budgets, selectedBudgetId, setSelectedBudgetId } = useData();
+import type { Budget } from "./types/budget.types.ts";
 
-  const shouldShowPlaceholder = budgets!.length === 0;
+function BudgetMain() {
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
+  const selectedBudgetId = useStore(budgetStore, (s) => s.selectedBudgetId);
+
+  const shouldShowPlaceholder = budgets.length === 0;
 
   return shouldShowPlaceholder ? (
     <BudgetPlaceholder />
@@ -17,10 +22,7 @@ function BudgetMain() {
       <div className="bg-shade-100 flex flex-col gap-3 rounded-md px-6 pb-4">
         <BudgetPieChart />
 
-        <BudgetSummery
-          selectedBudgetId={selectedBudgetId}
-          setSelectedBudgetId={setSelectedBudgetId}
-        />
+        <BudgetSummery selectedBudgetId={selectedBudgetId} />
       </div>
 
       <BudgetList selectedBudgetId={selectedBudgetId} />

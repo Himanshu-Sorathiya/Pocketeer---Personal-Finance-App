@@ -1,7 +1,5 @@
 import { useStore } from "@tanstack/react-store";
 
-import { useData } from "../../contexts/DataContext.tsx";
-
 import { potTransactionCacheStore } from "../../store/appCacheStore.ts";
 import { potStore } from "./store/potStore.ts";
 
@@ -15,15 +13,14 @@ import type { FilterState, Pot, SortingState } from "./types/pot.types.ts";
 import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
 
 function PotMain() {
-  const { pots } = useData();
+  const potTransactionCache = useStore(potTransactionCacheStore);
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
 
-  const potTransactionCache = useStore(potTransactionCacheStore);
-
   const filteredPots: Pot[] = filterPots(
-    [...pots!],
+    [...pots],
     filters,
     potTransactionCache,
   );

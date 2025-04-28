@@ -1,4 +1,6 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
@@ -8,9 +10,9 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Budget } from "../types/budget.types.ts";
 
 function EditBudgetModal({ budgetId }: any) {
-  const { budgets } = useData();
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
-  const budget: Budget | undefined = budgets!.find(
+  const budget: Budget | undefined = budgets.find(
     (budget) => budget.budgetId === budgetId,
   );
 

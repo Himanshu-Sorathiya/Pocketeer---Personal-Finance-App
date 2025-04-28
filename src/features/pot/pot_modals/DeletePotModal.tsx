@@ -1,4 +1,6 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { potStore } from "../store/potStore.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
@@ -8,9 +10,9 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Pot } from "../types/pot.types.ts";
 
 function DeletePotModal({ potId }: { potId: string }) {
-  const { pots } = useData();
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
-  const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
+  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

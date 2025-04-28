@@ -1,14 +1,21 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { transactionStore } from "../store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
+import { Transaction } from "../types/transaction.types.ts";
+
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
-  const { transactions } = useData();
+  const transactions: Transaction[] = useStore(
+    transactionStore,
+    (s) => s.transactions,
+  );
 
   const form = useAppForm({
     defaultValues: {
@@ -23,7 +30,7 @@ function CreateTransactionModal() {
     },
   });
 
-  const currency = transactions![0]?.currency;
+  const currency = transactions[0]?.currency;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

@@ -1,9 +1,8 @@
 import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
@@ -15,7 +14,12 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function AddMoneyToPotModal({ potId }: any) {
-  const { pots } = useData();
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
+
+  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
+
+  const savedAmount =
+    useStore(potTransactionCacheStore).get(pot!.potId)?.amount ?? 0;
 
   const form = useAppForm({
     defaultValues: {
@@ -25,11 +29,6 @@ function AddMoneyToPotModal({ potId }: any) {
       console.log("from", values);
     },
   });
-
-  const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
-
-  const savedAmount =
-    useStore(potTransactionCacheStore).get(pot!.potId)?.amount ?? 0;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

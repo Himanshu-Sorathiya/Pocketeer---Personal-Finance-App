@@ -1,4 +1,6 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
@@ -8,9 +10,9 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Pot } from "../types/pot.types.ts";
 
 function EditPotModal({ potId }: { potId: string }) {
-  const { pots } = useData();
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
-  const pot: Pot | undefined = pots!.find((pot) => pot.potId === potId);
+  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
   const form = useAppForm({
     defaultValues: {

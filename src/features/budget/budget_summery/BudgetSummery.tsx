@@ -1,28 +1,22 @@
 import { useStore } from "@tanstack/react-store";
 
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
+
+import { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
-function BudgetSummery({
-  selectedBudgetId,
-  setSelectedBudgetId,
-}: {
-  selectedBudgetId: string;
-  setSelectedBudgetId: (id: string) => void;
-}) {
+function BudgetSummery({ selectedBudgetId }: { selectedBudgetId: string }) {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-
-  const { budgets } = useData();
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-2xl font-semibold text-gray-800">Spending Summery</h3>
 
       <div className="flex flex-col gap-1">
-        {budgets!.map((budget) => {
+        {budgets.map((budget) => {
           const spentAmount =
             budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
 
@@ -37,7 +31,7 @@ function BudgetSummery({
                     : "transparent",
                 borderBottom: `1px solid ${themeColors.find((c) => c.name === budget.theme)?.hex}`,
               }}
-              onClick={() => setSelectedBudgetId(budget.budgetId)}
+              onClick={() => handleBudgetChange(budget.budgetId)}
             >
               <div className="flex items-center gap-2">
                 <div

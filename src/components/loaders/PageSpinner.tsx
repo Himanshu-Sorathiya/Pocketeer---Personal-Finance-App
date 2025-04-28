@@ -1,6 +1,6 @@
 function PageSpinner() {
   return (
-    <div className="flex size-full items-center justify-center bg-white/30 backdrop-blur-sm">
+    <div className="flex size-full items-center justify-center bg-orange-50 backdrop-blur-sm">
       <svg
         viewBox="0 0 24 24"
         fill="none"

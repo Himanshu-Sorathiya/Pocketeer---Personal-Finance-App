@@ -1,17 +1,16 @@
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { ListActions } from "./ListElements.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
-function ListHeader({ selectedBudgetId }: { selectedBudgetId: string }) {
-  const { budgets } = useData();
-
-  const budget: Budget =
-    budgets!.find((b) => b.budgetId === selectedBudgetId) || budgets![0];
-
+function ListHeader({
+  budget,
+  selectedBudgetId,
+}: {
+  budget: Budget;
+  selectedBudgetId: string;
+}) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-2">

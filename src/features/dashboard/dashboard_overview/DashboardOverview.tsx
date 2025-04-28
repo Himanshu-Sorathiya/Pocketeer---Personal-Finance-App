@@ -1,19 +1,26 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { transactionStore } from "../../transaction/store/transactionStore.ts";
 
 import OverviewBalance from "./OverviewBalance.tsx";
 
-function DashboardOverview() {
-  const { transactions } = useData();
+import { Transaction } from "../../transaction/types/transaction.types.ts";
 
-  const income = transactions!
+function DashboardOverview() {
+  const transactions: Transaction[] = useStore(
+    transactionStore,
+    (s) => s.transactions,
+  );
+
+  const income = transactions
     .filter((t) => t.type === "income")
     .reduce((acc, t) => acc + t.amount, 0);
-  const expense = transactions!
+  const expense = transactions
     .filter((t) => t.type === "expense")
     .reduce((acc, t) => acc + t.amount, 0);
 
   const balance = income - expense;
-  const currency = transactions![0]?.currency;
+  const currency = transactions[0]?.currency;
 
   return (
     <div className="grid grid-cols-3 gap-6">

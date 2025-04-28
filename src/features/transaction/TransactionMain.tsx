@@ -13,8 +13,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useData } from "../../contexts/DataContext.tsx";
-
 import { transactionStore } from "./store/transactionStore.ts";
 
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
@@ -97,7 +95,10 @@ function TransactionMain() {
     }),
   ];
 
-  const { transactions } = useData();
+  const transactions: Transaction[] = useStore(
+    transactionStore,
+    (s) => s.transactions,
+  );
 
   const columnFilters: ColumnFiltersState = useStore(
     transactionStore,
@@ -110,7 +111,7 @@ function TransactionMain() {
   );
 
   const table: Table<Transaction> = useReactTable({
-    data: transactions ?? [],
+    data: transactions,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

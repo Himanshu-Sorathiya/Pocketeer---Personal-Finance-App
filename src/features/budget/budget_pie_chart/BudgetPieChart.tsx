@@ -1,9 +1,8 @@
 import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-import { useData } from "../../../contexts/DataContext.tsx";
-
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import { budgetStore } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -11,20 +10,19 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetPieChart() {
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
+  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
-  const { budgets } = useData();
-
-  const budgetsWithSpent: (Budget & { spentAmount: number })[] = budgets!.map(
+  const budgetsWithSpent: (Budget & { spentAmount: number })[] = budgets.map(
     (budget) => ({
       ...budget,
       spentAmount: budgetTransactionCache.get(budget.budgetId)?.amount ?? 0,
     }),
   );
 
-  const totalSpent = budgetsWithSpent!
+  const totalSpent = budgetsWithSpent
     .reduce((sum, budget) => sum + budget.spentAmount, 0)
     .toFixed(2);
-  const totalBudget = budgetsWithSpent!
+  const totalBudget = budgetsWithSpent
     .reduce((sum, budget) => sum + budget.targetAmount, 0)
     .toFixed(2);
 

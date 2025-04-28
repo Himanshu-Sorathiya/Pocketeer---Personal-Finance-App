@@ -5,8 +5,6 @@ import AppLayout from "../../layouts/AppLayout.tsx";
 import ErrorPage from "../../pages/common/ErrorPage.tsx";
 import NotFoundPage from "../../pages/common/NotFoundPage.tsx";
 
-import { DataContextProvider } from "../../contexts/DataContext.tsx";
-
 import GlobalSpinner from "../../components/loaders/GlobalSpinner.tsx";
 
 export const Route = createFileRoute("/app")({
@@ -18,10 +16,8 @@ export const Route = createFileRoute("/app")({
 
 function RouteComponent() {
   return (
-    <DataContextProvider>
-      <AppLayout>
-        <Outlet />
-      </AppLayout>
-    </DataContextProvider>
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
   );
 }

@@ -1,14 +1,18 @@
-import { useData } from "../../../contexts/DataContext.tsx";
+import { useStore } from "@tanstack/react-store";
+
+import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
+import type { Pot } from "../types/pot.types.ts";
+
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
-  const { pots } = useData();
+  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
@@ -35,7 +39,7 @@ function CreatePotModal() {
     },
   });
 
-  const currency = pots![0]?.currency;
+  const currency = pots[0]?.currency;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">

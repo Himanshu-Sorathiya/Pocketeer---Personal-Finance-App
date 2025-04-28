@@ -6,6 +6,7 @@ import type {
 } from "@tanstack/react-table";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
+import type { Transaction } from "../types/transaction.types.ts";
 
 import {
   DEFAULT_END_DATE,
@@ -13,6 +14,8 @@ import {
 } from "../../../utilities/dateUtils.ts";
 
 type TransactionState = {
+  transactions: Transaction[];
+
   searchedRecipient: string;
   selectedCategory: SelectedOptions;
   selectedWeek: [Date, Date];
@@ -27,6 +30,8 @@ type TransactionState = {
 };
 
 const transactionStore = new Store<TransactionState>({
+  transactions: [],
+
   searchedRecipient: "",
   selectedCategory: { type: "category", value: "all" },
   selectedWeek: [DEFAULT_START_DATE, DEFAULT_END_DATE],
@@ -47,6 +52,14 @@ const transactionStore = new Store<TransactionState>({
 
   maxSearchLength: 15,
 });
+
+function setTransactions(transactions: Transaction[]) {
+  transactionStore.setState((prev) => ({
+    ...prev,
+
+    transactions,
+  }));
+}
 
 function updateFilter(
   search: string,
@@ -151,5 +164,6 @@ export {
   handleSearchChange,
   handleSortChange,
   handleTypeChange,
+  setTransactions,
   transactionStore,
 };
