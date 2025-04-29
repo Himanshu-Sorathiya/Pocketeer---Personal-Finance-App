@@ -185,6 +185,12 @@ function EditTransactionModal({ transactionId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
+                errors.push("Amount must be greater than 1");
+
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
@@ -198,7 +204,10 @@ function EditTransactionModal({ transactionId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 1 &&
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
                 errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;

@@ -1,5 +1,6 @@
 import { useStore } from "@tanstack/react-store";
 
+import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
@@ -18,6 +19,11 @@ function EditBudgetModal({ budgetId }: any) {
 
   const budget: Budget | undefined = budgets.find(
     (budget) => budget.budgetId === budgetId,
+  );
+
+  const spentAmount = useStore(
+    budgetTransactionCacheStore,
+    (s) => s.get(budget!.budgetId)!.amount,
   );
 
   const form = useAppForm({
@@ -100,6 +106,15 @@ function EditBudgetModal({ budgetId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
+              parseFloat(value) <= spentAmount &&
+                errors.push("Amount must be greater than already spent amount");
+
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
+                errors.push("Amount must be greater than 1");
+
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
@@ -113,7 +128,13 @@ function EditBudgetModal({ budgetId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 1 &&
+              parseFloat(value) <= spentAmount &&
+                errors.push("Amount must be greater than already spent amount");
+
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
                 errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;

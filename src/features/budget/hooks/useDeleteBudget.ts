@@ -22,7 +22,7 @@ function useDeleteBudget(): {
   } = useMutation({
     mutationFn: deleteBudgetApi,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["budgets"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
     },
     onError(error) {

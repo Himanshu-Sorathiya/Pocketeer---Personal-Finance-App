@@ -105,6 +105,15 @@ function AddMoneyToPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
+              savedAmount + parseFloat(value) !== pot!.targetAmount &&
+                pot!.targetAmount - (savedAmount + parseFloat(value)) < 1 &&
+                errors.push(
+                  "You must either add the full amount or leave at least 1 remaining.",
+                );
+
+              parseFloat(value) < 1 &&
+                errors.push("Amount must be greater than 1");
+
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
@@ -118,7 +127,13 @@ function AddMoneyToPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 1 &&
+              savedAmount + parseFloat(value) !== pot!.targetAmount &&
+                pot!.targetAmount - (savedAmount + parseFloat(value)) < 1 &&
+                errors.push(
+                  "You must either add the full amount or leave at least 1 remaining.",
+                );
+
+              parseFloat(value) < 1 &&
                 errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;

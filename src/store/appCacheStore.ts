@@ -111,6 +111,7 @@ function setPotCache(
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
       t.recipient.trim() === potName.trim() &&
+      t.category.trim() === "savings" &&
       new Date(t.creationDate) >= new Date(creationDate),
   );
 

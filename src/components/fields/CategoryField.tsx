@@ -18,6 +18,7 @@ function CategoryField({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const availableCategories = transactionCategories
+    .filter((c) => c !== "savings")
     .map((c) => {
       const isCurrent = c === currentCategory;
       const used = !isCurrent && items?.some((b: any) => b.category === c);
@@ -104,6 +105,7 @@ function CategoryDropDown({
   currentCategory?: string;
 }) {
   const availableCategories = transactionCategories
+    .filter((c) => c !== "savings")
     .map((c) => {
       const isCurrent = c === currentCategory;
       const used = !isCurrent && items?.some((b: any) => b.category === c);

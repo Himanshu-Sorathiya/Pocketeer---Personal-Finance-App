@@ -1,5 +1,6 @@
 import { useStore } from "@tanstack/react-store";
 
+import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
@@ -17,6 +18,11 @@ function EditPotModal({ potId }: { potId: string }) {
   const { potStatus, updatePot } = useUpdatePot();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
+
+  const savedAmount = useStore(
+    potTransactionCacheStore,
+    (s) => s.get(pot!.potId)!.amount,
+  );
 
   const form = useAppForm({
     defaultValues: {
@@ -117,6 +123,15 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
+              parseFloat(value) <= savedAmount &&
+                errors.push("Amount must be greater than already saved amount");
+
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
+                errors.push("Amount must be greater than 1");
+
               return errors.length === 0 ? undefined : errors;
             },
             onSubmit: ({ value }) => {
@@ -130,7 +145,13 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= 1 &&
+              parseFloat(value) <= savedAmount &&
+                errors.push("Amount must be greater than already saved amount");
+
+              parseFloat(value) >= 99999999.99 &&
+                errors.push("Amount must be less than 99999999.99");
+
+              parseFloat(value) < 1 &&
                 errors.push("Amount must be greater than 1");
 
               return errors.length === 0 ? undefined : errors;

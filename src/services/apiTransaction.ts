@@ -139,9 +139,38 @@ async function deleteTransaction(transactionId: string) {
   }
 }
 
+async function updateTransactions(
+  transactionIds: string[],
+  newRecipient: string,
+) {
+  const { error } = await supabase
+    .from("transactions")
+    .update({ recipient: newRecipient })
+    .in("transaction_id", transactionIds);
+
+  if (error) {
+    throw new Error("Failed to update transaction recipients.");
+  }
+}
+
+async function deleteTransactions(transactionIds: string[]) {
+  const { error } = await supabase
+    .from("transactions")
+    .delete()
+    .in("transaction_id", transactionIds);
+
+  if (error) {
+    throw new Error(
+      "Uh-oh! We ran into an issue while deleting your transactions. But don’t worry—Pocketeer will get things back on track soon!",
+    );
+  }
+}
+
 export {
   createTransaction,
   deleteTransaction,
+  deleteTransactions,
   getTransactions,
   updateTransaction,
+  updateTransactions,
 };
