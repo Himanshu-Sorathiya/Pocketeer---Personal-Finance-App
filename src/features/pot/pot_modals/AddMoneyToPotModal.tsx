@@ -5,7 +5,9 @@ import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useCreateTransaction } from "../../transaction/hooks/useCreateTransaction.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -16,6 +18,8 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function AddMoneyToPotModal({ potId }: any) {
   const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
+  const { transactionStatus, createTransaction } = useCreateTransaction();
+
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
   const savedAmount =
@@ -25,13 +29,21 @@ function AddMoneyToPotModal({ potId }: any) {
     defaultValues: {
       amount: "",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      createTransaction({
+        recipient: pot!.name,
+        category: "savings",
+        amount: +value.amount,
+        type: "income",
+        creationDate: new Date().toISOString().split("T")[0],
+      });
     },
   });
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {transactionStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Add Money to "${pot?.name}"`} />
 
       <ModalDescription description="Fuel your savings journey by adding more to your pot. Every contribution brings you closer to your goal with Pocketeer!" />

@@ -111,8 +111,7 @@ function setPotCache(
   const filteredTransactions: Transaction[] = transactions.filter(
     (t) =>
       t.recipient.trim() === potName.trim() &&
-      new Date(t.creationDate) >= new Date(creationDate) &&
-      t.type === "income",
+      new Date(t.creationDate) >= new Date(creationDate),
   );
 
   const sortedTransactions: Transaction[] = filteredTransactions.sort(
@@ -134,11 +133,15 @@ function setPotCache(
   potTransactionCacheStore.setState((state) => {
     const newCache = new Map(state);
 
+    const amount = sortedTransactions.reduce((sum, t) => {
+      return t.type === "income" ? sum + t.amount : sum - t.amount;
+    }, 0);
+
     newCache.set(potId, {
       creationDate,
       transactionsLength: sortedTransactions.length,
       transactions: sortedTransactions,
-      amount: sortedTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
+      amount,
     });
 
     return newCache;
