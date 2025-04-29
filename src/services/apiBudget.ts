@@ -38,7 +38,7 @@ async function getBudgets({
   return budgets;
 }
 
-async function addBudget(
+async function createBudget(
   budget: Omit<
     Budget,
     "user_id" | "budgetId" | "currency" | "creationDate" | "creationTime"
@@ -62,7 +62,7 @@ async function addBudget(
 
   if (error) {
     throw new Error(
-      "Oops! We couldn’t add your budget right now. But don’t worry—Pocketeer will sort it out soon!",
+      "Oops! We couldn’t create your budget right now. But don’t worry—Pocketeer will sort it out soon!",
     );
   }
 
@@ -78,4 +78,37 @@ async function addBudget(
   };
 }
 
-export { addBudget, getBudgets };
+async function updateBudget(
+  budgetId: string,
+  updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>,
+): Promise<Budget> {
+  const { data, error } = await supabase
+    .from("budgets")
+    .update({
+      ...("category" in updates && { category: updates.category }),
+      ...("targetAmount" in updates && { target_amount: updates.targetAmount }),
+      ...("theme" in updates && { theme: updates.theme }),
+    })
+    .eq("budget_id", budgetId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(
+      "Oops! We couldn’t update your budget right now. But don’t worry—Pocketeer will sort it out soon!",
+    );
+  }
+
+  return {
+    user_id: data.user_id,
+    budgetId: data.budget_id,
+    category: data.category,
+    targetAmount: data.target_amount,
+    currency: data.currency,
+    theme: data.theme,
+    creationDate: data.creation_date,
+    creationTime: data.creation_time,
+  };
+}
+
+export { createBudget, getBudgets, updateBudget };

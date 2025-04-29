@@ -4,35 +4,51 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import { createTransaction as createTransactionApi } from "../../../services/apiTransaction.ts";
+import { updateTransaction as updateTransactionApi } from "../../../services/apiTransaction.ts";
 
 import { closeModal } from "../../../store/appModalStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
-function useCreateTransaction(): {
-  createdTransaction: Transaction | undefined;
+function useUpdateTransaction(): {
+  updatedTransaction: Transaction | undefined;
   transactionStatus: "error" | "idle" | "pending" | "success";
   transactionError: Error | null;
-  createTransaction: UseMutateFunction<
+  updateTransaction: UseMutateFunction<
     Transaction,
     Error,
-    Omit<
-      Transaction,
-      "user_id" | "transactionId" | "currency" | "creationTime"
-    >,
+    {
+      transactionId: string;
+      updates: Partial<
+        Pick<
+          Transaction,
+          "recipient" | "category" | "amount" | "creationDate" | "type"
+        >
+      >;
+    },
     unknown
   >;
 } {
   const queryClient = useQueryClient();
 
   const {
-    data: createdTransaction,
+    data: updatedTransaction,
     status: transactionStatus,
     error: transactionError,
-    mutate: createTransaction,
+    mutate: updateTransaction,
   } = useMutation({
-    mutationFn: createTransactionApi,
+    mutationFn: ({
+      transactionId,
+      updates,
+    }: {
+      transactionId: string;
+      updates: Partial<
+        Pick<
+          Transaction,
+          "recipient" | "category" | "amount" | "creationDate" | "type"
+        >
+      >;
+    }) => updateTransactionApi(transactionId, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
@@ -47,11 +63,11 @@ function useCreateTransaction(): {
   });
 
   return {
-    createdTransaction,
+    updatedTransaction,
     transactionStatus,
     transactionError,
-    createTransaction,
+    updateTransaction,
   };
 }
 
-export { useCreateTransaction };
+export { useUpdateTransaction };

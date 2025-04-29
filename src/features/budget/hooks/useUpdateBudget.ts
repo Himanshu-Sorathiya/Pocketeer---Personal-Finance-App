@@ -4,34 +4,41 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import { createBudget as createBudgetApi } from "../../../services/apiBudget.ts";
+import { updateBudget as updateBudgetApi } from "../../../services/apiBudget.ts";
 
 import { closeModal } from "../../../store/appModalStore.ts";
+
 import type { Budget } from "../types/budget.types.ts";
 
-function useCreateBudget(): {
-  createdBudget: Budget | undefined;
+function useUpdateBudget(): {
+  updatedBudget: Budget | undefined;
   budgetStatus: "error" | "idle" | "pending" | "success";
   budgetError: Error | null;
-  createBudget: UseMutateFunction<
+  updateBudget: UseMutateFunction<
     Budget,
     Error,
-    Omit<
-      Budget,
-      "user_id" | "budgetId" | "currency" | "creationDate" | "creationTime"
-    >,
+    {
+      budgetId: string;
+      updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>;
+    },
     unknown
   >;
 } {
   const queryClient = useQueryClient();
 
   const {
-    data: createdBudget,
+    data: updatedBudget,
     status: budgetStatus,
     error: budgetError,
-    mutate: createBudget,
+    mutate: updateBudget,
   } = useMutation({
-    mutationFn: createBudgetApi,
+    mutationFn: ({
+      budgetId,
+      updates,
+    }: {
+      budgetId: string;
+      updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>;
+    }) => updateBudgetApi(budgetId, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
@@ -44,12 +51,7 @@ function useCreateBudget(): {
     },
   });
 
-  return {
-    createdBudget,
-    budgetStatus,
-    budgetError,
-    createBudget,
-  };
+  return { updatedBudget, budgetStatus, budgetError, updateBudget };
 }
 
-export { useCreateBudget };
+export { useUpdateBudget };

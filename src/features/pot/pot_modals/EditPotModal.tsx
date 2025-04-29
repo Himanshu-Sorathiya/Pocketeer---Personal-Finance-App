@@ -3,7 +3,9 @@ import { useStore } from "@tanstack/react-store";
 import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUpdatePot } from "../hooks/useUpdatePot.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -11,6 +13,8 @@ import type { Pot } from "../types/pot.types.ts";
 
 function EditPotModal({ potId }: { potId: string }) {
   const pots: Pot[] = useStore(potStore, (s) => s.pots);
+
+  const { potStatus, updatePot } = useUpdatePot();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
@@ -20,13 +24,22 @@ function EditPotModal({ potId }: { potId: string }) {
       targetAmount: String(pot?.targetAmount ?? ""),
       theme: pot?.theme ?? "",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      updatePot({
+        potId,
+        updates: {
+          name: value.name,
+          targetAmount: Number(value.targetAmount),
+          theme: value.theme,
+        },
+      });
     },
   });
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {potStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Edit "${pot?.name}" Pot`} />
 
       <ModalDescription description="Need to adjust your savings plan? Edit your pot to reflect your updated financial goals and keep moving forward with Pocketeer!" />

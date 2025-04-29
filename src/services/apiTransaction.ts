@@ -42,7 +42,7 @@ async function getTransactions({
   return transactions;
 }
 
-async function addTransaction(
+async function createTransaction(
   transaction: Omit<
     Transaction,
     "user_id" | "transactionId" | "currency" | "creationTime"
@@ -67,7 +67,7 @@ async function addTransaction(
 
   if (error) {
     throw new Error(
-      "Uh-oh! We ran into an issue while adding your transaction. But don’t worry—Pocketeer will get things back on track soon!",
+      "Uh-oh! We ran into an issue while creating your transaction. But don’t worry—Pocketeer will get things back on track soon!",
     );
   }
 
@@ -84,4 +84,45 @@ async function addTransaction(
   };
 }
 
-export { addTransaction, getTransactions };
+async function updateTransaction(
+  transactionId: string,
+  updates: Partial<
+    Pick<
+      Transaction,
+      "recipient" | "category" | "amount" | "creationDate" | "type"
+    >
+  >,
+): Promise<Transaction> {
+  const { data, error } = await supabase
+    .from("transactions")
+    .update({
+      ...("recipient" in updates && { recipient: updates.recipient }),
+      ...("category" in updates && { category: updates.category }),
+      ...("amount" in updates && { amount: updates.amount }),
+      ...("type" in updates && { type: updates.type }),
+      ...("creationDate" in updates && { creation_date: updates.creationDate }),
+    })
+    .eq("transaction_id", transactionId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(
+      "Uh-oh! We ran into an issue while updating your transaction. But don’t worry—Pocketeer will get things back on track soon!",
+    );
+  }
+
+  return {
+    user_id: data.user_id,
+    transactionId: data.transaction_id,
+    recipient: data.recipient,
+    category: data.category,
+    amount: data.amount,
+    type: data.type,
+    currency: data.currency,
+    creationDate: data.creation_date,
+    creationTime: data.creation_time,
+  };
+}
+
+export { createTransaction, getTransactions, updateTransaction };

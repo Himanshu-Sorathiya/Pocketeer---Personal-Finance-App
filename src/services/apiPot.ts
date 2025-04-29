@@ -32,7 +32,7 @@ async function getPots({ queryKey }: { queryKey: QueryKey }): Promise<Pot[]> {
   return pots;
 }
 
-async function addPot(
+async function createPot(
   pot: Omit<
     Pot,
     "user_id" | "potId" | "currency" | "creationDate" | "creationTime"
@@ -56,7 +56,7 @@ async function addPot(
 
   if (error) {
     throw new Error(
-      "Oops! Something went wrong while adding your pot. Don’t stress—Pocketeer is here to fix it in no time!",
+      "Oops! Something went wrong while creating your pot. Don’t stress—Pocketeer is here to fix it in no time!",
     );
   }
 
@@ -72,4 +72,37 @@ async function addPot(
   };
 }
 
-export { addPot, getPots };
+async function updatePot(
+  potId: string,
+  updates: Partial<Pick<Pot, "name" | "targetAmount" | "theme">>,
+): Promise<Pot> {
+  const { data, error } = await supabase
+    .from("pots")
+    .update({
+      ...("name" in updates && { name: updates.name }),
+      ...("targetAmount" in updates && { target_amount: updates.targetAmount }),
+      ...("theme" in updates && { theme: updates.theme }),
+    })
+    .eq("pot_id", potId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(
+      "Oops! Something went wrong while updating your pot. Don’t stress—Pocketeer is here to fix it in no time!",
+    );
+  }
+
+  return {
+    user_id: data.user_id,
+    potId: data.pot_id,
+    name: data.name,
+    targetAmount: data.target_amount,
+    currency: data.currency,
+    theme: data.theme,
+    creationDate: data.creation_date,
+    creationTime: data.creation_time,
+  };
+}
+
+export { createPot, getPots, updatePot };

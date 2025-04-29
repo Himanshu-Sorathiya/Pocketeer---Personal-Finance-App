@@ -4,7 +4,9 @@ import { format } from "date-fns";
 import { transactionStore } from "../store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUpdateTransaction } from "../hooks/useUpdateTransaction.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -16,7 +18,9 @@ function EditTransactionModal({ transactionId }: any) {
     (s) => s.transactions,
   );
 
-  const transaction = transactions.find(
+  const { transactionStatus, updateTransaction } = useUpdateTransaction();
+
+  const transaction: Transaction | undefined = transactions.find(
     (transaction) => transaction.transactionId === transactionId,
   );
 
@@ -28,13 +32,24 @@ function EditTransactionModal({ transactionId }: any) {
       amount: String(transaction?.amount ?? ""),
       type: transaction?.type ?? "expense",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      updateTransaction({
+        transactionId,
+        updates: {
+          amount: +value.amount,
+          category: value.category,
+          creationDate: value.date,
+          recipient: value.recipientName,
+          type: value.type,
+        },
+      });
     },
   });
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {transactionStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Edit Transaction of "${transaction?.recipient}"`} />
 
       <ModalDescription description="Need to make changes? Edit your transaction details to ensure your financial records stay accurate with Pocketeer!" />
