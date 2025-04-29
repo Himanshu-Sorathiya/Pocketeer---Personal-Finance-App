@@ -191,15 +191,16 @@ function ListProgressInfo({
 }
 
 function ListRecentTransactions({
-  id,
+  budgetId,
   category,
 }: {
-  id: string;
+  budgetId: string;
   category: string;
 }) {
   const latestTransactions: Transaction[] =
-    useStore(budgetTransactionCacheStore).get(id)?.transactions.slice(0, 3) ??
-    [];
+    useStore(budgetTransactionCacheStore)
+      .get(budgetId)
+      ?.transactions.slice(0, 3) ?? [];
 
   return (
     <div className="rounded-md bg-orange-50 p-4 pb-2">

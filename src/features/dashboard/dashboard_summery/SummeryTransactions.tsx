@@ -32,10 +32,19 @@ function RecentTransactions() {
   );
 
   const latestTransactions: Transaction[] = [...transactions]
-    .sort(
-      (a, b) =>
-        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
-    )
+    .sort((a, b) => {
+      const dateA = new Date(a.creationDate).getTime();
+      const dateB = new Date(b.creationDate).getTime();
+
+      if (dateA === dateB) {
+        const timeA = a.creationTime.split(":").join("");
+        const timeB = b.creationTime.split(":").join("");
+
+        return Number(timeB) - Number(timeA);
+      }
+
+      return dateB - dateA;
+    })
     .slice(0, 7);
 
   return (

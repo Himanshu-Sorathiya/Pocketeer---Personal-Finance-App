@@ -3,7 +3,9 @@ import { useStore } from "@tanstack/react-store";
 import { transactionStore } from "../store/transactionStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useCreateTransaction } from "../hooks/useCreateTransaction.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -17,6 +19,8 @@ function CreateTransactionModal() {
     (s) => s.transactions,
   );
 
+  const { transactionStatus, createTransaction } = useCreateTransaction();
+
   const form = useAppForm({
     defaultValues: {
       recipientName: "",
@@ -25,8 +29,14 @@ function CreateTransactionModal() {
       amount: "",
       type: "expense",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      createTransaction({
+        recipient: value.recipientName,
+        category: value.category,
+        amount: +value.amount,
+        type: value.type,
+        creationDate: value.date,
+      });
     },
   });
 
@@ -34,6 +44,8 @@ function CreateTransactionModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {transactionStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Create new Transaction`} />
 
       <ModalDescription description="Start tracking your finances by adding a new transaction. Stay on top of your income and expenses with Pocketeer!" />

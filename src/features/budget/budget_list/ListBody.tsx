@@ -35,7 +35,7 @@ function ListBody({ budget }: { budget: Budget }) {
         theme={theme}
       />
 
-      <ListRecentTransactions id={budget.budgetId} category={category} />
+      <ListRecentTransactions budgetId={budget.budgetId} category={category} />
     </div>
   );
 }

@@ -3,7 +3,9 @@ import { useStore } from "@tanstack/react-store";
 import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useCreateBudget } from "../hooks/useCreateBudget.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -14,6 +16,8 @@ import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
   const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
+
+  const { budgetStatus, createBudget } = useCreateBudget();
 
   const availableCategories = transactionCategories
     .map((c) => {
@@ -45,8 +49,12 @@ function CreateBudgetModal() {
       targetAmount: "",
       theme: availableThemeColors[0].name || "",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      createBudget({
+        category: value.category,
+        targetAmount: +value.targetAmount,
+        theme: value.theme,
+      });
     },
   });
 
@@ -54,6 +62,8 @@ function CreateBudgetModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {budgetStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Create New Budget`} />
 
       <ModalDescription description="Set limits for smarter spending. Create a budget to manage your expenses and stay financially on track with Pocketeer!" />

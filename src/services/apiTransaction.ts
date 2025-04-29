@@ -42,14 +42,12 @@ async function getTransactions({
   return transactions;
 }
 
-async function addTransaction({
-  transaction,
-}: {
+async function addTransaction(
   transaction: Omit<
     Transaction,
-    "transactionId" | "currency" | "user_id" | "creationTime"
-  >;
-}): Promise<Transaction> {
+    "user_id" | "transactionId" | "currency" | "creationTime"
+  >,
+): Promise<Transaction> {
   const { data, error } = await supabase
     .from("transactions")
     .insert([

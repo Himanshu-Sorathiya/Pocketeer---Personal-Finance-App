@@ -3,7 +3,9 @@ import { useStore } from "@tanstack/react-store";
 import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useCreatePot } from "../../pot/hooks/useCreatePot.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
@@ -13,6 +15,8 @@ import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
   const pots: Pot[] = useStore(potStore, (s) => s.pots);
+
+  const { potStatus, createPot } = useCreatePot();
 
   const availableThemeColors = themeColors
     .filter((c) => c.name !== "platinum_ash")
@@ -34,8 +38,12 @@ function CreatePotModal() {
       targetAmount: "",
       theme: availableThemeColors[0].name || "",
     },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    onSubmit: async ({ value }) => {
+      createPot({
+        name: value.name,
+        targetAmount: +value.targetAmount,
+        theme: value.theme,
+      });
     },
   });
 
@@ -43,6 +51,8 @@ function CreatePotModal() {
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {potStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Create New Pot`} />
 
       <ModalDescription description="Ready to give your savings a purpose? Create a pot and start setting targets for your financial goals with Pocketeer!" />

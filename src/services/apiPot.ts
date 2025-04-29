@@ -32,11 +32,12 @@ async function getPots({ queryKey }: { queryKey: QueryKey }): Promise<Pot[]> {
   return pots;
 }
 
-async function addPot({
-  pot,
-}: {
-  pot: Omit<Pot, "potId" | "currency" | "user_id" | "creationTime">;
-}): Promise<Pot> {
+async function addPot(
+  pot: Omit<
+    Pot,
+    "user_id" | "potId" | "currency" | "creationDate" | "creationTime"
+  >,
+): Promise<Pot> {
   const { data, error } = await supabase
     .from("pots")
     .insert([
@@ -46,7 +47,7 @@ async function addPot({
         target_amount: pot.targetAmount,
         currency,
         theme: pot.theme,
-        creation_date: pot.creationDate,
+        creation_date: new Date().toISOString().split("T")[0],
         creation_time: new Date().toTimeString().slice(0, 8),
       },
     ])

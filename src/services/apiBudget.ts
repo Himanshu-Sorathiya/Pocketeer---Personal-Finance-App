@@ -38,11 +38,12 @@ async function getBudgets({
   return budgets;
 }
 
-async function addBudget({
-  budget,
-}: {
-  budget: Omit<Budget, "budgetId" | "currency" | "user_id" | "creationTime">;
-}): Promise<Budget> {
+async function addBudget(
+  budget: Omit<
+    Budget,
+    "user_id" | "budgetId" | "currency" | "creationDate" | "creationTime"
+  >,
+): Promise<Budget> {
   const { data, error } = await supabase
     .from("budgets")
     .insert([
@@ -52,7 +53,7 @@ async function addBudget({
         target_amount: budget.targetAmount,
         currency,
         theme: budget.theme,
-        creation_date: budget.creationDate,
+        creation_date: new Date().toISOString().split("T")[0],
         creation_time: new Date().toTimeString().slice(0, 8),
       },
     ])
