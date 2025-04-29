@@ -82,6 +82,7 @@ async function updatePot(
       ...("name" in updates && { name: updates.name }),
       ...("targetAmount" in updates && { target_amount: updates.targetAmount }),
       ...("theme" in updates && { theme: updates.theme }),
+      ...{ creation_time: "00:00:00" },
     })
     .eq("pot_id", potId)
     .select()
@@ -105,4 +106,14 @@ async function updatePot(
   };
 }
 
-export { createPot, getPots, updatePot };
+async function deletePot(potId: string) {
+  const { error } = await supabase.from("pots").delete().eq("pot_id", potId);
+
+  if (error) {
+    throw new Error(
+      "Oops! Something went wrong while deleting your pot. Don’t stress—Pocketeer is here to fix it in no time!",
+    );
+  }
+}
+
+export { createPot, deletePot, getPots, updatePot };

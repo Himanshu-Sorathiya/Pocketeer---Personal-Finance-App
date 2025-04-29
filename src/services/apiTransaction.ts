@@ -101,6 +101,7 @@ async function updateTransaction(
       ...("amount" in updates && { amount: updates.amount }),
       ...("type" in updates && { type: updates.type }),
       ...("creationDate" in updates && { creation_date: updates.creationDate }),
+      ...{ creation_time: "00:00:00" },
     })
     .eq("transaction_id", transactionId)
     .select()
@@ -125,4 +126,22 @@ async function updateTransaction(
   };
 }
 
-export { createTransaction, getTransactions, updateTransaction };
+async function deleteTransaction(transactionId: string) {
+  const { error } = await supabase
+    .from("transactions")
+    .delete()
+    .eq("transaction_id", transactionId);
+
+  if (error) {
+    throw new Error(
+      "Uh-oh! We ran into an issue while deleting your transaction. But don’t worry—Pocketeer will get things back on track soon!",
+    );
+  }
+}
+
+export {
+  createTransaction,
+  deleteTransaction,
+  getTransactions,
+  updateTransaction,
+};

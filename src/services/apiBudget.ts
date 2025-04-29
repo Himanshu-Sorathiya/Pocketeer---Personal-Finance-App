@@ -88,6 +88,7 @@ async function updateBudget(
       ...("category" in updates && { category: updates.category }),
       ...("targetAmount" in updates && { target_amount: updates.targetAmount }),
       ...("theme" in updates && { theme: updates.theme }),
+      ...{ creation_time: "00:00:00" },
     })
     .eq("budget_id", budgetId)
     .select()
@@ -111,4 +112,17 @@ async function updateBudget(
   };
 }
 
-export { createBudget, getBudgets, updateBudget };
+async function deleteBudget(budgetId: string) {
+  const { error } = await supabase
+    .from("budgets")
+    .delete()
+    .eq("budget_id", budgetId);
+
+  if (error) {
+    throw new Error(
+      "Oops! We couldn’t delete your budget right now. But don’t worry—Pocketeer will sort it out soon!",
+    );
+  }
+}
+
+export { createBudget, deleteBudget, getBudgets, updateBudget };
