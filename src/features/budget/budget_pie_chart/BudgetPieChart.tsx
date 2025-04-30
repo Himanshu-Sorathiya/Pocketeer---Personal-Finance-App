@@ -2,15 +2,17 @@ import { useStore } from "@tanstack/react-store";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../store/budgetStore.ts";
+
+import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetPieChart() {
+  const { budgets } = useReadBudgets();
+
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   const budgetsWithSpent: (Budget & { spentAmount: number })[] = budgets.map(
     (budget) => ({

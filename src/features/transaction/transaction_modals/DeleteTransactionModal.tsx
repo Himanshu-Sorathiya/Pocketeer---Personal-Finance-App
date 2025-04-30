@@ -1,8 +1,5 @@
-import { useStore } from "@tanstack/react-store";
-
-import { transactionStore } from "../store/transactionStore.ts";
-
 import { useDeleteTransaction } from "../hooks/useDeleteTransaction.ts";
+import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
@@ -13,11 +10,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Transaction } from "../types/transaction.types.ts";
 
 function DeleteTransactionModal({ transactionId }: any) {
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
-
+  const { transactions } = useReadTransactions();
   const { transactionStatus, deleteTransaction } = useDeleteTransaction();
 
   const transaction: Transaction | undefined = transactions.find(

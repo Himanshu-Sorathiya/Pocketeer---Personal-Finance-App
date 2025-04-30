@@ -1,9 +1,9 @@
 import { useStore } from "@tanstack/react-store";
 
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useReadPots } from "../hooks/useReadPots.ts";
 import { useUpdatePot } from "../hooks/useUpdatePot.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
@@ -13,8 +13,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Pot } from "../types/pot.types.ts";
 
 function EditPotModal({ potId }: { potId: string }) {
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
-
+  const { pots } = useReadPots();
   const { potStatus, updatePot } = useUpdatePot();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);

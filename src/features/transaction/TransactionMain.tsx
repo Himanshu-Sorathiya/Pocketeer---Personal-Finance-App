@@ -15,6 +15,8 @@ import {
 
 import { transactionStore } from "./store/transactionStore.ts";
 
+import { useReadTransactions } from "./hooks/useReadTransactions.ts";
+
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
 import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
@@ -95,10 +97,7 @@ function TransactionMain() {
     }),
   ];
 
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
+  const { transactions } = useReadTransactions();
 
   const columnFilters: ColumnFiltersState = useStore(
     transactionStore,

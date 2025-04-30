@@ -3,6 +3,8 @@ import { useStore } from "@tanstack/react-store";
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { potStore } from "../store/potStore.ts";
 
+import { useReadPots } from "../hooks/useReadPots.ts";
+
 import BoardBody from "./BoardBody.tsx";
 import { BoardBadge } from "./BoardElements.tsx";
 import BoardHeader from "./BoardHeader.tsx";
@@ -12,8 +14,9 @@ import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 import { filterPots, sortPots } from "../pot_helpers/potHelpers.ts";
 
 function PotBoard() {
+  const { pots } = useReadPots();
+
   const potTransactionCache = useStore(potTransactionCacheStore);
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
   const filters: FilterState[] = useStore(potStore, (s) => s.filters);
   const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);

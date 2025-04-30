@@ -1,21 +1,15 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potStore } from "../store/potStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useCreatePot } from "../../pot/hooks/useCreatePot.ts";
+import { useReadPots } from "../hooks/useReadPots.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
-import type { Pot } from "../types/pot.types.ts";
-
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
-
+  const { pots } = useReadPots();
   const { potStatus, createPot } = useCreatePot();
 
   const availableThemeColors = themeColors

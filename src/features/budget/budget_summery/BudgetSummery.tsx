@@ -1,15 +1,16 @@
 import { useStore } from "@tanstack/react-store";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore, handleBudgetChange } from "../store/budgetStore.ts";
+import { handleBudgetChange } from "../store/budgetStore.ts";
 
-import { Budget } from "../types/budget.types.ts";
+import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetSummery({ selectedBudgetId }: { selectedBudgetId: string }) {
+  const { budgets } = useReadBudgets();
+
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   return (
     <div className="flex flex-col gap-3">

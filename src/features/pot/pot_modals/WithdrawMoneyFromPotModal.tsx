@@ -2,10 +2,10 @@ import { useStore } from "@tanstack/react-store";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { potStore } from "../store/potStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useCreateTransaction } from "../../transaction/hooks/useCreateTransaction.ts";
+import { useReadPots } from "../hooks/useReadPots.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
@@ -16,8 +16,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function WithdrawMoneyFromPotModal({ potId }: any) {
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
-
+  const { pots } = useReadPots();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);

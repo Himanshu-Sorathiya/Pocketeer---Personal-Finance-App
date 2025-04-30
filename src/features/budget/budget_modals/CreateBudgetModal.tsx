@@ -1,22 +1,16 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "../store/budgetStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useCreateBudget } from "../hooks/useCreateBudget.ts";
+import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
-import type { Budget } from "../types/budget.types.ts";
-
 import { themeColors } from "../../../constants/appOptions.ts";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
-
+  const { budgets } = useReadBudgets();
   const { budgetStatus, createBudget } = useCreateBudget();
 
   const availableCategories = transactionCategories

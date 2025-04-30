@@ -1,8 +1,6 @@
 import { type ReactNode } from "react";
 
-import { setBudgets } from "../features/budget/store/budgetStore.ts";
-import { setPots } from "../features/pot/store/potStore.ts";
-import { setTransactions } from "../features/transaction/store/transactionStore.ts";
+import { handleBudgetChange } from "../features/budget/store/budgetStore.ts";
 import {
   setBudgetCache,
   setPotCache,
@@ -47,10 +45,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
   if (isError) throw new Error(error?.message);
 
   if (transactions.length > 0) {
-    setTransactions(transactions);
-    setBudgets(budgets);
-    setPots(pots);
-
     transactions.forEach((transaction) => {
       setTransactionCache(transaction.transactionId, transaction.category);
     });
@@ -62,6 +56,8 @@ function AppLayout({ children }: { children?: ReactNode }) {
     pots.forEach((p) =>
       setPotCache(p.potId, p.name, p.creationDate, transactions),
     );
+
+    handleBudgetChange(budgets[0].budgetId);
   }
 
   return (

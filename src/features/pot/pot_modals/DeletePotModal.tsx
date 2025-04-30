@@ -1,8 +1,5 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potStore } from "../store/potStore.ts";
-
 import { useDeletePot } from "../hooks/useDeletePot.ts";
+import { useReadPots } from "../hooks/useReadPots.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
@@ -13,8 +10,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Pot } from "../types/pot.types.ts";
 
 function DeletePotModal({ potId }: { potId: string }) {
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
-
+  const { pots } = useReadPots();
   const { potStatus, deletePot } = useDeletePot();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);

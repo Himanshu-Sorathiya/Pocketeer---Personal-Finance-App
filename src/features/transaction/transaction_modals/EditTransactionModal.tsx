@@ -1,9 +1,7 @@
-import { useStore } from "@tanstack/react-store";
 import { format } from "date-fns";
 
-import { transactionStore } from "../store/transactionStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 import { useUpdateTransaction } from "../hooks/useUpdateTransaction.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
@@ -13,11 +11,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { Transaction } from "../types/transaction.types.ts";
 
 function EditTransactionModal({ transactionId }: any) {
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
-
+  const { transactions } = useReadTransactions();
   const { transactionStatus, updateTransaction } = useUpdateTransaction();
 
   const transaction: Transaction | undefined = transactions.find(

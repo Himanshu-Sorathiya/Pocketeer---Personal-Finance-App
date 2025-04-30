@@ -2,6 +2,8 @@ import { useStore } from "@tanstack/react-store";
 
 import { budgetStore } from "./store/budgetStore.ts";
 
+import { useReadBudgets } from "./hooks/useReadBudgets.ts";
+
 import BudgetList from "./budget_list/BudgetList.tsx";
 import BudgetPieChart from "./budget_pie_chart/BudgetPieChart.tsx";
 import BudgetPlaceholder from "./budget_placeholder/BudgetPlaceholder.tsx";
@@ -10,8 +12,14 @@ import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 import type { Budget } from "./types/budget.types.ts";
 
 function BudgetMain() {
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
-  const selectedBudgetId = useStore(budgetStore, (s) => s.selectedBudgetId);
+  const { budgets } = useReadBudgets();
+
+  const selectedBudgetId =
+    useStore(budgetStore, (s) => s.selectedBudgetId) || budgets![0].budgetId;
+
+  const budget: Budget =
+    budgets.find((budget) => budget.budgetId === selectedBudgetId) ||
+    budgets[0];
 
   const shouldShowPlaceholder = budgets.length === 0;
 
@@ -25,7 +33,7 @@ function BudgetMain() {
         <BudgetSummery selectedBudgetId={selectedBudgetId} />
       </div>
 
-      <BudgetList selectedBudgetId={selectedBudgetId} />
+      <BudgetList budget={budget} selectedBudgetId={selectedBudgetId} />
     </div>
   );
 }

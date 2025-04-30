@@ -1,6 +1,6 @@
 function FormSpinner() {
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center rounded-lg backdrop-blur-xs">
+    <div className="absolute inset-0 z-50 flex items-center justify-center rounded-lg bg-orange-50/30 backdrop-blur-xs">
       <svg
         viewBox="0 0 24 24"
         fill="none"

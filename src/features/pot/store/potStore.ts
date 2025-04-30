@@ -1,11 +1,9 @@
 import { Store } from "@tanstack/react-store";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
-import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
+import type { FilterState, SortingState } from "../types/pot.types.ts";
 
 type PotState = {
-  pots: Pot[];
-
   searchedPot: string;
   selectedStatus: SelectedOptions;
   selectedSort: SelectedOptions;
@@ -17,8 +15,6 @@ type PotState = {
 };
 
 const potStore = new Store<PotState>({
-  pots: [],
-
   searchedPot: "",
   selectedStatus: { type: "status", value: "all" },
   selectedSort: { type: "progress", value: "highest" },
@@ -31,14 +27,6 @@ const potStore = new Store<PotState>({
 
   maxSearchLength: 15,
 });
-
-function setPots(pots: Pot[]) {
-  potStore.setState((prev) => ({
-    ...prev,
-
-    pots,
-  }));
-}
 
 function updateFilter(search: string, status: string) {
   potStore.setState((prev) => ({
@@ -78,10 +66,4 @@ function handleSortChange(newType: string, newValue: string) {
   updateSorter(newType, newValue);
 }
 
-export {
-  handleSearchChange,
-  handleSortChange,
-  handleStatusChange,
-  potStore,
-  setPots,
-};
+export { handleSearchChange, handleSortChange, handleStatusChange, potStore };

@@ -1,8 +1,5 @@
-import { useStore } from "@tanstack/react-store";
-
-import { budgetStore } from "../store/budgetStore.ts";
-
 import { useDeleteBudget } from "../hooks/useDeleteBudget.ts";
+import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import CancelButton from "../../../components/buttons/CancelButton.tsx";
 import DeleteButton from "../../../components/buttons/DeleteButton.tsx";
@@ -13,8 +10,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Budget } from "../types/budget.types.ts";
 
 function DeleteBudgetModal({ budgetId }: { budgetId: keyof Budget }) {
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
-
+  const { budgets } = useReadBudgets();
   const { budgetStatus, deleteBudget } = useDeleteBudget();
 
   const budget: Budget | undefined = budgets.find(

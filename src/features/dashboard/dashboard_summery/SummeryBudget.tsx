@@ -3,7 +3,8 @@ import { useStore } from "@tanstack/react-store";
 import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../../budget/store/budgetStore.ts";
+
+import { useReadBudgets } from "../../budget/hooks/useReadBudgets.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import BudgetPieChart from "../../budget/budget_pie_chart/BudgetPieChart.tsx";
@@ -13,8 +14,9 @@ import type { Budget } from "../../budget/types/budget.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryBudget() {
+  const { budgets } = useReadBudgets();
+
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   const totalSpent = budgets.reduce((acc, budget) => {
     const spent = budgetTransactionCache.get(budget.budgetId)?.amount ?? 0;
@@ -42,8 +44,9 @@ function SummeryBudget() {
 }
 
 function BudgetSummery() {
+  const { budgets } = useReadBudgets();
+
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
 
   const budgetsFormatted: Budget[] = [...budgets]
     .sort((a, b) => {

@@ -3,7 +3,8 @@ import { useStore } from "@tanstack/react-store";
 import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { potStore } from "../../pot/store/potStore.ts";
+
+import { useReadPots } from "../../pot/hooks/useReadPots.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 
@@ -12,8 +13,9 @@ import type { Pot } from "../../pot/types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function SummeryPot() {
+  const { pots } = useReadPots();
+
   const potTransactionCache = useStore(potTransactionCacheStore);
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
   const totalSaved = pots.reduce((acc, pot) => {
     const saved = potTransactionCache.get(pot.potId)?.amount ?? 0;
@@ -62,8 +64,9 @@ function PotBalance({
 }
 
 function PotSummery() {
+  const { pots } = useReadPots();
+
   const potTransactionCache = useStore(potTransactionCacheStore);
-  const pots: Pot[] = useStore(potStore, (s) => s.pots);
 
   const potsFormatted: Pot[] = pots
     .sort((a, b) => {

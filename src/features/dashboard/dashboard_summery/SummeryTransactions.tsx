@@ -1,8 +1,6 @@
-import { useStore } from "@tanstack/react-store";
-
 import { Route as TransactionRoute } from "../../../routes/app/transaction.tsx";
 
-import { transactionStore } from "../../transaction/store/transactionStore.ts";
+import { useReadTransactions } from "../../transaction/hooks/useReadTransactions.ts";
 
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
@@ -26,10 +24,7 @@ function SummeryTransaction() {
 }
 
 function RecentTransactions() {
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
+  const { transactions } = useReadTransactions();
 
   const latestTransactions: Transaction[] = [...transactions]
     .sort((a, b) => {

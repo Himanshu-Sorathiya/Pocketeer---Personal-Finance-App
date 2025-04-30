@@ -1,24 +1,15 @@
-import { useStore } from "@tanstack/react-store";
-
-import { transactionStore } from "../store/transactionStore.ts";
-
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useCreateTransaction } from "../hooks/useCreateTransaction.ts";
+import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
-import { Transaction } from "../types/transaction.types.ts";
-
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
-  const transactions: Transaction[] = useStore(
-    transactionStore,
-    (s) => s.transactions,
-  );
-
+  const { transactions } = useReadTransactions();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
   const form = useAppForm({

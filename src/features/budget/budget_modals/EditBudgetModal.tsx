@@ -1,9 +1,9 @@
 import { useStore } from "@tanstack/react-store";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { budgetStore } from "../store/budgetStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 import { useUpdateBudget } from "../hooks/useUpdateBudget.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
@@ -13,8 +13,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Budget } from "../types/budget.types.ts";
 
 function EditBudgetModal({ budgetId }: any) {
-  const budgets: Budget[] = useStore(budgetStore, (s) => s.budgets);
-
+  const { budgets } = useReadBudgets();
   const { budgetStatus, updateBudget } = useUpdateBudget();
 
   const budget: Budget | undefined = budgets.find(
