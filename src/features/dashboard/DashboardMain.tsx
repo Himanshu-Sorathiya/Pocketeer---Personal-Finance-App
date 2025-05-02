@@ -1,6 +1,7 @@
 import { useReadTransactions } from "../transaction/hooks/useReadTransactions.ts";
 
 import DashboardOverview from "./dashboard_overview/DashboardOverview.tsx";
+import DashboardPlaceholder from "./dashboard_placeholder/DashboardPlaceholder.tsx";
 import DashboardSummery from "./dashboard_summery/DashboardSummery.tsx";
 
 function DashboardMain() {
@@ -27,7 +28,9 @@ function DashboardMain() {
         currency={currency}
       />
 
-      <DashboardSummery shouldShowPlaceholder={shouldShowPlaceholder} />
+      {shouldShowPlaceholder && <DashboardPlaceholder />}
+
+      {!shouldShowPlaceholder && <DashboardSummery />}
     </div>
   );
 }

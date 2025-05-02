@@ -91,7 +91,10 @@ function TransactionMain() {
     columnHelper.display({
       id: "actions",
       cell: (info) => (
-        <ActionsCell transactionId={info.row.original.transactionId} />
+        <ActionsCell
+          transactionId={info.row.original.transactionId}
+          category={info.row.original.category}
+        />
       ),
       header: () => null,
     }),
@@ -136,9 +139,9 @@ function TransactionMain() {
     <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-visible rounded-md p-4 whitespace-nowrap">
       <TransactionFilter />
 
-      {shouldShowPlaceholder ? (
-        <TransactionPlaceholder />
-      ) : (
+      {shouldShowPlaceholder && <TransactionPlaceholder />}
+
+      {!shouldShowPlaceholder && (
         <TransactionTable
           headerGroups={table.getHeaderGroups()}
           rowModels={table.getRowModel()}

@@ -71,7 +71,13 @@ function AmountCell({
   );
 }
 
-function ActionsCell({ transactionId }: { transactionId: string }) {
+function ActionsCell({
+  transactionId,
+  category,
+}: {
+  transactionId: string;
+  category: string;
+}) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 
   function handleActionClick(action: string) {
@@ -98,6 +104,7 @@ function ActionsCell({ transactionId }: { transactionId: string }) {
           action="transaction"
           setOpenDropdown={setOpenDropdown}
           handleActionClick={handleActionClick}
+          disabled={category === "savings"}
         />
       )}
     </div>

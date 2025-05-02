@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
 
-import { handleBudgetChange } from "../features/budget/store/budgetStore.ts";
 import {
   setBudgetCache,
   setPotCache,
@@ -49,15 +48,17 @@ function AppLayout({ children }: { children?: ReactNode }) {
       setTransactionCache(transaction.transactionId, transaction.category);
     });
 
-    budgets.forEach((b) =>
-      setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
-    );
+    if (budgets.length > 0) {
+      budgets.forEach((b) =>
+        setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
+      );
+    }
 
-    pots.forEach((p) =>
-      setPotCache(p.potId, p.name, p.creationDate, transactions),
-    );
-
-    handleBudgetChange(budgets[0].budgetId);
+    if (pots.length > 0) {
+      pots.forEach((p) =>
+        setPotCache(p.potId, p.name, p.creationDate, transactions),
+      );
+    }
   }
 
   return (

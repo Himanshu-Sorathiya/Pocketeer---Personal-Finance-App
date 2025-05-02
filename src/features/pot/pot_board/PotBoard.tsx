@@ -13,7 +13,13 @@ import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 
 import { filterPots, sortPots } from "../pot_helpers/potHelpers.ts";
 
-function PotBoard() {
+function PotBoard({
+  shouldShowPlaceholder,
+  setShouldShowPlaceholder,
+}: {
+  shouldShowPlaceholder: boolean;
+  setShouldShowPlaceholder: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { pots } = useReadPots();
 
   const potTransactionCache = useStore(potTransactionCacheStore);
@@ -31,6 +37,10 @@ function PotBoard() {
     sorting,
     potTransactionCache,
   );
+
+  setShouldShowPlaceholder(sortedPots.length === 0);
+
+  if (shouldShowPlaceholder) return null;
 
   return (
     <div className="grid min-w-full grid-cols-3 gap-4">

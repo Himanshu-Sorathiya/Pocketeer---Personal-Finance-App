@@ -7,6 +7,8 @@ import {
 import { createBudget as createBudgetApi } from "../../../services/apiBudget.ts";
 
 import { closeModal } from "../../../store/appModalStore.ts";
+import { handleBudgetChange } from "../store/budgetStore.ts";
+
 import type { Budget } from "../types/budget.types.ts";
 
 function useCreateBudget(): {
@@ -32,9 +34,11 @@ function useCreateBudget(): {
     mutate: createBudget,
   } = useMutation({
     mutationFn: createBudgetApi,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
+
+      handleBudgetChange(data.budgetId || "");
     },
     onError(error) {
       throw new Error(error?.message);

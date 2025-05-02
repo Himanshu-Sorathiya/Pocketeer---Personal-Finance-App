@@ -1,39 +1,12 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potTransactionCacheStore } from "../../store/appCacheStore.ts";
-import { potStore } from "./store/potStore.ts";
-
-import { useReadPots } from "./hooks/useReadPots.ts";
+import { useState } from "react";
 
 import PotBoard from "./pot_board/PotBoard.tsx";
 import PotFilter from "./pot_filter/PotFilter.tsx";
 import PotPlaceholder from "./pot_placeholder/PotPlaceholder.tsx";
 import PotSort from "./pot_sort/PotSort.tsx";
 
-import type { FilterState, Pot, SortingState } from "./types/pot.types.ts";
-
-import { filterPots, sortPots } from "./pot_helpers/potHelpers.ts";
-
 function PotMain() {
-  const { pots } = useReadPots();
-
-  const potTransactionCache = useStore(potTransactionCacheStore);
-
-  const filters: FilterState[] = useStore(potStore, (s) => s.filters);
-  const sorting: SortingState[] = useStore(potStore, (s) => s.sorting);
-
-  const filteredPots: Pot[] = filterPots(
-    [...pots],
-    filters,
-    potTransactionCache,
-  );
-  const sortedPots: Pot[] = sortPots(
-    filteredPots,
-    sorting,
-    potTransactionCache,
-  );
-
-  const shouldShowPlaceholder = sortedPots.length === 0;
+  const [shouldShowPlaceholder, setShouldShowPlaceholder] = useState(false);
 
   return (
     <div className="flex flex-col gap-6 whitespace-nowrap">
@@ -43,7 +16,12 @@ function PotMain() {
         <PotSort />
       </div>
 
-      {shouldShowPlaceholder ? <PotPlaceholder /> : <PotBoard />}
+      {shouldShowPlaceholder && <PotPlaceholder />}
+
+      <PotBoard
+        shouldShowPlaceholder={shouldShowPlaceholder}
+        setShouldShowPlaceholder={setShouldShowPlaceholder}
+      />
     </div>
   );
 }

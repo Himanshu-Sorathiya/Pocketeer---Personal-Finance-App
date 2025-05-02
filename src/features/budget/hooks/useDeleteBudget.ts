@@ -7,6 +7,7 @@ import {
 import { deleteBudget as deleteBudgetApi } from "../../../services/apiBudget.ts";
 
 import { closeModal } from "../../../store/appModalStore.ts";
+import { handleBudgetChange } from "../store/budgetStore.ts";
 
 function useDeleteBudget(): {
   budgetStatus: "error" | "idle" | "pending" | "success";
@@ -24,6 +25,8 @@ function useDeleteBudget(): {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
+
+      handleBudgetChange("");
     },
     onError(error) {
       throw new Error(error?.message);
