@@ -17,29 +17,6 @@ function CategoryField({
 
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const availableCategories = transactionCategories
-    .filter((c) => c !== "savings")
-    .map((c) => {
-      const isCurrent = c === currentCategory;
-      const used = !isCurrent && items?.some((b: any) => b.category === c);
-
-      return { category: c, used, isCurrent };
-    })
-    .sort((a, b) => {
-      if (a.isCurrent) return -1;
-      if (b.isCurrent) return 1;
-
-      return Number(a.used) - Number(b.used);
-    });
-
-  if (field.state.value === "" && availableCategories.length > 0) {
-    field.handleChange(
-      availableCategories.find((c) => !c.used || c.isCurrent)?.category ?? "",
-    );
-
-    return;
-  }
-
   return (
     <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Category</label>

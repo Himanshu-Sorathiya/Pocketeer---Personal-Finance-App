@@ -1,6 +1,18 @@
-function ModalHeader({ title }: { title: string }) {
+function ModalHeader({
+  title,
+  children,
+}: {
+  title: string;
+  children?: React.ReactNode;
+}) {
   return (
-    <h2 className="text-3xl font-semibold text-balance wrap-normal">{title}</h2>
+    <div className="flex items-center gap-1">
+      <h2 className="text-3xl font-semibold text-balance wrap-normal">
+        {title}
+      </h2>
+
+      {children}
+    </div>
   );
 }
 

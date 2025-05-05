@@ -9,6 +9,7 @@ import { useUpdatePot } from "../hooks/useUpdatePot.ts";
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
 import type { Pot } from "../types/pot.types.ts";
 
@@ -45,7 +46,13 @@ function EditPotModal({ potId }: { potId: string }) {
     <div className="flex min-w-lg flex-col gap-3">
       {potStatus === "pending" && <FormSpinner />}
 
-      <ModalHeader title={`Edit "${pot?.name}" Pot`} />
+      <ModalHeader title={`Edit "${pot?.name}" Pot`}>
+        <TooltipInfo
+          id="info-circle"
+          text1="Changing the name of this pot will also update the recipient name for all transactions related to this pot."
+          className="text-primary size-5"
+        />
+      </ModalHeader>
 
       <ModalDescription description="Need to adjust your savings plan? Edit your pot to reflect your updated financial goals and keep moving forward with Pocketeer!" />
 
@@ -122,7 +129,7 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= savedAmount &&
+              parseFloat(value) < savedAmount &&
                 errors.push("Amount must be greater than already saved amount");
 
               parseFloat(value) >= 99999999.99 &&
@@ -144,7 +151,7 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= savedAmount &&
+              parseFloat(value) < savedAmount &&
                 errors.push("Amount must be greater than already saved amount");
 
               parseFloat(value) >= 99999999.99 &&

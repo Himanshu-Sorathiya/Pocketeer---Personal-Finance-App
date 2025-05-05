@@ -67,6 +67,11 @@ function sortPots(
       const savedA = potTransactionCache.get(a.potId)?.amount ?? 0;
       const savedB = potTransactionCache.get(b.potId)?.amount ?? 0;
 
+      const isCompletedA = savedA >= a.targetAmount;
+      const isCompletedB = savedB >= b.targetAmount;
+
+      if (isCompletedA !== isCompletedB) return isCompletedA ? 1 : -1;
+
       return isDescending
         ? savedB / b.targetAmount - savedA / a.targetAmount
         : savedA / a.targetAmount - savedB / b.targetAmount;

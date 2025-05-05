@@ -10,7 +10,7 @@ export default defineConfig({
     TanStackRouterVite({
       target: "react",
       routesDirectory: "./src/routes",
-      generatedRouteTree: "./src/routes/routeTree.gen.ts",
+      generatedRouteTree: "./src/services/routeTree.gen.ts",
       autoCodeSplitting: true,
       semicolons: true,
       quoteStyle: "double",

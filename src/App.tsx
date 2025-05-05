@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 
-import { routeTree } from "./routes/routeTree.gen.ts";
-
 import ErrorPage from "./pages/common/ErrorPage.tsx";
 import NotFoundPage from "./pages/common/NotFoundPage.tsx";
+
+import { routeTree } from "./services/routeTree.gen.ts";
 
 import GlobalSpinner from "./components/loaders/GlobalSpinner.tsx";
 

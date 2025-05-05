@@ -29,14 +29,8 @@ function Transaction() {
 
   return (
     <>
-      <Header title="Transaction">
-        <button
-          type="button"
-          onClick={handleOpenModal}
-          className="cursor-pointer rounded bg-gray-800 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-gray-900"
-        >
-          Add Transaction
-        </button>
+      <Header title="Transaction" handleOpenModal={handleOpenModal}>
+        Add Transaction
       </Header>
 
       {id &&

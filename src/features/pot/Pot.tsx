@@ -31,14 +31,8 @@ function Pot() {
 
   return (
     <>
-      <Header title="Pot">
-        <button
-          type="button"
-          onClick={handleOpenModal}
-          className="cursor-pointer rounded bg-gray-800 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-gray-900"
-        >
-          Plant a Pot
-        </button>
+      <Header title="Pot" handleOpenModal={handleOpenModal}>
+        Plant a Pot
       </Header>
 
       {id &&

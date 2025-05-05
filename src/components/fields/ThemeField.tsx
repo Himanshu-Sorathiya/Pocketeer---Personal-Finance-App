@@ -17,33 +17,6 @@ function ThemeField({
 
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const availableThemeColors = themeColors
-    .filter((c) => c.name !== "platinum_ash")
-    .map((c) => {
-      const isCurrent = c.name === currentTheme;
-      const used = !isCurrent && items.some((i: any) => i.theme === c.name);
-      return {
-        name: c.name,
-        value: c.hex,
-        used,
-        isCurrent,
-      };
-    })
-    .sort((a, b) => {
-      if (a.isCurrent) return -1;
-      if (b.isCurrent) return 1;
-
-      return Number(a.used) - Number(b.used);
-    });
-
-  if (field.state.value === "" && availableThemeColors.length > 0) {
-    field.handleChange(
-      availableThemeColors.find((c) => !c.used || c.isCurrent)?.name ?? "",
-    );
-
-    return;
-  }
-
   return (
     <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-800">Theme</label>
@@ -63,8 +36,8 @@ function ThemeField({
             className="size-5 shrink-0 rounded-full"
             style={{
               backgroundColor:
-                availableThemeColors.find((c) => c.name === field.state.value)
-                  ?.value || "transparent",
+                themeColors.find((c) => c.name === field.state.value)?.hex ||
+                "transparent",
             }}
           ></div>
 

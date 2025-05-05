@@ -10,20 +10,20 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./__root.tsx";
-import { Route as AppAccountImport } from "./app/account.tsx";
-import { Route as AppBudgetImport } from "./app/budget.tsx";
-import { Route as AppDashboardImport } from "./app/dashboard.tsx";
-import { Route as AppIndexImport } from "./app/index.tsx";
-import { Route as AppNotificationImport } from "./app/notification.tsx";
-import { Route as AppPotImport } from "./app/pot.tsx";
-import { Route as AppRouteImport } from "./app/route.tsx";
-import { Route as AppTransactionImport } from "./app/transaction.tsx";
-import { Route as AuthIndexImport } from "./auth/index.tsx";
-import { Route as AuthLoginImport } from "./auth/login.tsx";
-import { Route as AuthRouteImport } from "./auth/route.tsx";
-import { Route as AuthSignupImport } from "./auth/signup.tsx";
-import { Route as IndexImport } from "./index.tsx";
+import { Route as rootRoute } from "./../routes/__root.tsx";
+import { Route as AppAccountImport } from "./../routes/app/account.tsx";
+import { Route as AppBudgetImport } from "./../routes/app/budget.tsx";
+import { Route as AppDashboardImport } from "./../routes/app/dashboard.tsx";
+import { Route as AppIndexImport } from "./../routes/app/index.tsx";
+import { Route as AppNotificationImport } from "./../routes/app/notification.tsx";
+import { Route as AppPotImport } from "./../routes/app/pot.tsx";
+import { Route as AppRouteImport } from "./../routes/app/route.tsx";
+import { Route as AppTransactionImport } from "./../routes/app/transaction.tsx";
+import { Route as AuthIndexImport } from "./../routes/auth/index.tsx";
+import { Route as AuthLoginImport } from "./../routes/auth/login.tsx";
+import { Route as AuthRouteImport } from "./../routes/auth/route.tsx";
+import { Route as AuthSignupImport } from "./../routes/auth/signup.tsx";
+import { Route as IndexImport } from "./../routes/index.tsx";
 
 // Create/Update Routes
 

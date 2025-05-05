@@ -29,14 +29,8 @@ function Budget() {
 
   return (
     <>
-      <Header title="Budget">
-        <button
-          type="button"
-          onClick={handleOpenModal}
-          className="cursor-pointer rounded bg-gray-800 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-gray-900"
-        >
-          Craft a Budget
-        </button>
+      <Header title="Budget" handleOpenModal={handleOpenModal}>
+        Craft a Budget
       </Header>
 
       {id && ["create_budget", "edit_budget", "delete_budget"].includes(id) && (
