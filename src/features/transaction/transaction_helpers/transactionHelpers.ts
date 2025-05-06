@@ -50,20 +50,8 @@ function filterDate(
 const filterFuzzy: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
   addMeta({ itemRank });
+
   return itemRank?.passed;
-};
-
-const sortFuzzy: SortingFn<any> = (rowA, rowB, columnId) => {
-  const metaA = rowA.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
-  const metaB = rowB.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
-
-  let dir = 0;
-
-  if (metaA?.itemRank && metaB?.itemRank) {
-    dir = compareItems(metaA.itemRank, metaB.itemRank);
-  }
-
-  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
 function filterAmount(
@@ -108,6 +96,19 @@ function sortAmount(
   return amountA - amountB;
 }
 
+const sortFuzzy: SortingFn<any> = (rowA, rowB, columnId) => {
+  const metaA = rowA.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+  const metaB = rowB.columnFiltersMeta[columnId] as { itemRank?: RankingInfo };
+
+  let dir = 0;
+
+  if (metaA?.itemRank && metaB?.itemRank) {
+    dir = compareItems(metaA.itemRank, metaB.itemRank);
+  }
+
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+};
+
 const setColumnFilters: OnChangeFn<ColumnFiltersState> = (updaterOrValue) => {
   transactionStore.setState((prev) => ({
     ...prev,
@@ -148,5 +149,5 @@ export {
   setSorting,
   sortAmount,
   sortDate,
-  sortFuzzy
+  sortFuzzy,
 };

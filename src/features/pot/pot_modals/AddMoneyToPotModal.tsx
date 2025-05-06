@@ -24,10 +24,12 @@ function AddMoneyToPotModal({ potId }: any) {
   const savedAmount =
     useStore(potTransactionCacheStore).get(pot!.potId)?.amount ?? 0;
 
+  const defaultValues = {
+    amount: "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      amount: "",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
       createTransaction({
         recipient: pot!.name,

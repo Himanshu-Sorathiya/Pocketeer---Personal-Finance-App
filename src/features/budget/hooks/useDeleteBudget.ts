@@ -6,6 +6,7 @@ import {
 
 import { deleteBudget as deleteBudgetApi } from "../../../services/apiBudget.ts";
 
+import { deleteBudgetCache } from "../../../store/appCacheStore.ts";
 import { closeModal } from "../../../store/appModalStore.ts";
 import { handleBudgetChange } from "../store/budgetStore.ts";
 
@@ -22,9 +23,11 @@ function useDeleteBudget(): {
     mutate: deleteBudget,
   } = useMutation({
     mutationFn: deleteBudgetApi,
-    onSuccess: () => {
+    onSuccess: (_, budgetId) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
+
+      deleteBudgetCache(budgetId);
 
       handleBudgetChange("");
     },

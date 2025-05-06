@@ -8,7 +8,10 @@ import { useStore } from "@tanstack/react-store";
 import { deletePot as deletePotApi } from "../../../services/apiPot.ts";
 import { deleteTransactions as deleteTransactionsApi } from "../../../services/apiTransaction.ts";
 
-import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import {
+  deletePotCache,
+  potTransactionCacheStore,
+} from "../../../store/appCacheStore.ts";
 import { closeModal } from "../../../store/appModalStore.ts";
 
 import type { Transaction } from "../../transaction/types/transaction.types.ts";
@@ -38,9 +41,11 @@ function useDeletePot(): {
 
       await deletePotApi(potId);
     },
-    onSuccess: () => {
+    onSuccess: (_, potId) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
+
+      deletePotCache(potId);
     },
     onError(error) {
       throw new Error(error?.message);

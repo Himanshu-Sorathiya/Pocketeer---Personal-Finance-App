@@ -32,12 +32,14 @@ function CreateBudgetModal() {
     })
     .filter(Boolean);
 
+  const defaultValues = {
+    category: availableCategories?.[0]?.category ?? "",
+    targetAmount: "",
+    theme: availableThemeColors?.[0]?.name ?? "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      category: availableCategories?.[0]?.category ?? "",
-      targetAmount: "",
-      theme: availableThemeColors?.[0]?.name ?? "",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
       createBudget({
         category: value.category,

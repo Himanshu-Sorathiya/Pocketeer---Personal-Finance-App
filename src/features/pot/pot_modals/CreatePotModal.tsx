@@ -35,12 +35,14 @@ function CreatePotModal() {
     })
     .filter(Boolean);
 
+  const defaultValues = {
+    name: "",
+    targetAmount: "",
+    theme: availableThemeColors?.[0]?.name ?? "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      name: "",
-      targetAmount: "",
-      theme: availableThemeColors?.[0]?.name ?? "",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
       createPot({
         name: value.name,

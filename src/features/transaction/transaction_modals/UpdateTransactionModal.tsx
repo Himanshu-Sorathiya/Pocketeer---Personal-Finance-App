@@ -1,60 +1,55 @@
-import { useStore } from "@tanstack/react-store";
-
-import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
+import { format } from "date-fns";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useReadPots } from "../hooks/useReadPots.ts";
-import { useUpdatePot } from "../hooks/useUpdatePot.ts";
+import { useReadTransactions } from "../hooks/useReadTransactions.ts";
+import { useUpdateTransaction } from "../hooks/useUpdateTransaction.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
-import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
-import type { Pot } from "../types/pot.types.ts";
+import { Transaction } from "../types/transaction.types.ts";
 
-function EditPotModal({ potId }: { potId: string }) {
-  const { pots } = useReadPots();
-  const { potStatus, updatePot } = useUpdatePot();
+function UpdateTransactionModal({ transactionId }: any) {
+  const { transactions } = useReadTransactions();
+  const { transactionStatus, updateTransaction } = useUpdateTransaction();
 
-  const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
-
-  const savedAmount = useStore(
-    potTransactionCacheStore,
-    (s) => s.get(pot!.potId)!.amount,
+  const transaction: Transaction | undefined = transactions.find(
+    (transaction) => transaction.transactionId === transactionId,
   );
 
+  const defaultValues = {
+    recipientName: transaction?.recipient ?? "",
+    category: transaction?.category ?? "",
+    date: transaction?.creationDate ?? "",
+    amount: String(transaction?.amount ?? ""),
+    type: transaction?.type ?? "expense",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      name: pot?.name ?? "New Pot Name",
-      targetAmount: String(pot?.targetAmount ?? ""),
-      theme: pot?.theme ?? "",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
-      updatePot({
-        potId,
-        updates: {
-          name: value.name,
-          targetAmount: Number(value.targetAmount),
-          theme: value.theme,
-        },
-      });
+      const updates: Partial<Transaction> = {};
+
+      if (value.recipientName !== defaultValues.recipientName)
+        updates.recipient = value.recipientName;
+      if (value.category !== defaultValues.category)
+        updates.category = value.category;
+      if (value.date !== defaultValues.date) updates.creationDate = value.date;
+      if (value.amount !== defaultValues.amount) updates.amount = +value.amount;
+      if (value.type !== defaultValues.type) updates.type = value.type;
+
+      updateTransaction({ transactionId, updates });
     },
   });
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
-      {potStatus === "pending" && <FormSpinner />}
+      {transactionStatus === "pending" && <FormSpinner />}
 
-      <ModalHeader title={`Edit "${pot?.name}" Pot`}>
-        <TooltipInfo
-          id="info-circle"
-          text1="Changing the name of this pot will also update the recipient name for all transactions related to this pot."
-          className="text-primary size-5"
-        />
-      </ModalHeader>
+      <ModalHeader title={`Edit Transaction of "${transaction?.recipient}"`} />
 
-      <ModalDescription description="Need to adjust your savings plan? Edit your pot to reflect your updated financial goals and keep moving forward with Pocketeer!" />
+      <ModalDescription description="Need to make changes? Edit your transaction details to ensure your financial records stay accurate with Pocketeer!" />
 
       <form
         onSubmit={(e) => {
@@ -64,7 +59,7 @@ function EditPotModal({ potId }: { potId: string }) {
         className="flex flex-col gap-4"
       >
         <form.AppField
-          name="name"
+          name="recipientName"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
@@ -112,11 +107,69 @@ function EditPotModal({ potId }: { potId: string }) {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => <field.NameField label="Pot Name" />}
+          children={(field) => <field.NameField label="Recipient Name" />}
         />
 
         <form.AppField
-          name="targetAmount"
+          name="date"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Date is required");
+
+              !/^\d{4}-\d{2}-\d{2}$/.test(value) &&
+                errors.push("Invalid date format. Please use YYYY-MM-DD.");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !/^\d{4}-\d{2}-\d{2}$/.test(value) &&
+                errors.push("Invalid date format. Please use YYYY-MM-DD.");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <field.DateField
+              transactionDate={
+                transaction?.creationDate ?? format(new Date(), "yyyy-MM-dd")
+              }
+            />
+          )}
+        />
+
+        <form.AppField
+          name="category"
+          validators={{
+            onChange: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+            onSubmit: ({ value }) => {
+              const errors: string[] = [];
+              value = value.trim();
+
+              !value && errors.push("Category is required");
+
+              return errors.length === 0 ? undefined : errors;
+            },
+          }}
+          children={(field) => (
+            <field.CategoryField currentCategory={transaction?.category} />
+          )}
+        />
+
+        <form.AppField
+          name="amount"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
@@ -128,9 +181,6 @@ function EditPotModal({ potId }: { potId: string }) {
                 errors.push(
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
-
-              parseFloat(value) < savedAmount &&
-                errors.push("Amount must be greater than already saved amount");
 
               parseFloat(value) >= 99999999.99 &&
                 errors.push("Amount must be less than 99999999.99");
@@ -151,9 +201,6 @@ function EditPotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) < savedAmount &&
-                errors.push("Amount must be greater than already saved amount");
-
               parseFloat(value) >= 99999999.99 &&
                 errors.push("Amount must be less than 99999999.99");
 
@@ -164,18 +211,21 @@ function EditPotModal({ potId }: { potId: string }) {
             },
           }}
           children={(field) => (
-            <field.AmountField label="Target Amount" currency={pot!.currency} />
+            <field.AmountField
+              label="Amount"
+              currency={transaction!.currency}
+            />
           )}
         />
 
         <form.AppField
-          name="theme"
+          name="type"
           validators={{
             onChange: ({ value }) => {
               const errors: string[] = [];
               value = value.trim();
 
-              !value && errors.push("Category is required");
+              !value && errors.push("Type is required");
 
               return errors.length === 0 ? undefined : errors;
             },
@@ -183,14 +233,12 @@ function EditPotModal({ potId }: { potId: string }) {
               const errors: string[] = [];
               value = value.trim();
 
-              !value && errors.push("Category is required");
+              !value && errors.push("Type is required");
 
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => (
-            <field.ThemeField items={pots} currentTheme={pot?.theme} />
-          )}
+          children={(field) => <field.TypeField label="Type" />}
         />
 
         <div className="flex gap-3">
@@ -199,7 +247,7 @@ function EditPotModal({ potId }: { potId: string }) {
           </form.AppForm>
 
           <form.AppForm>
-            <form.SubmitButton label="Update Pot" />
+            <form.SubmitButton label="Update Transaction" />
           </form.AppForm>
         </div>
       </form>
@@ -207,4 +255,4 @@ function EditPotModal({ potId }: { potId: string }) {
   );
 }
 
-export default EditPotModal;
+export default UpdateTransactionModal;

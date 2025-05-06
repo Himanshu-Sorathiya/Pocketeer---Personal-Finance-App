@@ -12,7 +12,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 
 import type { Budget } from "../types/budget.types.ts";
 
-function EditBudgetModal({ budgetId }: any) {
+function UpdateBudgetModal({ budgetId }: any) {
   const { budgets } = useReadBudgets();
   const { budgetStatus, updateBudget } = useUpdateBudget();
 
@@ -25,21 +25,24 @@ function EditBudgetModal({ budgetId }: any) {
     (s) => s.get(budget!.budgetId)!.amount,
   );
 
+  const defaultValues = {
+    category: budget?.category ?? "",
+    targetAmount: String(budget?.targetAmount ?? ""),
+    theme: budget?.theme ?? "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      category: budget?.category ?? "",
-      targetAmount: String(budget?.targetAmount ?? ""),
-      theme: budget?.theme ?? "",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
-      updateBudget({
-        budgetId,
-        updates: {
-          category: value.category,
-          targetAmount: Number(value.targetAmount),
-          theme: value.theme,
-        },
-      });
+      const updates: Partial<Budget> = {};
+
+      if (value.category !== defaultValues.category)
+        updates.category = value.category;
+      if (value.targetAmount !== defaultValues.targetAmount)
+        updates.targetAmount = Number(value.targetAmount);
+      if (value.theme !== defaultValues.theme) updates.theme = value.theme;
+
+      updateBudget({ budgetId, updates });
     },
   });
 
@@ -186,4 +189,4 @@ function EditBudgetModal({ budgetId }: any) {
   );
 }
 
-export default EditBudgetModal;
+export default UpdateBudgetModal;

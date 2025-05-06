@@ -16,7 +16,9 @@ async function getBudgets({
   const { data, error } = await supabase
     .from("budgets")
     .select("*")
-    .eq("user_id", queryKey[1]);
+    .eq("user_id", queryKey[1])
+    .order("creation_date", { ascending: false })
+    .order("creation_time", { ascending: false });
 
   if (error) {
     throw new Error(

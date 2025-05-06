@@ -12,14 +12,16 @@ function CreateTransactionModal() {
   const { transactions } = useReadTransactions();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
+  const defaultValues = {
+    recipientName: "",
+    category: transactionCategories[0] || "",
+    date: new Date().toISOString().slice(0, 10),
+    amount: "",
+    type: "expense",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      recipientName: "",
-      category: transactionCategories[0] || "",
-      date: new Date().toISOString().slice(0, 10),
-      amount: "",
-      type: "expense",
-    },
+    defaultValues,
     onSubmit: async ({ value }) => {
       createTransaction({
         recipient: value.recipientName,

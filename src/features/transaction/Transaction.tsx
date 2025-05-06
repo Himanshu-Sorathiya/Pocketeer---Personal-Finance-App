@@ -10,7 +10,7 @@ import {
 
 import CreateTransactionModal from "./transaction_modals/CreateTransactionModal.tsx";
 import DeleteTransactionModal from "./transaction_modals/DeleteTransactionModal.tsx";
-import EditTransactionModal from "./transaction_modals/EditTransactionModal.tsx";
+import UpdateTransactionModal from "./transaction_modals/UpdateTransactionModal.tsx";
 import TransactionMain from "./TransactionMain.tsx";
 
 import Header from "../../components/ui/Header.tsx";
@@ -42,7 +42,7 @@ function Transaction() {
           <ModalLayout onClose={handleCloseModal}>
             {id === "create_transaction" && <CreateTransactionModal />}
             {id === "edit_transaction" && (
-              <EditTransactionModal transactionId={transactionId} />
+              <UpdateTransactionModal transactionId={transactionId} />
             )}
             {id === "delete_transaction" && (
               <DeleteTransactionModal transactionId={transactionId} />

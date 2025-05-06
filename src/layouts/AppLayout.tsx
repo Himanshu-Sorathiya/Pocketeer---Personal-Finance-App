@@ -43,22 +43,18 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
   if (isError) throw new Error(error?.message);
 
-  if (transactions.length > 0) {
+  if (!isLoading) {
     transactions.forEach((transaction) => {
       setTransactionCache(transaction.transactionId, transaction.category);
     });
 
-    if (budgets.length > 0) {
-      budgets.forEach((b) =>
-        setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
-      );
-    }
+    budgets.forEach((b) =>
+      setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
+    );
 
-    if (pots.length > 0) {
-      pots.forEach((p) =>
-        setPotCache(p.potId, p.name, p.creationDate, transactions),
-      );
-    }
+    pots.forEach((p) =>
+      setPotCache(p.potId, p.name, p.creationDate, transactions),
+    );
   }
 
   return (

@@ -19,7 +19,9 @@ async function getTransactions({
   const { data, error } = await supabase
     .from("transactions")
     .select("*")
-    .eq("user_id", queryKey[1]);
+    .eq("user_id", queryKey[1])
+    .order("creation_date", { ascending: false })
+    .order("creation_time", { ascending: false });
 
   if (error) {
     throw new Error(
@@ -100,8 +102,13 @@ async function updateTransaction(
       ...("category" in updates && { category: updates.category }),
       ...("amount" in updates && { amount: updates.amount }),
       ...("type" in updates && { type: updates.type }),
-      ...("creationDate" in updates && { creation_date: updates.creationDate }),
-      ...{ creation_time: "00:00:00" },
+      ...("creationDate" in updates && {
+        creation_date: updates.creationDate,
+        creation_time:
+          updates.creationDate === new Date().toISOString().split("T")[0]
+            ? "00:00:00"
+            : "23:59:59",
+      }),
     })
     .eq("transaction_id", transactionId)
     .select()

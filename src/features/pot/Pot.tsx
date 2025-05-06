@@ -11,7 +11,7 @@ import {
 import AddMoneyToPotModal from "./pot_modals/AddMoneyToPotModal.tsx";
 import CreatePotModal from "./pot_modals/CreatePotModal.tsx";
 import DeletePotModal from "./pot_modals/DeletePotModal.tsx";
-import EditPotModal from "./pot_modals/EditPotModal.tsx";
+import UpdatePotModal from "./pot_modals/UpdatePotModal.tsx";
 import WithdrawMoneyFromPotModal from "./pot_modals/WithdrawMoneyFromPotModal.tsx";
 import PotMain from "./PotMain.tsx";
 
@@ -45,7 +45,7 @@ function Pot() {
         ].includes(id) && (
           <ModalLayout onClose={handleCloseModal}>
             {id === "create_pot" && <CreatePotModal />}
-            {id === "edit_pot" && <EditPotModal potId={potId} />}
+            {id === "edit_pot" && <UpdatePotModal potId={potId} />}
             {id === "delete_pot" && <DeletePotModal potId={potId} />}
             {id === "pot_add_money" && <AddMoneyToPotModal potId={potId} />}
             {id === "pot_withdraw_money" && (

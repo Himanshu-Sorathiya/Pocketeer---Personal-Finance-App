@@ -10,7 +10,7 @@ import {
 
 import CreateBudgetModal from "./budget_modals/CreateBudgetModal.tsx";
 import DeleteBudgetModal from "./budget_modals/DeleteBudgetModal.tsx";
-import EditBudgetModal from "./budget_modals/EditBudgetModal.tsx";
+import UpdateBudgetModal from "./budget_modals/UpdateBudgetModal.tsx";
 import BudgetMain from "./BudgetMain.tsx";
 
 import Header from "../../components/ui/Header.tsx";
@@ -36,7 +36,7 @@ function Budget() {
       {id && ["create_budget", "edit_budget", "delete_budget"].includes(id) && (
         <ModalLayout onClose={handleCloseModal}>
           {id === "create_budget" && <CreateBudgetModal />}
-          {id === "edit_budget" && <EditBudgetModal budgetId={budgetId} />}
+          {id === "edit_budget" && <UpdateBudgetModal budgetId={budgetId} />}
           {id === "delete_budget" && <DeleteBudgetModal budgetId={budgetId} />}
         </ModalLayout>
       )}

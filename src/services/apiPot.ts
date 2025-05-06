@@ -10,7 +10,9 @@ async function getPots({ queryKey }: { queryKey: QueryKey }): Promise<Pot[]> {
   const { data, error } = await supabase
     .from("pots")
     .select("*")
-    .eq("user_id", queryKey[1]);
+    .eq("user_id", queryKey[1])
+    .order("creation_date", { ascending: false })
+    .order("creation_time", { ascending: false });
 
   if (error) {
     throw new Error(

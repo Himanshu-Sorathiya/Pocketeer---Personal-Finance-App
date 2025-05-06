@@ -19,7 +19,6 @@ import { useReadTransactions } from "./hooks/useReadTransactions.ts";
 
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
 import TransactionPagination from "./transaction_pagination/TransactionPagination.tsx";
-import TransactionPlaceholder from "./transaction_placeholder/TransactionPlaceholder.tsx";
 import {
   ActionsCell,
   AmountCell,
@@ -133,20 +132,14 @@ function TransactionMain() {
     autoResetPageIndex: false,
   });
 
-  const shouldShowPlaceholder = table.getRowModel().rows.length === 0;
-
   return (
     <div className="bg-shade-100 flex min-h-full flex-col gap-5 overflow-visible rounded-md p-4 whitespace-nowrap">
       <TransactionFilter />
 
-      {shouldShowPlaceholder && <TransactionPlaceholder />}
-
-      {!shouldShowPlaceholder && (
-        <TransactionTable
-          headerGroups={table.getHeaderGroups()}
-          rowModels={table.getRowModel()}
-        />
-      )}
+      <TransactionTable
+        headerGroups={table.getHeaderGroups()}
+        rowModels={table.getRowModel()}
+      />
 
       <TransactionPagination
         pageIndex={table.getState().pagination.pageIndex}

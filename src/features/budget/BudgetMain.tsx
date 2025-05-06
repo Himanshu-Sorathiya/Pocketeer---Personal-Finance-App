@@ -12,7 +12,7 @@ import BudgetSummery from "./budget_summery/BudgetSummery.tsx";
 import type { Budget } from "./types/budget.types.ts";
 
 function BudgetMain() {
-  const { budgets } = useReadBudgets();
+  const { budgets, budgetsFetchStatus } = useReadBudgets();
 
   const selectedBudgetId = useStore(budgetStore, (s) => s.selectedBudgetId);
 
@@ -20,9 +20,14 @@ function BudgetMain() {
     budgets.find((budget) => budget.budgetId === selectedBudgetId) ||
     budgets[0];
 
-  const shouldShowPlaceholder = budgets.length === 0;
+  if (
+    budgetsFetchStatus === "idle" &&
+    budgets.length > 0 &&
+    selectedBudgetId === ""
+  )
+    handleBudgetChange(budgets[0].budgetId);
 
-  if (selectedBudgetId === "") handleBudgetChange(budgets[0].budgetId);
+  const shouldShowPlaceholder = budgets.length === 0;
 
   if (shouldShowPlaceholder) return <BudgetPlaceholder />;
 

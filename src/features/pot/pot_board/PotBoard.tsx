@@ -9,17 +9,13 @@ import BoardBody from "./BoardBody.tsx";
 import { BoardBadge } from "./BoardElements.tsx";
 import BoardHeader from "./BoardHeader.tsx";
 
+import PotPlaceholder from "../pot_placeholder/PotPlaceholder.tsx";
+
 import type { FilterState, Pot, SortingState } from "../types/pot.types.ts";
 
 import { filterPots, sortPots } from "../pot_helpers/potHelpers.ts";
 
-function PotBoard({
-  shouldShowPlaceholder,
-  setShouldShowPlaceholder,
-}: {
-  shouldShowPlaceholder: boolean;
-  setShouldShowPlaceholder: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function PotBoard() {
   const { pots } = useReadPots();
 
   const potTransactionCache = useStore(potTransactionCacheStore);
@@ -38,9 +34,9 @@ function PotBoard({
     potTransactionCache,
   );
 
-  setShouldShowPlaceholder(sortedPots.length === 0);
+  const shouldShowPlaceholder = sortedPots.length === 0;
 
-  if (shouldShowPlaceholder) return null;
+  if (shouldShowPlaceholder) return <PotPlaceholder />;
 
   return (
     <div className="grid min-w-full grid-cols-3 gap-4">

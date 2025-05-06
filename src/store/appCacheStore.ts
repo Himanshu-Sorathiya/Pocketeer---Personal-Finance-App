@@ -41,8 +41,11 @@ const potTransactionCacheStore = new Store<Map<string, TransactionCache>>(
   new Map(),
 );
 
-function setTransactionCache(transactionId: string, category: string) {
-  const iconPath = getRandomIcon(category);
+function setTransactionCache(
+  transactionId: string,
+  transactionCategory: string,
+) {
+  const iconPath = getRandomIcon(transactionCategory);
   const bgColor = getRandomColor();
 
   transactionIconCacheStore.setState((state) => {
@@ -61,19 +64,19 @@ function setTransactionCache(transactionId: string, category: string) {
 
 function setBudgetCache(
   budgetId: string,
-  category: string,
-  creationDate: string,
+  budgetCategory: string,
+  budgetCreationDate: string,
   transactions: Transaction[],
 ) {
-  const filteredTransactions: Transaction[] = transactions.filter(
+  const filteredBudgetTransactions: Transaction[] = transactions.filter(
     (t) =>
-      t.category.trim() === category.trim() &&
-      new Date(t.creationDate) >= new Date(creationDate) &&
+      t.category.trim() === budgetCategory.trim() &&
+      new Date(t.creationDate) >= new Date(budgetCreationDate) &&
       t.type === "expense",
   );
 
-  const sortedTransactions: Transaction[] = filteredTransactions.sort(
-    (a, b) => {
+  const sortedBudgetTransactions: Transaction[] =
+    filteredBudgetTransactions.sort((a, b) => {
       const dateA = new Date(a.creationDate).getTime();
       const dateB = new Date(b.creationDate).getTime();
 
@@ -85,17 +88,17 @@ function setBudgetCache(
       }
 
       return dateB - dateA;
-    },
-  );
+    });
 
   budgetTransactionCacheStore.setState((state) => {
     const newCache = new Map(state);
 
     newCache.set(budgetId, {
-      creationDate,
-      transactionsLength: sortedTransactions.length,
-      transactions: sortedTransactions,
-      amount: sortedTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
+      creationDate: budgetCreationDate,
+      transactionsLength: sortedBudgetTransactions.length,
+      transactions: sortedBudgetTransactions,
+      amount:
+        sortedBudgetTransactions.reduce((sum, t) => sum + t.amount, 0) ?? 0,
     });
 
     return newCache;
@@ -105,17 +108,17 @@ function setBudgetCache(
 function setPotCache(
   potId: string,
   potName: string,
-  creationDate: string,
+  potCreationDate: string,
   transactions: Transaction[],
 ) {
-  const filteredTransactions: Transaction[] = transactions.filter(
+  const filteredPotTransactions: Transaction[] = transactions.filter(
     (t) =>
       t.recipient.trim() === potName.trim() &&
       t.category.trim() === "savings" &&
-      new Date(t.creationDate) >= new Date(creationDate),
+      new Date(t.creationDate) >= new Date(potCreationDate),
   );
 
-  const sortedTransactions: Transaction[] = filteredTransactions.sort(
+  const sortedPotTransactions: Transaction[] = filteredPotTransactions.sort(
     (a, b) => {
       const dateA = new Date(a.creationDate).getTime();
       const dateB = new Date(b.creationDate).getTime();
@@ -134,14 +137,14 @@ function setPotCache(
   potTransactionCacheStore.setState((state) => {
     const newCache = new Map(state);
 
-    const amount = sortedTransactions.reduce((sum, t) => {
+    const amount = sortedPotTransactions.reduce((sum, t) => {
       return t.type === "income" ? sum + t.amount : sum - t.amount;
     }, 0);
 
     newCache.set(potId, {
-      creationDate,
-      transactionsLength: sortedTransactions.length,
-      transactions: sortedTransactions,
+      creationDate: potCreationDate,
+      transactionsLength: sortedPotTransactions.length,
+      transactions: sortedPotTransactions,
       amount,
     });
 
@@ -149,8 +152,41 @@ function setPotCache(
   });
 }
 
+function deleteTransactionCache(transactionId: string) {
+  transactionIconCacheStore.setState((state) => {
+    const newCache = new Map(state);
+
+    newCache.delete(transactionId);
+
+    return newCache;
+  });
+}
+
+function deleteBudgetCache(budgetId: string) {
+  budgetTransactionCacheStore.setState((state) => {
+    const newCache = new Map(state);
+
+    newCache.delete(budgetId);
+
+    return newCache;
+  });
+}
+
+function deletePotCache(potId: string) {
+  potTransactionCacheStore.setState((state) => {
+    const newCache = new Map(state);
+
+    newCache.delete(potId);
+
+    return newCache;
+  });
+}
+
 export {
   budgetTransactionCacheStore,
+  deleteBudgetCache,
+  deletePotCache,
+  deleteTransactionCache,
   potTransactionCacheStore,
   setBudgetCache,
   setPotCache,
