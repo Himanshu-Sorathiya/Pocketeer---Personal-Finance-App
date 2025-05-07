@@ -80,10 +80,13 @@ async function createBudget(
   };
 }
 
-async function updateBudget(
-  budgetId: string,
-  updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>,
-): Promise<Budget> {
+async function updateBudget({
+  budgetId,
+  updates,
+}: {
+  budgetId: string;
+  updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>;
+}): Promise<Budget> {
   const { data, error } = await supabase
     .from("budgets")
     .update({
@@ -114,7 +117,7 @@ async function updateBudget(
   };
 }
 
-async function deleteBudget(budgetId: string) {
+async function deleteBudget({ budgetId }: { budgetId: string }) {
   const { error } = await supabase
     .from("budgets")
     .delete()

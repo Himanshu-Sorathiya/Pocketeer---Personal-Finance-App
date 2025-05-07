@@ -26,12 +26,7 @@ function useCreatePot(): {
 } {
   const queryClient = useQueryClient();
 
-  const {
-    data: createdPot,
-    status: potStatus,
-    error: potError,
-    mutate: createPot,
-  } = useMutation({
+  const { data, status, error, mutate } = useMutation({
     mutationFn: createPotApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
@@ -46,10 +41,10 @@ function useCreatePot(): {
   });
 
   return {
-    createdPot,
-    potStatus,
-    potError,
-    createPot,
+    createdPot: data,
+    potStatus: status,
+    potError: error,
+    createPot: mutate,
   };
 }
 

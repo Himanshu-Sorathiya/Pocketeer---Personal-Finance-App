@@ -1,8 +1,4 @@
-import {
-  type QueryObserverResult,
-  type RefetchOptions,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { potQueryOptions } from "../../../services/queryOptions.ts";
 
@@ -13,26 +9,21 @@ function useReadPots(): {
   potsStatus: "pending" | "error" | "success";
   potsFetchStatus: "fetching" | "paused" | "idle";
   potsError: Error | null;
-  refetchPots: (
-    options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<Pot[], Error>>;
 } {
   const {
-    data: pots = [],
-    status: potsStatus,
-    fetchStatus: potsFetchStatus,
-    error: potsError,
-    refetch: refetchPots,
-  } = useQuery({
+    data = [],
+    status,
+    fetchStatus,
+    error,
+  } = useQuery<Pot[]>({
     ...potQueryOptions,
   });
 
   return {
-    pots,
-    potsStatus,
-    potsFetchStatus,
-    potsError,
-    refetchPots,
+    pots: data,
+    potsStatus: status,
+    potsFetchStatus: fetchStatus,
+    potsError: error,
   };
 }
 

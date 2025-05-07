@@ -61,7 +61,10 @@ async function createTransaction(
         type: transaction.type,
         currency,
         creation_date: transaction.creationDate,
-        creation_time: new Date().toTimeString().slice(0, 8),
+        creation_time:
+          transaction.creationDate === new Date().toISOString().split("T")[0]
+            ? new Date().toTimeString().slice(0, 8)
+            : "23:59:59",
       },
     ])
     .select()
@@ -86,15 +89,18 @@ async function createTransaction(
   };
 }
 
-async function updateTransaction(
-  transactionId: string,
+async function updateTransaction({
+  transactionId,
+  updates,
+}: {
+  transactionId: string;
   updates: Partial<
     Pick<
       Transaction,
       "recipient" | "category" | "amount" | "creationDate" | "type"
     >
-  >,
-): Promise<Transaction> {
+  >;
+}): Promise<Transaction> {
   const { data, error } = await supabase
     .from("transactions")
     .update({
@@ -133,7 +139,7 @@ async function updateTransaction(
   };
 }
 
-async function deleteTransaction(transactionId: string) {
+async function deleteTransaction({ transactionId }: { transactionId: string }) {
   const { error } = await supabase
     .from("transactions")
     .delete()
@@ -156,7 +162,9 @@ async function updateTransactions(
     .in("transaction_id", transactionIds);
 
   if (error) {
-    throw new Error("Failed to update transaction recipients.");
+    throw new Error(
+      "Uh-oh! We ran into an issue while updating your transactions. But don’t worry—Pocketeer will get things back on track soon!",
+    );
   }
 }
 

@@ -1,8 +1,4 @@
-import {
-  type QueryObserverResult,
-  type RefetchOptions,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { transactionQueryOptions } from "../../../services/queryOptions.ts";
 
@@ -13,24 +9,21 @@ function useReadTransactions(): {
   transactionsStatus: "pending" | "error" | "success";
   transactionsFetchStatus: "fetching" | "paused" | "idle";
   transactionsError: Error | null;
-  refetchTransactions: (
-    options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<Transaction[], Error>>;
 } {
   const {
-    data: transactions = [],
-    status: transactionsStatus,
-    fetchStatus: transactionsFetchStatus,
-    error: transactionsError,
-    refetch: refetchTransactions,
-  } = useQuery({ ...transactionQueryOptions });
+    data = [],
+    status,
+    fetchStatus,
+    error,
+  } = useQuery<Transaction[]>({
+    ...transactionQueryOptions,
+  });
 
   return {
-    transactions,
-    transactionsStatus,
-    transactionsFetchStatus,
-    transactionsError,
-    refetchTransactions,
+    transactions: data,
+    transactionsStatus: status,
+    transactionsFetchStatus: fetchStatus,
+    transactionsError: error,
   };
 }
 

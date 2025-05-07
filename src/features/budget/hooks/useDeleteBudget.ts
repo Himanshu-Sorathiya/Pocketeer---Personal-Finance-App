@@ -13,17 +13,20 @@ import { handleBudgetChange } from "../store/budgetStore.ts";
 function useDeleteBudget(): {
   budgetStatus: "error" | "idle" | "pending" | "success";
   budgetError: Error | null;
-  deleteBudget: UseMutateFunction<void, Error, string, unknown>;
+  deleteBudget: UseMutateFunction<
+    void,
+    Error,
+    {
+      budgetId: string;
+    },
+    unknown
+  >;
 } {
   const queryClient = useQueryClient();
 
-  const {
-    status: budgetStatus,
-    error: budgetError,
-    mutate: deleteBudget,
-  } = useMutation({
+  const { status, error, mutate } = useMutation({
     mutationFn: deleteBudgetApi,
-    onSuccess: (_, budgetId) => {
+    onSuccess: (_, { budgetId }) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
 
@@ -39,7 +42,7 @@ function useDeleteBudget(): {
     },
   });
 
-  return { budgetStatus, budgetError, deleteBudget };
+  return { budgetStatus: status, budgetError: error, deleteBudget: mutate };
 }
 
 export { useDeleteBudget };

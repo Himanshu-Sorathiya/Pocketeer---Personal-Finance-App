@@ -12,6 +12,7 @@ function PasswordField({ label }: { label: string }) {
       </label>
 
       <input
+        id="password"
         type="password"
         value={field.state.value}
         onBlur={field.handleBlur}

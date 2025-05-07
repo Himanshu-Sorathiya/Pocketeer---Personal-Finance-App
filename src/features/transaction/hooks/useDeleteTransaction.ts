@@ -12,17 +12,20 @@ import { closeModal } from "../../../store/appModalStore.ts";
 function useDeleteTransaction(): {
   transactionStatus: "error" | "idle" | "pending" | "success";
   transactionError: Error | null;
-  deleteTransaction: UseMutateFunction<void, Error, string, unknown>;
+  deleteTransaction: UseMutateFunction<
+    void,
+    Error,
+    {
+      transactionId: string;
+    },
+    unknown
+  >;
 } {
   const queryClient = useQueryClient();
 
-  const {
-    status: transactionStatus,
-    error: transactionError,
-    mutate: deleteTransaction,
-  } = useMutation({
+  const { status, error, mutate } = useMutation({
     mutationFn: deleteTransactionApi,
-    onSuccess: (_, transactionId) => {
+    onSuccess: (_, { transactionId }) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
@@ -37,7 +40,11 @@ function useDeleteTransaction(): {
     },
   });
 
-  return { transactionStatus, transactionError, deleteTransaction };
+  return {
+    transactionStatus: status,
+    transactionError: error,
+    deleteTransaction: mutate,
+  };
 }
 
 export { useDeleteTransaction };

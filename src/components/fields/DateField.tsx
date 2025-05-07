@@ -18,7 +18,9 @@ function DateField({ transactionDate }: { transactionDate?: string }) {
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-800">Date</label>
+      <label htmlFor="date" className="text-sm font-medium text-gray-800">
+        Date
+      </label>
 
       <div
         onMouseEnter={() => setOpenDropdown(true)}

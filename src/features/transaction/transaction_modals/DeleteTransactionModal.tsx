@@ -27,7 +27,7 @@ function DeleteTransactionModal({ transactionId }: any) {
 
       <DeleteButton
         label="Yes, Delete"
-        onClick={() => deleteTransaction(transactionId)}
+        onClick={() => deleteTransaction({ transactionId })}
       />
 
       <CancelButton label="Cancel" />

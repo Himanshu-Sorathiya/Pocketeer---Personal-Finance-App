@@ -27,12 +27,7 @@ function useCreateBudget(): {
 } {
   const queryClient = useQueryClient();
 
-  const {
-    data: createdBudget,
-    status: budgetStatus,
-    error: budgetError,
-    mutate: createBudget,
-  } = useMutation({
+  const { data, status, error, mutate } = useMutation({
     mutationFn: createBudgetApi,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
@@ -49,10 +44,10 @@ function useCreateBudget(): {
   });
 
   return {
-    createdBudget,
-    budgetStatus,
-    budgetError,
-    createBudget,
+    createdBudget: data,
+    budgetStatus: status,
+    budgetError: error,
+    createBudget: mutate,
   };
 }
 

@@ -221,7 +221,7 @@ function CreateTransactionModal() {
               return errors.length === 0 ? undefined : errors;
             },
           }}
-          children={(field) => <field.TypeField label="Type" />}
+          children={(field) => <field.TypeField />}
         />
 
         <div className="flex gap-3">

@@ -26,19 +26,8 @@ function useUpdateBudget(): {
 } {
   const queryClient = useQueryClient();
 
-  const {
-    data: updatedBudget,
-    status: budgetStatus,
-    error: budgetError,
-    mutate: updateBudget,
-  } = useMutation({
-    mutationFn: ({
-      budgetId,
-      updates,
-    }: {
-      budgetId: string;
-      updates: Partial<Pick<Budget, "category" | "targetAmount" | "theme">>;
-    }) => updateBudgetApi(budgetId, updates),
+  const { data, status, error, mutate } = useMutation({
+    mutationFn: updateBudgetApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
@@ -51,7 +40,12 @@ function useUpdateBudget(): {
     },
   });
 
-  return { updatedBudget, budgetStatus, budgetError, updateBudget };
+  return {
+    updatedBudget: data,
+    budgetStatus: status,
+    budgetError: error,
+    updateBudget: mutate,
+  };
 }
 
 export { useUpdateBudget };

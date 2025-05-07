@@ -31,24 +31,8 @@ function useUpdateTransaction(): {
 } {
   const queryClient = useQueryClient();
 
-  const {
-    data: updatedTransaction,
-    status: transactionStatus,
-    error: transactionError,
-    mutate: updateTransaction,
-  } = useMutation({
-    mutationFn: ({
-      transactionId,
-      updates,
-    }: {
-      transactionId: string;
-      updates: Partial<
-        Pick<
-          Transaction,
-          "recipient" | "category" | "amount" | "creationDate" | "type"
-        >
-      >;
-    }) => updateTransactionApi(transactionId, updates),
+  const { data, status, error, mutate } = useMutation({
+    mutationFn: updateTransactionApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
@@ -63,10 +47,10 @@ function useUpdateTransaction(): {
   });
 
   return {
-    updatedTransaction,
-    transactionStatus,
-    transactionError,
-    updateTransaction,
+    updatedTransaction: data,
+    transactionStatus: status,
+    transactionError: error,
+    updateTransaction: mutate,
   };
 }
 

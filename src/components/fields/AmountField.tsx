@@ -7,7 +7,7 @@ function AmountField({ label, currency }: { label: string; currency: string }) {
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label htmlFor="name" className="text-sm font-medium text-gray-800">
+      <label htmlFor="amount" className="text-sm font-medium text-gray-800">
         {label}
       </label>
 
@@ -21,6 +21,7 @@ function AmountField({ label, currency }: { label: string; currency: string }) {
         <span>{currency}</span>
 
         <input
+          id="amount"
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => {

@@ -19,7 +19,9 @@ function ThemeField({
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-800">Theme</label>
+      <label htmlFor="theme" className="text-sm font-medium text-gray-800">
+        Theme
+      </label>
 
       <div className="relative">
         <div

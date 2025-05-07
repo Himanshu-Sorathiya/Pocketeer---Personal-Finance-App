@@ -1,8 +1,4 @@
-import {
-  type QueryObserverResult,
-  type RefetchOptions,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { budgetQueryOptions } from "../../../services/queryOptions.ts";
 
@@ -13,26 +9,21 @@ function useReadBudgets(): {
   budgetsStatus: "pending" | "error" | "success";
   budgetsFetchStatus: "fetching" | "paused" | "idle";
   budgetsError: Error | null;
-  refetchBudgets: (
-    options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<Budget[], Error>>;
 } {
   const {
-    data: budgets = [],
-    status: budgetsStatus,
-    fetchStatus: budgetsFetchStatus,
-    error: budgetsError,
-    refetch: refetchBudgets,
-  } = useQuery({
+    data = [],
+    status,
+    fetchStatus,
+    error,
+  } = useQuery<Budget[]>({
     ...budgetQueryOptions,
   });
 
   return {
-    budgets,
-    budgetsStatus,
-    budgetsFetchStatus,
-    budgetsError,
-    refetchBudgets,
+    budgets: data,
+    budgetsStatus: status,
+    budgetsFetchStatus: fetchStatus,
+    budgetsError: error,
   };
 }
 

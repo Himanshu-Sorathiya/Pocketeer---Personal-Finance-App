@@ -2,7 +2,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-function TypeField({ label }: { label: string }) {
+function TypeField() {
   const field = useFieldContext<string>();
 
   function handleTypeChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -11,8 +11,8 @@ function TypeField({ label }: { label: string }) {
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label htmlFor="name" className="text-sm font-medium text-gray-800">
-        {label}
+      <label htmlFor="type" className="text-sm font-medium text-gray-800">
+        Type
       </label>
 
       <div

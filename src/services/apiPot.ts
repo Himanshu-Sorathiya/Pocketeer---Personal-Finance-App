@@ -1,5 +1,10 @@
 import type { QueryKey } from "@tanstack/react-query";
 
+import {
+  deleteTransactions as deleteTransactionsApi,
+  updateTransactions as updateTransactionsApi,
+} from "./apiTransaction.ts";
+
 import { currency, user_id } from "../constants/user.ts";
 
 import { supabase } from "./supabase.ts";
@@ -74,10 +79,19 @@ async function createPot(
   };
 }
 
-async function updatePot(
-  potId: string,
-  updates: Partial<Pick<Pot, "name" | "targetAmount" | "theme">>,
-): Promise<Pot> {
+async function updatePot({
+  potId,
+  updates,
+  transactionIds,
+}: {
+  potId: string;
+  updates: Partial<Pick<Pot, "name" | "targetAmount" | "theme">>;
+  transactionIds: string[];
+}): Promise<Pot> {
+  if (updates.name && transactionIds && transactionIds.length > 0) {
+    await updateTransactionsApi(transactionIds, updates.name);
+  }
+
   const { data, error } = await supabase
     .from("pots")
     .update({
@@ -108,7 +122,17 @@ async function updatePot(
   };
 }
 
-async function deletePot(potId: string) {
+async function deletePot({
+  potId,
+  transactionIds,
+}: {
+  potId: string;
+  transactionIds: string[];
+}): Promise<void> {
+  if (transactionIds && transactionIds.length > 0) {
+    await deleteTransactionsApi(transactionIds);
+  }
+
   const { error } = await supabase.from("pots").delete().eq("pot_id", potId);
 
   if (error) {

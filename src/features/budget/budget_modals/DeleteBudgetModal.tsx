@@ -35,7 +35,7 @@ function DeleteBudgetModal({ budgetId }: { budgetId: keyof Budget }) {
 
       <DeleteButton
         label="Yes, Delete"
-        onClick={() => deleteBudget(budgetId)}
+        onClick={() => deleteBudget({ budgetId })}
       />
 
       <CancelButton label="Cancel" />

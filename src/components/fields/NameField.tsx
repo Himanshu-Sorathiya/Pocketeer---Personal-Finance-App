@@ -12,6 +12,7 @@ function NameField({ label }: { label: string }) {
       </label>
 
       <input
+        id="name"
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}

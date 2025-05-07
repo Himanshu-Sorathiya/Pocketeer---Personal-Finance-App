@@ -11,11 +11,18 @@ import ModalDescription from "../../../components/ui/ModalDescription.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
 
+import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
 
 function UpdatePotModal({ potId }: { potId: string }) {
   const { pots } = useReadPots();
   const { potStatus, updatePot } = useUpdatePot();
+
+  const transactionsMap = useStore(potTransactionCacheStore);
+  const transactions: Transaction[] =
+    transactionsMap.get(potId)?.transactions ?? [];
+
+  const transactionIds = transactions.map((t) => t.transactionId);
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
@@ -40,7 +47,7 @@ function UpdatePotModal({ potId }: { potId: string }) {
         updates.targetAmount = Number(value.targetAmount);
       if (value.theme !== defaultValues.theme) updates.theme = value.theme;
 
-      updatePot({ potId, updates });
+      updatePot({ potId, updates, transactionIds });
     },
   });
 
@@ -51,7 +58,7 @@ function UpdatePotModal({ potId }: { potId: string }) {
       <ModalHeader title={`Edit "${pot?.name}" Pot`}>
         <TooltipInfo
           id="info-circle"
-          text1="Changing the name of this pot will also update the recipient name for all transactions related to this pot."
+          text1="Changing the name of this Pot will also update the Recipient Name for all Transactions related to this pot."
           className="text-primary size-5"
         />
       </ModalHeader>

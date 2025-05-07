@@ -19,7 +19,9 @@ function CategoryField({
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-800">Category</label>
+      <label htmlFor="category" className="text-sm font-medium text-gray-800">
+        Category
+      </label>
 
       <div className="relative">
         <div

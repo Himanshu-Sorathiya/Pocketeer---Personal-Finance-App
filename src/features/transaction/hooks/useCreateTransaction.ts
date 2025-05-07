@@ -26,12 +26,7 @@ function useCreateTransaction(): {
 } {
   const queryClient = useQueryClient();
 
-  const {
-    data: createdTransaction,
-    status: transactionStatus,
-    error: transactionError,
-    mutate: createTransaction,
-  } = useMutation({
+  const { data, status, error, mutate } = useMutation({
     mutationFn: createTransactionApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
@@ -47,10 +42,10 @@ function useCreateTransaction(): {
   });
 
   return {
-    createdTransaction,
-    transactionStatus,
-    transactionError,
-    createTransaction,
+    createdTransaction: data,
+    transactionStatus: status,
+    transactionError: error,
+    createTransaction: mutate,
   };
 }
 
