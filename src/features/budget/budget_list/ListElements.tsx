@@ -22,6 +22,7 @@ import {
 } from "../../transaction/store/transactionStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 import RecentTransaction from "../../../components/ui/RecentTransaction.tsx";
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
 import TooltipInfo from "../../../components/ui/Tooltip.tsx";
@@ -266,9 +267,7 @@ function ListActions({ selectedBudgetId }: { selectedBudgetId: string }) {
         onClick={() => setOpenDropdown(!openDropdown)}
         className="cursor-pointer rounded text-gray-500 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100 hover:text-gray-700"
       >
-        <svg className="flex h-6 w-6 items-center justify-center">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#actions-horizontal"></use>
-        </svg>
+        <Icon id="actions-horizontal" className="size-6" />
       </button>
 
       {openDropdown && (

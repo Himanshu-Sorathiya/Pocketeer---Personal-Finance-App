@@ -1,5 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
+import Icon from "../../../components/ui/Icon.tsx";
+
 function PaginationControls({
   firstPage,
   previousPage,
@@ -23,9 +25,8 @@ function PaginationControls({
         onClick={() => firstPage()}
         disabled={!getCanPreviousPage()}
       >
-        <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-double-left" />
-        </svg>
+        <Icon id="chevron-double-left" className="size-5" />
+
         <span>First Page</span>
       </PaginationButton>
 
@@ -33,9 +34,8 @@ function PaginationControls({
         onClick={() => previousPage()}
         disabled={!getCanPreviousPage()}
       >
-        <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-left" />
-        </svg>
+        <Icon id="chevron-left" className="size-5" />
+
         <span>Previous Page</span>
       </PaginationButton>
 
@@ -45,16 +45,14 @@ function PaginationControls({
 
       <PaginationButton onClick={() => nextPage()} disabled={!getCanNextPage()}>
         <span>Next Page</span>
-        <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-right" />
-        </svg>
+
+        <Icon id="chevron-right" className="size-5" />
       </PaginationButton>
 
       <PaginationButton onClick={() => lastPage()} disabled={!getCanNextPage()}>
         <span>Last Page</span>
-        <svg className="h-5 w-5" aria-hidden="true">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-double-right" />
-        </svg>
+
+        <Icon id="chevron-double-right" className="size-5" />
       </PaginationButton>
     </div>
   );

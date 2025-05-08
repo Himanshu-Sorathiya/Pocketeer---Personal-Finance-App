@@ -1,3 +1,5 @@
+import Icon from "./Icon.tsx";
+
 export default function Header({
   title,
   handleOpenModal,
@@ -18,9 +20,7 @@ export default function Header({
             onClick={handleOpenModal}
             className="flex cursor-pointer items-center gap-2 rounded bg-gray-800 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-gray-900"
           >
-            <svg className="size-5 stroke-3">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#create" />
-            </svg>
+            <Icon id="create" className="size-5 stroke-3" />
 
             <span>{children}</span>
           </button>

@@ -21,12 +21,8 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
           className="flex h-10 w-10 items-center justify-center rounded-full"
           style={{ backgroundColor: bgColor }}
         >
-          <svg className="h-6 w-6">
-            <use
-              href={
-                iconPath || "/src/assets/icons/ui_icons_sprite.svg#fallback"
-              }
-            />
+          <svg className="size-6">
+            <use href={iconPath} />
           </svg>
         </div>
 

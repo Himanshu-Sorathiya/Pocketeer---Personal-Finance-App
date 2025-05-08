@@ -8,6 +8,7 @@ import {
 } from "../store/transactionStore.ts";
 
 import DropDownMenu from "../../../components/dropdowns/DropDownMenu.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 
@@ -66,9 +67,7 @@ function FilterDropDown({
         }
         className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
-        <svg className="h-6 w-6">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#filter"></use>
-        </svg>
+        <Icon id="filter" className="size-6" />
       </button>
 
       {openDropdown === "type" && (

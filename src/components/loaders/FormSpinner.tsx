@@ -10,8 +10,6 @@ function FormSpinner() {
         aria-labelledby="title-06b desc-06b"
         className="animate h-12 w-12 animate-spin"
       >
-        <title id="title-06b">Icon title</title>
-        <desc id="desc-06b">Some desc</desc>
         <circle
           cx="12"
           cy="12"

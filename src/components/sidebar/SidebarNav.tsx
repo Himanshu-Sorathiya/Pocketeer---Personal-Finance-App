@@ -7,6 +7,8 @@ import { Route as notificationRoute } from "../../routes/app/notification.tsx";
 import { Route as potRoute } from "../../routes/app/pot.tsx";
 import { Route as transactionRoute } from "../../routes/app/transaction.tsx";
 
+import Icon from "../ui/Icon.tsx";
+
 function SidebarNav() {
   return (
     <nav className="divide-y divide-gray-700">
@@ -39,9 +41,7 @@ function SidebarNav() {
 
         <li className="rounded-md">
           <a className="flex cursor-pointer items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800">
-            <svg className="h-6 w-6">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#logout" />
-            </svg>
+            <Icon id="logout" className="size-6" />
 
             <span>Logout</span>
           </a>
@@ -68,9 +68,7 @@ function SidebarLink({
         activeProps={{ className: "text-primary bg-gray-800" }}
         inactiveProps={{ className: "text-white" }}
       >
-        <svg className="h-6 w-6">
-          <use href={`/src/assets/icons/ui_icons_sprite.svg#${icon}`} />
-        </svg>
+        <Icon id={icon} className="size-6" />
 
         <span>{label}</span>
       </Link>

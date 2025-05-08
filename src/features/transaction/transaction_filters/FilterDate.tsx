@@ -9,6 +9,7 @@ import {
 } from "../store/transactionStore.ts";
 
 import DropDownWeekPicker from "../../../components/dropdowns/DropDownWeekPicker.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 
 import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
 
@@ -65,13 +66,9 @@ function DateDropDown({
         className="cursor-pointer rounded p-0.5 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
         {isDefaultDateRange(selectedWeek[0], selectedWeek[1]) ? (
-          <svg className="h-6 w-6">
-            <use href="/src/assets/icons/ui_icons_sprite.svg#calendar"></use>
-          </svg>
+          <Icon id="calendar" className="size-6" />
         ) : (
-          <svg className="h-6 w-6">
-            <use href="/src/assets/icons/ui_icons_sprite.svg#calendar-range"></use>
-          </svg>
+          <Icon id="calendar-range" className="size-6" />
         )}
       </button>
 

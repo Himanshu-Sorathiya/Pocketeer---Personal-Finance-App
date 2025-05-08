@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Icon from "./Icon.tsx";
+
 function Tooltip({
   id,
   text1,
@@ -15,15 +17,13 @@ function Tooltip({
 
   return (
     <div className="relative inline-block">
-      <svg
-        id={id}
-        className={`cursor-pointer font-bold ${className}`}
+      <Icon
+        id={`${id}`}
+        className={`${className}`}
+        onClick={() => setVisible(!visible)}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        onClick={() => setVisible(!visible)}
-      >
-        <use href={`/src/assets/icons/ui_icons_sprite.svg#${id}`}></use>
-      </svg>
+      />
 
       {visible && (
         <div className="bg-shade-100 text-text absolute bottom-full left-1/2 z-10 w-64 -translate-x-1/2 -translate-y-2 rounded-md px-3 py-2 text-center text-sm font-medium whitespace-normal shadow-md">

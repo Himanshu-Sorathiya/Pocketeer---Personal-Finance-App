@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
+import Icon from "./Icon.tsx";
+
 function SummeryHeader({
   to,
   header,
@@ -32,9 +34,10 @@ function SummeryHeader({
           {label}
         </span>
 
-        <svg className="text-text group-hover:fill-primary size-4 fill-current transition-all duration-100">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#arrow-right"></use>
-        </svg>
+        <Icon
+          id="arrow-right"
+          className="text-text group-hover:fill-primary size-4 fill-current transition-all duration-100"
+        />
       </Link>
     </div>
   );

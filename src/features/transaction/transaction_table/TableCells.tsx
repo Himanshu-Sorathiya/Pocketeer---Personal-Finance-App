@@ -6,6 +6,7 @@ import { transactionIconCacheStore } from "../../../store/appCacheStore.ts";
 import { openModal } from "../../../store/appModalStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 
 import type { TransactionType } from "../../../constants/transactionConfig.ts";
 
@@ -29,10 +30,8 @@ function RecipientCell({
         className="flex h-10 w-10 items-center justify-center rounded-full"
         style={{ backgroundColor: bgColor }}
       >
-        <svg className="h-6 w-6">
-          <use
-            href={iconPath || "/src/assets/icons/ui_icons_sprite.svg#fallback"}
-          />
+        <svg className="size-6">
+          <use href={iconPath} />
         </svg>
       </div>
 
@@ -94,9 +93,7 @@ function ActionsCell({
         onClick={() => setOpenDropdown(!openDropdown)}
         className="cursor-pointer rounded text-gray-500 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100 hover:text-gray-700"
       >
-        <svg className="flex h-6 w-6 items-center justify-center">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#actions-vertical"></use>
-        </svg>
+        <Icon id="actions-vertical" className="size-6" />
       </button>
 
       {openDropdown && (

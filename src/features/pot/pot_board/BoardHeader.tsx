@@ -4,6 +4,8 @@ import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { BoardActions } from "./BoardElements.tsx";
 
+import Icon from "../../../components/ui/Icon.tsx";
+
 import type { Pot } from "../types/pot.types.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
@@ -22,13 +24,9 @@ function BoardHeader({ pot }: { pot: Pot }) {
           }}
         >
           {savedAmount === pot.targetAmount ? (
-            <svg className="h-6 w-6">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#trophy" />
-            </svg>
+            <Icon id="trophy" className="size-6" />
           ) : (
-            <svg className="h-6 w-6">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#cube" />
-            </svg>
+            <Icon id="cube" className="size-6" />
           )}
         </div>
 

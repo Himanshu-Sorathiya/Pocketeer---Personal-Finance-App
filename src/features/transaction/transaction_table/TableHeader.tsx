@@ -13,6 +13,7 @@ import {
 } from "../store/transactionStore.ts";
 
 import DropDownMenu from "../../../components/dropdowns/DropDownMenu.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 
 import type { SelectedOptions } from "../../../types/global.types.ts";
 import type { Transaction } from "../types/transaction.types.ts";
@@ -82,9 +83,7 @@ function SortDropDown({
         }
         className="cursor-pointer rounded p-0.5 focus-within:bg-neutral-100 hover:bg-neutral-100"
       >
-        <svg className="h-4 w-4">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#sort"></use>
-        </svg>
+        <Icon id="sort" className="size-4" />
       </button>
 
       {openDropdown === header.id && (

@@ -1,5 +1,7 @@
 import type { SetStateAction } from "react";
 
+import Icon from "../ui/Icon.tsx";
+
 import { appActions } from "../../constants/appOptions.ts";
 
 function DropDownActions({
@@ -32,11 +34,7 @@ function DropDownActions({
           className="block w-full cursor-grab rounded-lg px-4 py-2 text-left text-sm text-nowrap text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 disabled:cursor-not-allowed disabled:text-gray-400"
         >
           <span className="flex items-center gap-2">
-            <svg className="size-4 stroke-2">
-              <use
-                href={`/src/assets/icons/ui_icons_sprite.svg#${svgId[index]}`}
-              />
-            </svg>
+            <Icon id={`${svgId[index]}`} className="size-4 stroke-2" />
 
             {value
               .split("_")

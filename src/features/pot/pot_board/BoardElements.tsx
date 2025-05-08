@@ -12,6 +12,7 @@ import {
 import { openModal } from "../../../store/appModalStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
+import Icon from "../../../components/ui/Icon.tsx";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
@@ -201,9 +202,7 @@ function BoardBadge({
 
   return (
     <div className="absolute -top-2 -right-2 flex items-center gap-1 rounded-md bg-green-500 px-2 py-1 text-white">
-      <svg className="size-5">
-        <use href="/src/assets/icons/ui_icons_sprite.svg#check-badge" />
-      </svg>
+      <Icon id="check-badge" className="size-5" />
     </div>
   );
 }
@@ -224,9 +223,7 @@ function BoardActions({ potId }: { potId: string }) {
         onClick={() => setOpenDropdown(!openDropdown)}
         className="cursor-pointer rounded text-gray-500 transition-all duration-100 focus-within:bg-neutral-100 hover:bg-neutral-100 hover:text-gray-700"
       >
-        <svg className="flex h-6 w-6 items-center justify-center">
-          <use href="/src/assets/icons/ui_icons_sprite.svg#actions-horizontal"></use>
-        </svg>
+        <Icon id="actions-horizontal" className="size-6" />
       </button>
 
       {openDropdown && (

@@ -6,6 +6,7 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import DropDownDayPicker from "../dropdowns/DropDownDayPicker.tsx";
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+import Icon from "../ui/Icon.tsx";
 
 function DateField({ transactionDate }: { transactionDate?: string }) {
   const field = useFieldContext<string>();
@@ -35,9 +36,7 @@ function DateField({ transactionDate }: { transactionDate?: string }) {
               : "text-gray-500 outline-1 outline-gray-400"
           }`}
         >
-          <svg className="size-5">
-            <use href="/src/assets/icons/ui_icons_sprite.svg#calendar-days" />
-          </svg>
+          <Icon id="calendar-days" className="size-5" />
 
           <span className="flex-1 truncate capitalize">
             {field.state.value || "Select a Date"}

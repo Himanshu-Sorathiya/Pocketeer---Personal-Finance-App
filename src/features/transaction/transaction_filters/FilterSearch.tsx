@@ -5,6 +5,8 @@ import {
   transactionStore,
 } from "../store/transactionStore.ts";
 
+import Icon from "../../../components/ui/Icon.tsx";
+
 function FilterSearch() {
   const searchedRecipient: string = useStore(
     transactionStore,
@@ -30,9 +32,7 @@ function FilterSearch() {
         className="w-full bg-transparent outline-none"
       />
 
-      <svg className="h-6 w-6">
-        <use href="/src/assets/icons/ui_icons_sprite.svg#search"></use>
-      </svg>
+      <Icon id="search" className="size-6" />
 
       <div className="absolute right-1 -bottom-5 text-xs text-gray-500">
         {transactionStore.state.maxSearchLength -
