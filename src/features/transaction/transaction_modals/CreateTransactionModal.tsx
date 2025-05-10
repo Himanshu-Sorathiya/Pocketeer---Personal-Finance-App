@@ -1,4 +1,5 @@
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useCreateTransaction } from "../hooks/useCreateTransaction.ts";
 import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 
@@ -9,12 +10,13 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
+  const { user_id } = useUser();
   const { transactions } = useReadTransactions();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
   const defaultValues = {
     recipientName: "",
-    category: transactionCategories[0] || "",
+    category: transactionCategories[0] ?? "",
     date: new Date().toISOString().slice(0, 10),
     amount: "",
     type: "expense",
@@ -24,6 +26,7 @@ function CreateTransactionModal() {
     defaultValues,
     onSubmit: async ({ value }) => {
       createTransaction({
+        user_id: user_id ?? "",
         recipient: value.recipientName,
         category: value.category,
         amount: +value.amount,

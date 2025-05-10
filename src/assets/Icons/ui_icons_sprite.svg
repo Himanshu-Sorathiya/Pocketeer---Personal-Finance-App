@@ -134,7 +134,7 @@
   </symbol>
 
   <symbol
-    id="logout"
+    id="signout"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
@@ -148,7 +148,7 @@
   </symbol>
 
   <symbol
-    id="login"
+    id="signin"
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"

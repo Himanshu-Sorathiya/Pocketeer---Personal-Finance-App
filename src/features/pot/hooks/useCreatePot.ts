@@ -17,10 +17,7 @@ function useCreatePot(): {
   createPot: UseMutateFunction<
     Pot,
     Error,
-    Omit<
-      Pot,
-      "user_id" | "potId" | "currency" | "creationDate" | "creationTime"
-    >,
+    Omit<Pot, "potId" | "currency" | "creationDate" | "creationTime">,
     unknown
   >;
 } {

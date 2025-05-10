@@ -7,6 +7,8 @@ import { Route as notificationRoute } from "../../routes/app/notification.tsx";
 import { Route as potRoute } from "../../routes/app/pot.tsx";
 import { Route as transactionRoute } from "../../routes/app/transaction.tsx";
 
+import SignOut from "../../features/auth/SignOut.tsx";
+
 import Icon from "../ui/Icon.tsx";
 
 function SidebarNav() {
@@ -40,11 +42,7 @@ function SidebarNav() {
         />
 
         <li className="rounded-md">
-          <a className="flex cursor-pointer items-center space-x-3 rounded-md p-3 transition-all duration-150 hover:bg-gray-800">
-            <Icon id="logout" className="size-6" />
-
-            <span>Logout</span>
-          </a>
+          <SignOut />
         </li>
       </ul>
     </nav>

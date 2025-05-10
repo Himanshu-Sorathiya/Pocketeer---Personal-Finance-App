@@ -1,7 +1,7 @@
-import SignupContainer from "../../features/auth/Signup.tsx";
+import SignUpContainer from "../../features/auth/SignUp.tsx";
 
-function Signup() {
-  return <SignupContainer />;
+function SignUp() {
+  return <SignUpContainer />;
 }
 
-export default Signup;
+export default SignUp;

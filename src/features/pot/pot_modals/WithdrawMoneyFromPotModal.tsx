@@ -4,6 +4,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useCreateTransaction } from "../../transaction/hooks/useCreateTransaction.ts";
 import { useReadPots } from "../hooks/useReadPots.ts";
 
@@ -16,6 +17,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function WithdrawMoneyFromPotModal({ potId }: any) {
+  const { user_id } = useUser();
   const { pots } = useReadPots();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
@@ -32,6 +34,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
     defaultValues,
     onSubmit: async ({ value }) => {
       createTransaction({
+        user_id: user_id ?? "",
         recipient: pot!.name,
         category: "savings",
         amount: +value.amount,

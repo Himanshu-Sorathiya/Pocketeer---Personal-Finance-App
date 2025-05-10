@@ -1,4 +1,5 @@
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useCreateBudget } from "../hooks/useCreateBudget.ts";
 import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
@@ -11,6 +12,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
+  const { user_id } = useUser();
   const { budgets } = useReadBudgets();
   const { budgetStatus, createBudget } = useCreateBudget();
 
@@ -42,6 +44,7 @@ function CreateBudgetModal() {
     defaultValues,
     onSubmit: async ({ value }) => {
       createBudget({
+        user_id: user_id ?? "",
         category: value.category,
         targetAmount: +value.targetAmount,
         theme: value.theme,

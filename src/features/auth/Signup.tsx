@@ -1,28 +1,56 @@
 import { Link } from "@tanstack/react-router";
 
-import { Route as loginRoute } from "../../routes/auth/login.tsx";
+import { Route as loginRoute } from "../../routes/auth/signin.tsx";
 
 import { useAppForm } from "../../hooks/useAppForm.ts";
+import { useSignUp } from "./hooks/useSignUp.ts";
 
+import FormSpinner from "../../components/loaders/FormSpinner.tsx";
+import Icon from "../../components/ui/Icon.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
-function Signup() {
-  const form = useAppForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
+function SignUp() {
+  const { signUpStatus, signUpError, signUp } = useSignUp();
 
-    onSubmit: async (values) => {
-      console.log("from", values);
+  const defaultValues = {
+    name: "",
+    email: "",
+    password: "",
+  };
+
+  const form = useAppForm({
+    defaultValues,
+
+    onSubmit: async ({ value }) => {
+      signUp({
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      });
     },
   });
+
+  if (signUpError?.message === "user_already_exists") {
+    form.reset();
+  }
 
   return (
     <div className="w-full max-w-xl p-6">
       <div className="flex w-full min-w-lg flex-col gap-3 rounded-lg bg-white px-4 pt-5 pb-6 shadow-xl">
+        {signUpStatus === "pending" && <FormSpinner />}
+
         <ModalHeader title={`Signup with Pocketeer`} />
+
+        {signUpError?.message === "user_already_exists" && (
+          <div className="flex items-center gap-2 text-pretty">
+            <Icon id="warning-triangle" className="size-10 text-red-500" />
+
+            <p className="text-sm font-semibold text-gray-900">
+              Looks like you’re already part of the Pocketeer family! Try
+              signing in instead.
+            </p>
+          </div>
+        )}
 
         <form
           onSubmit={(e) => {
@@ -157,7 +185,7 @@ function Signup() {
             </form.AppForm>
 
             <form.AppForm>
-              <form.SubmitButton label="Register" />
+              <form.SubmitButton label="Sign Up" />
             </form.AppForm>
           </div>
         </form>
@@ -175,4 +203,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignUp;

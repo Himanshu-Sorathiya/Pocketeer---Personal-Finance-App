@@ -17,10 +17,7 @@ function useCreateTransaction(): {
   createTransaction: UseMutateFunction<
     Transaction,
     Error,
-    Omit<
-      Transaction,
-      "user_id" | "transactionId" | "currency" | "creationTime"
-    >,
+    Omit<Transaction, "transactionId" | "currency" | "creationTime">,
     unknown
   >;
 } {

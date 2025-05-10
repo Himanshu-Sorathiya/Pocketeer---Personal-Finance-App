@@ -3,6 +3,7 @@ import { useStore } from "@tanstack/react-store";
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useCreatePot } from "../../pot/hooks/useCreatePot.ts";
 import { useReadPots } from "../hooks/useReadPots.ts";
 
@@ -16,6 +17,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
+  const { user_id } = useUser();
   const { pots } = useReadPots();
   const { potStatus, createPot } = useCreatePot();
 
@@ -45,6 +47,7 @@ function CreatePotModal() {
     defaultValues,
     onSubmit: async ({ value }) => {
       createPot({
+        user_id: user_id ?? "",
         name: value.name,
         targetAmount: +value.targetAmount,
         theme: value.theme,

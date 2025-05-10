@@ -20,8 +20,8 @@ import { Route as AppPotImport } from "./../routes/app/pot.tsx";
 import { Route as AppRouteImport } from "./../routes/app/route.tsx";
 import { Route as AppTransactionImport } from "./../routes/app/transaction.tsx";
 import { Route as AuthIndexImport } from "./../routes/auth/index.tsx";
-import { Route as AuthLoginImport } from "./../routes/auth/login.tsx";
 import { Route as AuthRouteImport } from "./../routes/auth/route.tsx";
+import { Route as AuthSigninImport } from "./../routes/auth/signin.tsx";
 import { Route as AuthSignupImport } from "./../routes/auth/signup.tsx";
 import { Route as IndexImport } from "./../routes/index.tsx";
 
@@ -63,9 +63,9 @@ const AuthSignupRoute = AuthSignupImport.update({
   getParentRoute: () => AuthRouteRoute,
 } as any);
 
-const AuthLoginRoute = AuthLoginImport.update({
-  id: "/login",
-  path: "/login",
+const AuthSigninRoute = AuthSigninImport.update({
+  id: "/signin",
+  path: "/signin",
   getParentRoute: () => AuthRouteRoute,
 } as any);
 
@@ -172,11 +172,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppTransactionImport;
       parentRoute: typeof AppRouteImport;
     };
-    "/auth/login": {
-      id: "/auth/login";
-      path: "/login";
-      fullPath: "/auth/login";
-      preLoaderRoute: typeof AuthLoginImport;
+    "/auth/signin": {
+      id: "/auth/signin";
+      path: "/signin";
+      fullPath: "/auth/signin";
+      preLoaderRoute: typeof AuthSigninImport;
       parentRoute: typeof AuthRouteImport;
     };
     "/auth/signup": {
@@ -230,13 +230,13 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 );
 
 interface AuthRouteRouteChildren {
-  AuthLoginRoute: typeof AuthLoginRoute;
+  AuthSigninRoute: typeof AuthSigninRoute;
   AuthSignupRoute: typeof AuthSignupRoute;
   AuthIndexRoute: typeof AuthIndexRoute;
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthLoginRoute: AuthLoginRoute,
+  AuthSigninRoute: AuthSigninRoute,
   AuthSignupRoute: AuthSignupRoute,
   AuthIndexRoute: AuthIndexRoute,
 };
@@ -255,7 +255,7 @@ export interface FileRoutesByFullPath {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
-  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app/": typeof AppIndexRoute;
   "/auth/": typeof AuthIndexRoute;
@@ -269,7 +269,7 @@ export interface FileRoutesByTo {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
-  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app": typeof AppIndexRoute;
   "/auth": typeof AuthIndexRoute;
@@ -286,7 +286,7 @@ export interface FileRoutesById {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
-  "/auth/login": typeof AuthLoginRoute;
+  "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app/": typeof AppIndexRoute;
   "/auth/": typeof AuthIndexRoute;
@@ -304,7 +304,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
-    | "/auth/login"
+    | "/auth/signin"
     | "/auth/signup"
     | "/app/"
     | "/auth/";
@@ -317,7 +317,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
-    | "/auth/login"
+    | "/auth/signin"
     | "/auth/signup"
     | "/app"
     | "/auth";
@@ -332,7 +332,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
-    | "/auth/login"
+    | "/auth/signin"
     | "/auth/signup"
     | "/app/"
     | "/auth/";
@@ -384,7 +384,7 @@ export const routeTree = rootRoute
     "/auth": {
       "filePath": "auth/route.tsx",
       "children": [
-        "/auth/login",
+        "/auth/signin",
         "/auth/signup",
         "/auth/"
       ]
@@ -413,8 +413,8 @@ export const routeTree = rootRoute
       "filePath": "app/transaction.tsx",
       "parent": "/app"
     },
-    "/auth/login": {
-      "filePath": "auth/login.tsx",
+    "/auth/signin": {
+      "filePath": "auth/signin.tsx",
       "parent": "/auth"
     },
     "/auth/signup": {

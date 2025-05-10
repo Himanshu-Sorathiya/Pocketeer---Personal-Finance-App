@@ -6,18 +6,21 @@ import { Route as signupRoute } from "../../routes/auth/signup.tsx";
 import ModalLayout from "../../layouts/ModalLayout.tsx";
 
 import {
-    closeModal,
-    modalStore,
-    openModal,
+  closeModal,
+  modalStore,
+  openModal,
 } from "../../store/appModalStore.ts";
 
 import { useAppForm } from "../../hooks/useAppForm.ts";
+import { useSignIn } from "./hooks/useSignIn.ts";
 
 import ForgotPasswordModal from "./ForgotPasswordModal.tsx";
 
+import FormSpinner from "../../components/loaders/FormSpinner.tsx";
+import Icon from "../../components/ui/Icon.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
-function Login() {
+function SignIn() {
   const id = useStore(modalStore, (s) => s.id);
 
   function handleOpenModal() {
@@ -28,20 +31,44 @@ function Login() {
     closeModal();
   }
 
+  const { signInStatus, signInError, signIn } = useSignIn();
+
+  const defaultValues = {
+    email: "",
+    password: "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    defaultValues,
+    onSubmit: async ({ value }) => {
+      signIn({
+        email: value.email,
+        password: value.password,
+      });
     },
   });
+
+  if (signInError?.message === "invalid_credentials") {
+    form.reset();
+  }
 
   return (
     <div className="w-full max-w-xl p-6">
       <div className="flex w-full min-w-lg flex-col gap-3 rounded-lg bg-white px-4 pt-5 pb-6 shadow-xl">
-        <ModalHeader title={`Login to Pocketeer`} />
+        {signInStatus === "pending" && <FormSpinner />}
+
+        <ModalHeader title={`Signin to Pocketeer`} />
+
+        {signInError?.message === "invalid_credentials" && (
+          <div className="flex items-center gap-2">
+            <Icon id="warning-triangle" className="size-10 text-red-500" />
+
+            <p className="text-sm font-semibold text-gray-900">
+              Whoops! It looks like those credentials don't quite match. Give it
+              another shot and let’s get you back on track!
+            </p>
+          </div>
+        )}
 
         <form
           onSubmit={(e) => {
@@ -104,7 +131,7 @@ function Login() {
 
                 !/[A-Z]/.test(value) &&
                   errors.push(
-                    "Password must contain at least one uppercase letter",
+                    "Password must contain at least one inuppercase letter",
                   );
 
                 !/[a-z]/.test(value) &&
@@ -143,7 +170,7 @@ function Login() {
             </form.AppForm>
 
             <form.AppForm>
-              <form.SubmitButton label="Login" />
+              <form.SubmitButton label="Sign In" />
             </form.AppForm>
           </div>
         </form>
@@ -167,4 +194,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;

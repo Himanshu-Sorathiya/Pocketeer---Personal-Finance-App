@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { budgetQueryOptions } from "../../../services/queryOptions.ts";
+import { getBudgets as getBudgetsApi } from "../../../services/apiBudget.ts";
+
+import { useUser } from "../../auth/hooks/useUser.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
@@ -10,13 +12,16 @@ function useReadBudgets(): {
   budgetsFetchStatus: "fetching" | "paused" | "idle";
   budgetsError: Error | null;
 } {
+  const { user_id } = useUser();
+
   const {
     data = [],
     status,
     fetchStatus,
     error,
   } = useQuery<Budget[]>({
-    ...budgetQueryOptions,
+    queryKey: ["budgets", user_id],
+    queryFn: getBudgetsApi,
   });
 
   return {

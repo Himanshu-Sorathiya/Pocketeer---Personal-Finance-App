@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { transactionQueryOptions } from "../../../services/queryOptions.ts";
+import { getTransactions as getTransactionsApi } from "../../../services/apiTransaction.ts";
+
+import { useUser } from "../../auth/hooks/useUser.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -10,13 +12,16 @@ function useReadTransactions(): {
   transactionsFetchStatus: "fetching" | "paused" | "idle";
   transactionsError: Error | null;
 } {
+  const { user_id } = useUser();
+
   const {
     data = [],
     status,
     fetchStatus,
     error,
   } = useQuery<Transaction[]>({
-    ...transactionQueryOptions,
+    queryKey: ["transactions", user_id],
+    queryFn: getTransactionsApi,
   });
 
   return {

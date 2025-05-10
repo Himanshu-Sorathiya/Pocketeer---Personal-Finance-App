@@ -11,7 +11,7 @@ function ResetButton() {
       onClick={() => form.reset()}
       className="cursor-pointer rounded-md bg-gray-200 px-5 py-3 transition-all duration-150 hover:bg-gray-300"
     >
-      <Icon id="close" className="size-6" />
+      <Icon id="reset" className="size-6" />
     </button>
   );
 }

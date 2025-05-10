@@ -5,7 +5,7 @@ import {
   updateTransactions as updateTransactionsApi,
 } from "./apiTransaction.ts";
 
-import { currency, user_id } from "../constants/user.ts";
+import { currency } from "../constants/user.ts";
 
 import { supabase } from "./supabase.ts";
 
@@ -40,16 +40,13 @@ async function getPots({ queryKey }: { queryKey: QueryKey }): Promise<Pot[]> {
 }
 
 async function createPot(
-  pot: Omit<
-    Pot,
-    "user_id" | "potId" | "currency" | "creationDate" | "creationTime"
-  >,
+  pot: Omit<Pot, "potId" | "currency" | "creationDate" | "creationTime">,
 ): Promise<Pot> {
   const { data, error } = await supabase
     .from("pots")
     .insert([
       {
-        user_id,
+        user_id: pot.user_id,
         name: pot.name,
         target_amount: pot.targetAmount,
         currency,

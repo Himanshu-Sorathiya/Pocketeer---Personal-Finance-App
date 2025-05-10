@@ -18,10 +18,7 @@ function useCreateBudget(): {
   createBudget: UseMutateFunction<
     Budget,
     Error,
-    Omit<
-      Budget,
-      "user_id" | "budgetId" | "currency" | "creationDate" | "creationTime"
-    >,
+    Omit<Budget, "budgetId" | "currency" | "creationDate" | "creationTime">,
     unknown
   >;
 } {

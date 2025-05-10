@@ -1,6 +1,6 @@
 function GlobalSpinner() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm">
+    <div className="fixed inset-0 flex items-center justify-center bg-orange-50/30 backdrop-blur-sm">
       <svg
         viewBox="0 0 24 24"
         fill="none"

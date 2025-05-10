@@ -1,6 +1,6 @@
 import type { QueryKey } from "@tanstack/react-query";
 
-import { currency, user_id } from "../constants/user.ts";
+import { currency } from "../constants/user.ts";
 
 import { supabase } from "./supabase.ts";
 
@@ -43,14 +43,14 @@ async function getBudgets({
 async function createBudget(
   budget: Omit<
     Budget,
-    "user_id" | "budgetId" | "currency" | "creationDate" | "creationTime"
+    "budgetId" | "currency" | "creationDate" | "creationTime"
   >,
 ): Promise<Budget> {
   const { data, error } = await supabase
     .from("budgets")
     .insert([
       {
-        user_id,
+        user_id: budget.user_id,
         category: budget.category,
         target_amount: budget.targetAmount,
         currency,
