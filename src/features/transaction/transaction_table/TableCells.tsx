@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useStore } from "@tanstack/react-store";
 
 import { transactionIconCacheStore } from "../../../store/appCacheStore.ts";
-import { openModal } from "../../../store/appModalStore.ts";
+import { handleOpenModal } from "../../../store/appModalStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 import Icon from "../../../components/ui/Icon.tsx";
@@ -80,9 +80,9 @@ function ActionsCell({
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 
   function handleActionClick(action: string) {
-    if (action === "edit") openModal("edit_transaction", transactionId);
+    if (action === "edit") handleOpenModal("edit_transaction", transactionId);
     else if (action === "delete")
-      openModal("delete_transaction", transactionId);
+      handleOpenModal("delete_transaction", transactionId);
   }
 
   return (

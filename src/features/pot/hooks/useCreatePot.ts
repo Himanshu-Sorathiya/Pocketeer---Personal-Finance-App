@@ -6,7 +6,7 @@ import {
 
 import { createPot as createPotApi } from "../../../services/apiPot.ts";
 
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 import type { Pot } from "../types/pot.types.ts";
 
@@ -33,7 +33,7 @@ function useCreatePot(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

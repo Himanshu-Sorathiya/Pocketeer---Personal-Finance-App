@@ -7,7 +7,7 @@ import {
 import { deleteBudget as deleteBudgetApi } from "../../../services/apiBudget.ts";
 
 import { deleteBudgetCache } from "../../../store/appCacheStore.ts";
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 import { handleBudgetChange } from "../store/budgetStore.ts";
 
 function useDeleteBudget(): {
@@ -38,7 +38,7 @@ function useDeleteBudget(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

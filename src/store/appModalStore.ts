@@ -28,4 +28,12 @@ function closeModal() {
   }));
 }
 
-export { closeModal, modalStore, openModal };
+function handleOpenModal(id: ModalId, data?: any) {
+  openModal(id, data);
+}
+
+function handleCloseModal() {
+  closeModal();
+}
+
+export { handleCloseModal, handleOpenModal, modalStore };

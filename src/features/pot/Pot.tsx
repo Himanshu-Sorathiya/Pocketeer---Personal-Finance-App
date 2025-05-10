@@ -2,11 +2,7 @@ import { useStore } from "@tanstack/react-store";
 
 import ModalLayout from "../../layouts/ModalLayout.tsx";
 
-import {
-  closeModal,
-  modalStore,
-  openModal,
-} from "../../store/appModalStore.ts";
+import { modalStore } from "../../store/appModalStore.ts";
 
 import AddMoneyToPotModal from "./pot_modals/AddMoneyToPotModal.tsx";
 import CreatePotModal from "./pot_modals/CreatePotModal.tsx";
@@ -21,17 +17,9 @@ function Pot() {
   const id = useStore(modalStore, (s) => s.id);
   const potId = useStore(modalStore, (s) => s.data);
 
-  function handleOpenModal() {
-    openModal("create_pot");
-  }
-
-  function handleCloseModal() {
-    closeModal();
-  }
-
   return (
     <>
-      <Header title="Pot" handleOpenModal={handleOpenModal}>
+      <Header title="Pot" modalId="create_pot">
         Plant a Pot
       </Header>
 
@@ -43,7 +31,7 @@ function Pot() {
           "pot_add_money",
           "pot_withdraw_money",
         ].includes(id) && (
-          <ModalLayout onClose={handleCloseModal}>
+          <ModalLayout>
             {id === "create_pot" && <CreatePotModal />}
             {id === "edit_pot" && <UpdatePotModal potId={potId} />}
             {id === "delete_pot" && <DeletePotModal potId={potId} />}

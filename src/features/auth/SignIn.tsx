@@ -5,11 +5,7 @@ import { Route as signupRoute } from "../../routes/auth/signup.tsx";
 
 import ModalLayout from "../../layouts/ModalLayout.tsx";
 
-import {
-  closeModal,
-  modalStore,
-  openModal,
-} from "../../store/appModalStore.ts";
+import { handleOpenModal, modalStore } from "../../store/appModalStore.ts";
 
 import { useAppForm } from "../../hooks/useAppForm.ts";
 import { useSignIn } from "./hooks/useSignIn.ts";
@@ -22,14 +18,6 @@ import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function SignIn() {
   const id = useStore(modalStore, (s) => s.id);
-
-  function handleOpenModal() {
-    openModal("forgot_password");
-  }
-
-  function handleCloseModal() {
-    closeModal();
-  }
 
   const { signInStatus, signInError, signIn } = useSignIn();
 
@@ -155,7 +143,7 @@ function SignIn() {
                 <field.PasswordField label="Password" />
 
                 <span
-                  onClick={handleOpenModal}
+                  onClick={() => handleOpenModal("forgot_password")}
                   className="hover:text-primary cursor-pointer self-end text-sm font-medium text-nowrap text-gray-700 underline transition-all duration-100"
                 >
                   Forgot Password?
@@ -186,7 +174,7 @@ function SignIn() {
       </p>
 
       {id && ["forgot_password"].includes(id) && (
-        <ModalLayout onClose={handleCloseModal}>
+        <ModalLayout>
           {id === "forgot_password" && <ForgotPasswordModal />}
         </ModalLayout>
       )}

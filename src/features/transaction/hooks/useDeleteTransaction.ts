@@ -7,7 +7,7 @@ import {
 import { deleteTransaction as deleteTransactionApi } from "../../../services/apiTransaction.ts";
 
 import { deleteTransactionCache } from "../../../store/appCacheStore.ts";
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 function useDeleteTransaction(): {
   transactionStatus: "error" | "idle" | "pending" | "success";
@@ -36,7 +36,7 @@ function useDeleteTransaction(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

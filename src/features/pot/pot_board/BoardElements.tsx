@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { openModal } from "../../../store/appModalStore.ts";
+import { handleOpenModal } from "../../../store/appModalStore.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 import Icon from "../../../components/ui/Icon.tsx";
@@ -166,8 +166,9 @@ function BoardPotActions({
   targetAmount: number;
 }) {
   function handleActionClick(action: string) {
-    if (action === "add") openModal("pot_add_money", potId);
-    else if (action === "withdraw") openModal("pot_withdraw_money", potId);
+    if (action === "add") handleOpenModal("pot_add_money", potId);
+    else if (action === "withdraw")
+      handleOpenModal("pot_withdraw_money", potId);
   }
 
   return (
@@ -211,8 +212,8 @@ function BoardActions({ potId }: { potId: string }) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 
   function handleActionClick(action: string) {
-    if (action === "edit") openModal("edit_pot", potId);
-    else if (action === "delete") openModal("delete_pot", potId);
+    if (action === "edit") handleOpenModal("edit_pot", potId);
+    else if (action === "delete") handleOpenModal("delete_pot", potId);
   }
 
   return (

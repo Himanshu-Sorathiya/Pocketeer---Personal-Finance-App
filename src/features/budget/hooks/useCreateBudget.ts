@@ -6,7 +6,7 @@ import {
 
 import { createBudget as createBudgetApi } from "../../../services/apiBudget.ts";
 
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 import { handleBudgetChange } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
@@ -36,7 +36,7 @@ function useCreateBudget(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

@@ -7,7 +7,7 @@ import {
 import { deletePot as deletePotApi } from "../../../services/apiPot.ts";
 
 import { deletePotCache } from "../../../store/appCacheStore.ts";
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 function useDeletePot(): {
   potStatus: "error" | "idle" | "pending" | "success";
@@ -37,7 +37,7 @@ function useDeletePot(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

@@ -6,7 +6,7 @@ import {
 
 import { createTransaction as createTransactionApi } from "../../../services/apiTransaction.ts";
 
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -34,7 +34,7 @@ function useCreateTransaction(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

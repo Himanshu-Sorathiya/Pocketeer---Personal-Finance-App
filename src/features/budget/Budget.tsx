@@ -2,11 +2,7 @@ import { useStore } from "@tanstack/react-store";
 
 import ModalLayout from "../../layouts/ModalLayout.tsx";
 
-import {
-  closeModal,
-  modalStore,
-  openModal,
-} from "../../store/appModalStore.ts";
+import { modalStore } from "../../store/appModalStore.ts";
 
 import CreateBudgetModal from "./budget_modals/CreateBudgetModal.tsx";
 import DeleteBudgetModal from "./budget_modals/DeleteBudgetModal.tsx";
@@ -19,22 +15,14 @@ function Budget() {
   const id = useStore(modalStore, (s) => s.id);
   const budgetId = useStore(modalStore, (s) => s.data);
 
-  function handleOpenModal() {
-    openModal("create_budget");
-  }
-
-  function handleCloseModal() {
-    closeModal();
-  }
-
   return (
     <>
-      <Header title="Budget" handleOpenModal={handleOpenModal}>
+      <Header title="Budget" modalId="create_budget">
         Craft a Budget
       </Header>
 
       {id && ["create_budget", "edit_budget", "delete_budget"].includes(id) && (
-        <ModalLayout onClose={handleCloseModal}>
+        <ModalLayout>
           {id === "create_budget" && <CreateBudgetModal />}
           {id === "edit_budget" && <UpdateBudgetModal budgetId={budgetId} />}
           {id === "delete_budget" && <DeleteBudgetModal budgetId={budgetId} />}

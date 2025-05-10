@@ -6,7 +6,7 @@ import {
 
 import { updateTransaction as updateTransactionApi } from "../../../services/apiTransaction.ts";
 
-import { closeModal } from "../../../store/appModalStore.ts";
+import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
@@ -42,7 +42,7 @@ function useUpdateTransaction(): {
       throw new Error(error?.message);
     },
     onSettled: () => {
-      closeModal();
+      handleCloseModal();
     },
   });
 

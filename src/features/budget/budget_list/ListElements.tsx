@@ -13,7 +13,7 @@ import {
 import { Route as transactionRoute } from "../../../routes/app/transaction.tsx";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
-import { openModal } from "../../../store/appModalStore.ts";
+import { handleOpenModal } from "../../../store/appModalStore.ts";
 import {
   handleCategoryChange,
   handleDateRangeChange,
@@ -255,8 +255,9 @@ function ListActions({ selectedBudgetId }: { selectedBudgetId: string }) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 
   function handleActionClick(action: string) {
-    if (action === "edit") openModal("edit_budget", selectedBudgetId);
-    else if (action === "delete") openModal("delete_budget", selectedBudgetId);
+    if (action === "edit") handleOpenModal("edit_budget", selectedBudgetId);
+    else if (action === "delete")
+      handleOpenModal("delete_budget", selectedBudgetId);
   }
 
   return (

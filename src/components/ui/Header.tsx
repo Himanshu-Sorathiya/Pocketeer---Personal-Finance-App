@@ -1,12 +1,16 @@
+import { handleOpenModal } from "../../store/appModalStore.ts";
+
 import Icon from "./Icon.tsx";
 
-export default function Header({
+import type { ModalId } from "../../constants/modalConfig.ts";
+
+function Header({
   title,
-  handleOpenModal,
+  modalId,
   children,
 }: {
   title: string;
-  handleOpenModal?: () => void;
+  modalId?: ModalId;
   children?: React.ReactNode;
 }) {
   return (
@@ -17,7 +21,7 @@ export default function Header({
         <div>
           <button
             type="button"
-            onClick={handleOpenModal}
+            onClick={() => modalId && handleOpenModal(modalId)}
             className="flex cursor-pointer items-center gap-2 rounded bg-gray-800 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-gray-900"
           >
             <Icon id="create" className="size-5 stroke-3" />
@@ -29,3 +33,5 @@ export default function Header({
     </div>
   );
 }
+
+export default Header;
