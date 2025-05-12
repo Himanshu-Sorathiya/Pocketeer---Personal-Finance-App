@@ -9,6 +9,8 @@ import { deleteTransaction as deleteTransactionApi } from "../../../services/api
 import { deleteTransactionCache } from "../../../store/appCacheStore.ts";
 import { handleCloseModal } from "../../../store/appModalStore.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useDeleteTransaction(): {
   transactionStatus: "error" | "idle" | "pending" | "success";
   transactionError: Error | null;
@@ -26,14 +28,19 @@ function useDeleteTransaction(): {
   const { status, error, mutate } = useMutation({
     mutationFn: deleteTransactionApi,
     onSuccess: (_, { transactionId }) => {
+      showToast("success", "Transaction removed from your records. All set!");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
 
       deleteTransactionCache(transactionId);
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Couldn’t delete the transaction. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

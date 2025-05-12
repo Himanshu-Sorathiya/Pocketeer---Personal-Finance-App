@@ -10,6 +10,8 @@ import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 import type { Pot } from "../types/pot.types.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useUpdatePot(): {
   updatedPot: Pot | undefined;
   potStatus: "error" | "idle" | "pending" | "success";
@@ -30,11 +32,19 @@ function useUpdatePot(): {
   const { data, status, error, mutate } = useMutation({
     mutationFn: updatePotApi,
     onSuccess: () => {
+      showToast(
+        "success",
+        "Pot updated successfully. Keep your savings on point!",
+      );
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Something went wrong while updating the pot. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

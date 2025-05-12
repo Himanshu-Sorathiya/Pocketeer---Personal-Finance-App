@@ -9,6 +9,8 @@ import { deletePot as deletePotApi } from "../../../services/apiPot.ts";
 import { deletePotCache } from "../../../store/appCacheStore.ts";
 import { handleCloseModal } from "../../../store/appModalStore.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useDeletePot(): {
   potStatus: "error" | "idle" | "pending" | "success";
   potError: Error | null;
@@ -28,13 +30,18 @@ function useDeletePot(): {
     mutationFn: deletePotApi,
 
     onSuccess: (_, { potId }) => {
+      showToast("success", "Pot removed. Financial structure adjusted!");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
 
       deletePotCache(potId);
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Couldn’t delete the pot. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

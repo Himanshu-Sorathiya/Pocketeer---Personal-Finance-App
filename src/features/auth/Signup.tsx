@@ -6,7 +6,6 @@ import { useAppForm } from "../../hooks/useAppForm.ts";
 import { useSignUp } from "./hooks/useSignUp.ts";
 
 import FormSpinner from "../../components/loaders/FormSpinner.tsx";
-import Icon from "../../components/ui/Icon.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function SignUp() {
@@ -40,17 +39,6 @@ function SignUp() {
         {signUpStatus === "pending" && <FormSpinner />}
 
         <ModalHeader title={`Signup with Pocketeer`} />
-
-        {signUpError?.message === "user_already_exists" && (
-          <div className="flex items-center gap-2 text-pretty">
-            <Icon id="warning-triangle" className="size-10 text-red-500" />
-
-            <p className="text-sm font-semibold text-gray-900">
-              Looks like you’re already part of the Pocketeer family! Try
-              signing in instead.
-            </p>
-          </div>
-        )}
 
         <form
           onSubmit={(e) => {

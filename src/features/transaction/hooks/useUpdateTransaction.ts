@@ -10,6 +10,8 @@ import { handleCloseModal } from "../../../store/appModalStore.ts";
 
 import type { Transaction } from "../types/transaction.types.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useUpdateTransaction(): {
   updatedTransaction: Transaction | undefined;
   transactionStatus: "error" | "idle" | "pending" | "success";
@@ -34,12 +36,17 @@ function useUpdateTransaction(): {
   const { data, status, error, mutate } = useMutation({
     mutationFn: updateTransactionApi,
     onSuccess: () => {
+      showToast("success", "Transaction updated successfully. Stay organized!");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Something went wrong while updating the transaction. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

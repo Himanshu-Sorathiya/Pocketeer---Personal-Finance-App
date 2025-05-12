@@ -5,6 +5,8 @@ import { Route as signInRoute } from "../../../routes/auth/signin.tsx";
 
 import { signOut as signOutApi } from "../../../services/apiAuth.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useSignOut() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -12,12 +14,17 @@ function useSignOut() {
   const { status, error, mutate } = useMutation({
     mutationFn: signOutApi,
     onSuccess: () => {
+      showToast("success", "You’re signed out. See you again soon!");
+
       queryClient.removeQueries();
 
       navigate({ to: signInRoute.to, replace: true });
     },
-    onError: (error) => {
-      throw new Error(error.message);
+    onError: () => {
+      showToast(
+        "error",
+        "Whoops! Something went wrong while signing out. Give it another shot and let’s get you back on track!",
+      );
     },
   });
 

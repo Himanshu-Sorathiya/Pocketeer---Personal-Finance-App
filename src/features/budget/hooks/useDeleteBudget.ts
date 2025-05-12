@@ -10,6 +10,8 @@ import { deleteBudgetCache } from "../../../store/appCacheStore.ts";
 import { handleCloseModal } from "../../../store/appModalStore.ts";
 import { handleBudgetChange } from "../store/budgetStore.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useDeleteBudget(): {
   budgetStatus: "error" | "idle" | "pending" | "success";
   budgetError: Error | null;
@@ -27,6 +29,8 @@ function useDeleteBudget(): {
   const { status, error, mutate } = useMutation({
     mutationFn: deleteBudgetApi,
     onSuccess: (_, { budgetId }) => {
+      showToast("success", "Budget removed. Financial focus realigned!");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
 
@@ -34,8 +38,11 @@ function useDeleteBudget(): {
 
       handleBudgetChange("");
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Couldn’t delete the budget. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

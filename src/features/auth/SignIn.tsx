@@ -13,7 +13,6 @@ import { useSignIn } from "./hooks/useSignIn.ts";
 import ForgotPasswordModal from "./ForgotPasswordModal.tsx";
 
 import FormSpinner from "../../components/loaders/FormSpinner.tsx";
-import Icon from "../../components/ui/Icon.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function SignIn() {
@@ -46,17 +45,6 @@ function SignIn() {
         {signInStatus === "pending" && <FormSpinner />}
 
         <ModalHeader title={`Signin to Pocketeer`} />
-
-        {signInError?.message === "invalid_credentials" && (
-          <div className="flex items-center gap-2">
-            <Icon id="warning-triangle" className="size-10 text-red-500" />
-
-            <p className="text-sm font-semibold text-gray-900">
-              Whoops! It looks like those credentials don't quite match. Give it
-              another shot and let’s get you back on track!
-            </p>
-          </div>
-        )}
 
         <form
           onSubmit={(e) => {

@@ -11,6 +11,8 @@ import { handleBudgetChange } from "../store/budgetStore.ts";
 
 import type { Budget } from "../types/budget.types.ts";
 
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
 function useCreateBudget(): {
   createdBudget: Budget | undefined;
   budgetStatus: "error" | "idle" | "pending" | "success";
@@ -27,13 +29,21 @@ function useCreateBudget(): {
   const { data, status, error, mutate } = useMutation({
     mutationFn: createBudgetApi,
     onSuccess: (data) => {
+      showToast(
+        "success",
+        "Budget successfully created. Time to stay on track!",
+      );
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
 
       handleBudgetChange(data.budgetId || "");
     },
-    onError(error) {
-      throw new Error(error?.message);
+    onError() {
+      showToast(
+        "error",
+        "Whoops! Something went wrong while creating the budget. Give it another shot and let’s get you back on track!",
+      );
     },
     onSettled: () => {
       handleCloseModal();
