@@ -13,6 +13,8 @@ async function signIn({
   session: Session;
   weakPassword?: WeakPassword;
 }> {
+  await signOut();
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -46,6 +48,8 @@ async function signUp({
     throw new Error(error.code);
   }
 
+  await signOut();
+
   return data;
 }
 
@@ -73,4 +77,37 @@ async function getUser(): Promise<User> {
   return data?.user;
 }
 
-export { getUser, signIn, signOut, signUp };
+async function sendPasswordResetEmail({
+  email,
+}: {
+  email: string;
+}): Promise<void> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:5173/auth/reset-password",
+  });
+
+  if (error) {
+    throw new Error(error.code);
+  }
+}
+
+async function updatePassword({
+  password,
+}: {
+  password: string;
+}): Promise<void> {
+  const { error } = await supabase.auth.updateUser({ password });
+
+  if (error) {
+    throw new Error(error.code);
+  }
+}
+
+export {
+  getUser,
+  sendPasswordResetEmail,
+  signIn,
+  signOut,
+  signUp,
+  updatePassword,
+};

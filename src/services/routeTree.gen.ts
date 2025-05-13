@@ -20,6 +20,7 @@ import { Route as AppPotImport } from "./../routes/app/pot.tsx";
 import { Route as AppRouteImport } from "./../routes/app/route.tsx";
 import { Route as AppTransactionImport } from "./../routes/app/transaction.tsx";
 import { Route as AuthIndexImport } from "./../routes/auth/index.tsx";
+import { Route as AuthResetPasswordImport } from "./../routes/auth/reset-password.tsx";
 import { Route as AuthRouteImport } from "./../routes/auth/route.tsx";
 import { Route as AuthSigninImport } from "./../routes/auth/signin.tsx";
 import { Route as AuthSignupImport } from "./../routes/auth/signup.tsx";
@@ -66,6 +67,12 @@ const AuthSignupRoute = AuthSignupImport.update({
 const AuthSigninRoute = AuthSigninImport.update({
   id: "/signin",
   path: "/signin",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
+
+const AuthResetPasswordRoute = AuthResetPasswordImport.update({
+  id: "/reset-password",
+  path: "/reset-password",
   getParentRoute: () => AuthRouteRoute,
 } as any);
 
@@ -172,6 +179,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppTransactionImport;
       parentRoute: typeof AppRouteImport;
     };
+    "/auth/reset-password": {
+      id: "/auth/reset-password";
+      path: "/reset-password";
+      fullPath: "/auth/reset-password";
+      preLoaderRoute: typeof AuthResetPasswordImport;
+      parentRoute: typeof AuthRouteImport;
+    };
     "/auth/signin": {
       id: "/auth/signin";
       path: "/signin";
@@ -230,12 +244,14 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 );
 
 interface AuthRouteRouteChildren {
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute;
   AuthSigninRoute: typeof AuthSigninRoute;
   AuthSignupRoute: typeof AuthSignupRoute;
   AuthIndexRoute: typeof AuthIndexRoute;
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSigninRoute: AuthSigninRoute,
   AuthSignupRoute: AuthSignupRoute,
   AuthIndexRoute: AuthIndexRoute,
@@ -255,6 +271,7 @@ export interface FileRoutesByFullPath {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
+  "/auth/reset-password": typeof AuthResetPasswordRoute;
   "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app/": typeof AppIndexRoute;
@@ -269,6 +286,7 @@ export interface FileRoutesByTo {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
+  "/auth/reset-password": typeof AuthResetPasswordRoute;
   "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app": typeof AppIndexRoute;
@@ -286,6 +304,7 @@ export interface FileRoutesById {
   "/app/notification": typeof AppNotificationRoute;
   "/app/pot": typeof AppPotRoute;
   "/app/transaction": typeof AppTransactionRoute;
+  "/auth/reset-password": typeof AuthResetPasswordRoute;
   "/auth/signin": typeof AuthSigninRoute;
   "/auth/signup": typeof AuthSignupRoute;
   "/app/": typeof AppIndexRoute;
@@ -304,6 +323,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
+    | "/auth/reset-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/app/"
@@ -317,6 +337,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
+    | "/auth/reset-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/app"
@@ -332,6 +353,7 @@ export interface FileRouteTypes {
     | "/app/notification"
     | "/app/pot"
     | "/app/transaction"
+    | "/auth/reset-password"
     | "/auth/signin"
     | "/auth/signup"
     | "/app/"
@@ -384,6 +406,7 @@ export const routeTree = rootRoute
     "/auth": {
       "filePath": "auth/route.tsx",
       "children": [
+        "/auth/reset-password",
         "/auth/signin",
         "/auth/signup",
         "/auth/"
@@ -412,6 +435,10 @@ export const routeTree = rootRoute
     "/app/transaction": {
       "filePath": "app/transaction.tsx",
       "parent": "/app"
+    },
+    "/auth/reset-password": {
+      "filePath": "auth/reset-password.tsx",
+      "parent": "/auth"
     },
     "/auth/signin": {
       "filePath": "auth/signin.tsx",

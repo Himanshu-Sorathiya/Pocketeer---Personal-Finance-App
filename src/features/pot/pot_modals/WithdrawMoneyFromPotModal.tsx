@@ -147,6 +147,10 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
               if (parseFloat(value) > savedAmount)
                 form.setFieldValue("amount", String(savedAmount));
             },
+            onSubmit: ({ value }) => {
+              if (parseFloat(value) > savedAmount)
+                form.setFieldValue("amount", String(savedAmount));
+            },
           }}
           children={(field) => (
             <field.AmountField

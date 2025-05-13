@@ -1,27 +1,43 @@
 import { useAppForm } from "../../hooks/useAppForm.ts";
+import { useSendPasswordResetEmail } from "./hooks/useSendPasswordResetEmail.tsx";
 
+import FormSpinner from "../../components/loaders/FormSpinner.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";
 
 function ForgotPasswordModal() {
+  const {
+    sendPasswordResetEmailStatus,
+    sendPasswordResetEmailError,
+    sendPasswordResetEmail,
+  } = useSendPasswordResetEmail();
+
+  const defaultValues = {
+    email: "",
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      email: "",
-    },
-    onSubmit: async (values) => {
-      console.log("from", values);
+    defaultValues,
+    onSubmit: async ({ value }) => {
+      sendPasswordResetEmail({ email: value.email });
     },
   });
 
+  if (sendPasswordResetEmailError?.message) {
+    form.reset();
+  }
+
   return (
-    <div className="flex min-w-lg flex-col gap-3">
-      <ModalHeader title={`Reset Password`} />
+    <>
+      {sendPasswordResetEmailStatus === "pending" && <FormSpinner />}
+
+      <ModalHeader title={`Update Your Password`} />
 
       <form
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="flex flex-col gap-4"
+        className="mt-2 flex flex-col gap-4"
       >
         <form.AppField
           name="email"
@@ -55,11 +71,11 @@ function ForgotPasswordModal() {
           </form.AppForm>
 
           <form.AppForm>
-            <form.SubmitButton label="Reset" />
+            <form.SubmitButton label="Send Password Reset Email" />
           </form.AppForm>
         </div>
       </form>
-    </div>
+    </>
   );
 }
 

@@ -151,6 +151,13 @@ function AddMoneyToPotModal({ potId }: any) {
                   String(pot!.targetAmount - savedAmount),
                 );
             },
+            onSubmit: ({ value }) => {
+              if (parseFloat(value) > pot!.targetAmount - savedAmount)
+                form.setFieldValue(
+                  "amount",
+                  String(pot!.targetAmount - savedAmount),
+                );
+            },
           }}
           children={(field) => (
             <field.AmountField label="Amount to Add" currency={pot!.currency} />
