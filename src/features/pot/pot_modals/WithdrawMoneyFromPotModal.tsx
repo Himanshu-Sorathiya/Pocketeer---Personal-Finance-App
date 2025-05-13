@@ -5,8 +5,8 @@ import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useUser } from "../../auth/hooks/useUser.ts";
-import { useCreateTransaction } from "../../transaction/hooks/useCreateTransaction.ts";
 import { useReadPots } from "../hooks/useReadPots.ts";
+import { useWithdrawMoneyFromPot } from "../hooks/useWithdrawMoneyFromPot.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
@@ -19,7 +19,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 function WithdrawMoneyFromPotModal({ potId }: any) {
   const { user_id } = useUser();
   const { pots } = useReadPots();
-  const { transactionStatus, createTransaction } = useCreateTransaction();
+  const { transactionStatus, withdrawMoneyFromPot } = useWithdrawMoneyFromPot();
 
   const pot: Pot | undefined = pots.find((pot) => pot.potId === potId);
 
@@ -33,7 +33,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
   const form = useAppForm({
     defaultValues,
     onSubmit: async ({ value }) => {
-      createTransaction({
+      withdrawMoneyFromPot({
         user_id: user_id ?? "",
         recipient: pot!.name,
         category: "savings",
