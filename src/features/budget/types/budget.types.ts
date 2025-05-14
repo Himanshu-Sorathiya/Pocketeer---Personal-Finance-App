@@ -7,7 +7,6 @@ type Budget = {
   budgetId: string;
   category: TransactionCategory;
   targetAmount: number;
-  currency: string;
   theme: string;
   creationDate: string;
   creationTime: string;

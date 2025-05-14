@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 import { useUpdateTransaction } from "../hooks/useUpdateTransaction.ts";
 
@@ -11,6 +12,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { Transaction } from "../types/transaction.types.ts";
 
 function UpdateTransactionModal({ transactionId }: any) {
+  const { currency_symbol } = useUser();
   const { transactions } = useReadTransactions();
   const { transactionStatus, updateTransaction } = useUpdateTransaction();
 
@@ -211,10 +213,7 @@ function UpdateTransactionModal({ transactionId }: any) {
             },
           }}
           children={(field) => (
-            <field.AmountField
-              label="Amount"
-              currency={transaction!.currency}
-            />
+            <field.AmountField label="Amount" currency={currency_symbol} />
           )}
         />
 

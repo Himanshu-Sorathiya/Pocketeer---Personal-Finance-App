@@ -10,7 +10,6 @@ type Transaction = {
   category: TransactionCategory;
   amount: number;
   type: TransactionType;
-  currency: string;
   creationDate: string;
   creationTime: string;
 };

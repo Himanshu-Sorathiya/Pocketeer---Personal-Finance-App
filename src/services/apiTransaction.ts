@@ -1,7 +1,5 @@
 import type { QueryKey } from "@tanstack/react-query";
 
-import { currency } from "../constants/user.ts";
-
 import { supabase } from "./supabase.ts";
 
 import type { Transaction } from "../features/transaction/types/transaction.types.ts";
@@ -36,7 +34,6 @@ async function getTransactions({
     category: item.category as TransactionCategory,
     amount: item.amount,
     type: item.type as TransactionType,
-    currency: item.currency,
     creationDate: item.creation_date,
     creationTime: item.creation_time,
   }));
@@ -45,7 +42,7 @@ async function getTransactions({
 }
 
 async function createTransaction(
-  transaction: Omit<Transaction, "transactionId" | "currency" | "creationTime">,
+  transaction: Omit<Transaction, "transactionId" | "creationTime">,
 ): Promise<Transaction> {
   const { data, error } = await supabase
     .from("transactions")
@@ -56,7 +53,6 @@ async function createTransaction(
         category: transaction.category,
         amount: transaction.amount,
         type: transaction.type,
-        currency,
         creation_date: transaction.creationDate,
         creation_time:
           transaction.creationDate === new Date().toISOString().split("T")[0]
@@ -80,7 +76,6 @@ async function createTransaction(
     category: data.category,
     amount: data.amount,
     type: data.type,
-    currency: data.currency,
     creationDate: data.creation_date,
     creationTime: data.creation_time,
   };
@@ -130,7 +125,6 @@ async function updateTransaction({
     category: data.category,
     amount: data.amount,
     type: data.type,
-    currency: data.currency,
     creationDate: data.creation_date,
     creationTime: data.creation_time,
   };

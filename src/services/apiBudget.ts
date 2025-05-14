@@ -1,7 +1,5 @@
 import type { QueryKey } from "@tanstack/react-query";
 
-import { currency } from "../constants/user.ts";
-
 import { supabase } from "./supabase.ts";
 
 import type { Budget } from "../features/budget/types/budget.types.ts";
@@ -31,7 +29,6 @@ async function getBudgets({
     budgetId: item.budget_id,
     category: item.category as TransactionCategory,
     targetAmount: item.target_amount,
-    currency: item.currency,
     theme: item.theme,
     creationDate: item.creation_date,
     creationTime: item.creation_time,
@@ -53,7 +50,6 @@ async function createBudget(
         user_id: budget.user_id,
         category: budget.category,
         target_amount: budget.targetAmount,
-        currency,
         theme: budget.theme,
         creation_date: new Date().toISOString().split("T")[0],
         creation_time: new Date().toTimeString().slice(0, 8),
@@ -73,7 +69,6 @@ async function createBudget(
     budgetId: data.budget_id,
     category: data.category as TransactionCategory,
     targetAmount: data.target_amount,
-    currency: data.currency,
     theme: data.theme,
     creationDate: data.creation_date,
     creationTime: data.creation_time,
@@ -110,7 +105,6 @@ async function updateBudget({
     budgetId: data.budget_id,
     category: data.category,
     targetAmount: data.target_amount,
-    currency: data.currency,
     theme: data.theme,
     creationDate: data.creation_date,
     creationTime: data.creation_time,

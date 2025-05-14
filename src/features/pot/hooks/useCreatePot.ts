@@ -19,7 +19,7 @@ function useCreatePot(): {
   createPot: UseMutateFunction<
     Pot,
     Error,
-    Omit<Pot, "potId" | "currency" | "creationDate" | "creationTime">,
+    Omit<Pot, "potId" | "creationDate" | "creationTime">,
     unknown
   >;
 } {

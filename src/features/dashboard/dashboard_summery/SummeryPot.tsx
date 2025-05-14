@@ -4,6 +4,7 @@ import { Route as PotRoute } from "../../../routes/app/pot.tsx";
 
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadPots } from "../../pot/hooks/useReadPots.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
@@ -23,8 +24,6 @@ function SummeryPot() {
     return acc + saved;
   }, 0);
 
-  const currency = pots[0]?.currency;
-
   return totalSaved === 0 ? null : (
     <div className="bg-shade-100 flex flex-col gap-4 rounded-md px-6 pt-7 pb-4">
       <SummeryHeader
@@ -36,7 +35,7 @@ function SummeryPot() {
       />
 
       <div className="grid grid-cols-[2fr_3fr] gap-4">
-        <PotBalance totalSaved={totalSaved} currency={currency} />
+        <PotBalance totalSaved={totalSaved} />
 
         <PotSummery />
       </div>
@@ -44,19 +43,15 @@ function SummeryPot() {
   );
 }
 
-function PotBalance({
-  totalSaved,
-  currency,
-}: {
-  totalSaved: number;
-  currency: string;
-}) {
+function PotBalance({ totalSaved }: { totalSaved: number }) {
+  const { currency_symbol } = useUser();
+
   return (
     <div className="font-space-grotesk flex flex-col justify-center gap-1 rounded-md bg-orange-50 px-4 py-2 text-gray-900">
       <span className="text-sm">Total Saved</span>
 
       <span className="text-4xl font-medium">
-        {currency}
+        {currency_symbol}
         {totalSaved.toFixed(2)}
       </span>
     </div>
@@ -64,6 +59,7 @@ function PotBalance({
 }
 
 function PotSummery() {
+  const { currency_symbol } = useUser();
   const { pots } = useReadPots();
 
   const potTransactionCache = useStore(potTransactionCacheStore);
@@ -112,7 +108,7 @@ function PotSummery() {
                 </span>
 
                 <span className="font-space-grotesk text-lg font-semibold text-gray-900">
-                  {pot.currency}
+                  {currency_symbol}
                   {savedAmount.toFixed(2)}
                 </span>
               </div>

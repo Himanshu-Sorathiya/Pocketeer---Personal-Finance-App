@@ -1,7 +1,6 @@
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useUser } from "../../auth/hooks/useUser.ts";
 import { useCreateTransaction } from "../hooks/useCreateTransaction.ts";
-import { useReadTransactions } from "../hooks/useReadTransactions.ts";
 
 import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalDescription from "../../../components/ui/ModalDescription.tsx";
@@ -10,8 +9,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateTransactionModal() {
-  const { user_id } = useUser();
-  const { transactions } = useReadTransactions();
+  const { user_id, currency_symbol } = useUser();
   const { transactionStatus, createTransaction } = useCreateTransaction();
 
   const defaultValues = {
@@ -35,8 +33,6 @@ function CreateTransactionModal() {
       });
     },
   });
-
-  const currency = transactions[0]?.currency;
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
@@ -200,7 +196,7 @@ function CreateTransactionModal() {
             },
           }}
           children={(field) => (
-            <field.AmountField label="Amount" currency={currency} />
+            <field.AmountField label="Amount" currency={currency_symbol} />
           )}
         />
 

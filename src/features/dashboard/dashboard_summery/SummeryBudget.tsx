@@ -4,6 +4,7 @@ import { Route as BudgetRoute } from "../../../routes/app/budget.tsx";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadBudgets } from "../../budget/hooks/useReadBudgets.ts";
 
 import SummeryHeader from "../../../components/ui/SummeryHeader.tsx";
@@ -44,6 +45,7 @@ function SummeryBudget() {
 }
 
 function BudgetSummery() {
+  const { currency_symbol } = useUser();
   const { budgets } = useReadBudgets();
 
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
@@ -94,7 +96,7 @@ function BudgetSummery() {
                 </span>
 
                 <span className="font-space-grotesk text-lg font-semibold text-gray-900">
-                  {budget.currency}
+                  {currency_symbol}
                   {spentAmount.toFixed(2)}
                 </span>
               </div>

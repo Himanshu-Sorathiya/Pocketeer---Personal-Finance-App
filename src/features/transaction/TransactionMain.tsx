@@ -15,6 +15,7 @@ import {
 
 import { transactionStore } from "./store/transactionStore.ts";
 
+import { useUser } from "../auth/hooks/useUser.ts";
 import { useReadTransactions } from "./hooks/useReadTransactions.ts";
 
 import TransactionFilter from "./transaction_filters/TransactionFilter.tsx";
@@ -44,6 +45,8 @@ import {
 } from "./transaction_helpers/transactionHelpers.ts";
 
 function TransactionMain() {
+  const { currency_symbol } = useUser();
+
   const columnHelper: ColumnHelper<Transaction> =
     createColumnHelper<Transaction>();
 
@@ -73,12 +76,12 @@ function TransactionMain() {
       filterFn: filterDate,
       sortingFn: sortDate,
     }),
-    columnHelper.accessor((row) => `${row.currency}${row.amount}`, {
+    columnHelper.accessor((row) => `${currency_symbol}${row.amount}`, {
       id: "amount",
       cell: (info) => (
         <AmountCell
           amount={info.row.original.amount}
-          currency={info.row.original.currency}
+          currency={currency_symbol}
           type={info.row.original.type}
         />
       ),

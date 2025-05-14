@@ -17,7 +17,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function WithdrawMoneyFromPotModal({ potId }: any) {
-  const { user_id } = useUser();
+  const { user_id, currency_symbol } = useUser();
   const { pots } = useReadPots();
   const { transactionStatus, withdrawMoneyFromPot } = useWithdrawMoneyFromPot();
 
@@ -57,7 +57,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
         children={(amount) => (
           <PotBalance
             savedAmount={savedAmount}
-            currency={pot!.currency}
+            currency={currency_symbol}
             amount={+amount}
           />
         )}
@@ -81,7 +81,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
           <PotProgressInfo
             savedAmount={savedAmount}
             targetAmount={pot!.targetAmount}
-            currency={pot!.currency}
+            currency={currency_symbol}
             amount={+amount}
           />
         )}
@@ -155,7 +155,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
           children={(field) => (
             <field.AmountField
               label="Amount to Withdraw"
-              currency={pot!.currency}
+              currency={currency_symbol}
             />
           )}
         />
@@ -180,7 +180,7 @@ function PotBalance({
   amount,
 }: {
   savedAmount: number;
-  currency: string;
+  currency: string | undefined;
   amount: number;
 }) {
   return (
@@ -251,7 +251,7 @@ function PotProgressInfo({
 }: {
   savedAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
   amount: number;
 }) {
   return (

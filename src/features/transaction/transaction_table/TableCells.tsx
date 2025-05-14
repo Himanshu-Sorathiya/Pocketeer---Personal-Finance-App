@@ -57,7 +57,7 @@ function AmountCell({
   type,
 }: {
   amount: number;
-  currency: string;
+  currency: string | undefined;
   type: TransactionType;
 }) {
   return (

@@ -9,7 +9,7 @@ function DashboardOverview({
   balance: number;
   income: number;
   expense: number;
-  currency: string;
+  currency: string | undefined;
 }) {
   return (
     <div className="grid grid-cols-3 gap-6">

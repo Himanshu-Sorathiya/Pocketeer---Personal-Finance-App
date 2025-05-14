@@ -3,6 +3,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import type { Budget } from "../types/budget.types.ts";
@@ -10,6 +11,7 @@ import type { Budget } from "../types/budget.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetPieChart() {
+  const { currency_symbol } = useUser();
   const { budgets } = useReadBudgets();
 
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
@@ -130,12 +132,12 @@ function BudgetPieChart() {
         <p
           className={`font-space-grotesk text-3xl font-semibold ${totalSpent >= totalBudget ? "text-error" : "text-text"}`}
         >
-          {budgets![0].currency}
+          {currency_symbol}
           {totalSpent}
         </p>
 
         <p className="text-sm font-semibold text-gray-500">
-          of {budgets![0].currency}
+          of {currency_symbol}
           {totalBudget}
         </p>
       </div>

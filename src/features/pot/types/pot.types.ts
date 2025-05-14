@@ -13,7 +13,6 @@ type Pot = {
   potId: string;
   name: string;
   targetAmount: number;
-  currency: string;
   theme: string;
   creationDate: string;
   creationTime: string;

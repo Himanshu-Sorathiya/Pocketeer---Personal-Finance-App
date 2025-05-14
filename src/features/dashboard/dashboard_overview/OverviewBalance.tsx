@@ -6,7 +6,7 @@ function OverviewBalance({
 }: {
   label: string;
   amount: number;
-  currency: string;
+  currency: string | undefined;
   className?: string;
 }) {
   return (

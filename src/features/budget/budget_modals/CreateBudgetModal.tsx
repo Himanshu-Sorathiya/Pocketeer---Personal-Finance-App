@@ -12,7 +12,7 @@ import { themeColors } from "../../../constants/appOptions.ts";
 import { transactionCategories } from "../../../constants/transactionConfig.ts";
 
 function CreateBudgetModal() {
-  const { user_id } = useUser();
+  const { user_id, currency_symbol } = useUser();
   const { budgets } = useReadBudgets();
   const { budgetStatus, createBudget } = useCreateBudget();
 
@@ -51,8 +51,6 @@ function CreateBudgetModal() {
       });
     },
   });
-
-  const currency = budgets[0].currency;
 
   const canCreateBudget =
     availableCategories.length > 0 && availableThemeColors.length > 0;
@@ -146,7 +144,10 @@ function CreateBudgetModal() {
               },
             }}
             children={(field) => (
-              <field.AmountField label="Maximum to Spend" currency={currency} />
+              <field.AmountField
+                label="Maximum to Spend"
+                currency={currency_symbol}
+              />
             )}
           />
 

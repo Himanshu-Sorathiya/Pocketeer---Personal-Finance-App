@@ -17,13 +17,13 @@ import Icon from "../../../components/ui/Icon.tsx";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function BoardBalance({
-  currency,
   savedAmount,
   targetAmount,
+  currency,
 }: {
-  currency: string;
   savedAmount: number;
   targetAmount: number;
+  currency: string | undefined;
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
@@ -48,7 +48,7 @@ function BoardProgressChart({
   savedAmount: number;
   targetAmount: number;
   theme: string;
-  currency: string;
+  currency: string | undefined;
 }) {
   return (
     <div className="mt-2">
@@ -132,7 +132,7 @@ function BoardProgressInfo({
 }: {
   savedAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
 }) {
   return (
     <div className="flex items-center justify-between gap-4">

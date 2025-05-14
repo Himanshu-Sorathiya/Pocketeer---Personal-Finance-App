@@ -3,6 +3,7 @@ import { useStore } from "@tanstack/react-store";
 import { potTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadPots } from "../hooks/useReadPots.ts";
 import { useUpdatePot } from "../hooks/useUpdatePot.ts";
 
@@ -15,6 +16,7 @@ import type { Transaction } from "../../transaction/types/transaction.types.ts";
 import type { Pot } from "../types/pot.types.ts";
 
 function UpdatePotModal({ potId }: { potId: string }) {
+  const { currency_symbol } = useUser();
   const { pots } = useReadPots();
   const { potStatus, updatePot } = useUpdatePot();
 
@@ -173,7 +175,10 @@ function UpdatePotModal({ potId }: { potId: string }) {
             },
           }}
           children={(field) => (
-            <field.AmountField label="Target Amount" currency={pot!.currency} />
+            <field.AmountField
+              label="Target Amount"
+              currency={currency_symbol}
+            />
           )}
         />
 

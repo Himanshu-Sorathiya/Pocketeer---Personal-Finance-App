@@ -17,7 +17,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function AddMoneyToPotModal({ potId }: any) {
-  const { user_id } = useUser();
+  const { user_id, currency_symbol } = useUser();
   const { pots } = useReadPots();
   const { transactionStatus, addMoneyToPot } = useAddMoneyToPot();
 
@@ -58,7 +58,7 @@ function AddMoneyToPotModal({ potId }: any) {
           <PotBalance
             savedAmount={savedAmount}
             targetAmount={pot!.targetAmount}
-            currency={pot!.currency}
+            currency={currency_symbol}
             amount={+amount}
           />
         )}
@@ -82,7 +82,7 @@ function AddMoneyToPotModal({ potId }: any) {
           <PotProgressInfo
             savedAmount={savedAmount}
             targetAmount={pot!.targetAmount}
-            currency={pot!.currency}
+            currency={currency_symbol}
             amount={+amount}
           />
         )}
@@ -160,7 +160,10 @@ function AddMoneyToPotModal({ potId }: any) {
             },
           }}
           children={(field) => (
-            <field.AmountField label="Amount to Add" currency={pot!.currency} />
+            <field.AmountField
+              label="Amount to Add"
+              currency={currency_symbol}
+            />
           )}
         />
 
@@ -186,7 +189,7 @@ function PotBalance({
 }: {
   savedAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
   amount: number;
 }) {
   return (
@@ -262,7 +265,7 @@ function PotProgressInfo({
 }: {
   savedAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
   amount: number;
 }) {
   return (

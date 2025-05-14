@@ -41,7 +41,7 @@ function ListBalance({
   currency,
 }: {
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
 }) {
   return (
     <div className="text-sm font-normal text-gray-500">
@@ -62,7 +62,7 @@ function ListProgressChart({
 }: {
   spentAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
   theme: string;
 }) {
   return (
@@ -150,7 +150,7 @@ function ListProgressInfo({
 }: {
   spentAmount: number;
   targetAmount: number;
-  currency: string;
+  currency: string | undefined;
   theme: string;
 }) {
   return (

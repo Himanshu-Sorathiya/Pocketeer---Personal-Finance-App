@@ -19,7 +19,7 @@ function useWithdrawMoneyFromPot(): {
   withdrawMoneyFromPot: UseMutateFunction<
     Transaction,
     Error,
-    Omit<Transaction, "transactionId" | "currency" | "creationTime">,
+    Omit<Transaction, "transactionId" | "creationTime">,
     unknown
   >;
 } {

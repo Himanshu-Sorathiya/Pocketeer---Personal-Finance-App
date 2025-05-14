@@ -3,6 +3,7 @@ import { useStore } from "@tanstack/react-store";
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 import { useUpdateBudget } from "../hooks/useUpdateBudget.ts";
 
@@ -13,6 +14,7 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import type { Budget } from "../types/budget.types.ts";
 
 function UpdateBudgetModal({ budgetId }: any) {
+  const { currency_symbol } = useUser();
   const { budgets } = useReadBudgets();
   const { budgetStatus, updateBudget } = useUpdateBudget();
 
@@ -145,7 +147,7 @@ function UpdateBudgetModal({ budgetId }: any) {
           children={(field) => (
             <field.AmountField
               label="Maximum to Spend"
-              currency={budget!.currency}
+              currency={currency_symbol}
             />
           )}
         />

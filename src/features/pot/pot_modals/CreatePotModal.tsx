@@ -17,7 +17,7 @@ import type { Pot } from "../types/pot.types.ts";
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function CreatePotModal() {
-  const { user_id } = useUser();
+  const { user_id, currency_symbol } = useUser();
   const { pots } = useReadPots();
   const { potStatus, createPot } = useCreatePot();
 
@@ -54,8 +54,6 @@ function CreatePotModal() {
       });
     },
   });
-
-  const currency = pots[0]?.currency;
 
   const canCreatePot =
     runningPots.length < 7 && availableThemeColors.length > 0;
@@ -178,7 +176,10 @@ function CreatePotModal() {
               },
             }}
             children={(field) => (
-              <field.AmountField label="Target Amount" currency={currency} />
+              <field.AmountField
+                label="Target Amount"
+                currency={currency_symbol}
+              />
             )}
           />
 

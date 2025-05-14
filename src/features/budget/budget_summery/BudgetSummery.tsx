@@ -3,11 +3,13 @@ import { useStore } from "@tanstack/react-store";
 import { budgetTransactionCacheStore } from "../../../store/appCacheStore.ts";
 import { handleBudgetChange } from "../store/budgetStore.ts";
 
+import { useUser } from "../../auth/hooks/useUser.ts";
 import { useReadBudgets } from "../hooks/useReadBudgets.ts";
 
 import { themeColors } from "../../../constants/appOptions.ts";
 
 function BudgetSummery({ selectedBudgetId }: { selectedBudgetId: string }) {
+  const { currency_symbol } = useUser();
   const { budgets } = useReadBudgets();
 
   const budgetTransactionCache = useStore(budgetTransactionCacheStore);
@@ -60,12 +62,12 @@ function BudgetSummery({ selectedBudgetId }: { selectedBudgetId: string }) {
                 <span
                   className={`font-space-grotesk text-lg font-semibold ${spentAmount >= budget.targetAmount ? "text-error" : "text-text"}`}
                 >
-                  {budget.currency}
+                  {currency_symbol}
                   {spentAmount.toFixed(2)}
                 </span>
                 <span className="text-sm text-gray-500"> of </span>
                 <span className="font-space-grotesk text-sm text-gray-500">
-                  {budget.currency}
+                  {currency_symbol}
                   {budget.targetAmount.toFixed(2)}
                 </span>
               </div>

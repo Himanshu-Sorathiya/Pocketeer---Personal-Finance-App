@@ -2,7 +2,13 @@ import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
-function AmountField({ label, currency }: { label: string; currency: string }) {
+function AmountField({
+  label,
+  currency,
+}: {
+  label: string;
+  currency: string | undefined;
+}) {
   const field = useFieldContext<string>();
 
   return (

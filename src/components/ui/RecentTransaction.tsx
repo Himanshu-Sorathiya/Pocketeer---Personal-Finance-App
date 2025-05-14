@@ -2,15 +2,20 @@ import { useStore } from "@tanstack/react-store";
 
 import { transactionIconCacheStore } from "../../store/appCacheStore.ts";
 
+import { useUser } from "../../features/auth/hooks/useUser.ts";
+
 import type { Transaction } from "../../features/transaction/types/transaction.types.ts";
 
 function RecentTransaction({ transaction }: { transaction: Transaction }) {
+  const { currency_symbol } = useUser();
+
   const { iconPath, bgColor } = useStore(transactionIconCacheStore).get(
     transaction.transactionId,
   ) ?? {
     iconPath: "/src/assets/icons/ui_icons_sprite.svg#fallback",
     bgColor: "#B0B0B0",
   };
+
   return (
     <div
       className="flex justify-between px-1 py-3 text-gray-700"
@@ -33,7 +38,7 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
         <span
           className={`font-space-grotesk font-medium ${transaction.type === "income" && "text-green-500"}`}
         >
-          {transaction.currency}
+          {currency_symbol}
           {transaction.amount.toFixed(2)}
         </span>
 

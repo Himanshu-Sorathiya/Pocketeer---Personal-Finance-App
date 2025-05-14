@@ -1,3 +1,0 @@
-const currency = "₹";
-
-export { currency };
