@@ -1,5 +1,5 @@
 import { useAppForm } from "../../hooks/useAppForm.ts";
-import { useSendPasswordResetEmail } from "./hooks/useSendPasswordResetEmail.tsx";
+import { useSendPasswordResetEmail } from "./hooks/useSendPasswordResetEmail.ts";
 
 import FormSpinner from "../../components/loaders/FormSpinner.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";

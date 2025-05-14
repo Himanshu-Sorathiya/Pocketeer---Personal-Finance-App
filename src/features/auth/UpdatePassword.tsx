@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Route as signinRoute } from "../../routes/auth/signin.tsx";
 
 import { useAppForm } from "../../hooks/useAppForm.ts";
-import { useUpdatePassword } from "./hooks/useUpdatePassword.tsx";
+import { useUpdatePassword } from "./hooks/useUpdatePassword.ts";
 
 import FormSpinner from "../../components/loaders/FormSpinner.tsx";
 import ModalHeader from "../../components/ui/ModalHeader.tsx";

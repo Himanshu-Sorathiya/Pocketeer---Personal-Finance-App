@@ -26,7 +26,7 @@ function useUser(): {
     userStatus: status,
     userFetchStatus: fetchStatus,
     userError: error,
-    isAuthenticated: data?.role === "authenticated",
+    isAuthenticated: status === "success" && data?.role === "authenticated",
     user_id: data?.id,
   };
 }
