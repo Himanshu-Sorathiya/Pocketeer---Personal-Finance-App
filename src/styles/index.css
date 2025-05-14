@@ -3,6 +3,7 @@
 @theme {
   /* Fonts */
   --font-poppins: "Poppins", "Times New Roman";
+  --font-emoji: "Noto Color Emoji";
   --font-space-grotesk: "Space Grotesk", serif;
 
   /* Primary Palette */

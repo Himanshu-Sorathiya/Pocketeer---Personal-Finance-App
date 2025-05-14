@@ -4,6 +4,7 @@ import ResetButton from "../components/buttons/ResetButton.tsx";
 import SubmitButton from "../components/buttons/SubmitButton.tsx";
 import AmountField from "../components/fields/AmountField.tsx";
 import CategoryField from "../components/fields/CategoryField.tsx";
+import CurrencyField from "../components/fields/CurrencyField.tsx";
 import DateField from "../components/fields/DateField.tsx";
 import EmailField from "../components/fields/EmailField.tsx";
 import NameField from "../components/fields/NameField.tsx";
@@ -21,6 +22,7 @@ const { useAppForm } = createFormHook({
   fieldComponents: {
     AmountField,
     CategoryField,
+    CurrencyField,
     DateField,
     EmailField,
     NameField,

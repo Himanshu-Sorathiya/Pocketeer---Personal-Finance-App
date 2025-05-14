@@ -1,20 +1,25 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { useUser } from "../auth/hooks/useUser.ts";
+import { useFieldContext } from "../../hooks/useAppForm.ts";
+
+import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 
 import { currencyOptions } from "../../constants/currencyConfig.ts";
 
-function CurrencySelector() {
-  const { currency_code, currency_symbol } = useUser();
+function CurrencyField() {
+  const field = useFieldContext<string>();
+
+  const symbol = Object.values(currencyOptions).find(
+    (c) => c.code === field.state.value,
+  )?.symbol!;
+  const emoji = Object.values(currencyOptions).find(
+    (c) => c.code === field.state.value,
+  )?.emoji!;
 
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState({
-    code: currency_code ?? "",
-    symbol: currency_symbol ?? "",
-  });
 
   return (
-    <div className="relative flex max-w-lg flex-col gap-1">
+    <div className="relative flex flex-col gap-1">
       <label htmlFor="currency" className="text-sm font-medium text-gray-800">
         Currency
       </label>
@@ -25,13 +30,16 @@ function CurrencySelector() {
           onMouseLeave={() => setOpenDropdown(false)}
           onClick={() => setOpenDropdown(!openDropdown)}
           className={`flex w-full cursor-pointer items-center gap-2 rounded-md px-4 py-3 text-left caret-black transition-all duration-100 ${
-            selectedCurrency.code
+            field.state.value
               ? "text-gray-700 outline-1 outline-gray-500"
               : "text-gray-500 outline-1 outline-gray-400"
           }`}
         >
-          <span className="flex-1 truncate capitalize">
-            {selectedCurrency.symbol} - ({selectedCurrency.code})
+          <span className="flex flex-1 gap-1 truncate capitalize">
+            <span className="font-emoji">{emoji}</span>{" "}
+            <span>
+              {symbol} - ({field.state.value})
+            </span>
           </span>
 
           {openDropdown ? (
@@ -46,11 +54,11 @@ function CurrencySelector() {
         </div>
 
         {openDropdown && (
-          <CurrencyDropDown
-            setOpenDropdown={setOpenDropdown}
-            selectedCurrency={selectedCurrency}
-            setSelectedCurrency={setSelectedCurrency}
-          />
+          <CurrencyDropDown field={field} setOpenDropdown={setOpenDropdown} />
+        )}
+
+        {field.state.meta.isTouched && field.state.meta.errors && (
+          <ErrorTooltip meta={field.state.meta} />
         )}
       </div>
     </div>
@@ -58,21 +66,18 @@ function CurrencySelector() {
 }
 
 function CurrencyDropDown({
+  field,
   setOpenDropdown,
-  selectedCurrency,
-  setSelectedCurrency,
 }: {
+  field: any;
   setOpenDropdown: Dispatch<SetStateAction<boolean>>;
-  selectedCurrency: { code: string; symbol: string };
-  setSelectedCurrency: Dispatch<
-    SetStateAction<{ code: string; symbol: string }>
-  >;
 }) {
   const currencyList = Object.values(currencyOptions)
-    .map(({ code, symbol }) => ({
+    .map(({ code, symbol, emoji }) => ({
       code,
       symbol,
-      isCurrent: code === selectedCurrency.code,
+      emoji,
+      isCurrent: code === field.state.value,
     }))
     .sort((a, b) => (b.isCurrent ? 1 : 0) - (a.isCurrent ? 1 : 0));
 
@@ -86,20 +91,22 @@ function CurrencyDropDown({
         <button
           key={currency.code}
           onClick={() => {
-            setSelectedCurrency(currency);
-
+            field.handleChange(currency.code);
             setOpenDropdown(false);
           }}
           className="flex w-full cursor-grab items-center gap-3 rounded-lg px-4 py-2 text-left text-sm text-nowrap text-gray-600 hover:bg-gray-100 hover:text-gray-700"
           style={{
             backgroundColor:
-              selectedCurrency.code === currency.code ? "#f3f4f6" : "",
-            color: selectedCurrency.code === currency.code ? "#364153" : "",
-            fontWeight: selectedCurrency.code === currency.code ? "500" : "400",
+              field.state.value === currency.code ? "#f3f4f6" : "",
+            color: field.state.value === currency.code ? "#364153" : "",
+            fontWeight: field.state.value === currency.code ? "500" : "400",
           }}
         >
-          <span className="flex-1 truncate capitalize">
-            {currency.symbol} - ({currency.code})
+          <span className="flex flex-1 gap-1 truncate capitalize">
+            <span className="font-emoji">{currency.emoji}</span>{" "}
+            <span>
+              {currency.symbol} - ({currency.code})
+            </span>
           </span>
 
           {currency.isCurrent && (
@@ -111,4 +118,4 @@ function CurrencyDropDown({
   );
 }
 
-export default CurrencySelector;
+export default CurrencyField;
