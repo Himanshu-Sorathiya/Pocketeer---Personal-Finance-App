@@ -1,10 +1,16 @@
 import { useAppForm } from "../../../hooks/useAppForm.ts";
 import { useUser } from "../../auth/hooks/useUser.ts";
+import { useUpdateProfile } from "../hooks/useUpdateProfile.ts";
 
+import FormSpinner from "../../../components/loaders/FormSpinner.tsx";
 import ModalHeader from "../../../components/ui/ModalHeader.tsx";
+
+import { currencyOptions } from "../../../constants/currencyConfig.ts";
 
 function UpdateProfileModal() {
   const { currency_code } = useUser();
+  const { updateProfileStatus, updateProfileError, updateProfile } =
+    useUpdateProfile();
 
   const defaultValues = {
     currency: currency_code ?? "",
@@ -12,11 +18,33 @@ function UpdateProfileModal() {
 
   const form = useAppForm({
     defaultValues,
-    onSubmit: async ({ value }) => {},
+    onSubmit: async ({ value }) => {
+      const updates: {
+        currency_code: string;
+        currency_symbol: string;
+        currency_emoji: string;
+      } = { currency_code: "", currency_symbol: "", currency_emoji: "" };
+
+      updates.currency_code = value.currency;
+      updates.currency_symbol = Object.values(currencyOptions).find(
+        (c) => c.code === value.currency,
+      )?.symbol!;
+      updates.currency_emoji = Object.values(currencyOptions).find(
+        (c) => c.code === value.currency,
+      )?.emoji!;
+
+      updateProfile({ updates });
+    },
   });
+
+  if (updateProfileError?.message) {
+    form.reset();
+  }
 
   return (
     <div className="flex min-w-lg flex-col gap-3">
+      {updateProfileStatus === "pending" && <FormSpinner />}
+
       <ModalHeader title={`Update Profile`} />
 
       <form
@@ -48,17 +76,17 @@ function UpdateProfileModal() {
           }}
           children={(field) => <field.CurrencyField />}
         />
+
+        <div className="flex gap-3">
+          <form.AppForm>
+            <form.ResetButton />
+          </form.AppForm>
+
+          <form.AppForm>
+            <form.SubmitButton label="Update Profile" />
+          </form.AppForm>
+        </div>
       </form>
-
-      <div className="flex gap-3">
-        <form.AppForm>
-          <form.ResetButton />
-        </form.AppForm>
-
-        <form.AppForm>
-          <form.SubmitButton label="Update Profile" />
-        </form.AppForm>
-      </div>
     </div>
   );
 }

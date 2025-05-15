@@ -1,0 +1,34 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { updateProfile as updateProfileApi } from "../../../services/apiAccount.ts";
+
+import { handleCloseModal } from "../../../store/appModalStore.ts";
+
+import { showToast } from "../../../utilities/toastUtils.tsx";
+
+function useUpdateProfile() {
+  const queryClient = useQueryClient();
+
+  const { status, error, mutate } = useMutation({
+    mutationFn: updateProfileApi,
+    onSuccess: () => {
+      showToast("success", "Your profile has been successfully updated.");
+
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: () => {
+      showToast("error", "Failed to update the profile. Please try again.");
+    },
+    onSettled: () => {
+      handleCloseModal();
+    },
+  });
+
+  return {
+    updateProfileStatus: status,
+    updateProfileError: error,
+    updateProfile: mutate,
+  };
+}
+
+export { useUpdateProfile };

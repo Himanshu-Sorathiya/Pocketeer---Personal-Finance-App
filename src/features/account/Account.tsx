@@ -14,7 +14,7 @@ function Account() {
 
   return (
     <>
-      <Header title="Account" modalId="update_profile">
+      <Header title="Account" modalId="update_profile" showSVG={false}>
         Update Profile
       </Header>
 

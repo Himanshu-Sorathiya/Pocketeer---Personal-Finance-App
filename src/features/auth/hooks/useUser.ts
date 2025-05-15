@@ -12,6 +12,7 @@ function useUser(): {
   user_id: string | undefined;
   currency_code: string | undefined;
   currency_symbol: string | undefined;
+  currency_emoji: string | undefined;
 } {
   const {
     data = null,
@@ -32,6 +33,7 @@ function useUser(): {
     user_id: data?.id,
     currency_code: data?.user_metadata?.currency_code,
     currency_symbol: data?.user_metadata?.currency_symbol,
+    currency_emoji: data?.user_metadata?.currency_emoji,
   };
 }
 
