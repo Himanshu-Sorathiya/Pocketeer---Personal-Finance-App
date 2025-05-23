@@ -1,4 +1,5 @@
 import { useAppForm } from "../../../hooks/useAppForm.ts";
+import { useCurrencyRates } from "../../../hooks/useCurrencyRates.ts";
 import { useUser } from "../../auth/hooks/useUser.ts";
 import { useUpdateProfile } from "../hooks/useUpdateProfile.ts";
 
@@ -8,9 +9,10 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { currencyOptions } from "../../../constants/currencyConfig.ts";
 
 function UpdateProfileModal() {
-  const { currency_code } = useUser();
+  const { currency_code, user_id } = useUser();
   const { updateProfileStatus, updateProfileError, updateProfile } =
     useUpdateProfile();
+  const { rates } = useCurrencyRates();
 
   const defaultValues = {
     currency: currency_code ?? "",
@@ -25,15 +27,19 @@ function UpdateProfileModal() {
         currency_emoji: string;
       } = { currency_code: "", currency_symbol: "", currency_emoji: "" };
 
-      updates.currency_code = value.currency;
-      updates.currency_symbol = Object.values(currencyOptions).find(
-        (c) => c.code === value.currency,
-      )?.symbol!;
-      updates.currency_emoji = Object.values(currencyOptions).find(
-        (c) => c.code === value.currency,
-      )?.emoji!;
+      const conversionFactor = rates?.rates?.[value.currency] ?? 1;
 
-      updateProfile({ updates });
+      if (value.currency !== defaultValues.currency) {
+        updates.currency_code = value.currency;
+        updates.currency_symbol = Object.values(currencyOptions).find(
+          (c) => c.code === value.currency,
+        )?.symbol!;
+        updates.currency_emoji = Object.values(currencyOptions).find(
+          (c) => c.code === value.currency,
+        )?.emoji!;
+      }
+
+      updateProfile({ user_id: user_id!, conversionFactor, updates });
     },
   });
 

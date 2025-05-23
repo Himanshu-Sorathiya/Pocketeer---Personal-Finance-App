@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
+import Icon from "../ui/Icon.tsx";
 
 import { transactionCategories } from "../../constants/transactionConfig.ts";
 
@@ -45,13 +46,9 @@ function CategoryField({
           </span>
 
           {openDropdown ? (
-            <svg className="size-5">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-up" />
-            </svg>
+            <Icon id="chevron-up" className="size-5" />
           ) : (
-            <svg className="size-5">
-              <use href="/src/assets/icons/ui_icons_sprite.svg#chevron-down" />
-            </svg>
+            <Icon id="chevron-down" className="size-5" />
           )}
         </div>
 

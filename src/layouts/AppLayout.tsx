@@ -9,11 +9,14 @@ import {
 import { useReadBudgets } from "../features/budget/hooks/useReadBudgets.ts";
 import { useReadPots } from "../features/pot/hooks/useReadPots.ts";
 import { useReadTransactions } from "../features/transaction/hooks/useReadTransactions.ts";
+import { useCurrencyRates } from "../hooks/useCurrencyRates.ts";
 
 import PageSpinner from "../components/loaders/PageSpinner.tsx";
 import Sidebar from "../components/sidebar/Sidebar.tsx";
 
 function AppLayout({ children }: { children?: ReactNode }) {
+  const { ratesStatus, ratesFetchStatus, ratesError } = useCurrencyRates();
+
   const {
     transactions,
     transactionsStatus,
@@ -27,19 +30,22 @@ function AppLayout({ children }: { children?: ReactNode }) {
   const { pots, potsStatus, potsFetchStatus, potsError } = useReadPots();
 
   const isLoading =
+    ratesStatus === "pending" ||
     transactionsStatus === "pending" ||
     budgetsStatus === "pending" ||
     potsStatus === "pending" ||
+    ratesFetchStatus !== "idle" ||
     transactionsFetchStatus !== "idle" ||
     budgetsFetchStatus !== "idle" ||
     potsFetchStatus !== "idle";
 
   const isError =
+    ratesStatus === "error" ||
     transactionsStatus === "error" ||
     budgetsStatus === "error" ||
     potsStatus === "error";
 
-  const error = transactionsError || budgetsError || potsError;
+  const error = ratesError || transactionsError || budgetsError || potsError;
 
   if (isError) throw new Error(error?.message);
 
