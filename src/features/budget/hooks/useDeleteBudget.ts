@@ -31,12 +31,12 @@ function useDeleteBudget(): {
     onSuccess: (_, { budgetId }) => {
       showToast("success", "Budget removed. Financial focus realigned!");
 
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["budgets"] });
-
       deleteBudgetCache(budgetId);
 
       handleBudgetChange("");
+
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
     },
     onError() {
       showToast(

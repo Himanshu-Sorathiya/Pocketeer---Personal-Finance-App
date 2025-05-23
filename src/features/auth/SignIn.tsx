@@ -35,7 +35,7 @@ function SignIn() {
     },
   });
 
-  if (signInError?.message === "invalid_credentials") {
+  if (signInError?.message) {
     form.reset();
   }
 

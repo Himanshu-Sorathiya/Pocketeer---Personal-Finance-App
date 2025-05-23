@@ -22,9 +22,7 @@ async function getTransactions({
     .order("creation_time", { ascending: false });
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while fetching your transactions. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 
   const transactions: Transaction[] = data.map((item) => ({
@@ -64,9 +62,7 @@ async function createTransaction(
     .single();
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while creating your transaction. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -113,9 +109,7 @@ async function updateTransaction({
     .single();
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while updating your transaction. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -137,9 +131,7 @@ async function deleteTransaction({ transactionId }: { transactionId: string }) {
     .eq("transaction_id", transactionId);
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while deleting your transaction. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 }
 
@@ -153,9 +145,7 @@ async function updateTransactions(
     .in("transaction_id", transactionIds);
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while updating your transactions. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 }
 
@@ -166,9 +156,7 @@ async function deleteTransactions(transactionIds: string[]) {
     .in("transaction_id", transactionIds);
 
   if (error) {
-    throw new Error(
-      "Uh-oh! We ran into an issue while deleting your transactions. But don’t worry—Pocketeer will get things back on track soon!",
-    );
+    throw new Error(error.message);
   }
 }
 

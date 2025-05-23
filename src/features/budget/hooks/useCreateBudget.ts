@@ -34,10 +34,10 @@ function useCreateBudget(): {
         "Budget successfully created. Time to stay on track!",
       );
 
+      handleBudgetChange(data.budgetId || "");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
-
-      handleBudgetChange(data.budgetId || "");
     },
     onError() {
       showToast(

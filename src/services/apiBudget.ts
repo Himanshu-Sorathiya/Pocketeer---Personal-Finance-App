@@ -19,9 +19,7 @@ async function getBudgets({
     .order("creation_time", { ascending: false });
 
   if (error) {
-    throw new Error(
-      "Oops! We couldn’t fetch your budgets right now. But don’t worry—Pocketeer will sort it out soon!",
-    );
+    throw new Error(error.message);
   }
 
   const budgets: Budget[] = data.map((item) => ({
@@ -59,9 +57,7 @@ async function createBudget(
     .single();
 
   if (error) {
-    throw new Error(
-      "Oops! We couldn’t create your budget right now. But don’t worry—Pocketeer will sort it out soon!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -95,9 +91,7 @@ async function updateBudget({
     .single();
 
   if (error) {
-    throw new Error(
-      "Oops! We couldn’t update your budget right now. But don’t worry—Pocketeer will sort it out soon!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -118,9 +112,7 @@ async function deleteBudget({ budgetId }: { budgetId: string }) {
     .eq("budget_id", budgetId);
 
   if (error) {
-    throw new Error(
-      "Oops! We couldn’t delete your budget right now. But don’t worry—Pocketeer will sort it out soon!",
-    );
+    throw new Error(error.message);
   }
 }
 

@@ -30,11 +30,11 @@ function useDeleteTransaction(): {
     onSuccess: (_, { transactionId }) => {
       showToast("success", "Transaction removed from your records. All set!");
 
+      deleteTransactionCache(transactionId);
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
-
-      deleteTransactionCache(transactionId);
     },
     onError() {
       showToast(

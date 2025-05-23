@@ -29,7 +29,7 @@ function SignUp() {
     },
   });
 
-  if (signUpError?.message === "user_already_exists") {
+  if (signUpError?.message) {
     form.reset();
   }
 

@@ -18,9 +18,7 @@ async function getPots({ queryKey }: { queryKey: QueryKey }): Promise<Pot[]> {
     .order("creation_time", { ascending: false });
 
   if (error) {
-    throw new Error(
-      "Oops! Something went wrong while loading your pots. Don’t stress—Pocketeer is here to fix it in no time!",
-    );
+    throw new Error(error.message);
   }
 
   const pots: Pot[] = data.map((item) => ({
@@ -55,9 +53,7 @@ async function createPot(
     .single();
 
   if (error) {
-    throw new Error(
-      "Oops! Something went wrong while creating your pot. Don’t stress—Pocketeer is here to fix it in no time!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -97,9 +93,7 @@ async function updatePot({
     .single();
 
   if (error) {
-    throw new Error(
-      "Oops! Something went wrong while updating your pot. Don’t stress—Pocketeer is here to fix it in no time!",
-    );
+    throw new Error(error.message);
   }
 
   return {
@@ -127,9 +121,7 @@ async function deletePot({
   const { error } = await supabase.from("pots").delete().eq("pot_id", potId);
 
   if (error) {
-    throw new Error(
-      "Oops! Something went wrong while deleting your pot. Don’t stress—Pocketeer is here to fix it in no time!",
-    );
+    throw new Error(error.message);
   }
 }
 

@@ -41,7 +41,10 @@ function useUpdateProfile(): {
       queryClient.invalidateQueries({ queryKey: ["pots"] });
     },
     onError: () => {
-      showToast("error", "Failed to update the profile. Please try again.");
+      showToast(
+        "error",
+        "Oops! Something went wrong while updating your profile. We'll get it fixed soon!",
+      );
     },
     onSettled: () => {
       handleCloseModal();

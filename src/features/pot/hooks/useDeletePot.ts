@@ -32,10 +32,10 @@ function useDeletePot(): {
     onSuccess: (_, { potId }) => {
       showToast("success", "Pot removed. Financial structure adjusted!");
 
+      deletePotCache(potId);
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
-
-      deletePotCache(potId);
     },
     onError() {
       showToast(

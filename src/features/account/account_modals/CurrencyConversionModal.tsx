@@ -20,6 +20,7 @@ function CurrencyConversionModal() {
   const { rates } = useCurrencyRates();
 
   const { oldCurrency, updates } = useStore(modalStore, (s) => s.data);
+
   const oldSymbol = Object.values(currencyOptions).find(
     (c) => c.code === oldCurrency,
   )?.symbol;

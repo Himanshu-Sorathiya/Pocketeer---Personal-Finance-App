@@ -31,7 +31,6 @@ function useAddMoneyToPot(): {
       showToast("success", "Money successfully added to the pot!");
 
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
     },
     onError() {

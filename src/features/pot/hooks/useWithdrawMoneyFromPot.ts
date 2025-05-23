@@ -31,7 +31,6 @@ function useWithdrawMoneyFromPot(): {
       showToast("success", "Money successfully withdrawn from the pot!");
 
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({ queryKey: ["pots"] });
     },
     onError() {
