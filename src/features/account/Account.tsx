@@ -4,6 +4,7 @@ import ModalLayout from "../../layouts/ModalLayout.tsx";
 
 import { modalStore } from "../../store/appModalStore.ts";
 
+import CurrencyConversionModal from "./account_modals/CurrencyConversionModal.tsx";
 import UpdateProfileModal from "./account_modals/UpdateProfileModal.tsx";
 import AccountMain from "./AccountMain.tsx";
 
@@ -18,9 +19,10 @@ function Account() {
         Update Profile
       </Header>
 
-      {id && ["update_profile"].includes(id) && (
+      {id && ["update_profile", "currency_conversion"].includes(id) && (
         <ModalLayout>
           {id === "update_profile" && <UpdateProfileModal />}
+          {id === "currency_conversion" && <CurrencyConversionModal />}
         </ModalLayout>
       )}
 

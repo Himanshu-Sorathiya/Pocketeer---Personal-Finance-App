@@ -1,5 +1,6 @@
+import { handleOpenModal } from "../../../store/appModalStore.ts";
+
 import { useAppForm } from "../../../hooks/useAppForm.ts";
-import { useCurrencyRates } from "../../../hooks/useCurrencyRates.ts";
 import { useUser } from "../../auth/hooks/useUser.ts";
 import { useUpdateProfile } from "../hooks/useUpdateProfile.ts";
 
@@ -9,10 +10,10 @@ import ModalHeader from "../../../components/ui/ModalHeader.tsx";
 import { currencyOptions } from "../../../constants/currencyConfig.ts";
 
 function UpdateProfileModal() {
-  const { currency_code, user_id } = useUser();
+  const { currency_code, currency_symbol, currency_emoji, user_id } = useUser();
+
   const { updateProfileStatus, updateProfileError, updateProfile } =
     useUpdateProfile();
-  const { rates } = useCurrencyRates();
 
   const defaultValues = {
     currency: currency_code ?? "",
@@ -25,21 +26,32 @@ function UpdateProfileModal() {
         currency_code: string;
         currency_symbol: string;
         currency_emoji: string;
-      } = { currency_code: "", currency_symbol: "", currency_emoji: "" };
-
-      const conversionFactor = rates?.rates?.[value.currency] ?? 1;
+      } = {
+        currency_code: currency_code!,
+        currency_symbol: currency_symbol!,
+        currency_emoji: currency_emoji!,
+      };
 
       if (value.currency !== defaultValues.currency) {
-        updates.currency_code = value.currency;
-        updates.currency_symbol = Object.values(currencyOptions).find(
-          (c) => c.code === value.currency,
-        )?.symbol!;
-        updates.currency_emoji = Object.values(currencyOptions).find(
-          (c) => c.code === value.currency,
-        )?.emoji!;
+        const updates = {
+          currency_code: value.currency,
+          currency_symbol: Object.values(currencyOptions).find(
+            (c) => c.code === value.currency,
+          )?.symbol!,
+          currency_emoji: Object.values(currencyOptions).find(
+            (c) => c.code === value.currency,
+          )?.emoji!,
+        };
+
+        handleOpenModal("currency_conversion", {
+          oldCurrency: defaultValues.currency,
+          updates,
+        });
+
+        return;
       }
 
-      updateProfile({ user_id: user_id!, conversionFactor, updates });
+      updateProfile({ user_id: user_id!, conversionFactor: 1, updates });
     },
   });
 

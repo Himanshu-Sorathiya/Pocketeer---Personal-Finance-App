@@ -12,6 +12,7 @@ const modalIds = [
   "pot_withdraw_money",
   "forgot_password",
   "update_profile",
+  "currency_conversion",
 ] as const;
 
 type ModalId = (typeof modalIds)[number];
