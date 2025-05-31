@@ -50,17 +50,11 @@ function AppLayout({ children }: { children?: ReactNode }) {
   if (isError) throw new Error(error?.message);
 
   if (!isLoading) {
-    transactions.forEach((transaction) => {
-      setTransactionCache(transaction.transactionId, transaction.category);
-    });
+    setTransactionCache(transactions);
 
-    budgets.forEach((b) =>
-      setBudgetCache(b.budgetId, b.category, b.creationDate, transactions),
-    );
+    setBudgetCache(budgets, transactions);
 
-    pots.forEach((p) =>
-      setPotCache(p.potId, p.name, p.creationDate, transactions),
-    );
+    setPotCache(pots, transactions);
   }
 
   return (
