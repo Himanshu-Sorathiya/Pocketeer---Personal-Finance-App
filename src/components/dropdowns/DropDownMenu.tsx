@@ -16,7 +16,7 @@ function DropDownMenu({
   setSelectedOption: (type: string, value: string) => void;
 }) {
   return (
-    <div className="absolute top-7/12 -left-full z-10 mt-2 max-h-64 w-40 overflow-y-auto rounded-md border border-gray-100 bg-white p-1 shadow-md">
+    <div className="absolute top-7/12 -left-20 z-10 mt-2 max-h-64 w-40 overflow-y-auto rounded-md border border-gray-100 bg-white p-1 shadow-md">
       {options[id].map((option) => (
         <button
           key={option}

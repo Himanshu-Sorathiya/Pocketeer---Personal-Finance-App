@@ -1,4 +1,5 @@
 import { useStore } from "@tanstack/react-store";
+import { format } from "date-fns";
 
 import { transactionIconCacheStore } from "../../store/appCacheStore.ts";
 
@@ -6,8 +7,10 @@ import { useUser } from "../../features/auth/hooks/useUser.ts";
 
 import type { Transaction } from "../../features/transaction/types/transaction.types.ts";
 
+import { dateFormats } from "../../utilities/dateUtils.ts";
+
 function RecentTransaction({ transaction }: { transaction: Transaction }) {
-  const { currency_symbol } = useUser();
+  const { currency_symbol, currency_code } = useUser();
 
   const { iconPath, bgColor } = useStore(transactionIconCacheStore).get(
     transaction.transactionId,
@@ -42,7 +45,12 @@ function RecentTransaction({ transaction }: { transaction: Transaction }) {
           {transaction.amount.toFixed(2)}
         </span>
 
-        <span className="text-sm font-light">{transaction.creationDate}</span>
+        <span className="text-sm font-light">
+          {format(
+            new Date(transaction.creationDate),
+            dateFormats[currency_code!] ?? "dd/MM/yyyy",
+          )}
+        </span>
       </div>
     </div>
   );

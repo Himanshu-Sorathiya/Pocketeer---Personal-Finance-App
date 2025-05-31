@@ -1,12 +1,20 @@
 import { useStore } from "@tanstack/react-store";
+import { format } from "date-fns";
 
 import { transactionStore } from "../store/transactionStore.ts";
 
+import { useUser } from "../../auth/hooks/useUser.ts";
+
 import type { SelectedOptions } from "../../../types/global.types.ts";
 
-import { isDefaultDateRange } from "../../../utilities/dateUtils.ts";
+import {
+  dateFormats,
+  isDefaultDateRange,
+} from "../../../utilities/dateUtils.ts";
 
 function TransactionPlaceholder() {
+  const { currency_code } = useUser();
+
   const searchedRecipient: string = useStore(
     transactionStore,
     (s) => s.searchedRecipient,
@@ -62,12 +70,20 @@ function TransactionPlaceholder() {
         <>
           {" during "}
           <span className="font-semibold text-gray-700">
-            {selectedWeek[0].toLocaleDateString()}
+            {format(
+              selectedWeek[0],
+              dateFormats[currency_code!] ?? "dd/MM/yyyy",
+            )}
           </span>
+
           {" - "}
           <span className="font-semibold text-gray-700">
-            {selectedWeek[1].toLocaleDateString()}
+            {format(
+              selectedWeek[0],
+              dateFormats[currency_code!] ?? "dd/MM/yyyy",
+            )}
           </span>
+
           {" Week"}
         </>
       )}

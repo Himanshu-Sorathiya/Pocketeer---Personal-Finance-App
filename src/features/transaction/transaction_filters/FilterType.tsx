@@ -26,7 +26,7 @@ function FilterType() {
     <div
       onMouseEnter={() => setOpenDropdown("type")}
       onMouseLeave={() => setOpenDropdown(null)}
-      className={`relative flex w-56 cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 transition-all duration-100 ${
+      className={`relative flex cursor-pointer items-center justify-between gap-0.5 rounded-md bg-white p-3 text-gray-700 outline-1 transition-all duration-100 ${
         selectedType.value === "all" ? "outline-gray-300" : "outline-gray-500"
       }`}
     >

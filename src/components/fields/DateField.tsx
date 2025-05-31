@@ -2,13 +2,18 @@ import { useState } from "react";
 
 import { format } from "date-fns";
 
+import { useUser } from "../../features/auth/hooks/useUser.ts";
 import { useFieldContext } from "../../hooks/useAppForm.ts";
 
 import DropDownDayPicker from "../dropdowns/DropDownDayPicker.tsx";
 import ErrorTooltip from "../ui/ErrorTooltip.tsx";
 import Icon from "../ui/Icon.tsx";
 
+import { dateFormats } from "../../utilities/dateUtils.ts";
+
 function DateField({ transactionDate }: { transactionDate?: string }) {
+  const { currency_code } = useUser();
+
   const field = useFieldContext<string>();
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -39,7 +44,12 @@ function DateField({ transactionDate }: { transactionDate?: string }) {
           <Icon id="calendar-days" className="size-5" />
 
           <span className="flex-1 truncate capitalize">
-            {field.state.value || "Select a Date"}
+            {field.state.value
+              ? format(
+                  new Date(field.state.value),
+                  dateFormats[currency_code!] ?? "dd/MM/yyyy",
+                )
+              : "Select a Date"}
           </span>
         </div>
 

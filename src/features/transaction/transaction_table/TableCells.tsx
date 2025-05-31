@@ -1,14 +1,19 @@
 import { useState } from "react";
 
 import { useStore } from "@tanstack/react-store";
+import { format } from "date-fns";
 
 import { transactionIconCacheStore } from "../../../store/appCacheStore.ts";
 import { handleOpenModal } from "../../../store/appModalStore.ts";
+
+import { useUser } from "../../auth/hooks/useUser.ts";
 
 import DropDownActions from "../../../components/dropdowns/DropDownActions.tsx";
 import Icon from "../../../components/ui/Icon.tsx";
 
 import type { TransactionType } from "../../../constants/transactionConfig.ts";
+
+import { dateFormats } from "../../../utilities/dateUtils.ts";
 
 function RecipientCell({
   transactionId,
@@ -48,7 +53,11 @@ function CategoryCell({ category }: { category: string }) {
 }
 
 function DateCell({ date }: { date: string }) {
-  return <span>{date}</span>;
+  const { currency_code } = useUser();
+
+  return (
+    <span>{format(date, dateFormats[currency_code!] ?? "dd/MM/yyyy")}</span>
+  );
 }
 
 function AmountCell({
