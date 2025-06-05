@@ -1,10 +1,15 @@
 import { type ReactNode } from "react";
 
+import { useStore } from "@tanstack/react-store";
+
+import ModalLayout from "./ModalLayout.tsx";
+
 import {
   setBudgetCache,
   setPotCache,
   setTransactionCache,
 } from "../store/appCacheStore.ts";
+import { modalStore } from "../store/appModalStore.ts";
 
 import { useReadBudgets } from "../features/budget/hooks/useReadBudgets.ts";
 import { useReadPots } from "../features/pot/hooks/useReadPots.ts";
@@ -12,6 +17,7 @@ import { useReadTransactions } from "../features/transaction/hooks/useReadTransa
 import { useCurrencyRates } from "../hooks/useCurrencyRates.ts";
 
 import PageSpinner from "../components/loaders/PageSpinner.tsx";
+import ActionNotAllowedModal from "../components/modals/ActionNotAllowedModal.tsx";
 import Sidebar from "../components/sidebar/Sidebar.tsx";
 
 function AppLayout({ children }: { children?: ReactNode }) {
@@ -28,6 +34,8 @@ function AppLayout({ children }: { children?: ReactNode }) {
     useReadBudgets();
 
   const { pots, potsStatus, potsFetchStatus, potsError } = useReadPots();
+
+  const id = useStore(modalStore, (s) => s.id);
 
   const isLoading =
     ratesStatus === "pending" ||
@@ -49,7 +57,7 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
   if (isError) throw new Error(error?.message);
 
-  if (!isLoading) {
+  if (!isLoading && !isError) {
     setTransactionCache(transactions);
 
     setBudgetCache(budgets, transactions);
@@ -60,6 +68,12 @@ function AppLayout({ children }: { children?: ReactNode }) {
   return (
     <div className="flex h-screen max-h-screen min-h-screen overflow-hidden">
       <Sidebar />
+
+      {id && ["action_not_allowed"].includes(id) && (
+        <ModalLayout>
+          {id === "action_not_allowed" && <ActionNotAllowedModal />}
+        </ModalLayout>
+      )}
 
       {isLoading && <PageSpinner />}
 

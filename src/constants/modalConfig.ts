@@ -13,6 +13,7 @@ const modalIds = [
   "forgot_password",
   "update_profile",
   "currency_conversion",
+  "action_not_allowed",
 ] as const;
 
 type ModalId = (typeof modalIds)[number];

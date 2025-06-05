@@ -40,7 +40,7 @@ async function signUp({
     email,
     password,
     options: {
-      data: { name },
+      data: { name, account_creation_date: new Date().toISOString() },
     },
   });
 

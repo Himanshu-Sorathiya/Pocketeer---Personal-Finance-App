@@ -27,22 +27,16 @@ function UpdateProfileModal() {
         currency_symbol: string;
         currency_emoji: string;
       } = {
-        currency_code: currency_code!,
-        currency_symbol: currency_symbol!,
-        currency_emoji: currency_emoji!,
+        currency_code: value.currency ?? currency_code!,
+        currency_symbol:
+          Object.values(currencyOptions).find((c) => c.code === value.currency)
+            ?.symbol! ?? currency_symbol!,
+        currency_emoji:
+          Object.values(currencyOptions).find((c) => c.code === value.currency)
+            ?.emoji! ?? currency_emoji!,
       };
 
-      if (value.currency !== defaultValues.currency) {
-        const updates = {
-          currency_code: value.currency,
-          currency_symbol: Object.values(currencyOptions).find(
-            (c) => c.code === value.currency,
-          )?.symbol!,
-          currency_emoji: Object.values(currencyOptions).find(
-            (c) => c.code === value.currency,
-          )?.emoji!,
-        };
-
+      if (currency_code && value.currency !== defaultValues.currency) {
         handleOpenModal("currency_conversion", {
           oldCurrency: defaultValues.currency,
           updates,
