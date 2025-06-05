@@ -109,7 +109,7 @@ function AddMoneyToPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              savedAmount + parseFloat(value) !== pot!.targetAmount &&
+              savedAmount + parseFloat(value) < pot!.targetAmount &&
                 pot!.targetAmount - (savedAmount + parseFloat(value)) < 1 &&
                 errors.push(
                   "You must either add the full amount or leave at least 1 remaining.",
@@ -131,7 +131,7 @@ function AddMoneyToPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              savedAmount + parseFloat(value) !== pot!.targetAmount &&
+              savedAmount + parseFloat(value) < pot!.targetAmount &&
                 pot!.targetAmount - (savedAmount + parseFloat(value)) < 1 &&
                 errors.push(
                   "You must either add the full amount or leave at least 1 remaining.",
@@ -148,14 +148,14 @@ function AddMoneyToPotModal({ potId }: any) {
               if (parseFloat(value) > pot!.targetAmount - savedAmount)
                 form.setFieldValue(
                   "amount",
-                  String(pot!.targetAmount - savedAmount),
+                  String((pot!.targetAmount - savedAmount).toFixed(2)),
                 );
             },
             onSubmit: ({ value }) => {
               if (parseFloat(value) > pot!.targetAmount - savedAmount)
                 form.setFieldValue(
                   "amount",
-                  String(pot!.targetAmount - savedAmount),
+                  String((pot!.targetAmount - savedAmount).toFixed(2)),
                 );
             },
           }}

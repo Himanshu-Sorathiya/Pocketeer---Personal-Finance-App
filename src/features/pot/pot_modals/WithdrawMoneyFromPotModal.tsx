@@ -108,7 +108,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              savedAmount !== parseFloat(value) &&
+              savedAmount > parseFloat(value) &&
                 savedAmount - parseFloat(value) < 1 &&
                 errors.push(
                   "You must either withdraw the full amount or leave at least 1 remaining.",
@@ -130,7 +130,7 @@ function WithdrawMoneyFromPotModal({ potId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              savedAmount !== parseFloat(value) &&
+              savedAmount > parseFloat(value) &&
                 savedAmount - parseFloat(value) < 1 &&
                 errors.push(
                   "You must either withdraw the full amount or leave at least 1 remaining.",

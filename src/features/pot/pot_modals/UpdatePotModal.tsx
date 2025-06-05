@@ -140,7 +140,7 @@ function UpdatePotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) < savedAmount &&
+              parseFloat(value).toFixed(2) < savedAmount.toFixed(2) &&
                 errors.push("Amount must be greater than already saved amount");
 
               parseFloat(value) >= 99999999.99 &&
@@ -162,7 +162,7 @@ function UpdatePotModal({ potId }: { potId: string }) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) < savedAmount &&
+              parseFloat(value).toFixed(2) < savedAmount.toFixed(2) &&
                 errors.push("Amount must be greater than already saved amount");
 
               parseFloat(value) >= 99999999.99 &&

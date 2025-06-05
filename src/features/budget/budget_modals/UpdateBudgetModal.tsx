@@ -110,7 +110,7 @@ function UpdateBudgetModal({ budgetId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= spentAmount &&
+              parseFloat(value).toFixed(2) < spentAmount.toFixed(2) &&
                 errors.push("Amount must be greater than already spent amount");
 
               parseFloat(value) >= 99999999.99 &&
@@ -132,7 +132,7 @@ function UpdateBudgetModal({ budgetId }: any) {
                   "Invalid amount format. Please use numbers and at most 2 decimal places.",
                 );
 
-              parseFloat(value) <= spentAmount &&
+              parseFloat(value).toFixed(2) < spentAmount.toFixed(2) &&
                 errors.push("Amount must be greater than already spent amount");
 
               parseFloat(value) >= 99999999.99 &&
