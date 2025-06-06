@@ -1,10 +1,9 @@
-import type { User } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
 
 import { getUser as getUserApi } from "../../../services/apiAuth.ts";
 
 function useUser(): {
-  user: User | null;
+  user: any;
   userStatus: "pending" | "error" | "success";
   userFetchStatus: "fetching" | "paused" | "idle";
   userError: Error | null;
@@ -31,9 +30,9 @@ function useUser(): {
     userError: error,
     isAuthenticated: status === "success" && data?.role === "authenticated",
     user_id: data?.id,
-    currency_code: data?.user_metadata?.currency_code,
-    currency_symbol: data?.user_metadata?.currency_symbol,
-    currency_emoji: data?.user_metadata?.currency_emoji,
+    currency_code: data?.currency_code,
+    currency_symbol: data?.currency_symbol,
+    currency_emoji: data?.currency_emoji,
   };
 }
 

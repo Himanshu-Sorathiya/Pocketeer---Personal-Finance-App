@@ -61,7 +61,7 @@ async function signOut() {
   }
 }
 
-async function getUser(): Promise<User> {
+async function getUser() {
   const { data: session } = await supabase.auth.getSession();
 
   if (!session.session) {
@@ -74,7 +74,19 @@ async function getUser(): Promise<User> {
     throw new Error(error.message);
   }
 
-  return data?.user;
+  const user = {
+    id: data?.user?.id,
+    role: data?.user?.role,
+    email: data?.user?.email,
+    last_sign_in_at: data?.user?.last_sign_in_at,
+    name: data?.user?.user_metadata?.name,
+    account_creation_date: data?.user?.user_metadata?.account_creation_date,
+    currency_code: data?.user?.user_metadata?.currency_code,
+    currency_symbol: data?.user?.user_metadata?.currency_symbol,
+    currency_emoji: data?.user?.user_metadata?.currency_emoji,
+  };
+
+  return user;
 }
 
 async function sendPasswordResetEmail({
@@ -109,5 +121,5 @@ export {
   signIn,
   signOut,
   signUp,
-  updatePassword,
+  updatePassword
 };
